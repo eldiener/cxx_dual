@@ -3,25 +3,25 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(CXX_DUAL_REF_HPP)
-#define CXX_DUAL_REF_HPP
+#if !defined(CXXD_REF_HPP)
+#define CXXD_REF_HPP
 
 #include <boost/config.hpp>
-#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXX_DUAL_REF_USE_BOOST) || defined(CXX_DUAL_USE_BOOST)
-#if defined(CXX_DUAL_REF_USE_STD) || defined(CXX_DUAL_USE_STD)
+#if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)
+#if defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD)
 #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)
-#error CXX_DUAL: C++ standard ref is not available
+#error CXXD: C++ standard ref is not available
 #else
-#error CXX_DUAL: Using C++ standard and using Boost are both defined for ref
+#error CXXD: Using C++ standard and using Boost are both defined for ref
 #endif
 #endif
-#define CXX_DUAL_HAS_STD_REF 0
-#define CXX_DUAL_REF_NS boost
-#define CXX_DUAL_REF_HEADER <boost/core/ref.hpp>
+#define CXXD_HAS_STD_REF 0
+#define CXXD_REF_NS boost
+#define CXXD_REF_HEADER <boost/core/ref.hpp>
 #else
-#define CXX_DUAL_HAS_STD_REF 1
-#define CXX_DUAL_REF_NS std
-#define CXX_DUAL_REF_HEADER <functional>
+#define CXXD_HAS_STD_REF 1
+#define CXXD_REF_NS std
+#define CXXD_REF_HEADER <functional>
 #endif
 
-#endif // !defined(CXX_DUAL_REF_HPP)
+#endif // !defined(CXXD_REF_HPP)
