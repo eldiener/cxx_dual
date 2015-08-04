@@ -3,25 +3,35 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(CXXD_ARRAY_HPP)
-#define CXXD_ARRAY_HPP
+/* Multiple inclusion must be allowed */
 
-#include <boost/config.hpp>
-#if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
-#if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
-#if defined(BOOST_NO_CXX11_HDR_ARRAY)
-#error CXXD: C++ standard array is not available
-#else
-#error CXXD: Using C++ standard and using Boost are both defined for array
+#if !defined(CXXD_ARRAY_ERROR)
+	#if defined(CXXD_HAS_STD_ARRAY)
+		#if CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST))
+			#define CXXD_ARRAY_ERROR
+			#error CXXD: Previous use of C++ standard array erroneously overridden
+		#elif !CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
+			#define CXXD_ARRAY_ERROR
+			#error CXXD: Previous use of Boost array erroneously overridden
+		#endif
+	#elif (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
+		#define CXXD_ARRAY_ERROR
+		#error CXXD: Using C++ standard and using Boost are both defined for array
+	#else
+		#include <boost/config.hpp>
+		#if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
+			#if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
+				#define CXXD_ARRAY_ERROR
+				#error CXXD: C++ standard array is not available
+			#else
+				#define CXXD_HAS_STD_ARRAY 0
+				#define CXXD_ARRAY_NS boost
+				#define CXXD_ARRAY_HEADER <boost/array.hpp>
+			#endif
+		#else
+			#define CXXD_HAS_STD_ARRAY 1
+			#define CXXD_ARRAY_NS std
+			#define CXXD_ARRAY_HEADER <array>
+		#endif
+	#endif
 #endif
-#endif
-#define CXXD_HAS_STD_ARRAY 0
-#define CXXD_ARRAY_NS boost
-#define CXXD_ARRAY_HEADER <boost/array.hpp>
-#else
-#define CXXD_HAS_STD_ARRAY 1
-#define CXXD_ARRAY_NS std
-#define CXXD_ARRAY_HEADER <array>
-#endif
-
-#endif // !defined(CXXD_ARRAY_HPP)
