@@ -17,7 +17,7 @@
             #define CXXD_TYPE_INDEX_ERROR
             #error CXXD: Previous use of Boost type index erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_TYPE_INDEX) || defined(CXXD_TYPE_INDEX_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_TYPE_INDEX_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_TYPEINDEX) || defined(CXXD_TYPE_INDEX_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_TYPE_INDEX_USE_STD) || defined(CXXD_USE_STD)

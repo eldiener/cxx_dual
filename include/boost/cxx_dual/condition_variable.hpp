@@ -17,7 +17,7 @@
             #define CXXD_CONDITION_VARIABLE_ERROR
             #error CXXD: Previous use of Boost condition variable erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_CONDITION_VARIABLE) || defined(CXXD_CONDITION_VARIABLE_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_CONDITION_VARIABLE_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_CONDITION_VARIABLE) || defined(CXXD_CONDITION_VARIABLE_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_CONDITION_VARIABLE_USE_STD) || defined(CXXD_USE_STD)

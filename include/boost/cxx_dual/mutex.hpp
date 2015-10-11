@@ -17,7 +17,7 @@
             #define CXXD_MUTEX_ERROR
             #error CXXD: Previous use of Boost mutex erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_MUTEX) || defined(CXXD_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_MUTEX_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_MUTEX) || defined(CXXD_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_MUTEX_USE_STD) || defined(CXXD_USE_STD)

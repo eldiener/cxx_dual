@@ -17,7 +17,7 @@
             #define CXXD_THREAD_ERROR
             #error CXXD: Previous use of Boost thread erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_THREAD) || defined(CXXD_THREAD_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_THREAD_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_THREAD) || defined(CXXD_THREAD_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_THREAD_USE_STD) || defined(CXXD_USE_STD)

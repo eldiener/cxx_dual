@@ -17,7 +17,7 @@
             #define CXXD_ARRAY_ERROR
             #error CXXD: Previous use of Boost array erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)

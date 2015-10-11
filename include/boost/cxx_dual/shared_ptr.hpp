@@ -15,7 +15,7 @@
             #define CXXD_SHARED_PTR_ERROR
             #error CXXD: Previous use of Boost shared pointer erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_SHARED_PTR) || defined(CXXD_SHARED_PTR_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_SHARED_PTR_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_SMART_PTR) || defined(CXXD_SHARED_PTR_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_SHARED_PTR_USE_STD) || defined(CXXD_USE_STD)

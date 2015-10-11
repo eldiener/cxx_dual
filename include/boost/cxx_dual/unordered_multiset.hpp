@@ -17,7 +17,7 @@
             #define CXXD_UNORDERED_MULTISET_ERROR
             #error CXXD: Previous use of Boost unordered multiset erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_UNORDERED_MULTISET) || defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_UNORDERED_SET) || defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD)

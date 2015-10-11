@@ -17,7 +17,7 @@
             #define CXXD_REF_ERROR
             #error CXXD: Previous use of Boost ref erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_REF) || defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD)

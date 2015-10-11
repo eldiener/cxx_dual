@@ -17,7 +17,7 @@
             #define CXXD_FUNCTION_ERROR
             #error CXXD: Previous use of Boost function erroneously overridden
         #endif
-    #else
+    #elif !defined(CXXD_HAS_STD_FUNCTION) || defined(CXXD_FUNCTION_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_FUNCTION_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_FUNCTION_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_FUNCTION_USE_STD) || defined(CXXD_USE_STD)
