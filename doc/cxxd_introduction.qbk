@@ -1,0 +1,164 @@
+[section CXXD introduction]
+
+The Cxx dual library, or CXXD for short, is a macro library
+which allows the choice between a Boost library and its
+C++ standard equivalent library, using the same code to
+program either choice.
+
+[heading The problem]
+
+Particular functionality of a number of Boost libraries
+is duplicated to a great degree by C++ standard libraries, 
+most of which were originally created from the equivalent 
+Boost libraries. In designing software the choice of a 
+particular library to use is often predicated on what is 
+available when the end-user compiles the sources for a module.
+
+Given a Boost library, call it BBB, which has an
+equivalent C++ standard library, call it SSS, how does
+the designer of software choose whether to use BBB
+or SSS in his code ?
+
+The normal choice may be presented as:
+
+# Use BBB since it is always available for a given
+Boost distribution. This is by far the most popular choice.
+# Use SSS and fail to compile if the C++ standard library is not
+available given the compiler options and the C++ compiler
+implementation. This is the most popular choice if the
+designer of the software insists on a certain level of
+C++ standard support, such as that the software is compiled
+so that the C++11 standard or more is supported.
+# Support both BBB and SSS in the interface, with the proviso
+that if Boost is not being used BBB in the interface is not
+used and if the implementation and compiler options 
+are not adequate SSS in the interface is not used.
+Being "used" or not is done through preprocessing defines and
+preprocessing #if statements. This is the most time consuming 
+solution and will result in much duplication of functionality 
+to support both BBB and SSS.
+
+As mentioned above the first choice is easily the most popular
+since Boost library developers, and those involved using
+any one of the approximately current 120+ Boost libraries, assume
+that a Boost distribution is always available for the
+programmer to use. If you see this choice as always the
+single most viable one you need not continue reading
+about this library and can move on to what you have always
+used with perfect ease of mind.
+
+What are the possible downsides to the first choice ?
+
+# Some programmers, programming groups, businesses
+and large corporation employing programmers, do not
+like the idea of having to rely on the Boost distribution
+as a whole while feeling it is fine to rely on certain
+individual Boost libraries.
+# Programmers would like to use the C++ standard libraries
+when available with their compiler implementation rather
+than have a dependency in their code on the equivalent
+Boost library.
+# Programmers may be already using C++ standard library SSS in their code
+and do not want to have to therefore use the Boost library equivalent BBB
+for a particular library interface.
+
+The second choice, always using the C++ standard equivalent library,
+will occur less often because of its most obvious
+downside, which is that if the C++ standard library is not available
+for a particular compiler implementation and C++ standard compiler level the
+code will fail to compile. If however you write a library for a
+particular level of the C++ standard, such as C++11, and assume a
+strong implementation of that standard is needed by certain compilers
+which can compile your code, this is often your most viable choice
+and you need not continue reading about this library.
+
+The third choice, supporting both the Boost version of a library and the 
+equivalent C++ standard version of that library, is obviously programmable but 
+entails a much greater amount of work. Each usage of BBB and SSS will entail 
+writing code that supports both libraries and this will require a great deal 
+of extra code. Furthermore your code will be filled with uses of preprocessor 
+#if statements to delineate which usage of BBB or SSS would be available at 
+any given time. However if you are happy to do all the extra work to support 
+functionality in both BBB and SSS in your code you need not continue reading 
+about this library.
+
+[heading The solution]
+
+Any of the three choices presented above can be used and represent
+a solution to the problem presented. This particular library
+represents a fourth choice, which is more flexible than any of the
+three choices listed above but also has its down sides.
+
+The solution presented by the CXXD library is a means of supporting
+either BBB or SSS with a single set of code, without having to worry
+which is being used at compile time. The solution is predicated on the
+fact that for BBB and SSS the exact same functionality is present
+for a very large amount of the implementation of both libraries with
+the only difference being the namespace being used. The solution does
+offer the means to distinguish between BBB and SSS for the very small
+amount of functionality which may be different between the libraries.
+
+The solution is not problem free but will work painlessly most of the 
+time, and when it does not work will inform the end-user why during compilation. 
+This documentation will also discuss issues with the solution.
+
+The solution involves the use of macros, all starting with this library's
+common mnemonic of CXXD_, which allow a programming to use the functionality
+of equivalent BBB and SSS libraries with a single set of code.
+
+[heading How it works]
+
+For any given library called 'XXX', 
+which has a Boost version BBB and an equivalent C++ standard library SSS,
+the user of the CXXD library starts by including a header file called
+'<boost/cxxd/XXX.hpp>'. This header is caled the "CXXD header" 
+Once included, this header file will have three mandatory
+macro definitions, and one optional macro definition depending on the XXX library. 
+These definitions are:
+
+* CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor #include statement
+This is called the "dual library header".
+* CXXD_XXX_NS, the name of XXX's namespace.
+This is called the "dual library namespace".
+* CXXD_HAS_STD_XXX, 1 if the C++ standard library version is being used or
+0 if the Boost library version is being used
+* Optionally CXXD_XXX_MACRO(macro), transforms any XXX 'macro' to its actual name
+
+The usage of these CXXD_ macros in code is very simple:
+
+# Include the correct dual library header file using 'include CXXD_XXX_HEADER'.
+# Access any functionality in the dual library namespace using 'CXXD_XXX_NS::some_functionality etc...'.
+or, if there are no name clashes with another namespace, through 'using CXXD_XXX_NS; some_functionality etc...'.
+# Use any macro MMM, which is part of the XXX library implementation, 
+by specifying 'CXXD_XXX_MACRO(MMM)' as the macro name.
+# Optionally it is possible to write specific code for the Boost version of the library 
+or the C++ standard version of the library by using the CXXD_HAS_STD_XXX macro with a 
+preprocessor #if statement.
+
+[heading Generalized example]
+
+Somewhere in your code you want to use library XXX, without worrying whether
+you are using the Boost version or the C++ standard library version. Your code
+in general may look like:
+
+    #include <boost/cxxd/XXX.hpp> // Creates the macros for library XXX by including the CXXD header
+    #include CXXD_XXX_HEADER      // Includes the appropriate dual library header file
+
+    void SomeFunction()
+        {
+        CXXD_XXX_NS::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the dual library namespace
+        // Use the a_xxx_object in your code...
+        #if CXXD_HAS_STD_XXX
+        // Some code specific to the C++ standard implementation of XXX
+        #else
+        // Otherwise some code specific to the Boost implementation of XXX
+        #endif
+        CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
+        }
+        
+The major use is in the use of the dual library header CXXD_XXX_HEADER, to include the correct 
+header file for XXX, and in the dual library namespace CXXD_XXX_NS, to use the functionality of XXX;
+whereas CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro)
+may not even exist for the give library XXX.
+
+[endsect]

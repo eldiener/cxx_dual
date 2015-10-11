@@ -1,0 +1,26 @@
+[/ 
+  (C) Copyright Edward Diener 2015
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[library The Cxx Dual Library
+    [quickbook 1.6]
+    [id cxxd]
+    [dirname cxxd]
+    [copyright 2015 Tropic Software East Inc]
+    [purpose Choose Boost or standard library]
+    [category generic]
+    [authors [Diener, Edward]]
+    [source-mode c++]
+    [license
+        Distributed under the Boost Software License, Version 1.0.
+        (See accompanying file LICENSE_1_0.txt or copy at
+        [@http://www.boost.org/LICENSE_1_0.txt])
+    ]
+]
+ 
+[include cxxd_introduction.qbk]
+[include cxxd_libraries.qbk]
+[include cxxd_mechanism.qbk]

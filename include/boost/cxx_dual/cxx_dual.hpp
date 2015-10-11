@@ -3,8 +3,8 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(CXXD_HPP)
-#define CXXD_HPP
+#if !defined(CXX_DUAL_HPP)
+#define CXX_DUAL_HPP
 
 #include <boost/cxx_dual/array.hpp>
 #include <boost/cxx_dual/atomic.hpp>
@@ -31,4 +31,4 @@
 #include <boost/cxx_dual/unordered_multiset.hpp>
 #include <boost/cxx_dual/unordered_set.hpp>
 
-#endif // !defined(CXXD_HPP)
+#endif // !defined(CXX_DUAL_HPP)
