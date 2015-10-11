@@ -9,33 +9,43 @@
 	#if (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_ATOMIC_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for atomic
-	#else
-        #if defined(CXXD_HAS_STD_ATOMIC)
-            #if CXXD_HAS_STD_ATOMIC && (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST))
+	#elif defined(CXXD_HAS_STD_ATOMIC) && !defined(CXXD_ALLOW_CHANGE)
+        #if CXXD_HAS_STD_ATOMIC && (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST))
+            #define CXXD_ATOMIC_ERROR
+            #error CXXD: Previous use of C++ standard atomic erroneously overridden
+        #elif !CXXD_HAS_STD_ATOMIC && (defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD))
+            #define CXXD_ATOMIC_ERROR
+            #error CXXD: Previous use of Boost atomic erroneously overridden
+        #endif
+    #else
+        #include <boost/config.hpp>
+        #if defined(BOOST_NO_CXX11_HDR_ATOMIC) || defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST)
+            #if defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_ATOMIC_ERROR
-                #error CXXD: Previous use of C++ standard atomic erroneously overridden
-            #elif !CXXD_HAS_STD_ATOMIC && (defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD))
-                #define CXXD_ATOMIC_ERROR
-                #error CXXD: Previous use of Boost atomic erroneously overridden
+                #error CXXD: C++ standard atomic is not available
+            #else
+                #if defined(CXXD_HAS_STD_ATOMIC)
+                    #undef CXXD_HAS_STD_ATOMIC
+                    #undef CXXD_ATOMIC_NS
+                    #undef CXXD_ATOMIC_HEADER
+                    #undef CXXD_ATOMIC_MACRO
+                #endif
+                #define CXXD_HAS_STD_ATOMIC 0
+                #define CXXD_ATOMIC_NS boost
+                #define CXXD_ATOMIC_HEADER <boost/atomic/atomic.hpp>
+                #define CXXD_ATOMIC_MACRO(macro) BOOST_ ## macro
             #endif
         #else
-            #include <boost/config.hpp>
-            #if defined(BOOST_NO_CXX11_HDR_ATOMIC) || defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST)
-                #if defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD)
-                    #define CXXD_ATOMIC_ERROR
-                    #error CXXD: C++ standard atomic is not available
-                #else
-                    #define CXXD_HAS_STD_ATOMIC 0
-                    #define CXXD_ATOMIC_NS boost
-                    #define CXXD_ATOMIC_HEADER <boost/atomic/atomic.hpp>
-                    #define CXXD_ATOMIC_MACRO(macro) BOOST_ ## macro
-                #endif
-            #else
-                #define CXXD_HAS_STD_ATOMIC 1
-                #define CXXD_ATOMIC_NS std
-                #define CXXD_ATOMIC_HEADER <atomic>
-                #define CXXD_ATOMIC_MACRO(macro) macro
+            #if defined(CXXD_HAS_STD_ATOMIC)
+                #undef CXXD_HAS_STD_ATOMIC
+                #undef CXXD_ATOMIC_NS
+                #undef CXXD_ATOMIC_HEADER
+                #undef CXXD_ATOMIC_MACRO
             #endif
+            #define CXXD_HAS_STD_ATOMIC 1
+            #define CXXD_ATOMIC_NS std
+            #define CXXD_ATOMIC_HEADER <atomic>
+            #define CXXD_ATOMIC_MACRO(macro) macro
         #endif
-	#endif
+    #endif
 #endif

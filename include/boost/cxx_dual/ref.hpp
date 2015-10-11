@@ -9,31 +9,39 @@
 	#if (defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_REF_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for ref
-	#else
-        #if defined(CXXD_HAS_STD_REF)
-            #if CXXD_HAS_STD_REF && (defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST))
+	#elif defined(CXXD_HAS_STD_REF) && !defined(CXXD_ALLOW_CHANGE)
+        #if CXXD_HAS_STD_REF && (defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST))
+            #define CXXD_REF_ERROR
+            #error CXXD: Previous use of C++ standard ref erroneously overridden
+        #elif !CXXD_HAS_STD_REF && (defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD))
+            #define CXXD_REF_ERROR
+            #error CXXD: Previous use of Boost ref erroneously overridden
+        #endif
+    #else
+        #include <boost/config.hpp>
+        #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)
+            #if defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_REF_ERROR
-                #error CXXD: Previous use of C++ standard ref erroneously overridden
-            #elif !CXXD_HAS_STD_REF && (defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD))
-                #define CXXD_REF_ERROR
-                #error CXXD: Previous use of Boost ref erroneously overridden
+                #error CXXD: C++ standard ref is not available
+            #else
+                #if defined(CXXD_HAS_STD_REF)
+                    #undef CXXD_HAS_STD_REF
+                    #undef CXXD_REF_NS
+                    #undef CXXD_REF_HEADER
+                #endif
+                #define CXXD_HAS_STD_REF 0
+                #define CXXD_REF_NS boost
+                #define CXXD_REF_HEADER <boost/core/ref.hpp>
             #endif
         #else
-            #include <boost/config.hpp>
-            #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)
-                #if defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD)
-                    #define CXXD_REF_ERROR
-                    #error CXXD: C++ standard ref is not available
-                #else
-                    #define CXXD_HAS_STD_REF 0
-                    #define CXXD_REF_NS boost
-                    #define CXXD_REF_HEADER <boost/core/ref.hpp>
-                #endif
-            #else
-                #define CXXD_HAS_STD_REF 1
-                #define CXXD_REF_NS std
-                #define CXXD_REF_HEADER <functional>
+            #if defined(CXXD_HAS_STD_REF)
+                #undef CXXD_HAS_STD_REF
+                #undef CXXD_REF_NS
+                #undef CXXD_REF_HEADER
             #endif
+            #define CXXD_HAS_STD_REF 1
+            #define CXXD_REF_NS std
+            #define CXXD_REF_HEADER <functional>
         #endif
-	#endif
+    #endif
 #endif

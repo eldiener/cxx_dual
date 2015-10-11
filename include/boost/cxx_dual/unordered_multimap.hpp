@@ -9,31 +9,39 @@
 	#if (defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_UNORDERED_MULTIMAP_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for unordered multimap
-	#else
-        #if defined(CXXD_HAS_STD_UNORDERED_MULTIMAP)
-            #if CXXD_HAS_STD_UNORDERED_MULTIMAP && (defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST))
+	#elif defined(CXXD_HAS_STD_UNORDERED_MULTIMAP) && !defined(CXXD_ALLOW_CHANGE)
+        #if CXXD_HAS_STD_UNORDERED_MULTIMAP && (defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST))
+            #define CXXD_UNORDERED_MULTIMAP_ERROR
+            #error CXXD: Previous use of C++ standard unordered multimap erroneously overridden
+        #elif !CXXD_HAS_STD_UNORDERED_MULTIMAP && (defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD))
+            #define CXXD_UNORDERED_MULTIMAP_ERROR
+            #error CXXD: Previous use of Boost unordered multimap erroneously overridden
+        #endif
+    #else
+        #include <boost/config.hpp>
+        #if defined(BOOST_NO_CXX11_HDR_UNORDERED_MAP) || defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST)
+            #if defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_UNORDERED_MULTIMAP_ERROR
-                #error CXXD: Previous use of C++ standard unordered multimap erroneously overridden
-            #elif !CXXD_HAS_STD_UNORDERED_MULTIMAP && (defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD))
-                #define CXXD_UNORDERED_MULTIMAP_ERROR
-                #error CXXD: Previous use of Boost unordered multimap erroneously overridden
+                #error CXXD: C++ standard unordered multimap is not available
+            #else
+                #if defined(CXXD_HAS_STD_UNORDERED_MULTIMAP)
+                    #undef CXXD_HAS_STD_UNORDERED_MULTIMAP
+                    #undef CXXD_UNORDERED_MULTIMAP_NS
+                    #undef CXXD_UNORDERED_MULTIMAP_HEADER
+                #endif
+                #define CXXD_HAS_STD_UNORDERED_MULTIMAP 0
+                #define CXXD_UNORDERED_MULTIMAP_NS boost
+                #define CXXD_UNORDERED_MULTIMAP_HEADER <boost/unordered_map.hpp>
             #endif
         #else
-            #include <boost/config.hpp>
-            #if defined(BOOST_NO_CXX11_HDR_UNORDERED_MAP) || defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST)
-                #if defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD)
-                    #define CXXD_UNORDERED_MULTIMAP_ERROR
-                    #error CXXD: C++ standard unordered multimap is not available
-                #else
-                    #define CXXD_HAS_STD_UNORDERED_MULTIMAP 0
-                    #define CXXD_UNORDERED_MULTIMAP_NS boost
-                    #define CXXD_UNORDERED_MULTIMAP_HEADER <boost/unordered_map.hpp>
-                #endif
-            #else
-                #define CXXD_HAS_STD_UNORDERED_MULTIMAP 1
-                #define CXXD_UNORDERED_MULTIMAP_NS std
-                #define CXXD_UNORDERED_MULTIMAP_HEADER <unordered_map>
+            #if defined(CXXD_HAS_STD_UNORDERED_MULTIMAP)
+                #undef CXXD_HAS_STD_UNORDERED_MULTIMAP
+                #undef CXXD_UNORDERED_MULTIMAP_NS
+                #undef CXXD_UNORDERED_MULTIMAP_HEADER
             #endif
+            #define CXXD_HAS_STD_UNORDERED_MULTIMAP 1
+            #define CXXD_UNORDERED_MULTIMAP_NS std
+            #define CXXD_UNORDERED_MULTIMAP_HEADER <unordered_map>
         #endif
-	#endif
+    #endif
 #endif

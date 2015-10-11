@@ -9,31 +9,39 @@
 	#if (defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_RATIO_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for ratio
-	#else
-        #if defined(CXXD_HAS_STD_RATIO)
-            #if CXXD_HAS_STD_RATIO && (defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST))
+	#elif defined(CXXD_HAS_STD_RATIO) && !defined(CXXD_ALLOW_CHANGE)
+        #if CXXD_HAS_STD_RATIO && (defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST))
+            #define CXXD_RATIO_ERROR
+            #error CXXD: Previous use of C++ standard ratio erroneously overridden
+        #elif !CXXD_HAS_STD_RATIO && (defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD))
+            #define CXXD_RATIO_ERROR
+            #error CXXD: Previous use of Boost ratio erroneously overridden
+        #endif
+    #else
+        #include <boost/config.hpp>
+        #if defined(BOOST_NO_CXX11_HDR_RATIO) || defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST)
+            #if defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_RATIO_ERROR
-                #error CXXD: Previous use of C++ standard ratio erroneously overridden
-            #elif !CXXD_HAS_STD_RATIO && (defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD))
-                #define CXXD_RATIO_ERROR
-                #error CXXD: Previous use of Boost ratio erroneously overridden
+                #error CXXD: C++ standard ratio is not available
+            #else
+                #if defined(CXXD_HAS_STD_RATIO)
+                    #undef CXXD_HAS_STD_RATIO
+                    #undef CXXD_RATIO_NS
+                    #undef CXXD_RATIO_HEADER
+                #endif
+                #define CXXD_HAS_STD_RATIO 0
+                #define CXXD_RATIO_NS boost
+                #define CXXD_RATIO_HEADER <boost/ratio.hpp>
             #endif
         #else
-            #include <boost/config.hpp>
-            #if defined(BOOST_NO_CXX11_HDR_RATIO) || defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST)
-                #if defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD)
-                    #define CXXD_RATIO_ERROR
-                    #error CXXD: C++ standard ratio is not available
-                #else
-                    #define CXXD_HAS_STD_RATIO 0
-                    #define CXXD_RATIO_NS boost
-                    #define CXXD_RATIO_HEADER <boost/ratio.hpp>
-                #endif
-            #else
-                #define CXXD_HAS_STD_RATIO 1
-                #define CXXD_RATIO_NS std
-                #define CXXD_RATIO_HEADER <ratio>
+            #if defined(CXXD_HAS_STD_RATIO)
+                #undef CXXD_HAS_STD_RATIO
+                #undef CXXD_RATIO_NS
+                #undef CXXD_RATIO_HEADER
             #endif
+            #define CXXD_HAS_STD_RATIO 1
+            #define CXXD_RATIO_NS std
+            #define CXXD_RATIO_HEADER <ratio>
         #endif
-	#endif
+    #endif
 #endif

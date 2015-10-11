@@ -9,31 +9,39 @@
 	#if (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_ARRAY_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for array
-	#else
-        #if defined(CXXD_HAS_STD_ARRAY)
-            #if CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST))
+    #elif defined(CXXD_HAS_STD_ARRAY) && !defined(CXXD_ALLOW_CHANGE)
+        #if CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST))
+            #define CXXD_ARRAY_ERROR
+            #error CXXD: Previous use of C++ standard array erroneously overridden
+        #elif !CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
+            #define CXXD_ARRAY_ERROR
+            #error CXXD: Previous use of Boost array erroneously overridden
+        #endif
+    #else
+        #include <boost/config.hpp>
+        #if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
+            #if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_ARRAY_ERROR
-                #error CXXD: Previous use of C++ standard array erroneously overridden
-            #elif !CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
-                #define CXXD_ARRAY_ERROR
-                #error CXXD: Previous use of Boost array erroneously overridden
+                #error CXXD: C++ standard array is not available
+            #else
+                #if defined(CXXD_HAS_STD_ARRAY)
+                    #undef CXXD_HAS_STD_ARRAY
+                    #undef CXXD_ARRAY_NS
+                    #undef CXXD_ARRAY_HEADER
+                #endif
+                #define CXXD_HAS_STD_ARRAY 0
+                #define CXXD_ARRAY_NS boost
+                #define CXXD_ARRAY_HEADER <boost/array.hpp>
             #endif
         #else
-            #include <boost/config.hpp>
-            #if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
-                #if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
-                    #define CXXD_ARRAY_ERROR
-                    #error CXXD: C++ standard array is not available
-                #else
-                    #define CXXD_HAS_STD_ARRAY 0
-                    #define CXXD_ARRAY_NS boost
-                    #define CXXD_ARRAY_HEADER <boost/array.hpp>
-                #endif
-            #else
-                #define CXXD_HAS_STD_ARRAY 1
-                #define CXXD_ARRAY_NS std
-                #define CXXD_ARRAY_HEADER <array>
+            #if defined(CXXD_HAS_STD_ARRAY)
+                #undef CXXD_HAS_STD_ARRAY
+                #undef CXXD_ARRAY_NS
+                #undef CXXD_ARRAY_HEADER
             #endif
+            #define CXXD_HAS_STD_ARRAY 1
+            #define CXXD_ARRAY_NS std
+            #define CXXD_ARRAY_HEADER <array>
         #endif
-	#endif
+    #endif
 #endif
