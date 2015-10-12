@@ -1,7 +1,7 @@
 [section CXXD introduction]
 
 The Cxx dual library, or CXXD for short, is a macro library
-which allows the choice between a Boost library and its
+which allows the choice between using a Boost library or its
 C++ standard equivalent library, using the same code to
 program either choice.
 
@@ -22,17 +22,17 @@ or SSS in his code ?
 The normal choice may be presented as:
 
 # Use BBB since it is always available for a given
-Boost distribution. This is by far the most popular choice.
+Boost distribution. This is by far the most popular decision.
 # Use SSS and fail to compile if the C++ standard library is not
 available given the compiler options and the C++ compiler
 implementation. This is the most popular choice if the
 designer of the software insists on a certain level of
 C++ standard support, such as that the software is compiled
-so that the C++11 standard or more is supported.
+so that the C++11 standard or higher is supported.
 # Support both BBB and SSS in the interface, with the proviso
 that if Boost is not being used BBB in the interface is not
 used and if the implementation and compiler options 
-are not adequate SSS in the interface is not used.
+are not adequate then SSS in the interface is not used.
 Being "used" or not is done through preprocessing defines and
 preprocessing #if statements. This is the most time consuming 
 solution and will result in much duplication of functionality 
@@ -87,13 +87,13 @@ about this library.
 Any of the three choices presented above can be used and represent
 a solution to the problem presented. This particular library
 represents a fourth choice, which is more flexible than any of the
-three choices listed above but also has its down sides.
+three choices listed above but also has some negative aspects.
 
 The solution presented by the CXXD library is a means of supporting
 either BBB or SSS with a single set of code, without having to worry
 which is being used at compile time. The solution is predicated on the
 fact that for BBB and SSS the exact same functionality is present
-for a very large amount of the implementation of both libraries with
+for a very large amount of the implementation of both libraries, with
 the only difference being the namespace being used. The solution does
 offer the means to distinguish between BBB and SSS for the very small
 amount of functionality which may be different between the libraries.
@@ -108,45 +108,45 @@ of equivalent BBB and SSS libraries with a single set of code.
 
 [heading How it works]
 
-For any given library called 'XXX', 
-which has a Boost version BBB and an equivalent C++ standard library SSS,
-the user of the CXXD library starts by including a header file called
-'<boost/cxxd/XXX.hpp>'. This header is caled the "CXXD header" 
-Once included, this header file will have three mandatory
-macro definitions, and one optional macro definition depending on the XXX library. 
+For any given library called 'XXX', which has a Boost version BBB and an 
+equivalent C++ standard library SSS, the user of the CXXD library starts 
+by including a header file called '<boost/cxxd/XXX.hpp>'. The library 'XXX" is called 
+a 'module' in this documentation and the header is called the module's "CXXD header". 
+Once the module's CXXD header is included, it will have three mandatory 
+macro definitions and one optional macro definition, depending on the module.
 These definitions are:
 
-* CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor #include statement
-This is called the "dual library header".
-* CXXD_XXX_NS, the name of XXX's namespace.
-This is called the "dual library namespace".
-* CXXD_HAS_STD_XXX, 1 if the C++ standard library version is being used or
-0 if the Boost library version is being used
-* Optionally CXXD_XXX_MACRO(macro), transforms any XXX 'macro' to its actual name
+* CXXD_XXX_HEADER, the name of module XXX's header file as used by the preprocessor 
+#include statement. This is called the "module header" to distinguish it from
+the CXXD header.
+* CXXD_XXX_NS, the name of module XXX's namespace. This is called the "module namespace".
+* CXXD_HAS_STD_XXX, 1 if the module's C++ standard library version is being used or
+0 if the module's Boost library version is being used.
+* Optionally CXXD_XXX_MACRO(macro), transforms any module XXX 'macro' to its actual name.
 
-The usage of these CXXD_ macros in code is very simple:
+The usage of these CXXD_ macros in code for any given module is very simple:
 
-# Include the correct dual library header file using 'include CXXD_XXX_HEADER'.
-# Access any functionality in the dual library namespace using 'CXXD_XXX_NS::some_functionality etc...'.
+# Include the correct module header file using 'include CXXD_XXX_HEADER'.
+# Access any functionality in the module namespace using 'CXXD_XXX_NS::some_functionality etc...'.
 or, if there are no name clashes with another namespace, through 'using CXXD_XXX_NS; some_functionality etc...'.
-# Use any macro MMM, which is part of the XXX library implementation, 
+# Use any macro MMM, which is part of the module implementation, 
 by specifying 'CXXD_XXX_MACRO(MMM)' as the macro name.
-# Optionally it is possible to write specific code for the Boost version of the library 
-or the C++ standard version of the library by using the CXXD_HAS_STD_XXX macro with a 
+# Optionally it is possible to write specific code for the Boost version of the module
+or the C++ standard version of the module by using the CXXD_HAS_STD_XXX macro with a 
 preprocessor #if statement.
 
 [heading Generalized example]
 
-Somewhere in your code you want to use library XXX, without worrying whether
+Somewhere in your code you want to use module XXX, without worrying whether
 you are using the Boost version or the C++ standard library version. Your code
 in general may look like:
 
-    #include <boost/cxxd/XXX.hpp> // Creates the macros for library XXX by including the CXXD header
-    #include CXXD_XXX_HEADER      // Includes the appropriate dual library header file
+    #include <boost/cxxd/XXX.hpp> // Creates the macros for module XXX by including the appropriate CXXD header
+    #include CXXD_XXX_HEADER      // Includes the appropriate module header file
 
     void SomeFunction()
         {
-        CXXD_XXX_NS::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the dual library namespace
+        CXXD_XXX_NS::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the module namespace
         // Use the a_xxx_object in your code...
         #if CXXD_HAS_STD_XXX
         // Some code specific to the C++ standard implementation of XXX
@@ -156,9 +156,9 @@ in general may look like:
         CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
         }
         
-The major use is in the use of the dual library header CXXD_XXX_HEADER, to include the correct 
-header file for XXX, and in the dual library namespace CXXD_XXX_NS, to use the functionality of XXX;
-whereas CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro)
-may not even exist for the give library XXX.
+The major use of these CXXD macros is in the use of the module header CXXD_XXX_HEADER, to include the correct 
+header file for XXX, and in the module namespace CXXD_XXX_NS, to use the functionality of module XXX;
+whereas CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not even exist for the given 
+module XXX.
 
 [endsect]

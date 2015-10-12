@@ -1,22 +1,26 @@
 
 [section Choosing with the dual library]
 
+This area of the documentation explains the mechanisms by which
+the CXXD library chooses whether to use the Boost version or the
+C++ standard version of a particular module.
+
 [heading The default algorithm]
 
 The default algorithm employed by CXXD to choose whether to use a Boost library
-or its C++ standard equivalent is very simple. If the C++ standard library is available
+or its C++ standard equivalent for any module is very simple. If the C++ standard library is available
 during compilation it is chosen and if it is not available during compilation its
 equivalent Boost library is chosen.
 
-The determination of availability for any given library is done by examining 
+The determination of availability for any given module is done by examining 
 Boost.config macros. Boost config has quite a number of macros which will specify
 which C++ standard library is available during compilation. The logic of determining
 which library is available is determined within Boost config, and CXXD just uses the
-results of that logic to configure a particular library.
+results of that logic to configure a particular module.
 
-The logic of setting the macros for any particular library occurs when a CXXD header
+The logic of setting the macros for any particular module occurs when a CXXD header
 is included in the code. The logic is completely preprocessor macro based, and is specific
-to each CXXD header.
+to each module's CXXD header, although the logic for each CXXD header is generally the same.
 
 [heading Overriding the default algorithm]
 

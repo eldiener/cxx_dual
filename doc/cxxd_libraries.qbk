@@ -2,7 +2,7 @@
 [section Dual libraries]
 
 A library which CXXD supports with its system of macros is called a 
-"dual library" in this documentation, to distinguish the name from 
+"module" or "dual library" in this documentation, to distinguish the name from 
 the general term of "library". A dual library is a Boost library 
 whose functionality largely exists as a C++ standard library,
 where the differences between the Boost library and its C++ standard
@@ -24,7 +24,7 @@ The following table lists the dual libraries, in alphabetical order,
 and the appropriate information for each one:
 
 [table Libraries
-[[Library][Header file][Include macro][Namespace macro][Check C++ standard version macro]]
+[[Module][Header file][Include macro][Namespace macro][Check C++ standard version macro]]
 [[array][<boost/cxxd/array.hpp>][CXXD_ARRAY_HDR][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
 [[atomic][<boost/cxxd/atomic.hpp>][CXXD_ATOMIC_HDR][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
 [[bind][<boost/cxxd/bind.hpp>][CXXD_BIND_HDR][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
@@ -139,8 +139,8 @@ they happen:
 [heading Library header file dependency ]
 
 When the programmer includes the appropriate CXXD header file for a particular 
-library from within the boost/cxxd subdirectory there is no dependency
-being established on the library itself. Any one of the library header files 
+module from within the boost/cxxd subdirectory there is no dependency
+being established on the module itself. Any one of the CXXD header files 
 merely defines macros which the programmer may choose to use or not.
 
 Therefore the CXXD library itself does not depend on any of the dual libraries it supports.
@@ -153,7 +153,7 @@ single include:
 
   #include <boost/cxx_dual.h>
 
-I will call this the "all-purpose" header.
+I call this the "all-purpose" header.
 
 This includes macros for each library, starting with CXXD_, but as long 
 as the prefix CXXD_ does not conflict with macros from any other software 
