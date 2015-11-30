@@ -5,7 +5,7 @@ This area of the documentation explains the mechanisms by which
 the CXXD library chooses whether to use the Boost version or the
 C++ standard version of a particular module.
 
-[heading The default algorithm]
+[section The default algorithm]
 
 The default algorithm employed by CXXD to choose whether to use a Boost library
 or its C++ standard equivalent for any module is very simple. If the C++ standard library is available
@@ -18,13 +18,138 @@ which C++ standard library is available during compilation. The logic of determi
 which library is available is determined within Boost config, and CXXD just uses the
 results of that logic to configure a particular module.
 
-The logic of setting the macros for any particular module occurs when a CXXD header
-is included in the code. The logic is completely preprocessor macro based, and is specific
+The logic of setting the macros for any particular module occurs when the CXXD header for that
+module is included in the code. The logic is completely preprocessor macro based, and is specific
 to each module's CXXD header, although the logic for each CXXD header is generally the same.
 
-[heading Overriding the default algorithm]
+As an example, using the regex module:
 
+    #include <boost/cxxd/regex.hpp>
 
+    ... code
+    
+If Boost.config determines that the C++ standard regex library is available 
+CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', and 
+CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.config determines that the C++ standard regex library 
+is not available CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
+and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'. 
 
+[endsect]
+
+[section Overriding the default algorithm]
+
+Although CXXD chooses automatically whether the Boost library or the C++ standard library is to be used
+for any given module the programmer may decide to override this choice. The method of overriding the choice
+is to define a particular macro before including a particular CXXD header.
+
+The programmer may override the automatic choice of CXXD by specifying that the Boost library be used
+or by specifying that the C++ standard library be used. If the programmer specifies that the C++ standard
+library be used and that library is not available for use, a preprocessor error will be generated.
+
+[heading Specific overriding]
+
+For any given module 'xxx' defining a macro called CXXD_'XXX'_USE_BOOST, where XXX is the uppercase name of 
+the module, specifies that the Boost library will be used for module 'xxx'. It does not matter to what 
+CXXD_XXX_USE_BOOST is defined.
+
+For any given module 'xxx' defining a macro called CXXD_'XXX'_USE_STD, where XXX is the uppercase name of
+the module, specifies that the C++ standard library will be used for module 'xxx'. It does not matter to what 
+CXXD_XXX_USE_STD is defined.
+
+If for any given module 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD is defined a preprocessing
+error will occur when the CXXD header for module 'xxx' is included.
+
+As examples, using the regex module:
+
+    #define CXXD_REGEX_USE_BOOST
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
+and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.   
+
+    #define CXXD_REGEX_USE_STD
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', 
+and CXXD_REGEX_HEADER is defined as '<regex>' as long as the C++ standard
+regex library is available for use, else a preprocessing error is generated.
+
+[heading General overriding]
+
+Along with the specific macros of the form CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD
+which override default processing for module 'xxx' the programmer can specify either
+of two generalized macros which overrides default processing for any module.
+
+Defining a macro called CXXD_USE_BOOST specifies that the Boost library will be used 
+for any module. It does not matter to what CXXD_USE_BOOST is defined.
+
+Defining a macro called CXXD_USE_STD specifies that the C++ standard library will be used
+for any module. It does not matter to what CXXD_USE_STD is defined.
+
+If both CXXD_USE_BOOST and CXXD_USE_STD is defined a preprocessing
+error will occur when any CXXD header is included. 
+
+If for any given module 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_USE_STD is defined
+a preprocessing error will occur only if the CXXD header file for module 'xxx' is
+included.
+
+If for any given module 'xxx' both CXXD_'XXX'_USE_STD and CXXD_USE_BOOST is defined
+a preprocessing error will occur only if the CXXD header file for module 'xxx' is
+included.
+
+As examples, using the regex module:
+
+    #define CXXD_USE_BOOST
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
+and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.   
+
+    #define CXXD_USE_STD
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', 
+and CXXD_REGEX_HEADER is defined as '<regex>' as long as the C++ standard
+regex library is available for use, else a preprocessing error is generated.
+
+    #define CXXD_REGEX_USE_BOOST
+    #define CXXD_USE_STD
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+A preprocessing error is generated.
+
+    #define CXXD_REGEX_USE_STD
+    #define CXXD_USE_BOOST
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+A preprocessing error is generated.
+
+Using any CXXD header:
+
+    #define CXXD_USE_BOOST
+    #define CXXD_USE_STD
+    #include <boost/cxxd/'any_cxxd_header'
+
+    ... code
+    
+A preprocessing error is generated.
+    
+[endsect]
+
+[section CXXD header file inclusion]
+
+[endsect]
 
 [endsect]
