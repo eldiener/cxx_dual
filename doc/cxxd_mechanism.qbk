@@ -148,7 +148,149 @@ A preprocessing error is generated.
     
 [endsect]
 
-[section CXXD header file inclusion]
+[section Header file inclusion]
+
+CXXD header content is processed each time a particular CXXD header is included 
+in a translation unit. This is different from most headers in C++, which use 
+inclusion guards or compiler dependent pragmas so that the header file content
+only gets processed the first time.
+
+The reason for processing CXXD header content each time a CXXD header is included
+is because overriding macros could be defined ( or undefined ) at any time within a translation unit.
+CXXD always makes sure that overriding macros do not conflict with each other, as
+discussed just previously, and that the choice of either Boost or its equivalent
+standard library remains consistent for any particular module within a TU.
+    
+In actual usage the programmer himself will usually not include the same CXXD header
+more than once in a TU. 
+
+    #include <boost/cxxd/regex.hpp>
+    ... other #includes
+    #include <boost/cxxd/regex.hpp>
+
+    ... code
+    
+The above will rarely happen.
+    
+But what far more likely happens is that the programmer includes a non-CXXD
+header, often from another library, and that header will include a particular
+CXXD header.
+
+    // Header another_library.hpp
+    #include <boost/cxxd/regex.hpp>
+    ... other #includes
+
+    ... header code
+    
+A TU with:
+
+    #include <boost/cxxd/regex.hpp>
+    #include <another_library.hpp>
+
+    ... code
+    
+It is this latter case which will often cause a CXXD header to be included
+more than once in a TU.
+
+[heading Default algorithm redux]
+
+Recall that the default algorithm is used to choose between the Boost library or its
+C++ standard equivalent for a module when no overriding macros are relevant
+for that module. Because CXXD header content is processed each time the header is included 
+the default algorithm is slightly different the second and subsequent times a particular CXXD header 
+is included. In that case the default algorithm simply accepts which of the dual libraries of the module
+has been previously chosen. This saves preprocessing time and also makes sure that the choice for a given
+module is consistent throughout the TU.
+
+Let's look at how this works in practice with the default algorithm.
+
+    #include <boost/cxxd/regex.hpp>
+    
+    ... code
+    
+This is our normal case where the default algorithm will choose the
+C++ standard regex library if it is available, otherwise the Boost
+regex library.
+    
+    #include <boost/cxxd/regex.hpp>
+    #include <another_library.hpp>
+
+    ... code
+    
+In this situation when the CXXD regex module is included
+a second time, by including another_library.hpp, it simply accepts 
+the choice made the first time it was directly included.
+
+    #define CXXD_REGEX_USE_BOOST
+    #include <boost/cxxd/regex.hpp>
+    #undef CXXD_REGEX_USE_BOOST
+    #include <another_library.hpp>
+
+    ... code
+    
+In this case the first time that the CXXD regex module is included
+the default algorithm is not in effect since we have overridden the
+choice by specifying that the Boost regex library will be used.
+Although in practical experience it would be very unusual to undefine
+the overridden macro, we do it here to illustrate the fact that the second
+time that the CXXD regex module is included the default algorithm is in effect
+but it simply accepts the choice made the first time.
+
+[heading Dual library consistency]
+
+By default whenever a CXXD header for a particular module is included a second 
+or subsequent time in a TU the choice of the dual library cannot change from the original
+inclusion of that CXXD header. This consistency is enforced because it would normally
+cause problems in user's code if, for a given module, one part of the TU were using the C++ standard library 
+and another part of the TU were using the Boost library equivalent. This consistency, 
+of the same syntax meaning the same thing within a TU,
+is something which the CXXD library enforces. CXXD enforces this consistency by creating
+a preprocessing error if the dual library choice would change
+when a particular CXXD header is included more than once in a TU.
+
+However this consistency means that the order of header file inclusion
+potentially changes the way that CXXD works for a given module. To illustrate
+this we will use as an example a header file which has a macro override:
+
+    // Header another_library_with_override.hpp
+    #define CXXD_REGEX_USE_BOOST
+    #include <boost/cxxd/regex.hpp>
+    ... other #includes
+
+    ... header code
+    
+In this header file we override the default processing for the regex
+module so that the Boost regex library is always used. Let's also assume
+for our example that the C++ standard regex library is available. 
+Now if we include the another_library_with_override.hpp header first in 
+a TU followed by the CXXD regex header, as in:
+
+    #include <another_library_with_override.hpp>
+    ...other header files
+    #include <boost/cxxd/regex.hpp>
+    
+everything works fine. This is because we have the overridden macro
+in effect each time to determine that the Boost regex library will
+be used.
+
+But if we reverse the order of includes:
+
+    #include <boost/cxxd/regex.hpp>
+    ...other header files
+    #include <another_library_with_override.hpp>
+    
+we are essentially changing the dual library choice, in the TU, between the first
+time the CXXD regex header is included and the second time it is included.
+The first time the CXXD regex header is included no overriding is in effect so that
+the default algorithm chooses the C++ standard library because it is available.
+The second time the CXXD regex header is included an overriding macro changes the regex
+module to use the Boost regex library. Thus consistency between which dual library is chosen
+is broken and CXXD creates a preprocessing error.
+
+This is one of the weaknesses of a macro based system such as CXXD. Normally the
+order of inclusion of header files should not affect the way that code compiles.
+But in CXXD it does affect the compilation since, by default, CXXD does not allow
+the dual library for a particular module to change within a TU.
 
 [endsect]
 

@@ -110,8 +110,13 @@ of equivalent BBB and SSS libraries with a single set of code.
 
 For any given library called 'XXX', which has a Boost version BBB and an 
 equivalent C++ standard library SSS, the user of the CXXD library starts 
-by including a header file called '<boost/cxxd/XXX.hpp>'. The library 'XXX" is called 
-a 'module' in this documentation and the header is called the module's "CXXD header". 
+by including a header file called '<boost/cxxd/XXX.hpp>'. 
+
+In this documentation the library 'XXX" is called 
+a 'module', its choices between either a Boost library version or an equivalent
+C++ standard library version is called a 'dual library', and the header is called 
+the module's 'CXXD header'.
+
 Once the module's CXXD header is included, it will have three mandatory 
 macro definitions and one optional macro definition, depending on the module.
 These definitions are:
