@@ -1,9 +1,9 @@
 
-[section Dual libraries]
+[section Modules]
 
 A library which CXXD supports with its system of macros is called a 
-"module" or "dual library" in this documentation, to distinguish the name from 
-the general term of "library". A dual library is a Boost library 
+"module" in this documentation, to distinguish the name from 
+the general term of "library". A module is a Boost library 
 whose functionality largely exists as a C++ standard library,
 where the differences between the Boost library and its C++ standard
 equivalent are usually very minimal. An example of such a library would
@@ -16,14 +16,14 @@ or C++ standard regex, has little to do with the technical quality of the librar
 Both versions are of an extremely high quality and this is true for every Boost library 
 which has an equivalent C++ standard library version. 
 
-The dual libraries supported by CXXD are simply those Boost libraries which have 
+The modules supported by CXXD are simply those Boost libraries which have 
 a C++ standard equivalent where the syntactical use of either is very largely
 the same except for the namespace involved.
 
-The following table lists the dual libraries, in alphabetical order, 
+The following table lists the modules supported by CXXD, in alphabetical order, 
 and the appropriate information for each one:
 
-[table Libraries
+[table Modules
 [[Module][Header file][Include macro][Namespace macro][Check C++ standard version macro]]
 [[array][<boost/cxxd/array.hpp>][CXXD_ARRAY_HDR][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
 [[atomic][<boost/cxxd/atomic.hpp>][CXXD_ATOMIC_HDR][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
@@ -51,12 +51,12 @@ and the appropriate information for each one:
 [[unordered_set][<boost/cxxd/unordered_set.hpp>][CXXD_UNORDERED_SET_HDR][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
 ]
 
-Not mentioned or listed above is the macro of the form CXXD_XXX_MACRO, which is only 
-defined for a library XXX which has equivalent macro names between the C++ standard library 
+Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
+defined for a module XXX which has equivalent macro names between the C++ standard library 
 version and the Boost library version. This macro is used in the form of 
 CXXD_XXX_MACRO(MACRO_NAME) to produce the correct macro name for the equivalent macro no 
-matter which implementation is being used. Currently, among the libraries listed above, the only 
-library which uses this form is the 'atomic' library. It's name therefore is CXXD_ATOMIC_MACRO 
+matter which implementation is being used. Currently, among the modules listed above, the only 
+one which uses this form is the 'atomic' library. It's name therefore is CXXD_ATOMIC_MACRO 
 and it can be used in the form of CXXD_ATOMIC_MACRO(AN_ATOMIC_MACRO) to produce the correct 
 equivalent macro name for the 'atomic' library.
 
@@ -80,18 +80,20 @@ or the Boost regex library.
 
 [heading Using the CXXD_HAS_STD_... macro ]
 
-The CXXD_HAS_STD_... macro for any given dual library tests whether or not the C++ standard
-version of the library is being used. Conversely !CXXD_HAS_STD_... for any given dual library
-tests whether or not he Boost version of the library is being used.
+The 'CXXD_HAS_STD_...' macro for any given module tests whether or not the C++ standard
+version of the library is being used, returning '1' if it is used or '0' if it is not used. 
+Conversely the form '!CXXD_HAS_STD_...' for any given module tests whether or not the Boost 
+version of the library is being used, returning '1' if the Boost version of the library
+is being used or '0' if it is not being used.
 
-The CXXD_HAS_STD_... macro for any given library is a more understandable form of macro than
+The CXXD_HAS_STD_... macro for any given module is a more understandable form of macro than
 Boost.config already has for determining whether the compiler supports certain C++ libraries.
 Most of these macros are taken from whether or not a given BOOST_NO_CXX11_HDR_ is defined.
 
 You may decide you need the C++ standard version of
 a particular library, rather than the Boost version, or else you do not want your code to
 compile. As an example let's say that you want to create a compile error if the compiler
-does not support the C++ standard library type_traits library, even though the Boost type_traits
+does not support the C++ standard type_traits library, even though the Boost type_traits
 library could also normally be used.
 
   #include <boost/cxxd/type_traits.hpp>
@@ -117,7 +119,7 @@ all parts of a library.
   // Further code using BOOST_CPP_TYPE_TRAITS_NS::add_const
   
 You can also use the CXXD_HAS_STD_... macro to provide specific functionality
-depending on whether or not a particular library is using the C++ standard
+depending on whether or not a particular module is using the C++ standard
 or Boost version. Of course you hope to minimize these situations but occasionally
 they happen:
   
@@ -136,31 +138,31 @@ they happen:
   
   #endif
   
-[heading Library header file dependency ]
+[heading Module header file dependency ]
 
 When the programmer includes the appropriate CXXD header file for a particular 
 module from within the boost/cxxd subdirectory there is no dependency
-being established on the module itself. Any one of the CXXD header files 
+being established on the module itself, whether the module represents a Boost
+library or a C++ standard library. Any one of the CXXD header files 
 merely defines macros which the programmer may choose to use or not.
 
-Therefore the CXXD library itself does not depend on any of the dual libraries it supports.
+Therefore the CXXD library itself does not depend on any of the modules it supports.
 
-It is only when using a particular include macro, along with a particular namespace
-macro, from any given library that a dependency is established.
+It is only when using a particular module header, along with a particular module namespace,
+that a dependency is established.
 
-Because of this it has been made possible to include all library headers with a
-single include:
+Because of this you can include all module headers with a single include:
 
-  #include <boost/cxx_dual.h>
+  #include <boost/cxxd/cxx_dual.hpp>
 
 I call this the "all-purpose" header.
 
-This includes macros for each library, starting with CXXD_, but as long 
+This includes macros, starting with CXXD_, for each module, but as long 
 as the prefix CXXD_ does not conflict with macros from any other software 
 library in the translation unit there should be no problems even including this
 all-purpose header. Furthermore, since including any individual CXXD header
 imposes no dependency on either the Boost version or the C++ standard version of the
-dual library itself, including the all-purpose header above introduces no dependencies
-on any of the dual libraries in that all-purpose header.
+module itself, including the all-purpose header above introduces no dependencies
+on any of the modules in that all-purpose header.
 
 [endsect]
