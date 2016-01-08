@@ -100,7 +100,6 @@ library could also normally be used.
   #if !CXXD_HAS_STD_TYPE_TRAITS
   #error C++ standard type_traits library needed and not present.
   #endif
-  
   // Further code
   
 Another use for the CXXD_HAS_STD_... macro is to include particular header files
@@ -115,7 +114,6 @@ all parts of a library.
   #else
   #include <boost/type_traits/add_const.hpp>
   #endif
-  
   // Further code using BOOST_CPP_TYPE_TRAITS_NS::add_const
   
 You can also use the CXXD_HAS_STD_... macro to provide specific functionality
@@ -125,7 +123,6 @@ they happen:
   
   #include <boost/cxxd/thread.hpp>
   #include CXXD_THREAD_HDR
-  
   // Code...
   
   #if CXXD_HAS_STD_THREAD
@@ -151,7 +148,8 @@ Therefore the CXXD library itself does not depend on any of the modules it suppo
 It is only when using a particular module header, along with a particular module namespace,
 that a dependency is established.
 
-Because of this you can include all module headers with a single include:
+Because there is no dependency on the module itself when a particular CXXD header is included,
+CXXD allows inclusion of all module headers with a single include:
 
   #include <boost/cxxd/cxx_dual.hpp>
 

@@ -24,3 +24,4 @@
 [include cxxd_introduction.qbk]
 [include cxxd_modules.qbk]
 [include cxxd_mechanism.qbk]
+[include cxxd_in_library.qbk]
