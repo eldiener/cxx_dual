@@ -9,7 +9,7 @@
 	#if (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_ARRAY_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for array
-    #elif defined(CXXD_HAS_STD_ARRAY) && !defined(CXXD_ALLOW_CHANGE)
+    #elif defined(CXXD_HAS_STD_ARRAY) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_ARRAY && (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_ARRAY_ERROR
             #error CXXD: Previous use of C++ standard array erroneously overridden

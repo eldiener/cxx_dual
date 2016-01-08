@@ -9,7 +9,7 @@
 	#if (defined(CXXD_BIND_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_BIND_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_BIND_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for bind
-	#elif defined(CXXD_HAS_STD_BIND) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_BIND) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_BIND && (defined(CXXD_BIND_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_BIND_ERROR
             #error CXXD: Previous use of C++ standard bind erroneously overridden

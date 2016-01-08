@@ -9,7 +9,7 @@
 	#if (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_ATOMIC_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for atomic
-	#elif defined(CXXD_HAS_STD_ATOMIC) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_ATOMIC) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_ATOMIC && (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_ATOMIC_ERROR
             #error CXXD: Previous use of C++ standard atomic erroneously overridden

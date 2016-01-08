@@ -9,7 +9,7 @@
 	#if (defined(CXXD_RANDOM_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_RANDOM_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_RANDOM_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for random
-	#elif defined(CXXD_HAS_STD_RANDOM) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_RANDOM) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_RANDOM && (defined(CXXD_RANDOM_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_RANDOM_ERROR
             #error CXXD: Previous use of C++ standard random erroneously overridden

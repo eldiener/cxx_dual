@@ -9,7 +9,7 @@
 	#if (defined(CXXD_UNORDERED_SET_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_SET_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_UNORDERED_SET_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for unordered set
-	#elif defined(CXXD_HAS_STD_UNORDERED_SET) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_UNORDERED_SET) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_UNORDERED_SET && (defined(CXXD_UNORDERED_SET_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_UNORDERED_SET_ERROR
             #error CXXD: Previous use of C++ standard unordered set erroneously overridden

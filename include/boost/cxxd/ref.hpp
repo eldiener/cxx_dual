@@ -9,7 +9,7 @@
 	#if (defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_REF_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_REF_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for ref
-	#elif defined(CXXD_HAS_STD_REF) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_REF) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_REF && (defined(CXXD_REF_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_REF_ERROR
             #error CXXD: Previous use of C++ standard ref erroneously overridden

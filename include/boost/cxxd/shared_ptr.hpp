@@ -7,7 +7,7 @@
 	#if (defined(CXXD_SHARED_PTR_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_SHARED_PTR_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_SHARED_PTR_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for shared pointer
-	#elif defined(CXXD_HAS_STD_SHARED_PTR) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_SHARED_PTR) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_SHARED_PTR && (defined(CXXD_SHARED_PTR_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_SHARED_PTR_ERROR
             #error CXXD: Previous use of C++ standard shared pointer erroneously overridden

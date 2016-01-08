@@ -9,7 +9,7 @@
 	#if (defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_UNORDERED_MULTISET_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for unordered multiset
-	#elif defined(CXXD_HAS_STD_UNORDERED_MULTISET) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_UNORDERED_MULTISET) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_UNORDERED_MULTISET && (defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_UNORDERED_MULTISET_ERROR
             #error CXXD: Previous use of C++ standard unordered multiset erroneously overridden

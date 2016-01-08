@@ -9,7 +9,7 @@
 	#if (defined(CXXD_UNORDERED_MAP_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_MAP_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_UNORDERED_MAP_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for unordered map
-	#elif defined(CXXD_HAS_STD_UNORDERED_MAP) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_UNORDERED_MAP) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_UNORDERED_MAP && (defined(CXXD_UNORDERED_MAP_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_UNORDERED_MAP_ERROR
             #error CXXD: Previous use of C++ standard unordered map erroneously overridden

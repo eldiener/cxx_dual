@@ -9,7 +9,7 @@
 	#if (defined(CXXD_CHRONO_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_CHRONO_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_CHRONO_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for chrono
-	#elif defined(CXXD_HAS_STD_CHRONO) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_CHRONO) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_CHRONO && (defined(CXXD_CHRONO_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_CHRONO_ERROR
             #error CXXD: Previous use of C++ standard chrono erroneously overridden

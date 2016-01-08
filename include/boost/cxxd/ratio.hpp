@@ -9,7 +9,7 @@
 	#if (defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_RATIO_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_RATIO_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for ratio
-	#elif defined(CXXD_HAS_STD_RATIO) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_RATIO) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_RATIO && (defined(CXXD_RATIO_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_RATIO_ERROR
             #error CXXD: Previous use of C++ standard ratio erroneously overridden

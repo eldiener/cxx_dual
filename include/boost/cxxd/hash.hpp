@@ -9,7 +9,7 @@
 	#if (defined(CXXD_HASH_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_HASH_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_HASH_ERROR
 		#error CXXD: Using C++ standard and using Boost are both defined for hash
-	#elif defined(CXXD_HAS_STD_HASH) && !defined(CXXD_ALLOW_CHANGE)
+	#elif defined(CXXD_HAS_STD_HASH) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_HASH && (defined(CXXD_HASH_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_HASH_ERROR
             #error CXXD: Previous use of C++ standard hash erroneously overridden
