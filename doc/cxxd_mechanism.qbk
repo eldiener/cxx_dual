@@ -155,7 +155,7 @@ A preprocessing error is generated.
 The purpose of using overriding macros, for any CXXD module with the 
 specific overriding macros or for CXXD as a whole with the general
 overriding macros, is to override the default algorithm which CXXD
-uses to choose the dual library. However using overriding macros 
+uses to choose a dual library. However using overriding macros 
 for one's own implementation(s) of CXXD is foolish. This is because the easiest
 implementation, rather than using an overriding macro, is to just
 drop CXXD in favor of using either the Boost library or C++ standard
@@ -189,6 +189,10 @@ you can simply use:
     std::regex my_regex; // etc.
     ... code
     
+In this sense the examples given above of using specific or
+general overriding macros are purely artificial in order to
+merely show what the meaning of these overriding macros entail.
+    
 So what is the purpose of the overriding macros ? The purpose
 is to override the use of CXXD by another library. A third-party library
 may choose to use CXXD to provide a dual library for a particular
@@ -196,7 +200,51 @@ CXXD module. Your own code, which uses the third-party library but otherwise
 uses either the Boost version of the dual library or the C++ standard
 version of the dual library in all other situations, may enforce its
 own usage on the dual library interface of the third-party library by 
-using an overriding macro.
+using an overriding macro. As an example a third-party library might have
+as a public interface:
+
+    // Header file ThirdPartyHeader.hpp
+    #include <cxxd/regex.hpp>
+    #include CXXD_REGEX_HEADER
+    class ThirdPartyClass
+        {
+        public:
+        void SomeFunction(CXXD_REGEX_NS::regex &);
+        ... // other functionality
+        };
+        
+We will assume this is a header-only library for the time being
+( a discussion of using CXXD with a non-header-only library will
+follow later in the documentation ). In one's own code you may desire
+to use the ThirdPartyClass::SomeFunction interface with specifically
+the Boost regex library or, when building for C++11 on up, the standard
+regex library instead. Your own code might then look like:
+
+    #define CXXD_REGEX_USE_BOOST
+    #include <ThirdPartyHeader.hpp>
+    boost::regex my_regex("SomeRegularExpression etc.");
+    ThirdPartyClass tpclass;
+    tpclass.SomeFunction(my_regex);
+    
+or:
+
+    #define CXXD_REGEX_USE_STD
+    #include <ThirdPartyHeader.hpp>
+    std::regex my_regex("SomeRegularExpression etc.");
+    ThirdPartyClass tpclass;
+    tpclass.SomeFunction(my_regex);
+    
+instead of the non-overriding code of:
+    
+    #include <ThirdPartyHeader.hpp>
+    CXXD_REGEX_NS::regex my_regex("SomeRegularExpression etc.");
+    ThirdPartyClass tpclass;
+    tpclass.SomeFunction(my_regex);
+    
+In other words using the overriding macros of CXXD serves the purpose
+of using some already established interface involving CXXD without
+changing that interface's own code, at the same time forcing the choice
+of a particular dual library to be used.
     
 [endsect]
 
@@ -210,7 +258,7 @@ only gets processed the first time.
 The reason for processing CXXD header content each time a CXXD header is included
 is because overriding macros could be defined ( or undefined ) at any time within a translation unit.
 CXXD always makes sure that overriding macros do not conflict with each other, as
-discussed just previously, and that the choice of either Boost or its equivalent
+discussed previously, and that the choice of either Boost or its equivalent
 standard library remains consistent for any particular module within a TU.
     
 In actual usage the programmer himself will usually not include the same CXXD header
@@ -338,7 +386,7 @@ order of inclusion of header files should not affect the way that code compiles.
 But in CXXD it does affect the compilation since, by default, CXXD does not allow
 the dual library for a particular module to change within a TU.
 
-The end user can override the dual library consistency for all modules by defining
+The end user can override the dual library consistency for all CXXD modules by defining
 a macro, called CXXD_NO_CONSISTENCY. CXXD_NO_CONSISTENCY must always be defined to nothing, as in:
 
     #define CXXD_NO_CONSISTENCY
