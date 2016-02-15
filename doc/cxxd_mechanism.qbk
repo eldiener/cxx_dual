@@ -217,8 +217,7 @@ We will assume this is a header-only library for the time being
 ( a discussion of using CXXD with a non-header-only library will
 follow later in the documentation ). In one's own code you may desire
 to use the ThirdPartyClass::SomeFunction interface with specifically
-the Boost regex library or, when building for C++11 on up, the standard
-regex library instead. Your own code might then look like:
+the Boost regex library only. Your own code might then look like:
 
     #define CXXD_REGEX_USE_BOOST
     #include <ThirdPartyHeader.hpp>
@@ -226,7 +225,8 @@ regex library instead. Your own code might then look like:
     ThirdPartyClass tpclass;
     tpclass.SomeFunction(my_regex);
     
-or:
+Conversely you may decide that your use of the ThirdPartyClass::SomeFunction interface 
+should be with the standard regex library only, so your code might then look like:
 
     #define CXXD_REGEX_USE_STD
     #include <ThirdPartyHeader.hpp>
@@ -234,7 +234,8 @@ or:
     ThirdPartyClass tpclass;
     tpclass.SomeFunction(my_regex);
     
-instead of the non-overriding code of:
+Instead if you did accept the dual nature of the ThirdPartyHeader.hpp header, your code
+might then like:
     
     #include <ThirdPartyHeader.hpp>
     CXXD_REGEX_NS::regex my_regex("SomeRegularExpression etc.");
