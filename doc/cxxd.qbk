@@ -21,6 +21,7 @@
     ]
 ]
  
+[include cxxd_templates.qbk]
 [include cxxd_introduction.qbk]
 [include cxxd_modules.qbk]
 [include cxxd_mechanism.qbk]

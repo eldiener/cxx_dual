@@ -175,14 +175,7 @@ overriding macro must be in the header file itself so that any other code
 which uses the library, and includes the MyHeader.hpp file, picks up the
 override. This is different from an executable where an overriding macro
 could be passed on the command line when a particular TU is being compiled.
-        
-[heading Use in a non-header only library]
 
-A non-header file only library is a library which is built into a shared library
-or a static library. A non-header file only library could contain some code which
-is header file only along with some code which consists of the built portion of the
-library. Because the built portion of a non-header file library is code whose
-functionality is fixed a non-header file only library presents more difficult
-problems if CXXD is used.
+[include cxxd_non_header.qbk]
 
 [endsect]
