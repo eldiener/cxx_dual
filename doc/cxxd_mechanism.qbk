@@ -3,12 +3,12 @@
 
 This area of the documentation explains the mechanisms by which
 the CXXD library chooses whether to use the Boost version or the
-C++ standard version of a particular module.
+C++ standard version of a particular CXXD-mod.
 
 [section The default algorithm]
 
 The default algorithm employed by CXXD to choose whether to use a Boost library
-or its C++ standard equivalent for any module is very simple. If the C++ standard library is available
+or its C++ standard equivalent for any CXXD-mod is very simple. If the C++ standard library is available
 during compilation it is chosen and if it is not available during compilation its
 equivalent Boost library is chosen.
 
@@ -16,13 +16,13 @@ The determination of availability for any given module is done by examining
 Boost.config macros. Boost config has quite a number of macros which will specify
 which C++ standard library is available during compilation. The logic of determining
 which library is available is determined within Boost config, and CXXD just uses the
-results of that logic to configure a particular module.
+results of that logic to configure a particular CXXD-mod.
 
-The logic of setting the macros for any particular module occurs when the CXXD header for that
-module is included in the code. The logic is completely preprocessor macro based, and is specific
-to each module's CXXD header, although the logic for each CXXD header is generally the same.
+The logic of setting the macros for any particular CXXD-mod occurs when the CXXD header for that
+CXXD-mod is included in the code. The logic is completely preprocessor macro based, and is specific
+to each CXXD header, although the logic for each CXXD header is generally the same.
 
-As an example, using the regex module:
+As an example, using the regex CXXD-mod:
 
     #include <boost/cxxd/regex.hpp>
     ... code
@@ -38,7 +38,7 @@ and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.
 [section Overriding the default algorithm]
 
 Although CXXD chooses automatically whether the Boost library or the C++ standard library is to be used
-for any given module the programmer may decide to override this choice. The method of overriding the choice
+for any given CXXD-mod the programmer may decide to override this choice. The method of overriding the choice
 is to define a particular macro before including a particular CXXD header.
 
 The programmer may override the automatic choice of CXXD by specifying that the Boost library be used
@@ -47,26 +47,26 @@ library be used and that library is not available for use, a preprocessor error 
 
 [heading Specific overriding]
 
-For any given module 'xxx' defining a macro called CXXD_'XXX'_USE_BOOST, where XXX is the uppercase name of 
-the module, specifies that the Boost library will be used for module 'xxx'. CXXD_'XXX'_USE_BOOST must always 
+For any given CXXD-module 'xxx' defining a macro called CXXD_'XXX'_USE_BOOST, where XXX is the uppercase name of 
+the CXXD-mod, specifies that the Boost library will be used for 'xxx'. CXXD_'XXX'_USE_BOOST must always 
 be defined to nothing, as in:
 
     #define CXXD_'XXX'_USE_BOOST
     
 where XXX is the uppercase name of the module.
 
-For any given module 'xxx' defining a macro called CXXD_'XXX'_USE_STD, where XXX is the uppercase name of
-the module, specifies that the C++ standard library will be used for module 'xxx'. CXXD_'XXX'_USE_STD must always
+For any given CXXD-mod 'xxx' defining a macro called CXXD_'XXX'_USE_STD, where XXX is the uppercase name of
+the CXXD-mod, specifies that the C++ standard library will be used for 'xxx'. CXXD_'XXX'_USE_STD must always
 be defined to nothing, as in:
 
     #define CXXD_'XXX'_USE_STD
     
 where XXX is the uppercase name of the module.
 
-If for any given module 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD is defined a preprocessing
-error will occur when the CXXD header for module 'xxx' is included.
+If for any given CXXD-mod 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD is defined a preprocessing
+error will occur when the CXXD header for 'xxx' is included.
 
-As examples, using the regex module:
+As examples, using the regex CXXD-mod:
 
     #define CXXD_REGEX_USE_BOOST
     #include <boost/cxxd/regex.hpp>
@@ -86,31 +86,31 @@ regex library is available for use, else a preprocessing error is generated.
 [heading General overriding]
 
 Along with the specific macros of the form CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD
-which override default processing for module 'xxx' the programmer can specify either
-of two generalized macros which overrides default processing for any module.
+which override default processing for 'xxx' the programmer can specify either
+of two generalized macros which overrides default processing for any CXXD-mod.
 
 Defining a macro called CXXD_USE_BOOST specifies that the Boost library will be used 
-for any module. CXXD_USE_BOOST must always be defined to nothing, as in:
+for any CXXD-mod. CXXD_USE_BOOST must always be defined to nothing, as in:
 
     #define CXXD_USE_BOOST
     
 Defining a macro called CXXD_USE_STD specifies that the C++ standard library will be used
-for any module. CXXD_USE_STD must always be defined to nothing, as in:
+for any CXXD-mod. CXXD_USE_STD must always be defined to nothing, as in:
 
     #define CXXD_USE_STD
     
 If both CXXD_USE_BOOST and CXXD_USE_STD is defined a preprocessing
 error will occur when any CXXD header is included.
 
-If for any given module 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_USE_STD is defined
-a preprocessing error will occur only if the CXXD header file for module 'xxx' is
+If for any given CXXD-mod 'xxx' both CXXD_'XXX'_USE_BOOST and CXXD_USE_STD is defined
+a preprocessing error will occur only if the CXXD header file for 'xxx' is
 included.
 
-If for any given module 'xxx' both CXXD_'XXX'_USE_STD and CXXD_USE_BOOST is defined
-a preprocessing error will occur only if the CXXD header file for module 'xxx' is
+If for any given CXXD-mod 'xxx' both CXXD_'XXX'_USE_STD and CXXD_USE_BOOST is defined
+a preprocessing error will occur only if the CXXD header file for 'xxx' is
 included.
 
-As examples, using the regex module:
+As examples, using the regex CXXD-mod:
 
     #define CXXD_USE_BOOST
     #include <boost/cxxd/regex.hpp>
@@ -152,7 +152,7 @@ A preprocessing error is generated.
     
 [heading Purpose of overriding]
 
-The purpose of using overriding macros, for any CXXD module with the 
+The purpose of using overriding macros, for any CXXD-mod with the 
 specific overriding macros or for CXXD as a whole with the general
 overriding macros, is to override the default algorithm which CXXD
 uses to choose a dual library. However using overriding macros 
@@ -169,7 +169,7 @@ In other words, instead of:
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
     
-you can simply use:
+you can simply code:
 
     #include <boost/regex.hpp>
     boost::regex my_regex; // etc.
@@ -183,7 +183,7 @@ and instead of:
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
     
-you can simply use:
+you can simply code:
 
     #include <regex>
     std::regex my_regex; // etc.
@@ -293,8 +293,8 @@ more than once in a TU.
 [heading Default algorithm redux]
 
 Recall that the default algorithm is used to choose between the Boost library or its
-C++ standard equivalent for a module when no overriding macros are relevant
-for that module. Because CXXD header content is processed each time the header is included 
+C++ standard equivalent for a CXXD-mod when no overriding macros are relevant
+for that CXXD-mod. Because CXXD header content is processed each time the header is included 
 the default algorithm is slightly different the second and subsequent times a particular CXXD header 
 is included. In that case the default algorithm simply accepts which of the dual libraries of the module
 has been previously chosen. This saves preprocessing time and also makes sure that the choice for a given
@@ -334,10 +334,10 @@ Boost regex library. This is done even if the C++ standard regex library is avai
 
 [heading Dual library consistency]
 
-By default whenever a CXXD header for a particular module is included a second 
+By default whenever a CXXD header for a particular CXXD-mod is included a second 
 or subsequent time in a TU the choice of the dual library cannot change from the original
 inclusion of that CXXD header. This consistency is enforced because it would normally
-cause problems in user's code if, for a given module, one part of the TU were using the C++ standard library 
+cause problems in user's code if, for a given CXXD-mod, one part of the TU were using the C++ standard library 
 and another part of the TU were using the Boost library equivalent. This consistency, 
 of the same syntax meaning the same thing within a TU,
 is something which the CXXD library enforces. CXXD enforces this consistency by creating
@@ -355,7 +355,7 @@ this we will use as an example a header file which has an overriding macro:
     ... header code
     
 In this header file we override the default processing for the regex
-module so that the Boost regex library is always used. Let's also assume
+CXXD-mod so that the Boost regex library is always used. Let's also assume
 for our example that the C++ standard regex library is available. 
 Now if we include the another_library_with_override.hpp header first in 
 a TU followed by the CXXD regex header, as in:
@@ -387,21 +387,21 @@ order of inclusion of header files should not affect the way that code compiles.
 But in CXXD it does affect the compilation since, by default, CXXD does not allow
 the dual library for a particular module to change within a TU.
 
-The end user can override the dual library consistency for all CXXD modules by defining
+The end user can override the dual library consistency for all CXXD-mods by defining
 a macro, called CXXD_NO_CONSISTENCY. CXXD_NO_CONSISTENCY must always be defined to nothing, as in:
 
     #define CXXD_NO_CONSISTENCY
 
 Overriding dual library consistency for a TU is a serious matter and should
 not be done lightly. CXXD does not recommend doing this but in the spirit of flexibility
-allows it. Overriding consistency allows the dual library for a module to change when that
-module's CXXD header file is included more than once. In actuality, unless the end-user
+allows it. Overriding consistency allows the dual library for a CXXD-mod to change when that
+CXXD-mod's CXXD header file is included more than once. In actuality, unless the end-user
 goes about undefining already defined overriding macros, the only case where overriding
 the consistency will normally cause the dual library for a module to change within a TU
 is in the second example given above, ie. when the default algorithm chooses a dual
 library the first time a CXXD header is included and then an overriding macro changes the dual library
 with the opposite choice the subsequent time the CXXD header is included. In all other
-cases merely adding further override macros before further inclusions will cause either
+cases merely adding further override macros before further inclusions will either
 cause overriding macro conflicts, which will always produce preprocessing errors from
 within CXXD, or not change the dual library chosen in any further way. 
 

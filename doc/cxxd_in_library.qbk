@@ -117,10 +117,10 @@ CXXD, rather than simply dropping a CXXD dual library in order to directly
 use either a Boost library or its standard C++ equivalent library in the
 interface.
 
-Overriding macros for a module in a library should occur
+Overriding macros for a CXXD-mode in a library should occur
 when that module is being used in a second library
 and the second library doing the overriding consistently uses the
-Boost or C++ standard dual library for that module otherwise.
+Boost or C++ standard dual library for that CXXD-mod otherwise.
         
 Given in OtherLibrary:
 
