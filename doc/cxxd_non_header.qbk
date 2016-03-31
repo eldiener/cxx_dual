@@ -41,14 +41,14 @@ As a simple generalized example without immediately going into all the details,
 which I will do shortly, let's suppose that my shared or static library, whose
 current base name is called MyLib, is changed to use the CXXD regex interface in a
 built portion of the library. The process would be that when MyLib is built it will
-consist of two variants; one variant when MyLib is built using the Boost regex library
+consist of two variants; one variant when MyLib is built when using the Boost regex library
 and one variant when MyLib is built when using the C++ standard regex library. In order
 for this to work I need two separate 'base' names for MyLib, depending on whether
 Boost regex or C++ standard regex is the dual library for regex when the library is built.
 The choice of these 'base' names will be encoded into the build process for MyLib. When an
-end-user uses my library he links to the correct 'base' name depending on whether or
-not CXXD chooses the Boost regex or C++ standard regex library as the dual library
-when the CXXD regex header file gets included.
+end-user uses my library, by including its appropriate header file(s), he links to the 
+correct name depending on whether or not CXXD chooses the Boost regex or C++ standard regex 
+library as the dual library when the CXXD regex header file gets included.
 
 [header The solution in detail]
 
@@ -101,9 +101,7 @@ And we now we have the separate source code file MyHeader.cpp:
     #include "MyHeader.hpp"
     void MyClass::MyFunction(CXXD_REGEX_NS::regex & rx)
         {
-        /*
-        Some Functionality
-        */
+        /* Some Functionality using 'rx' */
         }
         
 At this point we have two problems to solve:
@@ -128,7 +126,7 @@ we always have a solution for our first problem.
 
 In specific terms we are going to specify two builds
 for our library under two different names, and we are
-going to specify the appropriate CXXD override macros
+going to specify appropriate CXXD override macros
 on the command line for each build. For the purposes
 of our example I will choose the library name 'MyLib'
 for the build where the Boost regex library will be
@@ -157,7 +155,7 @@ mechanism for choosing the library when MyLib is being used.
 When the end-user builds the MyLib library he will pass appropriate
 command line switches which determine whether or not the C++ standard
 regex library is supported. If the C++ standard regex library is not 
-supported by appropriate coomand line switches the build of 'MyLib'
+supported by appropriate command line switches the build of 'MyLib'
 should still succeed but the build of 'MyLib_std' will fail. This is
 as it should be. A build of MyLib with the appropriate commamnd line
 switches ( usually C++11 support ) will succeed in also building 'MyLib_std'.
@@ -173,7 +171,7 @@ specify at that time, based on which dual regex library is being used,
 the correctly named library to which to link.
 
 The solution to our problem lies in auto-linking for those compilers
-which support it. Without auto-linking the best that we can do is provide some sort of documentation
+which support it. Without auto-linking what we can do is provide some sort of documentation
 specifying the name of our library depending on the dual library choice
 which occurs when the end-user uses our library.
 
@@ -234,8 +232,9 @@ macro:
     lib MyLib : MyHeader.cpp : <define>CXXD_REGEX_USE_BOOST <define>MYLIB_BEING_BUILT ;
     lib MyLib_std : MyHeader.cpp : <define>CXXD_REGEX_USE_STD <define>MYLIB_BEING_BUILT ;
     
-The end-user of our library could also define the MYLIB_DYN_LINK, before including
-MyHeader.hpp in his code, to auto-link to the shared library version instead of the
+As part of the auto-linking mechanism of Boost config the end-user of our library 
+could also define the MYLIB_DYN_LINK, before including MyHeader.hpp in his code, 
+to auto-link to the shared library version instead of the
 static library version of the appropriate MyLib variant.
     
 For the end-user which is using a compiler that does not support
@@ -245,8 +244,8 @@ library or the C++ standard regex library. That end-user will have to manually
 link the correct library name in his own code. This is usually done by adding the
 name of the library to the linker command line.
 
-As an added tool for that end-user
-our MyLib could also create a program which prints to standard output the name
+As an added tool for that end-user whose compiler does not support auto-linking
+the MyLib build could also create a program which prints to standard output the name
 of the library to link using the library name generated in our MyLibName.hpp header
 file. We could do that with a source file called MyLibName.cpp:
 
@@ -287,11 +286,12 @@ different from what happens when CXXD is not being used.
 I have chosen a very simple example in using CXXD in the built portion of a non-header only 
 library. This is because my example uses a single CXXD module in the built code, and the built code
 consists of a single source file with its corresponding header file. It is
-quite possible, however, that a non-header only library uses many more CXXD modules and that the use
-of CXXD modules occurs in many more source files with their corresponding header files. While
-the exact same principles apply when using a number of CXXD mods as using a single one, an
-important issue that comes up when using a number of CXXD mods is whether we have to support
-all possible library variants and how we would limit the possible variants if necessary.
+quite possible, however, that a non-header only library uses many more CXXD modules in the 
+built portion of the library and that the use of CXXD modules occurs in many more source files 
+with their corresponding header files. While the exact same principles apply when using a number 
+of CXXD mods as using a single one, an important issue that comes up when using a number of CXXD 
+mods is whether we have to support all possible library variants and how we would limit the possible 
+variants if necessary.
 
 Let's consider that if the number of separate CXXD mods in the built portion of a non-header
 only library is designated as 'n', we have [power 2..n] of different CXXD combinations which the end-user
@@ -302,14 +302,14 @@ the number of CXXD mods being used in the built portion of a non-header only lib
 being those CXXD mods our library is directly using but also possibly CXXD mods being used by
 other libraries which our own non-header library is using in its built portion. Clearly the number
 of CXXD modules in the built portion of a non-header only library may proliferate to an unmanageable
-amount.
+amount if we have to build every possible variant.
 
 Despite the fact that there are [power 2..n] possible variants it is quite possible that the library 
-developer will choose to support many less variants. Very often he may choose to support only two variants. 
+developer will choose to support many less variants. In fact very often he may choose to support only two variants. 
 Those two variants are often divided by whether or not the library is being compiled in C++11 on up mode or 
 not. For most, if not all, of the CXXD modules in a given compiler implementation, when compiling in C++11 on up
 mode the C++ standard library version of the dual library is available and when not compiling in C++11
-mode on up only the Boost version will be available. So realistically, even when the number n of different
+mode on up only the Boost version will be available. So realistically, even when the number 'n' of different
 CXXD modules are being used by the built portion of a non-header only library, the library developer
 may choose to support only two variants, either all Boost libraries or all C++ standard library
 equivalents.
@@ -321,20 +321,21 @@ need some way to intelligently limit the number of variants supported.
 
 Let's take a look at our example MyLib and let's see what we have to do to support more library
 variants and possibly limit the number of variants. Imagine that in the source of the library being built
-we are supporting more than simply the CXXD regex module but also other CXXD modules. For the
-sake of this updated example let's suppose we also are using the CXXD bind, CXXD function, and
-CXXD tuple modules in the built portion of MyLib. We will do this by adding some functionality
+we are supporting more than simply the regex CXXD-mod but also other CXXD-mods. For the
+sake of this updated example let's suppose we also are using the CXXD array, CXXD function, and
+CXXD tuple mods in the built portion of MyLib. We will do this by adding some functionality
 to our MyHeader interface. In actuality the built portion of a non-header only library
 will usually encompass far more than a single source/header file pairing, but for the sake of
 our still fairly simple example we will continue to imagine a single source/header pairing. 
+
 Our updated Myheader.hpp will now look like:
 
     // Header file MyHeader.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
-    #include CXXD_BIND_HEADER
+    #include CXXD_ARRAY_HEADER
     #include CXXD_FUNCTION_HEADER
     #include CXXD_REGEX_HEADER
     #include CXXD_TUPLE_HEADER
@@ -343,42 +344,64 @@ Our updated Myheader.hpp will now look like:
         {
         public:
         void MyFunction(CXXD_REGEX_NS::regex &);
-        void AnotherFunction(CXXD_REGEX_NS::regex &);
-        void YetAnotherFunction(CXXD_REGEX_NS::regex &);
+        void AFunction(CXXD_ARRAY_NS::array<int,5> &);
+        void AnotherFunction(CXXD_FUNCTION_NS::function<long (double)> &);
+        void YetAnotherFunction(CXXD_TUPLE_NS::tuple<float,short> &);
         };
+        
+Our updated MyHeader.cpp will now look like:
+        
+    // Source file MyHeader.cpp
+    #include "MyHeader.hpp"
+    void MyClass::MyFunction(CXXD_REGEX_NS::regex & rx)
+        {
+        /* Some Functionality using 'rx' */
+        }
+    void MyClass::AFunction(CXXD_ARRAY_NS::array<int,5> & arr)
+        {
+        /* Some Functionality using 'arr' */
+        }
+    void MyClass::AnotherFunction(CXXD_FUNCTION_NS::function<long (double)> & fun)
+        {
+        /* Some Functionality using 'fun' */
+        }
+    void MyClass::YetAnotherFunction(CXXD_TUPLE_NS::tuple<float,short> &tup)
+        {
+        /* Some Functionality using 'tup' */
+        }
         
 If we look back at our MyLibName.hpp we can both extend the name of the
 library to encompass more variants as well as limit the variants we wish to allow. Allowing all
 our new variants could give us something like:
 
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
-    #if CXXD_HAS_STD_BIND
+    #if CXXD_HAS_STD_ARRAY
         #if CXXD_HAS_STD_FUNCTION
             #if CXXD_HAS_STD_REGEX
                 #if CXXD_HAS_STD_TUPLE
                     #define MYLIB_LIBRARY_NAME MyLib_std
                 #else
-                    #define MYLIB_LIBRARY_NAME MyLib_bd_fn_rx
+                    #define MYLIB_LIBRARY_NAME MyLib_ar_fn_rx
                 #endif
             #elif CXXD_HAS_STD_TUPLE
-                #define MYLIB_LIBRARY_NAME MyLib_bd_fn_tp
+                #define MYLIB_LIBRARY_NAME MyLib_ar_fn_tp
             #else
-                #define MYLIB_LIBRARY_NAME MyLib_bd_fn
+                #define MYLIB_LIBRARY_NAME MyLib_ar_fn
             #endif
         #elif CXXD_HAS_STD_REGEX
             #if CXXD_HAS_STD_TUPLE
-                #define MYLIB_LIBRARY_NAME MyLib_bd_rx_tp
+                #define MYLIB_LIBRARY_NAME MyLib_ar_rx_tp
             #else
-                #define MYLIB_LIBRARY_NAME MyLib_bd_rx
+                #define MYLIB_LIBRARY_NAME MyLib_ar_rx
             #endif
         #elif CXXD_HAS_STD_TUPLE
-            #define MYLIB_LIBRARY_NAME MyLib_bd_tp
+            #define MYLIB_LIBRARY_NAME MyLib_ar_tp
         #else
-            #define MYLIB_LIBRARY_NAME MyLib_bd
+            #define MYLIB_LIBRARY_NAME MyLib_ar
         #endif
     #elif CXXD_HAS_STD_FUNCTION
         #if CXXD_HAS_STD_REGEX
@@ -405,13 +428,13 @@ our new variants could give us something like:
     #endif
     
 That is some complicated-looking code to just give a name to each variant,
-but it is really just a series of tests of all combinations of CXXD_HAS_STD_'XXX'
+but it is really just a series of tests of all 16 combinations of CXXD_HAS_STD_'XXX'
 for the possible 'XXX' CXXD modules being used. It is actually more tedious than
 really complicated. We just have to choose a naming convention for our variants
 so that all variant names are unique. In our case the manual naming convention
 chosen is that each CXXD mod where the C++ standard library is being chosen has a
 two character abbreviation preceded by an underscore appended to the base 'MyLib'
-name, but if all the CXXD mods have the C++ standard library being the mnemonic
+name, but if all the CXXD mods have the C++ standard library being chosen the mnemonic
 '_std' is appended to the base 'MyLib' name instead. Furthermore the appends are
 done in the alphabetical order of CXXD mods being used. This manual scheme is
 purely arbitrary for naming variants when building a non-header only library and,
@@ -419,39 +442,36 @@ of course, the library developer using CXXD may choose whatever manual scheme
 he wishes to give each variant he chooses to support a unique name. 
 Later in this documentation section I will discuss CXXD support in the form of a 
 CXXD macro which which the library developer can use to automate the naming scheme
-if he wishes as well as a CXXD macro which the library developer can use to test 
-for all his valid possibilities at once.
+if he wishes with a single invocation of the macro.
 
 Now suppose we do not want to support all variants in MyLib but just a subset of the 16
 possible variants in our example. As one case suppose we want to support only those variants
-where both CXXD bind and CXXD function are both using either the Boost library
-or both are using the C++ standard library. We might rationalize doing this because
-bind and function are often used together to support C++ callables. Whatever the
-rationalization our changed MyLibName.hpp could then be:
+where both CXXD array and CXXD function are both using either the Boost library
+or both are using the C++ standard library. Our changed MyLibName.hpp could then be:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
-    #if CXXD_HAS_STD_BIND
+    #if CXXD_HAS_STD_ARRAY
         #if CXXD_HAS_STD_FUNCTION
             #if CXXD_HAS_STD_REGEX
                 #if CXXD_HAS_STD_TUPLE
                     #define MYLIB_LIBRARY_NAME MyLib_std
                 #else
-                    #define MYLIB_LIBRARY_NAME MyLib_bd_fn_rx
+                    #define MYLIB_LIBRARY_NAME MyLib_ar_fn_rx
                 #endif
             #elif CXXD_HAS_STD_TUPLE
-                #define MYLIB_LIBRARY_NAME MyLib_bd_fn_tp
+                #define MYLIB_LIBRARY_NAME MyLib_ar_fn_tp
             #else
-                #define MYLIB_LIBRARY_NAME MyLib_bd_fn
+                #define MYLIB_LIBRARY_NAME MyLib_ar_fn
             #endif
         #else
-            #error MyLib - CXXD configuration not supported where bind and function differ.
+            #error MyLib - CXXD configuration not supported where array and function differ.
         #endif
     #elif CXXD_HAS_STD_FUNCTION
-        #error MyLib - CXXD configuration not supported where bind and function differ.
+        #error MyLib - CXXD configuration not supported where array and function differ.
     #elif CXXD_HAS_STD_REGEX
         #if CXXD_HAS_STD_TUPLE
             #define MYLIB_LIBRARY_NAME MyLib_rx_tp
@@ -470,20 +490,22 @@ time of the variants we do not support. Of course we could and should also
 notify the end-user of MyLib in the documentation about the variants we do
 or do not support. But the nice thing is that we can produce a compile-time
 error, in the form of a preprocessor error, while still using CXXD to limit
-the subset of variants.
+the subset of variants. Later in this documentation section I will discuss 
+CXXD support in the form of a CXXD macro which which the library developer 
+can use to test for all his valid possibilities with a single macro invocation.
 
 Suppose we simplify further in a manner I suggested previously where we
 will only support the two variants which most likely corresponds to the end-user
 compiling with C++11 on up support or not. Now are MyLibName.hpp gets much simpler:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
-    #if CXXD_HAS_STD_BIND && CXXD_HAS_STD_FUNCTION && CXXD_HAS_STD_REGEX && CXXD_HAS_STD_TUPLE
+    #if CXXD_HAS_STD_ARRAY && CXXD_HAS_STD_FUNCTION && CXXD_HAS_STD_REGEX && CXXD_HAS_STD_TUPLE
         #define MYLIB_LIBRARY_NAME MyLib_std
-    #elif !(CXXD_HAS_STD_BIND || CXXD_HAS_STD_FUNCTION || CXXD_HAS_STD_REGEX || CXXD_HAS_STD_TUPLE)
+    #elif !(CXXD_HAS_STD_ARRAY || CXXD_HAS_STD_FUNCTION || CXXD_HAS_STD_REGEX || CXXD_HAS_STD_TUPLE)
         #define MYLIB_LIBRARY_NAME MyLib
     #else
         #error CXXD configuration only supported if all dual libraries are Boost or all dual libraries are C++ standard.
@@ -502,43 +524,43 @@ jam file which builds his library.
 
 With our first extended example, for all 16 variants, the updated jam file would be, at minimum:
     
-    lib MyLib : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_std : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn_rx : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn_tp : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_rx_tp : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_rx : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_tp : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_fn_rx_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_fn_rx : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_fn_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_fn : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_rx_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_rx : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_std : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_rx_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_fn_rx_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_fn_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_fn_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_fn : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_rx_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
     
 With our second extended example, with its 8 variants, the updated jam file would be, at minimum:
     
-    lib MyLib : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_std : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn_rx : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn_tp : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_bd_fn : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_rx_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
-    lib MyLib_rx : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_tp : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_std : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_ar_fn : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_rx_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib_rx : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_tp : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
     
 With our third extended example, with its 2 variants, the updated jam file would be, at minimum:
     
-    lib MyLib : MyHeader.cpp : <define>CXXD_BIND_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
-    lib MyLib_std : MyHeader.cpp : <define>CXXD_BIND_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
+    lib MyLib : MyHeader.cpp : <define>CXXD_ARRAY_USE_BOOST <define>CXXD_FUNCTION_USE_BOOST <define>CXXD_REGEX_USE_BOOST <define>CXXD_TUPLE_USE_BOOST <define>MYLIB_BEING_BUILT ;
+    lib MyLib_std : MyHeader.cpp : <define>CXXD_ARRAY_USE_STD <define>CXXD_FUNCTION_USE_STD <define>CXXD_REGEX_USE_STD <define>CXXD_TUPLE_USE_STD <define>MYLIB_BEING_BUILT ;
 
 Aside from the functional changes in MyLib itself, to use more CXXD modules in the
 built portion of the library, the changes to a proposed MyLibName.hpp in our example
 and the changes to the jam file used to build the non-header only library 
-are the only ones that need to be  done to support more variants, 
+are the only ones that need to be done to support more variants, 
 and possibly limit the variants compared to the total number possible. 
 The rest of the infrastructure in our example remains in place.
 
@@ -604,12 +626,15 @@ The macro is in the header file <cxxd/library_name.hpp>
 The macro takes one or more variadic parameters. The single required variadic parameter is
 the base name of the library. The remaining variadic parameters are optional and are
 Boost PP tuples. Each tuple has one to three elements. The first element, which is mandatory,
-is one of the preprocessor identifiers for a given CXXD-mod given above. 
+is one of the CXXD-mod identifiers given above.
 The second optional element, which may be empty, is a preprocessor identifier to be appended 
 to the base name if the particular CXXD-mod is being used and the C++ standard library has been 
 chosen as the dual library. The third optional element, which may also be empty or obviously 
 left out entirely, is a preprocessor identifier to be added to the base name if the particular 
-CXXD-mod is being used and the Boost library has been chosen as the dual library.
+CXXD-mod is being used and the Boost library has been chosen as the dual library. The optional
+parameters allow the macro invoker to specify his own identifiers to be appended to the base
+library name for each CXXD-mod being included. If he does not specify his own identifier
+for a particular CXXD-mod by using an optional variadic parameter, defaults values are chosen instead.
 
 Given the required base name for a library and the optional remaining variadic parameters
 the macro expands to a library variant name.
@@ -669,18 +694,19 @@ Any appended mnemonics by default are added to the base name in the alphabetical
 order in which the individual CXXD-mods occur above and not in the order in which
 the CXXD-mods are included.
 
-The way that the CXXD_LIBRARY_NAME
-works, when the single required base name is passed to the macro, is exactly the
-manual methodology used when specifying unique variant names in the MyLibName.hpp samples given above.
-Furthermore the default naming scheme guarantees that if Boost is consistently being 
+The way that the CXXD_LIBRARY_NAME works, when the single required base name is passed to the macro, 
+is exactly the manual method I have previously used when specifying unique variant names in the 
+MyLibName.hpp samples given above.
+
+The default naming scheme guarantees that if Boost is consistently being 
 chosen instead of the equivalent C++ standard library, which is what will naturally
 happen in the vast majority of cases if C++11 on up mode is not being used during
-compilation, the library name generated is the same as the base name. This is, I believe,
-what Boost library authors expect in their non-header only libraries.
+compilation, the library name generated is the same as the base name. This latter is, I believe,
+what Boost library authors wouold expect in their non-header only libraries.
 
 The end-user changes the default naming scheme by passing as optional parameters
-one or more tuples for each CXXD-mod where he wants a different mnemonic to be appended
-to the base name. In this case the tuple specifies a different mnemonic to be used for
+one or more Boost PP tuples for each CXXD-mod where he wants a different mnemonic to be appended
+to the base name. In this case the Boost PP tuple specifies a different mnemonic to be used for
 a particular CXXD-mod, depending on whether the dual library to be chosen for that CXXD-mod
 is the C++ standard library or the Boost library. The order of the mnemonics to be appended
 also changes according to the order of the CXXD-mod identifiers he specifies in the optional
@@ -691,63 +717,63 @@ A number of examples will be given using the four CXXD-mods we have previously c
 in our examples for MyLibName.hpp header file and some arbitrarily chosen combinations.
 These arbitrarily chosen combinations are specified purely to illustrate how the macro works:
 
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
     #include <cxxd/library_name.hpp>
 
-    /* bind uses Boost, function uses C++ standard, regex uses C++ standard, tuple uses Boost */
+    /* array uses Boost, function uses C++ standard, regex uses C++ standard, tuple uses Boost */
     
     CXXD_LIBRARY_NAME(MyLib) expands to 'MyLib_fn_rx'
     
-    /* bind uses C++ standard, function uses C++ standard, regex uses C++ standard, tuple uses C++ standard */
+    /* array uses C++ standard, function uses C++ standard, regex uses C++ standard, tuple uses C++ standard */
     
     CXXD_LIBRARY_NAME(MyLib) expands to 'MyLib_std'
     
-    /* bind uses Boost, function uses Boost, regex uses Boost, tuple uses Boost */
+    /* array uses Boost, function uses Boost, regex uses Boost, tuple uses Boost */
     
     CXXD_LIBRARY_NAME(MyLib) expands to 'MyLib'
     
-    /* bind uses Boost, function uses C++ standard, regex uses C++ standard, tuple uses Boost */
+    /* array uses Boost, function uses C++ standard, regex uses C++ standard, tuple uses Boost */
     
     CXXD_LIBRARY_NAME(MyLib,(CXXD_REGEX,RStd,_rboost)) expands to 'MyLibRStd_fn'
     
-    /* bind uses Boost, function uses C++ standard, regex uses Boost, tuple uses Boost */
+    /* array uses Boost, function uses C++ standard, regex uses Boost, tuple uses Boost */
     
-    CXXD_LIBRARY_NAME(MyLib,(CXXD_TUPLE,_cpp_tuple,_boost_tuple),(CXXD_BIND,,_bboost)) expands to 'MyLib_boost_tuple_bboost_fn'
+    CXXD_LIBRARY_NAME(MyLib,(CXXD_TUPLE,_cpp_tuple,_boost_tuple),(CXXD_ARRAY,,_bboost)) expands to 'MyLib_boost_tuple_bboost_fn'
     
-    /* bind uses Boost, function uses Boost, regex uses Boost, tuple uses Boost */
+    /* array uses Boost, function uses Boost, regex uses Boost, tuple uses Boost */
     
     CXXD_LIBRARY_NAME(MyLib,(CXXD_ALL,Std,Boost)) expands to 'MyLibBoost'
     
-    /* bind uses C++ standard, function uses C++ standard, regex uses C++ standard, tuple uses C++ standard */
+    /* array uses C++ standard, function uses C++ standard, regex uses C++ standard, tuple uses C++ standard */
     
     CXXD_LIBRARY_NAME(MyLib,(CXXD_ALL,Std,Boost)) expands to 'MyLibStd'
     
 If we look at the MyLibName.hpp as presented previously we can use the CXXD_LIBRARY_NAME
-to simplify the logic of the file. In the first case, where we do not try to limit the
+to simplify the syntax of the file. In the first case, where we do not try to limit the
 variants, our file could be:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
     #include <cxxd/library_name.hpp>
     #define MYLIB_LIBRARY_NAME CXXD_LIBRARY_NAME(MyLib)
     
-In the second case where we do limit the variants so that CXXD-mod bind and CXXD-mod function
+In the second case where we do limit the variants so that CXXD-mod array and CXXD-mod function
 always choose the same dual library, our file could be:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
     #include <cxxd/library_name.hpp>
-    #if (CXXD_HAS_STD_BIND && !CXXD_HAS_STD_FUNCTION) || (!CXXD_HAS_STD_BIND && CXXD_HAS_STD_FUNCTION)
-        #error MyLib - CXXD configuration not supported where bind and function differ.
+    #if (CXXD_HAS_STD_ARRAY && !CXXD_HAS_STD_FUNCTION) || (!CXXD_HAS_STD_ARRAY && CXXD_HAS_STD_FUNCTION)
+        #error MyLib - CXXD configuration not supported where array and function differ.
     #else
         #define MYLIB_LIBRARY_NAME CXXD_LIBRARY_NAME(MyLib)
     #endif
@@ -756,19 +782,21 @@ In the third case where we limit our variants to the two choices of all Boost
 or all C++ standard libraries, our file could be:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
     #include <cxxd/library_name.hpp>
-    #if (CXXD_HAS_STD_BIND && CXXD_HAS_STD_FUNCTION && CXXD_HAS_STD_REGEX && CXXD_HAS_STD_TUPLE) || \
-        !(CXXD_HAS_STD_BIND || CXXD_HAS_STD_FUNCTION || CXXD_HAS_STD_REGEX || CXXD_HAS_STD_TUPLE)
+    #if (CXXD_HAS_STD_ARRAY && CXXD_HAS_STD_FUNCTION && CXXD_HAS_STD_REGEX && CXXD_HAS_STD_TUPLE) || \
+        !(CXXD_HAS_STD_ARRAY || CXXD_HAS_STD_FUNCTION || CXXD_HAS_STD_REGEX || CXXD_HAS_STD_TUPLE)
         #define MYLIB_LIBRARY_NAME CXXD_LIBRARY_NAME(MyLib)
     #else
         #error CXXD configuration only supported if all dual libraries are Boost or all dual libraries are C++ standard.
     #endif
     
-In all cases the use of CXXD_LIBRARY_NAME simplifies our MyLibName.hpp header file.
+In all cases the invocation of the single CXXD_LIBRARY_NAME macro simplifies our MyLibName.hpp header file.
+Nonetheless the choice of using the CXXD_LIBRARY_NAME macro or manually name the
+library variants is totally up to the library author.
     
 [header Macro testing all possibilities]
 
@@ -791,31 +819,31 @@ to 0.
 Each variadic parameter represents a combination. Each combination is 
 a series of Boost PP tuples. This 'series' in the VMD library is called a VMD sequence.
 
-Each tuple in the series has two elements. The first tuple element is a
-CXXD-mod identifiers as explained above.
-The second tuple element is either 0 or 1,
+Each Boost PP tuple in the series has two elements. The first Boost PP tuple element is a
+CXXD-mod identifier as listed previously.
+The second Boost PP tuple element is either 0 or 1,
 meaning respectively that for the CXXD-mod specified the dual library is Boost (0) or 
-the dual library is the C++ standard library (1). The tuple encoding identifies a valid 
-choice for the library being built for a single CXXD-mod. The series of tuples 
-combine the valid choices into a single possibility. When a particular CXXD-mod
-is not part of a combination it means that if that CXXD-mod is included it can validly
+the dual library is the C++ standard library (1). The Boost PP tuple encoding identifies a valid 
+choice for the library being built for a single CXXD-mod. The series of Boost PP tuples 
+combine the valid choices into a single 'possibility'. When a particular CXXD-mod
+is not part of a possibility it means that if that CXXD-mod is included it can validly
 use either its Boost or C++ standard library.
 
-As an arbitrary example of a combination:
+As an arbitrary example of a possibility:
 
-    (CXXD_REGEX,0)(CXXD_BIND,1)(CXXD_TUPLE,1)
+    (CXXD_REGEX,0)(CXXD_ARRAY,1)(CXXD_TUPLE,1)
     
-as one of our variadic parameters says that a situation where the CXXD regex module
-uses the Boost library while the CXXD bind and tuple mods use the C++ standard
+as one of our variadic parameters says that a situation where the regex CXXD-mod
+uses the Boost library while the CXXD array and tuple mods use the C++ standard
 library is a valid possibility for the library.
 
-The library author can specify as many valid combinations as he chooses as
-variadic parameters but at least one combination has to be specified to
+The library author can specify as many valid possibilities as he chooses as
+variadic parameters but at least one possibility has to be specified to
 use the macro. If all possible combinations of the CXXD-mods being included are
 valid there is absolutely no point in using the CXXD_VALID_VARIANTS macro as
 we have no intention of limiting the possible variants.
 
-For the CXXD_MODS_ALL identifier only one tuple should define the combination.
+For the CXXD_MODS_ALL identifier only one tuple should define the possibility.
 The designation as a variadic parameter of:
 
     (CXXD_MODS_ALL,0)
@@ -829,10 +857,10 @@ says that a valid possibility is that every CXXD-mod included uses the C++
 standard library as the dual library.
 
 A number of examples will be given using the four CXXD-mods we have previously chosen
-in our examples for MyLibName.hpp header file and some arbitrarily chosen valid combinations.
-These arbitrarily chosen valid combinations are specified purely to illustrate how the macro works:
+in our examples for MyLibName.hpp header file and some arbitrarily chosen valid possibilities.
+These arbitrarily chosen valid possibilities are specified purely to illustrate how the macro works:
 
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
@@ -840,75 +868,75 @@ These arbitrarily chosen valid combinations are specified purely to illustrate h
     
     /* Valid possibilities are:
     1) All four CXXD-mods use the Boost library
-    2) CXXD-mod bind uses the Boost library, 
+    2) CXXD-mod array uses the Boost library, 
        CXXD-mod function uses the C++ standard library, 
        CXXD-mod tuple uses the Boost library,
        CXXD-mod regex uses either the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_BIND,0)(CXXD_FUNCTION,1)(CXXD_TUPLE,0))
+    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_ARRAY,0)(CXXD_FUNCTION,1)(CXXD_TUPLE,0))
         
     /* Valid possibilities are:
     1) All four CXXD-mods use the C++standard library
-    2) CXXD-mod bind uses the Boost library, 
+    2) CXXD-mod array uses the Boost library, 
        CXXD-mod function uses the Boost library 
        CXXD-mod tuple uses the Boost library or the C++ standard library,
        CXXD-mod regex uses the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,1),(CXXD_BIND,0)(CXXD_FUNCTION,0))
+    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,1),(CXXD_ARRAY,0)(CXXD_FUNCTION,0))
         
     /* Valid possibilities are:
-    1) CXXD-mod bind uses the Boost library, 
+    1) CXXD-mod array uses the Boost library, 
        CXXD-mod function uses the Boost library 
        CXXD-mod tuple uses the Boost library or the C++ standard library,
        CXXD-mod regex uses the Boost library or the C++ standard library
-    2) CXXD-mod bind uses the C++ standard library, 
+    2) CXXD-mod array uses the C++ standard library, 
        CXXD-mod function uses the C++ standard library 
        CXXD-mod tuple uses the Boost library or the C++ standard library,
        CXXD-mod regex uses the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_BIND,0)(CXXD_FUNCTION,0),(CXXD_BIND,1)(CXXD_FUNCTION,1))
+    CXXD_VALID_VARIANTS((CXXD_ARRAY,0)(CXXD_FUNCTION,0),(CXXD_ARRAY,1)(CXXD_FUNCTION,1))
         
     /* Valid possibilities are:
     1) All four CXXD-mods use the Boost library
     2) All four CXXD-mods use the C++standard library
     3) CXXD-mod regex uses either the Boost library
        CXXD-mod tuple uses the C++ standard library
-       CXXD-mod bind uses the Boost library or the C++ standard library,
+       CXXD-mod array uses the Boost library or the C++ standard library,
        CXXD-mod function uses the Boost library or the C++ standard library
     */
     
     CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_MODS_ALL,1),(CXXD_REGEX,0)(CXXD_TUPLE,1))
     
 Essentially the CXXD_VALID_VARIANTS present an alternate form of '#if (CXXD_HAS_STD_XXX ...)'
-preprocessor constructs which are used to limit the CXXD-mod combinations which a particular
+preprocessor constructs which are used to limit the CXXD-mod possibilities which a particular
 library decides is valid. If we take our example MyLibName.hpp which limit the possibilities
 of dual libraries combinations we can re-code our second and third case using this macro, 
 since our first case, which does not limit the possibilities, has no use for using the 
 CXXD_VALID_VARIANTS macro.
 
-In the second case where we do limit the variants so that CXXD-mod bind and CXXD-mod function
+In the second case where we do limit the variants so that CXXD-mod array and CXXD-mod function
 always choose the same dual library, our file could now be:
 
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
     #include <cxxd/valid_variants.hpp>
-    #if CXXD_VALID_VARIANTS((CXXD_BIND,0)(CXXD_FUNCTION,0),(CXXD_BIND,1)(CXXD_FUNCTION,1))
+    #if CXXD_VALID_VARIANTS((CXXD_ARRAY,0)(CXXD_FUNCTION,0),(CXXD_ARRAY,1)(CXXD_FUNCTION,1))
         #define MYLIB_LIBRARY_NAME CXXD_LIBRARY_NAME(MyLib)
     #else
-        #error MyLib - CXXD configuration not supported where bind and function differ.
+        #error MyLib - CXXD configuration not supported where array and function differ.
     #endif
     
 In the third case where we limit our variants to the two choices of all Boost
 or all C++ standard libraries, our file could be:
     
     // Header file MyLibName.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/regex.hpp>
     #include <cxxd/tuple.hpp>
@@ -919,40 +947,40 @@ or all C++ standard libraries, our file could be:
         #error CXXD configuration only supported if all dual libraries are Boost or all dual libraries are C++ standard.
     #endif
     
-Even though their is little practical benefit of limiting combinations of CXXD-mod dual library
-choices when the case is not a non-header only library, the CXXD_VALID_VARIANTS macro 
+Even though their is little practical benefit of limiting possibilities of CXXD-mod dual library
+choices when the case is a header only library, the CXXD_VALID_VARIANTS macro 
 could be used in those situations also. As an example let us suppose we have a header-only
-library which uses CXXD-mod bind and CXXD-mod function along with other CXXD-mods.
+library which uses CXXD-mod array and CXXD-mod function along with other CXXD-mods.
 As we have done in one of our non-header only MyLibName.hpp examples we arbitrarily decide that the
-bind and function dual library choices should always match. We could code up a header
-file for the sole purpose of producing a preprocessor error if our bind and function dual
+array and function dual library choices should always match. We could code up a header
+file for the sole purpose of producing a preprocessor error if our array and function dual
 library choices do not match, and then include that header file in all are header-only
 library header files as a check to make sure they match whenever any header file is included.
 Our header file might be called MyHeaderOnlyLibCheck.hpp:
         
     // Header file MyHeaderOnlyLibCheck.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
     #include <cxxd/valid_variants.hpp>
-    #if !CXXD_VALID_VARIANTS((CXXD_BIND,0)(CXXD_FUNCTION,0),(CXXD_BIND,1)(CXXD_FUNCTION,1))
-        #error MyLib - CXXD configuration not supported where bind and function differ.
+    #if !CXXD_VALID_VARIANTS((CXXD_ARRAY,0)(CXXD_FUNCTION,0),(CXXD_ARRAY,1)(CXXD_FUNCTION,1))
+        #error MyLib - CXXD configuration not supported where array and function differ.
     #endif
     
 We now include that header file in all of the header files of our header-only library and every time
 the end-user uses one of our header files a check is made to ensure that the dual libraries
-for bind and function match. 
+for array and function match.
 
 Of course we could simply eschew the use of the CXXD_VALID_VARIANTS macro in this case and 
 simply code up our MyHeaderOnlyLibCheck.hpp header file in this way:
     
     // Header file MyHeaderOnlyLibCheck.hpp
-    #include <cxxd/bind.hpp>
+    #include <cxxd/array.hpp>
     #include <cxxd/function.hpp>
-    #if !((CXXD_HAS_STD_BIND && CXXD_HAS_STD_FUNCTION) || (!CXXD_HAS_STD_BIND && !CXXD_HAS_STD_FUNCTION))
-        #error MyLib - CXXD configuration not supported where bind and function differ.
+    #if !((CXXD_HAS_STD_ARRAY && CXXD_HAS_STD_FUNCTION) || (!CXXD_HAS_STD_ARRAY && !CXXD_HAS_STD_FUNCTION))
+        #error MyLib - CXXD configuration not supported where array and function differ.
     #endif
     
 The choice of using the CXXD_VALID_VARIANTS macro or manually test the individual
-CXXD_HAS_STD_'XXX' macros is up to the library author.
+CXXD_HAS_STD_'XXX' macros is totally up to the library author.
     
 [endsect]
