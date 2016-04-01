@@ -1,0 +1,54 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section CXXD Errors]
+
+CXXD errors are preprocessor errors issue by the CXXD library
+using the preprocessor '#error' directive. These errors occur
+when the inclusion of a CXXD-mod produces inconsistencies
+which CXXD does not allow. These inconsistencies can be found
+either the first time CXXD includes a particular CXXD-mod header
+file or subsequent times CXXD includes a particular CXXD-mod
+header.
+
+The errors which can occur involve four different situations
+for which CXXD issues the "#error' directive. These situations
+are, for any given CXXD-mod called 'xxx':
+
+* If override macros for both Boost and the C++ standard library
+occur when a particular CXXD-mod is included an '#error' directive
+is emitted of 'CXXD: Using C++ standard and using Boost are both defined for xxx'.
+
+* If the C++ standard library has been previously chosen and is
+subsequently overridden by the Boost library an '#error' directive
+is emitted of 'CXXD: Previous use of C++ standard xxx erroneously overridden'.
+
+* If the Boost standard library has been previously chosen and is
+subsequently overridden by the C++ standard library an '#error' directive
+is emitted of 'CXXD: Previous use of Boost xxx erroneously overridden'.
+
+* If override macros for the C++ standard library occurs but the
+C++ standard library is not available for the CXXD-mod xxx an '#error'
+directive is emitted of 'CXXD: C++ standard xxx is not available'.
+
+As previously stated in the documentation CCXD-mod header files are
+processed each time they are included to avoid inconsistencies. 
+
+The first error listed above could happen either the first time a particular
+CXXD-mod is included or a subsequent time a particular CXXD-mod is included, 
+since override macros could occur at any time in a TU.
+
+The second and third errors listed above can only happen at a subsequent
+time a particular CXXD-mod is included, since either message occurs when
+an override macro changes the dual library choice from a previous inclusion
+of the CXXD-mod header.
+
+The last error message can only occur the first time a particular CXXD-mod
+is included, where an override macro for the C++ standard library fails
+because the library is not available.
+
+[endsect]
