@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file shared_mutex.hpp
+    @brief Dual library for the shared mutex implementation.
+    
+    Chooses either the Boost shared mutex implementation or the C++ standard shared mutex implementation.
+*/
+
+/** @def CXXD_SHARED_MUTEX_HEADER
+    @brief The shared mutex header file name.
+    
+    The object-like macro expands to the include header file designation for the shared mutex header file.
+    The macro is used with the syntax: #include CXXD_SHARED_MUTEX_HEADER
+*/
+
+/** @def CXXD_SHARED_MUTEX_NS
+    @brief The shared mutex namespace.
+    
+    The object-like macro expands to the namespace for the shared mutex implementation.
+*/
+
+/** @def CXXD_HAS_STD_SHARED_MUTEX
+    @brief Determines whether the C++ standard shared mutex implementation or the Boost shared mutex implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard shared mutex implementation has been chosen
+    0 if the Boost shared mutex implementation has been chosen.
+*/
 
 #if !defined(CXXD_SHARED_MUTEX_ERROR)
 	#if (defined(CXXD_SHARED_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_SHARED_MUTEX_USE_STD) || defined(CXXD_USE_STD))

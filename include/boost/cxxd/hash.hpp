@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file hash.hpp
+    @brief Dual library for the hash implementation.
+    
+    Chooses either the Boost hash implementation or the C++ standard hash implementation.
+*/
+
+/** @def CXXD_HASH_HEADER
+    @brief The hash header file name.
+    
+    The object-like macro expands to the include header file designation for the hash header file.
+    The macro is used with the syntax: #include CXXD_HASH_HEADER
+*/
+
+/** @def CXXD_HASH_NS
+    @brief The hash namespace.
+    
+    The object-like macro expands to the namespace for the hash implementation.
+*/
+
+/** @def CXXD_HAS_STD_HASH
+    @brief Determines whether the C++ standard hash implementation or the Boost hash implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard hash implementation has been chosen
+    0 if the Boost hash implementation has been chosen.
+*/
 
 #if !defined(CXXD_HASH_ERROR)
 	#if (defined(CXXD_HASH_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_HASH_USE_STD) || defined(CXXD_USE_STD))

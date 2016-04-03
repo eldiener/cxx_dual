@@ -10,8 +10,8 @@
 CXXD errors are preprocessor errors issue by the CXXD library
 using the preprocessor '#error' directive. These errors occur
 when the inclusion of a CXXD-mod produces inconsistencies
-which CXXD does not allow. These inconsistencies can be found
-either the first time CXXD includes a particular CXXD-mod header
+which CXXD does not allow. These inconsistencies can be found,
+in a TU, either the first time CXXD includes a particular CXXD-mod header
 file or subsequent times CXXD includes a particular CXXD-mod
 header.
 

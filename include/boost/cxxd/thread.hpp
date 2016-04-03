@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file thread.hpp
+    @brief Dual library for the thread implementation.
+    
+    Chooses either the Boost thread implementation or the C++ standard thread implementation.
+*/
+
+/** @def CXXD_THREAD_HEADER
+    @brief The thread header file name.
+    
+    The object-like macro expands to the include header file designation for the thread header file.
+    The macro is used with the syntax: #include CXXD_THREAD_HEADER
+*/
+
+/** @def CXXD_THREAD_NS
+    @brief The thread namespace.
+    
+    The object-like macro expands to the namespace for the thread implementation.
+*/
+
+/** @def CXXD_HAS_STD_THREAD
+    @brief Determines whether the C++ standard thread implementation or the Boost thread implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard thread implementation has been chosen
+    0 if the Boost thread implementation has been chosen.
+*/
 
 #if !defined(CXXD_THREAD_ERROR)
 	#if (defined(CXXD_THREAD_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_THREAD_USE_STD) || defined(CXXD_USE_STD))

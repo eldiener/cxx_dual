@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file chrono.hpp
+    @brief Dual library for chrono implementation.
+    
+    Chooses either the Boost chrono implementation or the C++ standard chrono implementation.
+*/
+
+/** @def CXXD_CHRONO_HEADER
+    @brief The chrono header file name.
+    
+    The object-like macro expands to the include header file designation for the chrono header file.
+    The macro is used with the syntax: #include CXXD_CHRONO_HEADER
+*/
+
+/** @def CXXD_CHRONO_NS
+    @brief The chrono namespace.
+    
+    The object-like macro expands to the namespace for the chrono implementation.
+*/
+
+/** @def CXXD_HAS_STD_CHRONO
+    @brief Determines whether the C++ standard chrono implementation or the Boost chrono implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard chrono implementation has been chosen
+    0 if the Boost chrono implementation has been chosen.
+*/
 
 #if !defined(CXXD_CHRONO_ERROR)
 	#if (defined(CXXD_CHRONO_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_CHRONO_USE_STD) || defined(CXXD_USE_STD))

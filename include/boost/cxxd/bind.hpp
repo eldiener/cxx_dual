@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file bind.hpp
+    @brief Dual library for the bind implementation.
+    
+    Chooses either the Boost bind implementation or the C++ standard bind implementation.
+*/
+
+/** @def CXXD_BIND_HEADER
+    @brief The bind header file name.
+    
+    The object-like macro expands to the include header file designation for the bind header file.
+    The macro is used with the syntax: #include CXXD_BIND_HEADER
+*/
+
+/** @def CXXD_BIND_NS
+    @brief The bind namespace.
+    
+    The object-like macro expands to the namespace for the bind implementation.
+*/
+
+/** @def CXXD_HAS_STD_BIND
+    @brief Determines whether the C++ standard bind implementation or the Boost bind implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard bind implementation has been chosen
+    0 if the Boost bind implementation has been chosen.
+*/
 
 #if !defined(CXXD_BIND_ERROR)
 	#if (defined(CXXD_BIND_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_BIND_USE_STD) || defined(CXXD_USE_STD))

@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file unordered_set.hpp
+    @brief Dual library for the unordered set implementation.
+    
+    Chooses either the Boost unordered set implementation or the C++ standard unordered set implementation.
+*/
+
+/** @def CXXD_UNORDERED_SET_HEADER
+    @brief The unordered set header file name.
+    
+    The object-like macro expands to the include header file designation for the unordered set header file.
+    The macro is used with the syntax: #include CXXD_UNORDERED_SET_HEADER
+*/
+
+/** @def CXXD_UNORDERED_SET_NS
+    @brief The unordered set namespace.
+    
+    The object-like macro expands to the namespace for the unordered set implementation.
+*/
+
+/** @def CXXD_HAS_STD_UNORDERED_SET
+    @brief Determines whether the C++ standard unordered set implementation or the Boost unordered set implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard unordered set implementation has been chosen
+    0 if the Boost unordered set implementation has been chosen.
+*/
 
 #if !defined(CXXD_UNORDERED_SET_ERROR)
 	#if (defined(CXXD_UNORDERED_SET_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_SET_USE_STD) || defined(CXXD_USE_STD))

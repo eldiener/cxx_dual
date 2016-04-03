@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016.
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file array.hpp
+    @brief Dual library for the array implementation.
+    
+    Chooses either the Boost array implementation or the C++ standard array implementation.
+*/
+
+/** @def CXXD_ARRAY_HEADER
+    @brief The array header file name.
+    
+    The object-like macro expands to the include header file designation for the array header file.
+    The macro is used with the syntax: #include CXXD_ARRAY_HEADER
+*/
+
+/** @def CXXD_ARRAY_NS
+    @brief The array namespace.
+    
+    The object-like macro expands to the namespace for the array implementation.
+*/
+
+/** @def CXXD_HAS_STD_ARRAY
+    @brief Determines whether the C++ standard array implementation or the Boost array implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard array implementation has been chosen
+    0 if the Boost array implementation has been chosen.
+*/
 
 #if !defined(CXXD_ARRAY_ERROR)
 	#if (defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD))

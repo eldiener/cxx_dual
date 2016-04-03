@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file unordered_multimap.hpp
+    @brief Dual library for the unordered multimap implementation.
+    
+    Chooses either the Boost unordered multimap implementation or the C++ standard unordered multimap implementation.
+*/
+
+/** @def CXXD_UNORDERED_MULTIMAP_HEADER
+    @brief The unordered multimap header file name.
+    
+    The object-like macro expands to the include header file designation for the unordered multimap header file.
+    The macro is used with the syntax: #include CXXD_UNORDERED_MULTIMAP_HEADER
+*/
+
+/** @def CXXD_UNORDERED_MULTIMAP_NS
+    @brief The unordered multimap namespace.
+    
+    The object-like macro expands to the namespace for the unordered multimap implementation.
+*/
+
+/** @def CXXD_HAS_STD_UNORDERED_MULTIMAP
+    @brief Determines whether the C++ standard unordered multimap implementation or the Boost unordered multimap implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard unordered multimap implementation has been chosen
+    0 if the Boost unordered multimap implementation has been chosen.
+*/
 
 #if !defined(CXXD_UNORDERED_MULTIMAP_ERROR)
 	#if (defined(CXXD_UNORDERED_MULTIMAP_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_MULTIMAP_USE_STD) || defined(CXXD_USE_STD))

@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file regex.hpp
+    @brief Dual library for the regex implementation.
+    
+    Chooses either the Boost regex implementation or the C++ standard regex implementation.
+*/
+
+/** @def CXXD_REGEX_HEADER
+    @brief The regex header file name.
+    
+    The object-like macro expands to the include header file designation for the regex header file.
+    The macro is used with the syntax: #include CXXD_REGEX_HEADER
+*/
+
+/** @def CXXD_REGEX_NS
+    @brief The regex namespace.
+    
+    The object-like macro expands to the namespace for the regex implementation.
+*/
+
+/** @def CXXD_HAS_STD_REGEX
+    @brief Determines whether the C++ standard regex implementation or the Boost regex implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard regex implementation has been chosen
+    0 if the Boost regex implementation has been chosen.
+*/
 
 #if !defined(CXXD_REGEX_ERROR)
 	#if (defined(CXXD_REGEX_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_REGEX_USE_STD) || defined(CXXD_USE_STD))

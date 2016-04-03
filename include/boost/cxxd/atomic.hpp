@@ -1,9 +1,43 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file atomic.hpp
+    @brief Dual library for atomic data type.
+    
+    Chooses either the Boost atomic implementation or the C++ standard atomic implementation.
+*/
+
+/** @def CXXD_ATOMIC_HEADER
+    @brief The atomic header file name.
+    
+    The object-like macro expands to the include header file designation for the atomic header file.
+    The macro is used with the syntax: #include CXXD_ATOMIC_HEADER
+*/
+
+/** @def CXXD_ATOMIC_MACRO(macro)
+    @brief Generates an object-like macro name from the 'macro' name passed to it.
+    
+    The function-like macro expands to the name of an atmomic object-like macro name
+    for any given atomic macro name passed to it.
+*/
+
+/** @def CXXD_ATOMIC_NS
+    @brief The atomic namespace.
+    
+    The object-like macro expands to the namespace for the atomic implementation.
+*/
+
+/** @def CXXD_HAS_STD_ATOMIC
+    @brief Determines whether the C++ standard atomic implementation or the Boost atomic implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard atomic implementation has been chosen
+    0 if the Boost atomic implementation has been chosen.
+*/
 
 #if !defined(CXXD_ATOMIC_ERROR)
 	#if (defined(CXXD_ATOMIC_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_ATOMIC_USE_STD) || defined(CXXD_USE_STD))

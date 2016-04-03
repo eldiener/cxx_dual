@@ -1,9 +1,36 @@
-//  (C) Copyright Edward Diener 2015. 
+//  (C) Copyright Edward Diener 2015-2016. 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 /* Multiple inclusion must be allowed */
+
+/** @file function.hpp
+    @brief Dual library for the function implementation.
+    
+    Chooses either the Boost function implementation or the C++ standard function implementation.
+*/
+
+/** @def CXXD_FUNCTION_HEADER
+    @brief The function header file name.
+    
+    The object-like macro expands to the include header file designation for the function header file.
+    The macro is used with the syntax: #include CXXD_FUNCTION_HEADER
+*/
+
+/** @def CXXD_FUNCTION_NS
+    @brief The function namespace.
+    
+    The object-like macro expands to the namespace for the function implementation.
+*/
+
+/** @def CXXD_HAS_STD_FUNCTION
+    @brief Determines whether the C++ standard function implementation or the Boost function implementation has been chosen.
+    
+    The object-like macro expands to:
+    1 if the C++ standard function implementation has been chosen
+    0 if the Boost function implementation has been chosen.
+*/
 
 #if !defined(CXXD_FUNCTION_ERROR)
 	#if (defined(CXXD_FUNCTION_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_FUNCTION_USE_STD) || defined(CXXD_USE_STD))
