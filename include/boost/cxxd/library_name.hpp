@@ -6,8 +6,6 @@
 #if !defined(CXXD_LIBRARY_NAME_HPP)
 #define CXXD_LIBRARY_NAME_HPP
 
-#include <boost/preprocessor/config/config.hpp>
-
 /** @file library_name.hpp
 
     Contains CXXD_LIBRARY_NAME macro.
@@ -33,8 +31,8 @@
     Each optional variadic parameter is a Boost PP tuple with one to three
     elements. The Boost PP tuple designates:
     
-    - The name of a CXXD-mod. The CXXD-mod name is 'CXXD_' followed by the name of a CXXD-mod in uppercase.
-      The CXXD-mod names are specified in a separate list below.
+    - A CXXD-mod identifier. The CXXD-mod identifier is 'CXXD_' followed by the name of a CXXD-mod in uppercase.
+      The CXXD-mod identifiers are specified in a separate list below.
     - A mnemonic to be appended to the base library name if the CXXD-mod is using its C++ standard implementation.
     - A mnemonic to be appended to the base library name if the CXXD-mod is using its Boost implementation.
     
@@ -53,12 +51,12 @@
     However lack of a difference in the mnemonics, if it occurs, is not flagged 
     as an error in the processing of the macro.
     
-    If an optional parameter for a particular CXXD-mod which is included is not specified,
+    If an optional parameter is not specified for a particular CXXD-mod which is included,
     a default value is appended as a mnemonic for the particular CXXD-mod if the CXXD-mod
-    is using its C++ standard implementation. Otherwise if the CXXD-mod is using its Boost
+    is using its C++ standard implementation; otherwise by default if the CXXD-mod is using its Boost
     C++ standard implementation no value is appended by default.
     
-    The CXXD-mod names and their default values for the C++ standard implementation are:
+    The CXXD-mod identifiers and their default values for the C++ standard implementation are:
     
     - CXXD_ARRAY,_ar
     - CXXD_ATOMIC,_at
@@ -100,9 +98,13 @@
     
 */
 
+#include <boost/preprocessor/config/config.hpp>
+
 #if BOOST_PP_VARIADICS
 
-#define CXXD_LIBRARY_NAME(...)
+#include <cxxd/detail/library_name.hpp>
+
+#define CXXD_LIBRARY_NAME(...) CXXD_DETAIL_LIBRARY_NAME(__VA_ARGS__)
 
 #endif
 

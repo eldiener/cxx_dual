@@ -17,7 +17,17 @@
 #include <boost/vmd/tuple/push_back.hpp>
 #include <boost/cxxd/detail/mod_table.hpp>
 
-#define CXXD_DETAIL_CREATE_ID_TABLE \
+/*
+
+    Expands to a table of all included CXXD-mods
+    
+    The table consists of: 
+        CXXD mod id
+        0 or 1, for Boost implementation or C++ standard implementation respectively
+
+*/
+
+#define CXXD_DETAIL_CREATE_ID_TABLE() \
     CXXD_DETAIL_CREATE_ID_TABLE_RESULT \
         ( \
         BOOST_PP_WHILE \
@@ -37,6 +47,7 @@
 #define CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state) BOOST_PP_TUPLE_ELEM(1,state)
 #define CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state) BOOST_PP_TUPLE_ELEM(2,state)
 #define CXXD_DETAIL_CREATE_ID_TABLE_RESULT(state) BOOST_PP_TUPLE_ELEM(3,state)
+
 #define CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_ID(state) \
     BOOST_PP_TUPLE_ELEM \
         ( \
@@ -62,11 +73,21 @@
 /**/
 
 #define CXXD_DETAIL_CREATE_ID_TABLE_PRED(d,state) \
-    BOOST_PP_NOT_EQUAL_D \
+    BOOST_PP_NOT_EQUAL \
         ( \
-        d, \
         CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state), \
         CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state) \
+        ) \
+/**/
+
+#define CXXD_DETAIL_CREATE_ID_TABLE_OP_RES(state) \
+    BOOST_VMD_TUPLE_PUSH_BACK \
+        ( \
+        CXXD_DETAIL_CREATE_ID_TABLE_RESULT(state), \
+            ( \
+            CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_ID(state), \
+            CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state) \
+            ) \
         ) \
 /**/
 
@@ -75,20 +96,13 @@
     CXXD_DETAIL_CREATE_ID_TABLE_MODS(state), \
     BOOST_PP_INC(CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state)), \
     CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state), \
-    BOOST_VMD_TUPLE_PUSH_BACK \
+    BOOST_PP_IIF \
         ( \
-        CXXD_DETAIL_CREATE_ID_TABLE_RESULT(state), \
-            ( \
-            CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_ID(state), \
-            BOOST_PP_IIF \
-                ( \
-                BOOST_VMD_IS_NUMBER(CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state)), \
-                CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK, \
-                BOOST_VMD_EMPTY \
-                ) \
-            (state) \
-            ) \
+        BOOST_VMD_IS_NUMBER(CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state)), \
+        CXXD_DETAIL_CREATE_ID_TABLE_OP_RES, \
+        CXXD_DETAIL_CREATE_ID_TABLE_RESULT \
         ) \
+    (state) \
     ) \
 /**/
 
