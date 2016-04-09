@@ -39,10 +39,10 @@
     BOOST_PP_IIF \
         ( \
         BOOST_PP_EQUAL(BOOST_PP_SEQ_SIZE(seq),1), \
-        CXXD_DETAIL_LBN_NOV,
-        CXXD_DETAIL_LBN_PROC
-        )
-    (seq)
+        CXXD_DETAIL_LBN_NOV, \
+        CXXD_DETAIL_LBN_USER \
+        ) \
+    (seq) \
 /**/
 
 #define CXXD_DETAIL_LBN_NOV(seq) \
@@ -244,7 +244,7 @@
         ) \
 /**/
 
-#define CXXD_DETAIL_LBN_PROC(seq) \
+#define CXXD_DETAIL_LBN_USER(seq) \
     CXXD_DETAIL_LBN_NP \
         ( \
         BOOST_PP_SEQ_HEAD(seq), \

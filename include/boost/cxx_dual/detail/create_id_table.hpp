@@ -1,4 +1,4 @@
-//  (C) Copyright Edward Diener 2016. 
+//  (C) Copyright Edward Diener 2016.
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -6,16 +6,13 @@
 #if !defined(CXXD_DETAIL_CREATE_ID_TABLE_HPP)
 #define CXXD_DETAIL_CREATE_ID_TABLE_HPP
 
-#include <boost/preprocessor/arithmetic/inc.hpp>
-#include <boost/preprocessor/comparison/not_equal.hpp>
 #include <boost/preprocessor/control/iif.hpp>
-#include <boost/preprocessor/control/while.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
-#include <boost/preprocessor/tuple/size.hpp>
-#include <boost/vmd/empty.hpp>
+#include <boost/vmd/identity.hpp>
 #include <boost/vmd/is_number.hpp>
 #include <boost/vmd/tuple/push_back.hpp>
 #include <boost/cxx_dual/detail/mod_table.hpp>
+#include <boost/cxx_dual/detail/table_read_rows.hpp>
 
 /*
 
@@ -28,82 +25,34 @@
 */
 
 #define CXXD_DETAIL_CREATE_ID_TABLE() \
-    CXXD_DETAIL_CREATE_ID_TABLE_RESULT \
+    CXXD_DETAIL_TABLE_READ_ROWS(CXXD_DETAIL_MOD_TABLE,,CXXD_DETAIL_CREATE_ID_TABLE_RRMAC) \
+/**/
+
+#define CXXD_DETAIL_CREATE_ID_TABLE_RRMAC(d,row,state) \
+    BOOST_VMD_IDENTITY_RESULT \
         ( \
-        BOOST_PP_WHILE \
+        BOOST_PP_IIF \
             ( \
-            CXXD_DETAIL_CREATE_ID_TABLE_PRED, \
-            CXXD_DETAIL_CREATE_ID_TABLE_OP, \
-                ( \
-                CXXD_DETAIL_MOD_TABLE, \
-                0, \
-                BOOST_PP_TUPLE_SIZE(CXXD_DETAIL_MOD_TABLE), \
-                ) \
+            BOOST_VMD_IS_NUMBER(CXXD_DETAIL_CREATE_ID_TABLE_ROW_VALUE(row)), \
+            CXXD_DETAIL_CREATE_ID_TABLE_RRMAC_RES, \
+            BOOST_VMD_IDENTITY(state) \
             ) \
+        (row,state) \
         ) \
 /**/
 
-#define CXXD_DETAIL_CREATE_ID_TABLE_MODS(state) BOOST_PP_TUPLE_ELEM(0,state)
-#define CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state) BOOST_PP_TUPLE_ELEM(1,state)
-#define CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state) BOOST_PP_TUPLE_ELEM(2,state)
-#define CXXD_DETAIL_CREATE_ID_TABLE_RESULT(state) BOOST_PP_TUPLE_ELEM(3,state)
-
-#define CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_ID(state) \
-    BOOST_PP_TUPLE_ELEM \
-        ( \
-        0, \
-        BOOST_PP_TUPLE_ELEM \
-            ( \
-            CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state), \
-            CXXD_DETAIL_CREATE_ID_TABLE_MODS(state) \
-            ) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state) \
-    BOOST_PP_TUPLE_ELEM \
-        ( \
-        1, \
-        BOOST_PP_TUPLE_ELEM \
-            ( \
-            CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state), \
-            CXXD_DETAIL_CREATE_ID_TABLE_MODS(state) \
-            ) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_CREATE_ID_TABLE_PRED(d,state) \
-    BOOST_PP_NOT_EQUAL \
-        ( \
-        CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state), \
-        CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_CREATE_ID_TABLE_OP_RES(state) \
+#define CXXD_DETAIL_CREATE_ID_TABLE_RRMAC_RES(row,state) \
     BOOST_VMD_TUPLE_PUSH_BACK \
         ( \
-        CXXD_DETAIL_CREATE_ID_TABLE_RESULT(state), \
+        state, \
             ( \
-            CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_ID(state), \
-            CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state) \
+            CXXD_DETAIL_CREATE_ID_TABLE_ROW_ID(row), \
+            CXXD_DETAIL_CREATE_ID_TABLE_ROW_VALUE(row) \
             ) \
         ) \
 /**/
 
-#define CXXD_DETAIL_CREATE_ID_TABLE_OP(d,state) \
-    ( \
-    CXXD_DETAIL_CREATE_ID_TABLE_MODS(state), \
-    BOOST_PP_INC(CXXD_DETAIL_CREATE_ID_TABLE_INDEX(state)), \
-    CXXD_DETAIL_CREATE_ID_TABLE_SIZE(state), \
-    BOOST_PP_IIF \
-        ( \
-        BOOST_VMD_IS_NUMBER(CXXD_DETAIL_CREATE_ID_TABLE_CURRENT_CHECK(state)), \
-        CXXD_DETAIL_CREATE_ID_TABLE_OP_RES, \
-        CXXD_DETAIL_CREATE_ID_TABLE_RESULT \
-        ) \
-    (state) \
-    ) \
-/**/
+#define CXXD_DETAIL_CREATE_ID_TABLE_ROW_ID(row) BOOST_PP_TUPLE_ELEM(0,row)
+#define CXXD_DETAIL_CREATE_ID_TABLE_ROW_VALUE(row) BOOST_PP_TUPLE_ELEM(1,row)
 
 #endif // !defined(CXXD_DETAIL_CREATE_ID_TABLE_HPP)
