@@ -158,7 +158,7 @@ that a dependency is established.
 Because there is no dependency on the CXXD-mod itself when a particular CXXD header is included,
 CXXD allows inclusion of all CXDD-mode headers with a single include:
 
-  #include <boost/cxx_dual/cxx_dual.hpp>
+  #include <boost/cxx_dual/cxx_mods.hpp>
 
 I call this the "all-purpose" header.
 
