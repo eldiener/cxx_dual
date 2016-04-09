@@ -26,4 +26,5 @@ project cxxd_tests : requirements <warnings>on
 test-suite cxxd_data
     : 
        [ run test_all.cpp ]
+       [ run test_library_name.cpp ]
     ;

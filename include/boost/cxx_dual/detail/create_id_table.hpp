@@ -15,7 +15,7 @@
 #include <boost/vmd/empty.hpp>
 #include <boost/vmd/is_number.hpp>
 #include <boost/vmd/tuple/push_back.hpp>
-#include <boost/cxxd/detail/mod_table.hpp>
+#include <boost/cxx_dual/detail/mod_table.hpp>
 
 /*
 

@@ -24,12 +24,12 @@
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/vmd/identity.hpp>
 #include <boost/vmd/is_empty.hpp>
-#include <cxxd/detail/create_id_table.hpp>
-#include <cxxd/detail/library_name_register.hpp>
-#include <cxxd/detail/mod_append_table.hpp>
-#include <cxxd/detail/mods_all_register.hpp>
-#include <cxxd/detail/table_find.hpp>
-#include <cxxd/detail/table_read_rows.hpp>
+#include <boost/cxx_dual/detail/create_id_table.hpp>
+#include <boost/cxx_dual/detail/library_name_register.hpp>
+#include <boost/cxx_dual/detail/mod_append_table.hpp>
+#include <boost/cxx_dual/detail/mods_all_register.hpp>
+#include <boost/cxx_dual/detail/table_find.hpp>
+#include <boost/cxx_dual/detail/table_read_rows.hpp>
 
 #define CXXD_DETAIL_LIBRARY_NAME(...) \
     CXXD_DETAIL_LBN_PROC(BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__)) \

@@ -30,7 +30,7 @@ to each CXXD header, although the logic for each CXXD header is generally the sa
 
 As an example, using the regex CXXD-mod:
 
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 If Boost.config determines that the C++ standard regex library is available 
@@ -75,14 +75,14 @@ error will occur when the CXXD header for 'xxx' is included.
 As examples, using the regex CXXD-mod:
 
     #define CXXD_REGEX_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
 and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.   
 
     #define CXXD_REGEX_USE_STD
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', 
@@ -119,14 +119,14 @@ included.
 As examples, using the regex CXXD-mod:
 
     #define CXXD_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
 and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.   
 
     #define CXXD_USE_STD
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', 
@@ -135,14 +135,14 @@ regex library is available for use, else a preprocessing error is generated.
 
     #define CXXD_REGEX_USE_BOOST
     #define CXXD_USE_STD
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 A preprocessing error is generated.
 
     #define CXXD_REGEX_USE_STD
     #define CXXD_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 A preprocessing error is generated.
@@ -151,7 +151,7 @@ Using any CXXD header:
 
     #define CXXD_USE_BOOST
     #define CXXD_USE_STD
-    #include <boost/cxxd/'any_cxxd_header'
+    #include <boost/cxx_dual/'any_cxxd_header'
     ... code
     
 A preprocessing error is generated.
@@ -170,7 +170,7 @@ library directly.
 In other words, instead of:
 
     #define CXXD_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HDR
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
@@ -184,7 +184,7 @@ you can simply code:
 and instead of:
 
     #define CXXD_USE_STD
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HDR
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
@@ -271,9 +271,9 @@ standard library remains consistent for any particular module within a TU.
 In actual usage the programmer himself will usually not include the same CXXD header
 more than once in a TU. 
 
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... other #includes
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 The above is possible but will rarely happen.
@@ -283,13 +283,13 @@ header, often from another library, and that header will include a particular
 CXXD header.
 
     // Header another_library.hpp
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... other #includes
     ... header code
     
 A TU with:
 
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include <another_library.hpp>
     ... code
     
@@ -308,14 +308,14 @@ module is consistent throughout the TU.
 
 Let's look at how this works in practice with the default algorithm.
 
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... code
     
 This is our normal case where the default algorithm will choose the
 C++ standard regex library if it is available, otherwise the Boost
 regex library.
     
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include <another_library.hpp>
     ... code
     
@@ -324,7 +324,7 @@ a second time, by including another_library.hpp, it simply accepts
 the choice made the first time it was directly included.
 
     #define CXXD_REGEX_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #undef CXXD_REGEX_USE_BOOST
     #include <another_library.hpp>
     ... code
@@ -356,7 +356,7 @@ this we will use as an example a header file which has an overriding macro:
 
     // Header another_library_with_override.hpp
     #define CXXD_REGEX_USE_BOOST
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ... other #includes
     ... header code
     
@@ -368,7 +368,7 @@ a TU followed by the CXXD regex header, as in:
 
     #include <another_library_with_override.hpp>
     ...other header files
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     
 everything works fine. This is because we have the overridden macro
 in effect each time to determine that the Boost regex library will
@@ -376,7 +376,7 @@ be used.
 
 But if we reverse the order of includes:
 
-    #include <boost/cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     ...other header files
     #include <another_library_with_override.hpp>
     

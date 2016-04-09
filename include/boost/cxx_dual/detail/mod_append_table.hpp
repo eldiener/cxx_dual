@@ -6,9 +6,9 @@
 #if !defined(CXXD_DETAIL_MOD_APPEND_TABLE_HPP)
 #define CXXD_DETAIL_MOD_APPEND_TABLE_HPP
 
-#include <cxxd/detail/table_find.hpp>
-#include <cxxd/detail/library_name_register.hpp>
-#include <cxxd/detail/mods_all_register.hpp>
+#include <boost/cxx_dual/detail/table_find.hpp>
+#include <boost/cxx_dual/detail/library_name_register.hpp>
+#include <boost/cxx_dual/detail/mods_all_register.hpp>
 
 #define CXXD_DETAIL_MOD_APPEND_TABLE \
     ( \

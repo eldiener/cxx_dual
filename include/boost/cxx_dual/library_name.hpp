@@ -102,7 +102,7 @@
 
 #if BOOST_PP_VARIADICS
 
-#include <cxxd/detail/library_name.hpp>
+#include <boost/cxx_dual/detail/library_name.hpp>
 
 #define CXXD_LIBRARY_NAME(...) CXXD_DETAIL_LIBRARY_NAME(__VA_ARGS__)
 

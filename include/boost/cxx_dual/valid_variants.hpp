@@ -6,8 +6,6 @@
 #if !defined(CXXD_VALID_VARIANTS_HPP)
 #define CXXD_VALID_VARIANTS_HPP
 
-#include <boost/preprocessor/config/config.hpp>
-
 /** @file valid_variants.hpp
 
     Contains CXXD_VALID_VARIANTS macro.
@@ -96,6 +94,8 @@
     return 1. Otherwise the macro returns 0 if none of the variants match.
     
 */
+
+#include <boost/preprocessor/config/config.hpp>
 
 #if BOOST_PP_VARIADICS
 

@@ -31,30 +31,30 @@ and the appropriate information for each one:
 
 [table CXXD-Mods
 [[CXXD-Mod][Header file][Include macro][Namespace macro][Check C++ standard version macro]]
-[[array][<boost/cxxd/array.hpp>][CXXD_ARRAY_HDR][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
-[[atomic][<boost/cxxd/atomic.hpp>][CXXD_ATOMIC_HDR][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
-[[bind][<boost/cxxd/bind.hpp>][CXXD_BIND_HDR][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
-[[chrono][<boost/cxxd/chrono.hpp>][CXXD_CHRONO_HDR][CXXD_CHRONO_NS][CXXD_HAS_STD_CHRONO]]
-[[condition variable][<boost/cxxd/condition_variable.hpp>][CXXD_CONDITION_VARIABLE_HDR][CXXD_CONDITION_VARIABLE_NS][CXXD_HAS_STD_CONDITION_VARIABLE]]
-[[function][<boost/cxxd/function.hpp>][CXXD_FUNCTION_HDR][CXXD_FUNCTION_NS][CXXD_HAS_STD_FUNCTION]]
-[[hash][<boost/cxxd/hash.hpp>][CXXD_HASH_HDR][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
-[[mem_fn][<boost/cxxd/mem_fn.hpp>][CXXD_MEM_FN_HDR][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
-[[mutex][<boost/cxxd/mutex.hpp>][CXXD_MUTEX_HDR][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
-[[random][<boost/cxxd/random.hpp>][CXXD_RANDOM_HDR][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
-[[ratio][<boost/cxxd/ratio.hpp>][CXXD_RATIO_HDR][CXXD_RATIO_NS][CXXD_HAS_STD_RATIO]]
-[[ref][<boost/cxxd/ref.hpp>][CXXD_REF_HDR][CXXD_REF_NS][CXXD_HAS_STD_REF]]
-[[regex][<boost/cxxd/regex.hpp>][CXXD_REGEX_HDR][CXXD_REGEX_NS][CXXD_HAS_STD_REGEX]]
-[[shared_mutex][<boost/cxxd/shared_mutex.hpp>][CXXD_SHARED_MUTEX_HDR][CXXD_SHARED_MUTEX_NS][CXXD_HAS_STD_SHARED_MUTEX]]
-[[shared_ptr][<boost/cxxd/shared_ptr.hpp>][CXXD_SHARED_PTR_HDR][CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
-[[system][<boost/cxxd/shared_ptr.hpp>][CXXD_SYSTEM_HDR][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
-[[thread][<boost/cxxd/thread.hpp>][CXXD_THREAD_HDR][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
-[[tuple][<boost/cxxd/tuple.hpp>][CXXD_TUPLE_HDR][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
-[[type_index][<boost/cxxd/type_index.hpp>][CXXD_TYPE_INDEX_HDR][CXXD_TYPE_INDEX_NS][CXXD_HAS_STD_TYPE_INDEX]]
-[[type_traits][<boost/cxxd/type_traits.hpp>][CXXD_TYPE_TRAITS_HDR][CXXD_TYPE_TRAITS_NS][CXXD_HAS_STD_TYPE_TRAITS]]
-[[unordered_map][<boost/cxxd/unordered_map.hpp>][CXXD_UNORDERED_MAP_HDR][CXXD_UNORDERED_MAP_NS][CXXD_HAS_STD_UNORDERED_MAP]]
-[[unordered_multimap][<boost/cxxd/unordered_multimap.hpp>][CXXD_UNORDERED_MULTIMAP_HDR][CXXD_UNORDERED_MULTIMAP_NS][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
-[[unordered_multiset][<boost/cxxd/unordered_multiset.hpp>][CXXD_UNORDERED_MULTISET_HDR][CXXD_UNORDERED_MULTISET_NS][CXXD_HAS_STD_UNORDERED_MULTISET]]
-[[unordered_set][<boost/cxxd/unordered_set.hpp>][CXXD_UNORDERED_SET_HDR][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
+[[array][<boost/cxx_dual/array.hpp>][CXXD_ARRAY_HDR][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
+[[atomic][<boost/cxx_dual/atomic.hpp>][CXXD_ATOMIC_HDR][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
+[[bind][<boost/cxx_dual/bind.hpp>][CXXD_BIND_HDR][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
+[[chrono][<boost/cxx_dual/chrono.hpp>][CXXD_CHRONO_HDR][CXXD_CHRONO_NS][CXXD_HAS_STD_CHRONO]]
+[[condition variable][<boost/cxx_dual/condition_variable.hpp>][CXXD_CONDITION_VARIABLE_HDR][CXXD_CONDITION_VARIABLE_NS][CXXD_HAS_STD_CONDITION_VARIABLE]]
+[[function][<boost/cxx_dual/function.hpp>][CXXD_FUNCTION_HDR][CXXD_FUNCTION_NS][CXXD_HAS_STD_FUNCTION]]
+[[hash][<boost/cxx_dual/hash.hpp>][CXXD_HASH_HDR][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
+[[mem_fn][<boost/cxx_dual/mem_fn.hpp>][CXXD_MEM_FN_HDR][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
+[[mutex][<boost/cxx_dual/mutex.hpp>][CXXD_MUTEX_HDR][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
+[[random][<boost/cxx_dual/random.hpp>][CXXD_RANDOM_HDR][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
+[[ratio][<boost/cxx_dual/ratio.hpp>][CXXD_RATIO_HDR][CXXD_RATIO_NS][CXXD_HAS_STD_RATIO]]
+[[ref][<boost/cxx_dual/ref.hpp>][CXXD_REF_HDR][CXXD_REF_NS][CXXD_HAS_STD_REF]]
+[[regex][<boost/cxx_dual/regex.hpp>][CXXD_REGEX_HDR][CXXD_REGEX_NS][CXXD_HAS_STD_REGEX]]
+[[shared_mutex][<boost/cxx_dual/shared_mutex.hpp>][CXXD_SHARED_MUTEX_HDR][CXXD_SHARED_MUTEX_NS][CXXD_HAS_STD_SHARED_MUTEX]]
+[[shared_ptr][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SHARED_PTR_HDR][CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
+[[system][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_HDR][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
+[[thread][<boost/cxx_dual/thread.hpp>][CXXD_THREAD_HDR][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
+[[tuple][<boost/cxx_dual/tuple.hpp>][CXXD_TUPLE_HDR][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
+[[type_index][<boost/cxx_dual/type_index.hpp>][CXXD_TYPE_INDEX_HDR][CXXD_TYPE_INDEX_NS][CXXD_HAS_STD_TYPE_INDEX]]
+[[type_traits][<boost/cxx_dual/type_traits.hpp>][CXXD_TYPE_TRAITS_HDR][CXXD_TYPE_TRAITS_NS][CXXD_HAS_STD_TYPE_TRAITS]]
+[[unordered_map][<boost/cxx_dual/unordered_map.hpp>][CXXD_UNORDERED_MAP_HDR][CXXD_UNORDERED_MAP_NS][CXXD_HAS_STD_UNORDERED_MAP]]
+[[unordered_multimap][<boost/cxx_dual/unordered_multimap.hpp>][CXXD_UNORDERED_MULTIMAP_HDR][CXXD_UNORDERED_MULTIMAP_NS][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
+[[unordered_multiset][<boost/cxx_dual/unordered_multiset.hpp>][CXXD_UNORDERED_MULTISET_HDR][CXXD_UNORDERED_MULTISET_NS][CXXD_HAS_STD_UNORDERED_MULTISET]]
+[[unordered_set][<boost/cxx_dual/unordered_set.hpp>][CXXD_UNORDERED_SET_HDR][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
 ]
 
 Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
@@ -71,7 +71,7 @@ equivalent macro name for the 'atomic' CXXD-mod.
 The form of using these macros in a translation unit will now be given, 
 choosing the regex library as an example.
 
-  #include <boost/cxxd/regex.hpp>
+  #include <boost/cxx_dual/regex.hpp>
   #include CXXD_REGEX_HDR
   
   void SomeFunction()
@@ -103,7 +103,7 @@ As an example let's say that you want to create a compile error if the compiler
 does not support the C++ standard type_traits library, even though the Boost type_traits
 library could also normally be used.
 
-  #include <boost/cxxd/type_traits.hpp>
+  #include <boost/cxx_dual/type_traits.hpp>
   #if !CXXD_HAS_STD_TYPE_TRAITS
   #error C++ standard type_traits library needed and not present.
   #endif
@@ -115,7 +115,7 @@ more prevalent with Boost than with the C++ standard library, since the latter a
 always has a single header file which includes library functionality for
 all parts of a library. 
     
-  #include <boost/cxxd/type_traits.hpp>
+  #include <boost/cxx_dual/type_traits.hpp>
   #if CXXD_HAS_STD_TYPE_TRAITS
   #include CXXD_TYPE_TRAITS_HDR
   #else
@@ -128,7 +128,7 @@ depending on whether or not a particular CXXD-mod is using the C++ standard
 or Boost version. Of course you hope to minimize these situations but occasionally
 they happen:
   
-  #include <boost/cxxd/thread.hpp>
+  #include <boost/cxx_dual/thread.hpp>
   #include CXXD_THREAD_HDR
   // Code...
   
@@ -158,7 +158,7 @@ that a dependency is established.
 Because there is no dependency on the CXXD-mod itself when a particular CXXD header is included,
 CXXD allows inclusion of all CXDD-mode headers with a single include:
 
-  #include <boost/cxxd/cxx_dual.hpp>
+  #include <boost/cxx_dual/cxx_dual.hpp>
 
 I call this the "all-purpose" header.
 

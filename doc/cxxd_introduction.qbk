@@ -120,7 +120,7 @@ of equivalent BBB and SSS libraries with a single set of code.
 
 For any given library called 'XXX', which has a Boost version BBB and an 
 equivalent C++ standard library SSS, the user of the CXXD library starts 
-by including a header file called '<boost/cxxd/XXX.hpp>'. This action is
+by including a header file called '<boost/cxx_dual/XXX.hpp>'. This action is
 called 'including a CXXD-mod'.
 
 In this documentation the library 'XXX" is called 
@@ -164,7 +164,7 @@ Somewhere in your code you want to use the XXX CXXD-mod, without worrying whethe
 you are using the Boost version or the C++ standard library version of XXX. Your code
 in general may look like:
 
-    #include <boost/cxxd/XXX.hpp> // Creates the macros for module XXX by including the appropriate CXXD header
+    #include <boost/cxx_dual/XXX.hpp> // Creates the macros for module XXX by including the appropriate CXXD header
     #include CXXD_XXX_HEADER      // Includes the appropriate CXXD-mod header file
 
     void SomeFunction()
