@@ -10,11 +10,8 @@
 #include <boost/preprocessor/arithmetic/inc.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/preprocessor/comparison/greater.hpp>
-#include <boost/preprocessor/comparison/not_equal.hpp>
 #include <boost/preprocessor/control/expr_iif.hpp>
 #include <boost/preprocessor/control/iif.hpp>
-#include <boost/preprocessor/control/while.hpp>
-#include <boost/preprocessor/logical/bitand.hpp>
 #include <boost/preprocessor/logical/compl.hpp>
 #include <boost/preprocessor/punctuation/paren_if.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
@@ -25,7 +22,6 @@
 #include <boost/preprocessor/tuple/replace.hpp>
 #include <boost/preprocessor/tuple/size.hpp>
 #include <boost/preprocessor/variadic/to_seq.hpp>
-#include <boost/vmd/equal.hpp>
 #include <boost/vmd/identity.hpp>
 #include <boost/vmd/is_empty.hpp>
 #include <cxxd/detail/create_id_table.hpp>
@@ -133,20 +129,16 @@
 */
 
 #define CXXD_DETAIL_LBN_IS_MODS_ALL(idt) \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_SIZE(idt,BOOST_PP_TUPLE_SIZE(idt)) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_SIZE(idt,size) \
     BOOST_PP_IIF \
         ( \
-        BOOST_PP_EQUAL(size,1), \
+        BOOST_PP_EQUAL(BOOST_PP_TUPLE_SIZE(idt),1), \
         CXXD_DETAIL_LBN_IS_MODS_ALL_SINGLE, \
         CXXD_DETAIL_LBN_IS_MODS_ALL_MP \
         ) \
-    (idt,size) \
+    (idt) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_SINGLE(idt,ignore) \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_SINGLE(idt) \
     BOOST_PP_TUPLE_ELEM \
         ( \
         1, \
@@ -154,108 +146,53 @@
         ) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_MP(idt,size) \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_MP(idt) \
     CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT \
         ( \
-        BOOST_PP_WHILE \
+        CXXD_DETAIL_TABLE_READ_ROWS \
             ( \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_PRED, \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_OP, \
-            (idt,0,size,,) \
+            idt, \
+            (,), \
+            CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC, \
+            1 \
             ) \
         ) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_IDT(state)    BOOST_PP_TUPLE_ELEM(0,state)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state)  BOOST_PP_TUPLE_ELEM(1,state)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_SIZE(state)   BOOST_PP_TUPLE_ELEM(2,state)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state)   BOOST_PP_TUPLE_ELEM(3,state)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT(state) BOOST_PP_TUPLE_ELEM(4,state)
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_CURRENT_VALUE(state) \
-    BOOST_PP_TUPLE_ELEM \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC(d,row,state) \
+    CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_VALUE \
         ( \
-        1, \
-        BOOST_PP_TUPLE_ELEM \
-            ( \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state), \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_IDT(state) \
-            ) \
+        CXXD_DETAIL_LBN_IS_MODS_ALL_ROW_VALUE(row), \
+        state \
         ) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_PRED(d,state) \
-    BOOST_PP_BITAND \
-        ( \
-        BOOST_PP_NOT_EQUAL \
-            ( \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state), \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_SIZE(state) \
-            ), \
-        BOOST_VMD_EQUAL \
-            ( \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state), \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT(state) \
-            ) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_OP(d,state) \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_OP_UI \
-        ( \
-        d, \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_OP_VALUE \
-            ( \
-            d, \
-            state, \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_CURRENT_VALUE(state) \
-            ) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_OP_VALUE(d,state,value) \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_VALUE(value,state) \
     BOOST_PP_IIF \
         ( \
-        BOOST_PP_EQUAL(0,CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state)), \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_OP_FIRST, \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_OP_NORMAL \
+        BOOST_VMD_IS_EMPTY(CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state)), \
+        CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_FIRST, \
+        CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_NORMAL \
         ) \
-    (d,state,value) \
+    (value,state) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_OP_FIRST(d,state,value) \
-    ( \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_IDT(state), \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state), \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_SIZE(state), \
-    value, \
-    value \
-    ) \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_FIRST(value,ignore) \
+    (0,(value,value)) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_OP_NORMAL(d,state,value) \
-    ( \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_IDT(state), \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state), \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_SIZE(state), \
-    value, \
-    BOOST_PP_EXPR_IIF \
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_NORMAL(value,state) \
+    BOOST_PP_IIF \
         ( \
         BOOST_PP_EQUAL(value,CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state)), \
-        value \
+        (0,state), \
+        (1,(value,)) \
         ) \
-    ) \
 /**/
 
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_OP_UI(d,state) \
-    BOOST_PP_TUPLE_REPLACE_D \
-        ( \
-        d, \
-        state, \
-        1, \
-        BOOST_PP_INC(CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_INDEX(state)) \
-        ) \
-/**/
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_ROW_VALUE(row) BOOST_PP_TUPLE_ELEM(1,row)
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state) BOOST_PP_TUPLE_ELEM(0,state)
+#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT(state) BOOST_PP_TUPLE_ELEM(1,state)
 
 /*
 
