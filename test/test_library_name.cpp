@@ -4,21 +4,21 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-// #define CXXD_ARRAY_USE_BOOST
+#define CXXD_ARRAY_USE_BOOST
 // #define CXXD_ARRAY_USE_STD
-// #include <boost/cxx_dual/array.hpp>
+#include <boost/cxx_dual/array.hpp>
 // #define CXXD_ATOMIC_USE_BOOST
-// #define CXXD_ATOMIC_USE_STD
-// #include <boost/cxx_dual/atomic.hpp>
+#define CXXD_ATOMIC_USE_STD
+#include <boost/cxx_dual/atomic.hpp>
 // #define CXXD_BIND_USE_BOOST
 // #define CXXD_BIND_USE_STD
-// #include <boost/cxx_dual/bind.hpp>
+#include <boost/cxx_dual/bind.hpp>
 // #define CXXD_CHRONO_USE_BOOST
 // #define CXXD_CHRONO_USE_STD
-// #include <boost/cxx_dual/chrono.hpp>
+#include <boost/cxx_dual/chrono.hpp>
 // #define CXXD_CONDITION_VARIABLE_USE_BOOST
-// #define CXXD_CONDITION_VARIABLE_USE_STD
-// #include <boost/cxx_dual/condition_variable.hpp>
+#define CXXD_CONDITION_VARIABLE_USE_STD
+#include <boost/cxx_dual/condition_variable.hpp>
 // #define CXXD_FUNCTION_USE_BOOST
 // #define CXXD_FUNCTION_USE_STD
 // #include <boost/cxx_dual/function.hpp>
@@ -77,10 +77,16 @@
 // #define CXXD_UNORDERED_SET_USE_STD
 // #include <boost/cxx_dual/unordered_set.hpp>
 
-#include <boost/cxx_dual/library_name.hpp>
+#include <boost/preprocessor/tuple/size.hpp>
+#include <boost/cxx_dual/detail/create_id_table.hpp>
+#include <boost/cxx_dual/detail/library_name_register.hpp>
+#include <boost/cxx_dual/detail/mods_all_register.hpp>
+#include <boost/cxx_dual/detail/table_find.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 int main()
   {
+  BOOST_TEST_EQ(BOOST_PP_TUPLE_SIZE(CXXD_DETAIL_CREATE_ID_TABLE()),5);
+  BOOST_TEST_EQ(CXXD_DETAIL_TABLE_FIND(CXXD_DETAIL_CREATE_ID_TABLE(),0,CXXD_ARRAY,1),0);
   return boost::report_errors();
   }

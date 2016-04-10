@@ -18,12 +18,17 @@
 #include <boost/preprocessor/control/expr_iif.hpp>
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/facilities/overload.hpp>
+#include <boost/preprocessor/logical/bitand.hpp>
+#include <boost/preprocessor/logical/bitor.hpp>
 #include <boost/preprocessor/repetition/for.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/replace.hpp>
 #include <boost/preprocessor/tuple/size.hpp>
 #include <boost/preprocessor/variadic/size.hpp>
+#include <boost/vmd/empty.hpp>
 #include <boost/vmd/equal.hpp>
+#include <boost/vmd/is_number.hpp>
+#include <boost/vmd/is_tuple.hpp>
 
 /*
 
@@ -76,6 +81,28 @@
 /**/
 
 #define CXXD_DETAIL_TABLE_FIND_PARAMS(table,findex,value,rindex) \
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_BITAND \
+            ( \
+            BOOST_VMD_IS_TUPLE(table), \
+            BOOST_PP_BITAND \
+                ( \
+                BOOST_VMD_IS_NUMBER(findex), \
+                BOOST_PP_BITOR \
+                    ( \
+                    BOOST_VMD_IS_EMPTY(rindex), \
+                    BOOST_VMD_IS_NUMBER(rindex) \
+                    ) \
+                ) \
+            ), \
+        CXXD_DETAIL_TABLE_FIND_PARAMS_GO, \
+        BOOST_VMD_EMPTY \
+        ) \
+    (table,findex,value,rindex) \
+/**/
+
+#define CXXD_DETAIL_TABLE_FIND_PARAMS_GO(table,findex,value,rindex) \
     BOOST_PP_FOR \
         ( \
         (value,0,BOOST_PP_TUPLE_SIZE(table),table,findex,rindex), \
@@ -127,12 +154,12 @@
 #define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE(state) \
     CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW \
         ( \
-        CXXD_DETAIL_TABLE_FIND_STATE_RETURN_INDEX(state), \
         BOOST_PP_TUPLE_ELEM \
             ( \
             CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state), \
             CXXD_DETAIL_TABLE_FIND_STATE_TABLE(state) \
-            ) \
+            ), \
+        CXXD_DETAIL_TABLE_FIND_STATE_RETURN_INDEX(state) \
         ) \
 /**/
 
