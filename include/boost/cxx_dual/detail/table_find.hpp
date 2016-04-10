@@ -1,4 +1,4 @@
-//  (C) Copyright Edward Diener 2016. 
+//  (C) Copyright Edward Diener 2016 
 //  Use, modification and distribution are subject to the 
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -6,27 +6,23 @@
 #if !defined(CXXD_DETAIL_TABLE_FIND_HPP)
 #define CXXD_DETAIL_TABLE_FIND_HPP
 
-#include <boost/vmd/is_empty.hpp>
+#include <boost/vmd/empty.hpp>
 
 #if BOOST_VMD_MSVC
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/facilities/empty.hpp>
 #endif
 
-#include <boost/preprocessor/arithmetic/inc.hpp>
-#include <boost/preprocessor/comparison/not_equal.hpp>
-#include <boost/preprocessor/control/expr_iif.hpp>
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/facilities/overload.hpp>
 #include <boost/preprocessor/logical/bitand.hpp>
 #include <boost/preprocessor/logical/bitor.hpp>
-#include <boost/preprocessor/repetition/for.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/tuple/replace.hpp>
-#include <boost/preprocessor/tuple/size.hpp>
-#include <boost/preprocessor/variadic/size.hpp>
-#include <boost/vmd/empty.hpp>
+
 #include <boost/vmd/equal.hpp>
+#include <boost/vmd/identity.hpp>
+#include <boost/vmd/is_empty.hpp>
 #include <boost/vmd/is_number.hpp>
 #include <boost/vmd/is_tuple.hpp>
 
@@ -103,107 +99,76 @@
 /**/
 
 #define CXXD_DETAIL_TABLE_FIND_PARAMS_GO(table,findex,value,rindex) \
-    BOOST_PP_FOR \
+    CXXD_DETAIL_TABLE_FIND_STATE_RETURN_VALUE \
         ( \
-        (value,0,BOOST_PP_TUPLE_SIZE(table),table,findex,rindex), \
-        CXXD_DETAIL_TABLE_FIND_PRED, \
-        CXXD_DETAIL_TABLE_FIND_OP, \
-        CXXD_DETAIL_TABLE_FIND_MACRO \
+        CXXD_DETAIL_TABLE_READ_ROWS(table,(findex,value,rindex,),CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC,1) \
         ) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_STATE_VALUE(state) BOOST_PP_TUPLE_ELEM(0,state)
-#define CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state) BOOST_PP_TUPLE_ELEM(1,state)
-#define CXXD_DETAIL_TABLE_FIND_STATE_SIZE(state) BOOST_PP_TUPLE_ELEM(2,state)
-#define CXXD_DETAIL_TABLE_FIND_STATE_TABLE(state) BOOST_PP_TUPLE_ELEM(3,state)
-#define CXXD_DETAIL_TABLE_FIND_STATE_FIND_INDEX(state) BOOST_PP_TUPLE_ELEM(4,state)
-#define CXXD_DETAIL_TABLE_FIND_STATE_RETURN_INDEX(state) BOOST_PP_TUPLE_ELEM(5,state)
-
-#define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_VALUE(state) \
-    BOOST_PP_TUPLE_ELEM \
+#define CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC(d,row,state) \
+    BOOST_VMD_IDENTITY_RESULT \
         ( \
-        CXXD_DETAIL_TABLE_FIND_STATE_FIND_INDEX(state), \
-        BOOST_PP_TUPLE_ELEM \
+        BOOST_PP_IIF \
             ( \
-            CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state), \
-            CXXD_DETAIL_TABLE_FIND_STATE_TABLE(state) \
+            BOOST_VMD_EQUAL_D \
+                ( \
+                d, \
+                CXXD_DETAIL_TABLE_FIND_STATE_VALUE(state), \
+                CXXD_DETAIL_TABLE_FIND_STATE_ROW_FIND_VALUE(row,state) \
+                ), \
+            CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC_FOUND, \
+            BOOST_VMD_IDENTITY((0,state)) \
             ) \
+        (d,row,state) \
         ) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW_EMPTY(row,ri) row
-
-#define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW_FULL(row,ri) \
-    BOOST_PP_TUPLE_ELEM \
+#define CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC_FOUND(d,row,state) \
+    ( \
+    1, \
+    BOOST_PP_TUPLE_REPLACE_D \
         ( \
-        ri, \
-        row \
+        d, \
+        state, \
+        3, \
+        CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE(row,state) \
         ) \
+    ) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW(row,ri) \
-    BOOST_PP_IIF \
-        ( \
-        BOOST_VMD_IS_EMPTY(ri), \
-        CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW_EMPTY, \
-        CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW_FULL \
-        ) \
-    (row,ri) \
+#define CXXD_DETAIL_TABLE_FIND_STATE_FIND_INDEX(state) BOOST_PP_TUPLE_ELEM(0,state)
+#define CXXD_DETAIL_TABLE_FIND_STATE_VALUE(state) BOOST_PP_TUPLE_ELEM(1,state)
+#define CXXD_DETAIL_TABLE_FIND_STATE_RETURN_INDEX(state) BOOST_PP_TUPLE_ELEM(2,state)
+#define CXXD_DETAIL_TABLE_FIND_STATE_RETURN_VALUE(state) BOOST_PP_TUPLE_ELEM(3,state)
+
+#define CXXD_DETAIL_TABLE_FIND_STATE_ROW_FIND_VALUE(row,state) \
+    BOOST_PP_TUPLE_ELEM(CXXD_DETAIL_TABLE_FIND_STATE_FIND_INDEX(state),row) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE(state) \
-    CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE_ROW \
+#define CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE(row,state) \
+    CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE_RI \
         ( \
-        BOOST_PP_TUPLE_ELEM \
-            ( \
-            CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state), \
-            CXXD_DETAIL_TABLE_FIND_STATE_TABLE(state) \
-            ), \
+        row, \
+        state, \
         CXXD_DETAIL_TABLE_FIND_STATE_RETURN_INDEX(state) \
         ) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_INCREMENT(state) \
-    BOOST_PP_INC(CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state)) \
-/**/
-
-#define CXXD_DETAIL_TABLE_FIND_VALUE_MATCH(state) \
-    BOOST_VMD_EQUAL \
+#define CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE_RI(row,state,ri) \
+    BOOST_VMD_IDENTITY_RESULT \
         ( \
-        CXXD_DETAIL_TABLE_FIND_STATE_VALUE(state), \
-        CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_VALUE(state) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_TABLE_FIND_PRED(r,state) \
-    BOOST_PP_NOT_EQUAL \
-        ( \
-        CXXD_DETAIL_TABLE_FIND_STATE_TABLE_INDEX(state), \
-        CXXD_DETAIL_TABLE_FIND_STATE_SIZE(state) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_TABLE_FIND_OP(r,state) \
-    BOOST_PP_TUPLE_REPLACE \
-        ( \
-        state, \
-        1, \
         BOOST_PP_IIF \
             ( \
-            CXXD_DETAIL_TABLE_FIND_VALUE_MATCH(state), \
-            CXXD_DETAIL_TABLE_FIND_STATE_SIZE, \
-            CXXD_DETAIL_TABLE_FIND_INCREMENT \
+            BOOST_VMD_IS_EMPTY(ri), \
+            BOOST_VMD_IDENTITY(row), \
+            CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE_FIELD \
             ) \
-        (state) \
+        (row,state,ri) \
         ) \
 /**/
 
-#define CXXD_DETAIL_TABLE_FIND_MACRO(r,state) \
-    BOOST_PP_EXPR_IIF \
-        ( \
-        CXXD_DETAIL_TABLE_FIND_VALUE_MATCH(state), \
-        CXXD_DETAIL_TABLE_FIND_STATE_CURRENT_RETURN_VALUE(state) \
-        ) \
+#define CXXD_DETAIL_TABLE_FIND_STATE_ROW_RETURN_VALUE_FIELD(row,state,ri) \
+    BOOST_PP_TUPLE_ELEM(ri,row) \
 /**/
 
 #endif // !defined(CXXD_DETAIL_TABLE_FIND_HPP)
