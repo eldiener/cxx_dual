@@ -13,6 +13,7 @@
 #include <boost/preprocessor/control/expr_iif.hpp>
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/logical/compl.hpp>
+#include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/punctuation/paren_if.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
 #include <boost/preprocessor/seq/seq.hpp>
@@ -279,6 +280,7 @@
 
 #define CXXD_DETAIL_LBN_NZSEQ_MACRO(r,size,index,elem) \
     BOOST_PP_LPAREN_IF(BOOST_PP_COMPL(index)) \
+    BOOST_PP_COMMA_IF(index) \
     CXXD_DETAIL_LBN_NZSEQ_MACRO_ELEM(elem,BOOST_PP_TUPLE_SIZE(elem)) \
     BOOST_PP_RPAREN_IF(BOOST_PP_EQUAL(size,BOOST_PP_INC(index))) \
 /**/

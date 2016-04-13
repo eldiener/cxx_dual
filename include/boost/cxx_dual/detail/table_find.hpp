@@ -26,6 +26,8 @@
 #include <boost/vmd/is_number.hpp>
 #include <boost/vmd/is_tuple.hpp>
 
+#include <boost/cxx_dual/detail/table_read_rows_find.hpp>
+
 /*
 
     Finds a specific value in a table.
@@ -101,7 +103,7 @@
 #define CXXD_DETAIL_TABLE_FIND_PARAMS_GO(table,findex,value,rindex) \
     CXXD_DETAIL_TABLE_FIND_STATE_RETURN_VALUE \
         ( \
-        CXXD_DETAIL_TABLE_READ_ROWS(table,(findex,value,rindex,),CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC,1) \
+        CXXD_DETAIL_TABLE_READ_ROWS_FIND(table,(findex,value,rindex,),CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC,1) \
         ) \
 /**/
 
