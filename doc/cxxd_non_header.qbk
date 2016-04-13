@@ -446,6 +446,7 @@ done in the alphabetical order of CXXD mods being used. This manual scheme is
 purely arbitrary for naming variants when building a non-header only library and,
 of course, the library developer using CXXD may choose whatever manual scheme
 he wishes to give each variant he chooses to support a unique name. 
+
 Later in this documentation section I will discuss CXXD support in the form of a 
 CXXD macro which which the library developer can use to automate the naming scheme
 if he wishes with a single invocation of the macro.
@@ -496,7 +497,9 @@ time of the variants we do not support. Of course we could and should also
 notify the end-user of MyLib in the documentation about the variants we do
 or do not support. But the nice thing is that we can produce a compile-time
 error, in the form of a preprocessor error, while still using CXXD to limit
-the subset of variants. Later in this documentation section I will discuss 
+the subset of variants. 
+
+Later in this documentation section I will discuss 
 CXXD support in the form of a CXXD macro which which the library developer 
 can use to test for all his valid possibilities with a single macro invocation.
 
@@ -518,11 +521,11 @@ compiling with C++11 on up support or not. Now are MyLibName.hpp gets much simpl
     #endif
     
 Here we have further simplified the number of variants, theoretically producing builds which either
-support C++11 on up or not, the latter usually meaning C++03 support. Of course this may produce
-problems if the end-user wants to compile in C++11 mode but the compiler the end-user uses has 
-C++ standard support for one or more of the CXXD modules we are using but not all of those we
-are using. However even in this case the end-user could turn off C++11 mode when compiling and 
-link to the MyLib variant which supports all Boost libraries for the CXXD modules.
+support C++11 on up or do not support C++11 on up, the latter usually meaning C++03 support. 
+Of course this may produce problems if the end-user wants to compile in C++11 mode but the compiler
+the end-user uses has C++ standard support for one or more of the CXXD modules we are using but not
+all of those we are using. However even in this case the end-user could turn off C++11 mode when 
+compiling and link to the MyLib variant which supports all Boost libraries for the CXXD modules.
 
 In these examples the library author needs to adjust the build of his library
 to only build the variants which he allows. In Boost terms rhis means modifying
@@ -621,7 +624,7 @@ in slightly different ways in the two macros which follow.
 [header Macro naming a library variant]
 
 There is a macro in CXXD for naming a library variant based on the dual library chosen
-for whatever CXXD-mods are being included when the macro is invoked. This macro provides
+for whatever CXXD-mods are being included when the macro is actually invoked. This macro provides
 an automatic methodology for naming which can replace a manual method the end-user
 may have chosen to use. The macro is a variadic macro whose name and signature is:
 
@@ -635,8 +638,8 @@ Boost PP tuples. Each tuple has one to three elements. The first element, which 
 is one of the CXXD-mod identifiers given above.
 The second optional element, which may be empty, is a preprocessor identifier to be appended 
 to the base name if the particular CXXD-mod is being used and the C++ standard library has been 
-chosen as the dual library. The third optional element, which may also be empty or obviously 
-left out entirely, is a preprocessor identifier to be added to the base name if the particular 
+chosen as the dual library. The third optional element, which may also be empty, is a preprocessor 
+identifier to be added to the base name if the particular
 CXXD-mod is being used and the Boost library has been chosen as the dual library. The optional
 parameters allow the macro invoker to specify his own identifiers to be appended to the base
 library name for each CXXD-mod being included. If he does not specify his own identifier
@@ -696,8 +699,8 @@ the final library variant name is the base name of the library with '_std' appen
 if all the CXXD-mods being used have the Boost library as the dual library the final library 
 variant name is just the base name.
 
-Any appended mnemonics by default are added to the base name in the alphabetical
-order in which the individual CXXD-mods occur above and not in the order in which
+In the default case any appended mnemonics are added to the base name in the alphabetical
+order in which the individual CXXD-mods occur in the default table above and not in the order in which
 the CXXD-mods are included.
 
 The way that the CXXD_LIBRARY_NAME works, when the single required base name is passed to the macro, 
@@ -708,7 +711,7 @@ The default naming scheme guarantees that if Boost is consistently being
 chosen instead of the equivalent C++ standard library, which is what will naturally
 happen in the vast majority of cases if C++11 on up mode is not being used during
 compilation, the library name generated is the same as the base name. This latter is, I believe,
-what Boost library authors wouold expect in their non-header only libraries.
+what Boost library authors would expect in their non-header only libraries.
 
 The end-user changes the default naming scheme by passing as optional parameters
 one or more Boost PP tuples for each CXXD-mod where he wants a different mnemonic to be appended
@@ -759,7 +762,7 @@ These arbitrarily chosen combinations are specified purely to illustrate how the
     
 If we look at the MyLibName.hpp as presented previously we can use the CXXD_LIBRARY_NAME
 to simplify the syntax of the file. In the first case, where we do not try to limit the
-variants, our file could be:
+variants, our file would be:
     
     // Header file MyLibName.hpp
     #include <cxxd/array.hpp>
@@ -770,7 +773,7 @@ variants, our file could be:
     #define MYLIB_LIBRARY_NAME CXXD_LIBRARY_NAME(MyLib)
     
 In the second case where we do limit the variants so that CXXD-mod array and CXXD-mod function
-always choose the same dual library, our file could be:
+always choose the same dual library, our file would be:
     
     // Header file MyLibName.hpp
     #include <cxxd/array.hpp>
@@ -785,7 +788,7 @@ always choose the same dual library, our file could be:
     #endif
     
 In the third case where we limit our variants to the two choices of all Boost
-or all C++ standard libraries, our file could be:
+or all C++ standard libraries, our file would be:
     
     // Header file MyLibName.hpp
     #include <cxxd/array.hpp>
@@ -806,8 +809,9 @@ library variants is totally up to the library author.
     
 [header Macro testing all possibilities]
 
-There is a macro in CXXD for testing whether the CXXD dual libraries which are chosen
-match one or more combinations of dual library possibilities. This macro provides an 
+There is a macro in CXXD for testing whether the CXXD-mods which are included,
+when the macro is actually invoked, match one or more combinations of dual 
+library possibilities. This macro provides an
 automatic method for testing all dual library possibilities at once and offers 
 an alternative to the manual testing of dual library possibilities which the end-user
 may have chosen to use. The macro is a variadic macro whose name and signature is:
@@ -822,7 +826,7 @@ dual libraries chosen for the CXXD-mods being included match any of combinations
 represented by the variadic parameters the macro expands to 1, otherwise it expands
 to 0.
 
-Each variadic parameter represents a combination. Each combination is 
+Each variadic parameter represents a 'possibility'. Each possibility is 
 a series of Boost PP tuples. This 'series' in the VMD library is called a VMD sequence.
 
 Each Boost PP tuple in the series has two elements. The first Boost PP tuple element is a
@@ -831,7 +835,7 @@ The second Boost PP tuple element is either 0 or 1,
 meaning respectively that for the CXXD-mod specified the dual library is Boost (0) or 
 the dual library is the C++ standard library (1). The Boost PP tuple encoding identifies a valid 
 choice for the library being built for a single CXXD-mod. The series of Boost PP tuples 
-combine the valid choices into a single 'possibility'. When a particular CXXD-mod
+combine the valid choices into a single possibility. When a particular CXXD-mod
 is not part of a possibility it means that if that CXXD-mod is included it can validly
 use either its Boost or C++ standard library.
 
@@ -872,6 +876,8 @@ These arbitrarily chosen valid possibilities are specified purely to illustrate 
     #include <cxxd/tuple.hpp>
     #include <cxxd/valid_variants.hpp>
     
+    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_ARRAY,0)(CXXD_FUNCTION,1)(CXXD_TUPLE,0))
+        
     /* Valid possibilities are:
     1) All four CXXD-mods use the Boost library
     2) CXXD-mod array uses the Boost library, 
@@ -880,7 +886,7 @@ These arbitrarily chosen valid possibilities are specified purely to illustrate 
        CXXD-mod regex uses either the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_ARRAY,0)(CXXD_FUNCTION,1)(CXXD_TUPLE,0))
+    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,1),(CXXD_ARRAY,0)(CXXD_FUNCTION,0))
         
     /* Valid possibilities are:
     1) All four CXXD-mods use the C++standard library
@@ -890,7 +896,7 @@ These arbitrarily chosen valid possibilities are specified purely to illustrate 
        CXXD-mod regex uses the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,1),(CXXD_ARRAY,0)(CXXD_FUNCTION,0))
+    CXXD_VALID_VARIANTS((CXXD_ARRAY,0)(CXXD_FUNCTION,0),(CXXD_ARRAY,1)(CXXD_FUNCTION,1))
         
     /* Valid possibilities are:
     1) CXXD-mod array uses the Boost library, 
@@ -903,28 +909,26 @@ These arbitrarily chosen valid possibilities are specified purely to illustrate 
        CXXD-mod regex uses the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_ARRAY,0)(CXXD_FUNCTION,0),(CXXD_ARRAY,1)(CXXD_FUNCTION,1))
-        
+    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_MODS_ALL,1),(CXXD_REGEX,0)(CXXD_TUPLE,1))
+    
     /* Valid possibilities are:
     1) All four CXXD-mods use the Boost library
     2) All four CXXD-mods use the C++standard library
-    3) CXXD-mod regex uses either the Boost library
+    3) CXXD-mod regex uses the Boost library
        CXXD-mod tuple uses the C++ standard library
        CXXD-mod array uses the Boost library or the C++ standard library,
        CXXD-mod function uses the Boost library or the C++ standard library
     */
     
-    CXXD_VALID_VARIANTS((CXXD_MODS_ALL,0),(CXXD_MODS_ALL,1),(CXXD_REGEX,0)(CXXD_TUPLE,1))
-    
 Essentially the CXXD_VALID_VARIANTS present an alternate form of '#if (CXXD_HAS_STD_XXX ...)'
 preprocessor constructs which are used to limit the CXXD-mod possibilities which a particular
 library decides is valid. If we take our example MyLibName.hpp which limit the possibilities
-of dual libraries combinations we can re-code our second and third case using this macro, 
-since our first case, which does not limit the possibilities, has no use for using the 
-CXXD_VALID_VARIANTS macro.
+of dual libraries combinations we can re-code our second and third case using this macro.
+Since our first case, which does not limit the possibilities, has no use for using the 
+CXXD_VALID_VARIANTS macro, we do not specify its use there.
 
 In the second case where we do limit the variants so that CXXD-mod array and CXXD-mod function
-always choose the same dual library, our file could now be:
+always choose the same dual library, our file would now be:
 
     // Header file MyLibName.hpp
     #include <cxxd/array.hpp>
@@ -939,7 +943,7 @@ always choose the same dual library, our file could now be:
     #endif
     
 In the third case where we limit our variants to the two choices of all Boost
-or all C++ standard libraries, our file could be:
+or all C++ standard libraries, our file would now be:
     
     // Header file MyLibName.hpp
     #include <cxxd/array.hpp>
@@ -953,16 +957,18 @@ or all C++ standard libraries, our file could be:
         #error CXXD configuration only supported if all dual libraries are Boost or all dual libraries are C++ standard.
     #endif
     
+In both cases we produce shorter versions of our MyLibName.hpp code.
+    
 Even though their is little practical benefit of limiting possibilities of CXXD-mod dual library
-choices when the case is a header only library, the CXXD_VALID_VARIANTS macro 
+choices when the situation is a header only library, the CXXD_VALID_VARIANTS macro 
 could be used in those situations also. As an example let us suppose we have a header-only
 library which uses CXXD-mod array and CXXD-mod function along with other CXXD-mods.
 As we have done in one of our non-header only MyLibName.hpp examples we arbitrarily decide that the
 array and function dual library choices should always match. We could code up a header
 file for the sole purpose of producing a preprocessor error if our array and function dual
 library choices do not match, and then include that header file in all are header-only
-library header files as a check to make sure they match whenever any header file is included.
-Our header file might be called MyHeaderOnlyLibCheck.hpp:
+library header files as a check to make sure they match whenever any of our header filed is included.
+Our checking header file might be called MyHeaderOnlyLibCheck.hpp:
         
     // Header file MyHeaderOnlyLibCheck.hpp
     #include <cxxd/array.hpp>
@@ -986,7 +992,9 @@ simply code up our MyHeaderOnlyLibCheck.hpp header file in this way:
         #error MyLib - CXXD configuration not supported where array and function differ.
     #endif
     
-The choice of using the CXXD_VALID_VARIANTS macro or manually test the individual
+Whether the possibility of using the CXXD_VALID_VARIANTS macro is considered for a
+non-header only library, its main purpose, or a header-only library,
+the choice of using the CXXD_VALID_VARIANTS macro or manually test the individual
 CXXD_HAS_STD_'XXX' macros is totally up to the library author.
     
 [endsect]
