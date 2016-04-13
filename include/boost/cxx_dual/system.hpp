@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_SYSTEM) || defined(CXXD_SYSTEM_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_SYSTEM_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX11_HDR_SYSTEM_ERROR) || defined(CXXD_SYSTEM_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_SYSTEM_ERROR)) || defined(CXXD_SYSTEM_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_SYSTEM_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_SYSTEM_ERROR
                 #error CXXD: C++ standard system error is not available

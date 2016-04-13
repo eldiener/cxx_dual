@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX11_HDR_ARRAY) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_ARRAY)) || defined(CXXD_ARRAY_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_ARRAY_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_ARRAY_ERROR
                 #error CXXD: C++ standard array is not available

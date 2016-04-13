@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_RANDOM) || defined(CXXD_RANDOM_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_RANDOM_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX11_HDR_RANDOM) || defined(CXXD_RANDOM_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_RANDOM)) || defined(CXXD_RANDOM_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_RANDOM_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_RANDOM_ERROR
                 #error CXXD: C++ standard random is not available

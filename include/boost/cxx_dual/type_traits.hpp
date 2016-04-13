@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_TYPE_TRAITS) || defined(CXXD_TYPE_TRAITS_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_TYPE_TRAITS_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS) || defined(CXXD_TYPE_TRAITS_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)) || defined(CXXD_TYPE_TRAITS_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_TYPE_TRAITS_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_TYPE_TRAITS_ERROR
                 #error CXXD: C++ standard type traits is not available

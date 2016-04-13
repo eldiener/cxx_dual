@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_MEM_FN) || defined(CXXD_MEM_FN_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_MEM_FN_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX11_HDR_FUNCTIONAL) || defined(CXXD_MEM_FN_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_FUNCTIONAL)) || defined(CXXD_MEM_FN_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_MEM_FN_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_MEM_FN_ERROR
                 #error CXXD: C++ standard mem_fn is not available

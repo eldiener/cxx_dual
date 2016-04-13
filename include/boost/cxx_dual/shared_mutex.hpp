@@ -46,7 +46,7 @@
         #endif
     #elif !defined(CXXD_HAS_STD_SHARED_MUTEX) || defined(CXXD_SHARED_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_SHARED_MUTEX_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
-        #if defined(BOOST_NO_CXX14_HDR_SHARED_MUTEX) || defined(CXXD_SHARED_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST)
+        #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX14_HDR_SHARED_MUTEX)) || defined(CXXD_SHARED_MUTEX_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_SHARED_MUTEX_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_SHARED_MUTEX_ERROR
                 #error CXXD: C++ standard shared mutex is not available

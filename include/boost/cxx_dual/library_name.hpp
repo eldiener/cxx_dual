@@ -44,7 +44,7 @@
     An empty element is valid and means that nothing will
     be appended to the base name if the case is met.
     
-    When a tuple is specified it is important that the mnemonic to be appended
+    When a tuple is specified as an optional parameter it is important that the mnemonic to be appended
     be different whether the CXXD-mod is using its C++ standard implementation
     or its Boost implementation, else there is no guarantee that a unique library
     name will be generated depending on the CXXD-mods being included.
@@ -94,7 +94,7 @@
     Boost implementation.
     
     The use of the optional parameters is the way to override the default
-    processing for any particular CXXD-mod.
+    processing for any particular CXXD-mod, or for all CXXD-mods.
     
 */
 
