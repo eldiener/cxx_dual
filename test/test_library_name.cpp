@@ -4,89 +4,98 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#define CXXD_ARRAY_USE_BOOST
-// #define CXXD_ARRAY_USE_STD
-#include <boost/cxx_dual/array.hpp>
-// #define CXXD_ATOMIC_USE_BOOST
-#define CXXD_ATOMIC_USE_STD
-#include <boost/cxx_dual/atomic.hpp>
-// #define CXXD_BIND_USE_BOOST
-// #define CXXD_BIND_USE_STD
-#include <boost/cxx_dual/bind.hpp>
-// #define CXXD_CHRONO_USE_BOOST
-// #define CXXD_CHRONO_USE_STD
-#include <boost/cxx_dual/chrono.hpp>
-// #define CXXD_CONDITION_VARIABLE_USE_BOOST
-#define CXXD_CONDITION_VARIABLE_USE_STD
-#include <boost/cxx_dual/condition_variable.hpp>
-// #define CXXD_FUNCTION_USE_BOOST
-// #define CXXD_FUNCTION_USE_STD
-// #include <boost/cxx_dual/function.hpp>
-// #define CXXD_HASH_USE_BOOST
-// #define CXXD_HASH_USE_STD
-// #include <boost/cxx_dual/hash.hpp>
-// #define CXXD_MEM_FN_USE_BOOST
-// #define CXXD_MEM_FN_USE_STD
-// #include <boost/cxx_dual/mem_fn.hpp>
-// #define CXXD_MUTEX_USE_BOOST
-// #define CXXD_MUTEX_USE_STD
-// #include <boost/cxx_dual/mutex.hpp>
-// #define CXXD_RANDOM_USE_BOOST
-// #define CXXD_RANDOM_USE_STD
-// #include <boost/cxx_dual/random.hpp>
-// #define CXXD_RATIO_USE_BOOST
-// #define CXXD_RATIO_USE_STD
-// #include <boost/cxx_dual/ratio.hpp>
-// #define CXXD_REF_USE_BOOST
-// #define CXXD_REF_USE_STD
-// #include <boost/cxx_dual/ref.hpp>
-// #define CXXD_REGEX_USE_BOOST
-// #define CXXD_REGEX_USE_STD
-// #include <boost/cxx_dual/regex.hpp>
-// #define CXXD_SHARED_MUTEX_USE_BOOST
-// #define CXXD_SHARED_MUTEX_USE_STD
-// #include <boost/cxx_dual/shared_mutex.hpp>
-// #define CXXD_SHARED_PTR_USE_BOOST
-// #define CXXD_SHARED_PTR_USE_STD
-// #include <boost/cxx_dual/shared_ptr.hpp>
-// #define CXXD_SYSTEM_USE_BOOST
-// #define CXXD_SYSTEM_USE_STD
-// #include <boost/cxx_dual/system.hpp>
-// #define CXXD_THREAD_USE_BOOST
-// #define CXXD_THREAD_USE_STD
-// #include <boost/cxx_dual/thread.hpp>
-// #define CXXD_TUPLE_USE_BOOST
-// #define CXXD_TUPLE_USE_STD
-// #include <boost/cxx_dual/tuple.hpp>
-// #define CXXD_TYPE_INDEX_USE_BOOST
-// #define CXXD_TYPE_INDEX_USE_STD
-// #include <boost/cxx_dual/type_index.hpp>
-// #define CXXD_TYPE_TRAITS_USE_BOOST
-// #define CXXD_TYPE_TRAITS_USE_STD
-// #include <boost/cxx_dual/type_traits.hpp>
-// #define CXXD_UNORDERED_MAP_USE_BOOST
-// #define CXXD_UNORDERED_MAP_USE_STD
-// #include <boost/cxx_dual/unordered_map.hpp>
-// #define CXXD_UNORDERED_MULTIMAP_USE_BOOST
-// #define CXXD_UNORDERED_MULTIMAP_USE_STD
-// #include <boost/cxx_dual/unordered_multimap.hpp>
-// #define CXXD_UNORDERED_MULTISET_USE_BOOST
-// #define CXXD_UNORDERED_MULTISET_USE_STD
-// #include <boost/cxx_dual/unordered_multiset.hpp>
-// #define CXXD_UNORDERED_SET_USE_BOOST
-// #define CXXD_UNORDERED_SET_USE_STD
-// #include <boost/cxx_dual/unordered_set.hpp>
+#define CXXD_NO_CONFIG
+#define CXXD_NO_CONSISTENCY
 
-#include <boost/preprocessor/tuple/size.hpp>
-#include <boost/cxx_dual/detail/create_id_table.hpp>
-#include <boost/cxx_dual/detail/library_name_register.hpp>
-#include <boost/cxx_dual/detail/mods_all_register.hpp>
-#include <boost/cxx_dual/detail/table_find.hpp>
+#include <boost/cxx_dual/library_name.hpp>
+#include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 int main()
   {
-  BOOST_TEST_EQ(BOOST_PP_TUPLE_SIZE(CXXD_DETAIL_CREATE_ID_TABLE()),5);
-  BOOST_TEST_EQ(CXXD_DETAIL_TABLE_FIND(CXXD_DETAIL_CREATE_ID_TABLE(),0,CXXD_ARRAY,1),0);
+  
+#define CXXD_ARRAY_USE_BOOST
+#define CXXD_ATOMIC_USE_STD
+#define CXXD_BIND_USE_BOOST
+#define CXXD_CHRONO_USE_STD
+#define CXXD_CONDITION_VARIABLE_USE_STD
+
+#define CXXD_FUNCTION_USE_BOOST
+#define CXXD_HASH_USE_BOOST
+#define CXXD_MEM_FN_USE_BOOST
+#define CXXD_MUTEX_USE_BOOST
+#define CXXD_RANDOM_USE_BOOST
+#define CXXD_RATIO_USE_BOOST
+#define CXXD_REF_USE_BOOST
+#define CXXD_REGEX_USE_BOOST
+#define CXXD_SHARED_MUTEX_USE_BOOST
+#define CXXD_SHARED_PTR_USE_BOOST
+#define CXXD_SYSTEM_USE_BOOST
+#define CXXD_THREAD_USE_BOOST
+#define CXXD_TUPLE_USE_BOOST
+#define CXXD_TYPE_INDEX_USE_BOOST
+#define CXXD_TYPE_TRAITS_USE_BOOST
+#define CXXD_UNORDERED_MAP_USE_BOOST
+#define CXXD_UNORDERED_MULTIMAP_USE_BOOST
+#define CXXD_UNORDERED_MULTISET_USE_BOOST
+#define CXXD_UNORDERED_SET_USE_BOOST
+
+#define BOOST_VMD_REGISTER_ALib_at_ch_cv (ALib_at_ch_cv)
+#define BOOST_VMD_DETECT_ALib_at_ch_cv_ALib_at_ch_cv
+#define BOOST_VMD_REGISTER_ALib_arrayBoostChStandard_at_cv (ALib_arrayBoostChStandard_at_cv)
+#define BOOST_VMD_DETECT_ALib_arrayBoostChStandard_at_cv_ALib_arrayBoostChStandard_at_cv
+
+#include <boost/cxx_dual/cxx_mods.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib_at_ch_cv));
+  
+  BOOST_TEST
+    (
+    BOOST_VMD_EQUAL
+        (
+        CXXD_LIBRARY_NAME
+            (
+            ALib,
+            (CXXD_ARRAY,_arrayStandard,_arrayBoost),
+            (CXXD_CHRONO,ChStandard,ChBoost)
+            ),
+        ALib_arrayBoostChStandard_at_cv
+        )
+    );
+  
+#include <libs/cxx_dual/test/test_library_name_override_reset.hpp>
+
+#define CXXD_ARRAY_USE_BOOST
+#define CXXD_ATOMIC_USE_BOOST
+#define CXXD_BIND_USE_BOOST
+#define CXXD_CHRONO_USE_BOOST
+#define CXXD_CONDITION_VARIABLE_USE_BOOST
+#define CXXD_FUNCTION_USE_BOOST
+#define CXXD_HASH_USE_BOOST
+#define CXXD_MEM_FN_USE_BOOST
+#define CXXD_MUTEX_USE_BOOST
+#define CXXD_RANDOM_USE_BOOST
+#define CXXD_RATIO_USE_BOOST
+#define CXXD_REF_USE_BOOST
+#define CXXD_REGEX_USE_BOOST
+#define CXXD_SHARED_MUTEX_USE_BOOST
+#define CXXD_SHARED_PTR_USE_BOOST
+#define CXXD_SYSTEM_USE_BOOST
+#define CXXD_THREAD_USE_BOOST
+#define CXXD_TUPLE_USE_BOOST
+#define CXXD_TYPE_INDEX_USE_BOOST
+#define CXXD_TYPE_TRAITS_USE_BOOST
+#define CXXD_UNORDERED_MAP_USE_BOOST
+#define CXXD_UNORDERED_MULTIMAP_USE_BOOST
+#define CXXD_UNORDERED_MULTISET_USE_BOOST
+#define CXXD_UNORDERED_SET_USE_BOOST
+
+#define BOOST_VMD_REGISTER_ALib (ALib)
+#define BOOST_VMD_DETECT_ALib_ALib
+
+#include <libs/cxx_dual/test/test_library_name_include.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib));
+  
   return boost::report_errors();
   }
