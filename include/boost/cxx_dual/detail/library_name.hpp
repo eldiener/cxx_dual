@@ -232,7 +232,7 @@
     BOOST_PP_EXPR_IIF \
         ( \
         BOOST_PP_COMPL(BOOST_VMD_IS_EMPTY(row)), \
-        BOOST_PP_TUPLE_REMOVE(0,row) \
+        BOOST_PP_TUPLE_REMOVE(row,0) \
         ) \
 /**/
 
