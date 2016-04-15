@@ -10,9 +10,9 @@
 #include <boost/preprocessor/arithmetic/inc.hpp>
 #include <boost/preprocessor/comparison/equal.hpp>
 #include <boost/preprocessor/comparison/greater.hpp>
-#include <boost/preprocessor/control/expr_iif.hpp>
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/logical/compl.hpp>
+#include <boost/preprocessor/logical/not.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 #include <boost/preprocessor/punctuation/paren_if.hpp>
 #include <boost/preprocessor/seq/for_each_i.hpp>
@@ -23,6 +23,7 @@
 #include <boost/preprocessor/tuple/replace.hpp>
 #include <boost/preprocessor/tuple/size.hpp>
 #include <boost/preprocessor/variadic/to_seq.hpp>
+#include <boost/vmd/empty.hpp>
 #include <boost/vmd/identity.hpp>
 #include <boost/vmd/is_empty.hpp>
 #include <boost/cxx_dual/detail/create_id_table.hpp>
@@ -221,19 +222,27 @@
 /**/
 
 #define CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER(ntup) \
-    BOOST_PP_EXPR_IIF \
+    BOOST_PP_IIF \
         ( \
         BOOST_PP_COMPL(BOOST_VMD_IS_EMPTY(ntup)), \
-        CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER_CHECK(CXXD_DETAIL_TABLE_FIND(ntup,0,CXXD_MODS_ALL,)) \
+        CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER_TF, \
+        BOOST_VMD_EMPTY \
         ) \
+    (ntup) \
+/**/
+
+#define CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER_TF(ntup) \
+    CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER_CHECK(CXXD_DETAIL_TABLE_FIND(ntup,0,CXXD_MODS_ALL,)) \
 /**/
 
 #define CXXD_DETAIL_LBN_GET_MODS_ALL_APPENDS_USER_CHECK(row) \
-    BOOST_PP_EXPR_IIF \
+    BOOST_PP_IIF \
         ( \
         BOOST_PP_COMPL(BOOST_VMD_IS_EMPTY(row)), \
-        BOOST_PP_TUPLE_REMOVE(row,0) \
+        BOOST_PP_TUPLE_REMOVE, \
+        BOOST_VMD_EMPTY \
         ) \
+    (row,0) \
 /**/
 
 #define CXXD_DETAIL_LBN_GET_MODS_ALL_RETRIEVE(defall,userall) \
@@ -279,7 +288,7 @@
 /**/
 
 #define CXXD_DETAIL_LBN_NZSEQ_MACRO(r,size,index,elem) \
-    BOOST_PP_LPAREN_IF(BOOST_PP_COMPL(index)) \
+    BOOST_PP_LPAREN_IF(BOOST_PP_NOT(index)) \
     BOOST_PP_COMMA_IF(index) \
     CXXD_DETAIL_LBN_NZSEQ_MACRO_ELEM(elem,BOOST_PP_TUPLE_SIZE(elem)) \
     BOOST_PP_RPAREN_IF(BOOST_PP_EQUAL(size,BOOST_PP_INC(index))) \
@@ -288,8 +297,20 @@
 #define CXXD_DETAIL_LBN_NZSEQ_MACRO_ELEM(elem,size) \
     ( \
     BOOST_PP_TUPLE_ELEM(0,elem), \
-    BOOST_PP_EXPR_IIF(BOOST_PP_GREATER(size,1),BOOST_PP_TUPLE_ELEM(1,elem)), \
-    BOOST_PP_EXPR_IIF(BOOST_PP_GREATER(size,2),BOOST_PP_TUPLE_ELEM(2,elem)) \
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_GREATER(size,1), \
+        BOOST_PP_TUPLE_ELEM, \
+        BOOST_VMD_EMPTY \
+        ) \
+    (1,elem), \
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_GREATER(size,2), \
+        BOOST_PP_TUPLE_ELEM, \
+        BOOST_VMD_EMPTY \
+        ) \
+    (2,elem) \
     ) \
 /**/
 
