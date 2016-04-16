@@ -99,7 +99,9 @@
 
 #if BOOST_PP_VARIADICS
 
-#define CXXD_VALID_VARIANTS(...)
+#include <boost/cxx_dual/detail/valid_variants.hpp>
+
+#define CXXD_VALID_VARIANTS(...) CXXD_DETAIL_VALID_VARIANTS(__VA_ARGS__)
 
 #endif
 
