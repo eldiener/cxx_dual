@@ -56,10 +56,18 @@
     CXXD_DETAIL_TABLE_FIND_OVR(table,findex,__VA_ARGS__) \
 /**/
 
+#define CXXD_DETAIL_TABLE_FIND_D(d,table,findex,...) \
+    CXXD_DETAIL_TABLE_FIND_OVR_D(d,table,findex,__VA_ARGS__) \
+/**/
+
 #if BOOST_VMD_MSVC
 
 #define CXXD_DETAIL_TABLE_FIND_OVR(table,findex,...) \
     BOOST_PP_CAT(BOOST_PP_OVERLOAD(CXXD_DETAIL_TABLE_FIND_OV,__VA_ARGS__)(table,findex,__VA_ARGS__),BOOST_PP_EMPTY()) \
+/**/
+
+#define CXXD_DETAIL_TABLE_FIND_OVR_D(d,table,findex,...) \
+    BOOST_PP_CAT(BOOST_PP_OVERLOAD(CXXD_DETAIL_TABLE_FIND_OV_D,__VA_ARGS__)(d,table,findex,__VA_ARGS__),BOOST_PP_EMPTY()) \
 /**/
 
 #else
@@ -68,14 +76,26 @@
     BOOST_PP_OVERLOAD(CXXD_DETAIL_TABLE_FIND_OV,__VA_ARGS__)(table,findex,__VA_ARGS__) \
 /**/
 
+#define CXXD_DETAIL_TABLE_FIND_OVR_D(d,table,findex,...) \
+    BOOST_PP_OVERLOAD(CXXD_DETAIL_TABLE_FIND_OV_D,__VA_ARGS__)(d,table,findex,__VA_ARGS__) \
+/**/
+
 #endif
 
 #define CXXD_DETAIL_TABLE_FIND_OV1(table,findex,value) \
     CXXD_DETAIL_TABLE_FIND_PARAMS(table,findex,value,) \
 /**/
 
+#define CXXD_DETAIL_TABLE_FIND_OV_D1(d,table,findex,value) \
+    CXXD_DETAIL_TABLE_FIND_PARAMS_D(d,table,findex,value,) \
+/**/
+
 #define CXXD_DETAIL_TABLE_FIND_OV2(table,findex,value,rindex) \
     CXXD_DETAIL_TABLE_FIND_PARAMS(table,findex,value,rindex) \
+/**/
+
+#define CXXD_DETAIL_TABLE_FIND_OV_D2(d,table,findex,value,rindex) \
+    CXXD_DETAIL_TABLE_FIND_PARAMS_D(d,table,findex,value,rindex) \
 /**/
 
 #define CXXD_DETAIL_TABLE_FIND_PARAMS(table,findex,value,rindex) \
@@ -100,10 +120,39 @@
     (table,findex,value,rindex) \
 /**/
 
+#define CXXD_DETAIL_TABLE_FIND_PARAMS_D(d,table,findex,value,rindex) \
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_BITAND \
+            ( \
+            BOOST_VMD_IS_TUPLE(table), \
+            BOOST_PP_BITAND \
+                ( \
+                BOOST_VMD_IS_NUMBER(findex), \
+                BOOST_PP_BITOR \
+                    ( \
+                    BOOST_VMD_IS_EMPTY(rindex), \
+                    BOOST_VMD_IS_NUMBER(rindex) \
+                    ) \
+                ) \
+            ), \
+        CXXD_DETAIL_TABLE_FIND_PARAMS_GO_D, \
+        BOOST_VMD_EMPTY \
+        ) \
+    (d,table,findex,value,rindex) \
+/**/
+
 #define CXXD_DETAIL_TABLE_FIND_PARAMS_GO(table,findex,value,rindex) \
     CXXD_DETAIL_TABLE_FIND_STATE_RETURN_VALUE \
         ( \
         CXXD_DETAIL_TABLE_READ_ROWS(table,(findex,value,rindex,),CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC,1) \
+        ) \
+/**/
+
+#define CXXD_DETAIL_TABLE_FIND_PARAMS_GO_D(d,table,findex,value,rindex) \
+    CXXD_DETAIL_TABLE_FIND_STATE_RETURN_VALUE \
+        ( \
+        CXXD_DETAIL_TABLE_READ_ROWS_D(d,table,(findex,value,rindex,),CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC,1) \
         ) \
 /**/
 

@@ -32,4 +32,5 @@ test-suite cxxd_data
     : 
        [ run test_all.cpp  : : : $(l_gcc_c11) ]
        [ run test_library_name.cpp : : : $(l_gcc_c11) ]
+       [ run test_valid_variants.cpp : : : $(l_gcc_c11) ]
     ;

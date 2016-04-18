@@ -69,7 +69,7 @@
 /**/
 
 #define CXXD_DETAIL_LBN_BN_IDT_PROC(bname,idt) \
-    CXXD_DETAIL_LBN_BN_ALLRES(bname,idt,CXXD_DETAIL_LBN_IS_MODS_ALL(idt)) \
+    CXXD_DETAIL_LBN_BN_ALLRES(bname,idt,CXXD_DETAIL_IDT_IS_MODS_ALL(idt)) \
 /**/
 
 #define CXXD_DETAIL_LBN_BN_ALLRES(bname,idt,allres) \
@@ -114,87 +114,6 @@
             ) \
         ) \
 /**/
-
-/*
-
-    Retrieves whether all included mods have the C++ standard implementation set
-    or the Boost implementation set or neither case
-    
-    idt = processed id table containing only are valid included values
-          where a value for an included CXXD-mod is either 1 for the
-          C++ standard implementation or 0 for the Boost implementation
-          
-    expands to 1 if all CXXD-mods use the C++ standard implementation
-               0 if all CXXD-mods use the Boost implementation
-               otherwise emptiness
-
-*/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL(idt) \
-    BOOST_PP_IIF \
-        ( \
-        BOOST_PP_EQUAL(BOOST_PP_TUPLE_SIZE(idt),1), \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_SINGLE, \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_MP \
-        ) \
-    (idt) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_SINGLE(idt) \
-    BOOST_PP_TUPLE_ELEM \
-        ( \
-        1, \
-        BOOST_PP_TUPLE_ELEM(0,idt) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_MP(idt) \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT \
-        ( \
-        CXXD_DETAIL_TABLE_READ_ROWS \
-            ( \
-            idt, \
-            (,), \
-            CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC, \
-            1 \
-            ) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC(d,row,state) \
-    CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_VALUE \
-        ( \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_ROW_VALUE(row), \
-        state \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_VALUE(value,state) \
-    BOOST_PP_IIF \
-        ( \
-        BOOST_VMD_IS_EMPTY(CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state)), \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_FIRST, \
-        CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_NORMAL \
-        ) \
-    (value,state) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_FIRST(value,ignore) \
-    (0,(value,value)) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_RRMAC_NORMAL(value,state) \
-    BOOST_PP_IIF \
-        ( \
-        BOOST_PP_EQUAL(value,CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state)), \
-        (0,state), \
-        (1,(value,)) \
-        ) \
-/**/
-
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_ROW_VALUE(row) BOOST_PP_TUPLE_ELEM(1,row)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_PREV(state) BOOST_PP_TUPLE_ELEM(0,state)
-#define CXXD_DETAIL_LBN_IS_MODS_ALL_STATE_RESULT(state) BOOST_PP_TUPLE_ELEM(1,state)
 
 /*
 
@@ -315,7 +234,7 @@
 /**/
 
 #define CXXD_DETAIL_LBN_NORM(bname,idt,ntup) \
-    CXXD_DETAIL_LBN_NORM_ALLRES(bname,idt,ntup,CXXD_DETAIL_LBN_IS_MODS_ALL(idt)) \
+    CXXD_DETAIL_LBN_NORM_ALLRES(bname,idt,ntup,CXXD_DETAIL_IDT_IS_MODS_ALL(idt)) \
 /**/
 
 #define CXXD_DETAIL_LBN_NORM_ALLRES(bname,idt,ntup,allres) \

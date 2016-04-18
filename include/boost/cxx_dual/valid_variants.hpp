@@ -19,8 +19,8 @@
     a variadic parameter. A CXXD-mod choice refers to whether the
     CXXD-mod chooses the C++ standard implementation or the Boost implementation.
     
-    If the CXXD-mod choices based on the CXXD-mod headers being included 
-    before the macro is invoked match any one of the variants, the macro expands to 1, 
+    If the CXXD-mod choices, based on the CXXD-mod headers being included 
+    before the macro, is invoked match any one of the variants, the macro expands to 1, 
     otherwise the macro expands to 0.
     
     The macro provides a single invocation where the creator of a library
@@ -36,7 +36,7 @@
     element is 1 if the desired choice is the C++ standard implementation of that CXXD-mod or 0
     if the desired choice is the Boost implementation of that CXXD-mod.
     
-    The VMD sequence of each choice makes up a combination of dual library choices
+    The VMD sequence of each choice makes up a combination of dual library choices,
     which denote a valid variant which the macro invoker says that his library will allow.
     
     The list of CXXD-mod identifiers and their CXXD-mod is:
@@ -76,7 +76,7 @@
     one in the VMD sequence for that variant.
     
     The macro invoker must pass at least one variant as a variadic parameter
-    otherwise there is not point in using this macro, but may specify any number of 
+    otherwise there is no point in using this macro, but may specify any number of 
     further variants as variadic parameters.
     
     A protoypical variant will look like:

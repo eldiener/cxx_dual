@@ -9,7 +9,7 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/logical/bitand.hpp>
 #include <boost/preprocessor/detail/auto_rec.hpp>
-#include <boost/preprocessor/detail/is_nullary.hpp>
+#include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 #include <boost/cxx_dual/detail/table_read_rows_1.hpp>
 #include <boost/cxx_dual/detail/table_read_rows_2.hpp>
 #include <boost/cxx_dual/detail/table_read_rows_3.hpp>
@@ -72,8 +72,8 @@
 #define CXXD_DETAIL_TABLE_READ_ROWS_AR_CHECK(n) \
     BOOST_PP_BITAND \
         ( \
-        BOOST_PP_IS_NULLARY(CXXD_DETAIL_TABLE_READ_ROWS_ ## n(,,)()), \
-        BOOST_PP_IS_NULLARY(CXXD_DETAIL_TABLE_READ_ROWS_D_ ## n(1,,,)()) \
+        BOOST_PP_IS_BEGIN_PARENS(CXXD_DETAIL_TABLE_READ_ROWS_ ## n(,,)()), \
+        BOOST_PP_IS_BEGIN_PARENS(CXXD_DETAIL_TABLE_READ_ROWS_D_ ## n(1,,,)()) \
         ) \
 /**/
 
