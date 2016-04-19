@@ -91,6 +91,27 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_ARRAY,0)(CXXD_BIND,0)(CXXD_CHRONO,0)(CXXD_CONDITION_VARIABLE,1),
+        (CXXD_MODS_ALL,0),
+        (CXXD_CHRONO,1)(CXXD_ATOMIC,1)(CXXD_BIND,0)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_ARRAY,0)(CXXD_BIND,0)(CXXD_CHRONO,0)(CXXD_CONDITION_VARIABLE,1),
+        (CXXD_MODS_ALL,1),
+        (CXXD_CHRONO,1)(CXXD_ATOMIC,1)(CXXD_BIND,1)
+        )
+    );
+  
 #include <libs/cxx_dual/test/test_override_reset.hpp>
 
 #define CXXD_ARRAY_USE_STD
@@ -120,6 +141,27 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_ARRAY,0)(CXXD_BIND,0)(CXXD_CHRONO,0)(CXXD_CONDITION_VARIABLE,1),
+        (CXXD_MODS_ALL,0),
+        (CXXD_CHRONO,1)(CXXD_ATOMIC,1)(CXXD_BIND,0)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_ARRAY,0)(CXXD_BIND,0)(CXXD_CHRONO,0)(CXXD_CONDITION_VARIABLE,1),
+        (CXXD_MODS_ALL,1),
+        (CXXD_CHRONO,1)(CXXD_ATOMIC,0)(CXXD_BIND,1)
+        )
+    );
+    
 #include <libs/cxx_dual/test/test_override_reset.hpp>
 
 #define CXXD_ARRAY_USE_BOOST
@@ -151,6 +193,27 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_MODS_ALL,0),
+        (CXXD_FUNCTION,1)(CXXD_MEM_FN,1)(CXXD_MUTEX,0),
+        (CXXD_FUNCTION,1)(CXXD_HASH,0)(CXXD_MEM_FN,0)(CXXD_MUTEX,0)(CXXD_RANDOM,1)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_FUNCTION,1)(CXXD_MEM_FN,0)(CXXD_MUTEX,0)(CXXD_TUPLE,1),
+        (CXXD_MODS_ALL,1),
+        (CXXD_FUNCTION,1)(CXXD_HASH,0)(CXXD_MEM_FN,0)(CXXD_MUTEX,1)(CXXD_RANDOM,1)
+        )
+    );
+    
 #include <libs/cxx_dual/test/test_override_reset.hpp>
 
 #define CXXD_ARRAY_USE_BOOST
@@ -182,6 +245,27 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_REF,1)(CXXD_REGEX,1)(CXXD_SHARED_MUTEX,1)(CXXD_HASH,1)(CXXD_SHARED_PTR,0)(CXXD_RANDOM,0),
+        (CXXD_MODS_ALL,0),
+        (CXXD_RATIO,0)(CXXD_REF,1)(CXXD_REGEX,1)(CXXD_SHARED_MUTEX,1)(CXXD_SHARED_PTR,0)(CXXD_RANDOM,0)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_REF,1)(CXXD_REGEX,1)(CXXD_SHARED_MUTEX,1)(CXXD_HASH,1)(CXXD_SHARED_PTR,0)(CXXD_RANDOM,0),
+        (CXXD_MODS_ALL,0),
+        (CXXD_RATIO,0)(CXXD_REF,1)(CXXD_REGEX,1)(CXXD_SHARED_MUTEX,1)(CXXD_SHARED_PTR,1)(CXXD_RANDOM,0)
+        )
+    );
+    
 #include <libs/cxx_dual/test/test_override_reset.hpp>
 
 #define CXXD_ARRAY_USE_BOOST
@@ -213,6 +297,27 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
+        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,0)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1),
+        (CXXD_MODS_ALL,1)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_MODS_ALL,1),
+        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
+        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,1)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1)
+        )
+    );
+    
 #include <libs/cxx_dual/test/test_override_reset.hpp>
 
 #define CXXD_ARRAY_USE_BOOST
@@ -243,5 +348,28 @@ int main()
 
 #include <libs/cxx_dual/test/test_re_include.hpp>
 
+  BOOST_TEST
+    (
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_UNORDERED_MAP,1)(CXXD_TUPLE,0)(CXXD_UNORDERED_MULTISET,1),
+        (CXXD_UNORDERED_SET,0)(CXXD_SYSTEM,1)(CXXD_TUPLE,0),
+        (CXXD_UNORDERED_MULTISET,1)(CXXD_UNORDERED_MAP,0)(CXXD_TUPLE,0)(CXXD_UNORDERED_MULTIMAP,1)(CXXD_UNORDERED_SET,0),
+        (CXXD_UNORDERED_MULTIMAP,1)(CXXD_REGEX,1)(CXXD_TUPLE,0)
+        )
+    );
+    
+  BOOST_TEST
+    (
+    !
+    CXXD_VALID_VARIANTS
+        (
+        (CXXD_UNORDERED_MAP,1)(CXXD_TUPLE,0)(CXXD_UNORDERED_MULTISET,1),
+        (CXXD_UNORDERED_MULTISET,1)(CXXD_UNORDERED_MAP,0)(CXXD_TUPLE,1)(CXXD_UNORDERED_MULTIMAP,1)(CXXD_UNORDERED_SET,0),
+        (CXXD_UNORDERED_SET,0)(CXXD_SYSTEM,1)(CXXD_TUPLE,0),
+        (CXXD_UNORDERED_MULTIMAP,1)(CXXD_REGEX,1)(CXXD_TUPLE,0)
+        )
+    );
+    
   return boost::report_errors();
   }

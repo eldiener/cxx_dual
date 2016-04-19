@@ -75,7 +75,7 @@
         The second tuple element is a tuple
             The first element is 1 for a valid combination or 0 for an invalid combination
             The second element is the idt
-            The third element is a possibly updated idt mods all seting.
+            The third element is a possibly updated idt mods all setting.
 
 */
 
@@ -145,7 +145,7 @@
         CXXD_DETAIL_VV_RRMAC_NORM, \
         CXXD_DETAIL_VV_RRMAC_MCHECK \
         ) \
-    (d,tbl,idt,mall,mres) \
+    (d,tbl,idt,mall,imres) \
 /**/
 
 /*
