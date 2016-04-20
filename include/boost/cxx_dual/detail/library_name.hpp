@@ -316,7 +316,7 @@
 
 /*
 
-    Loops through the ID table in order to append menmonics to the base name
+    Loops through the ID table in order to append mnemonics to the base name
     
     Returns the updated base name
     

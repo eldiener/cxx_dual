@@ -83,8 +83,8 @@
     BOOST_PP_IIF \
         ( \
         CXXD_DETAIL_VV_RRMAC_RES_RESULT(res), \
-        (1,(1,,)), \
-        (0,(0,idt,CXXD_DETAIL_VV_RRMAC_RES_MRES(res))) \
+        (0,(1,,)), \
+        (1,(0,idt,CXXD_DETAIL_VV_RRMAC_RES_MRES(res))) \
         ) \
 /**/
 
@@ -169,15 +169,16 @@
 #define CXXD_DETAIL_VV_RRMAC_MCHECK(d,ignore,idt,mall,imres) \
     CXXD_DETAIL_VV_RRMAC_MCHECK_WITH_IM \
         ( \
+        d, \
         mall, \
         CXXD_DETAIL_VV_RRMAC_MCHECK_GET(d,idt,imres) \
         ) \
 /**/
 
-#define CXXD_DETAIL_VV_RRMAC_MCHECK_WITH_IM(mall,imres) \
+#define CXXD_DETAIL_VV_RRMAC_MCHECK_WITH_IM(d,mall,imres) \
     BOOST_PP_IIF \
         ( \
-        BOOST_VMD_EQUAL(mall,imres), \
+        BOOST_VMD_EQUAL_D(d,mall,imres), \
         (1,), \
         (0,imres) \
         ) \
@@ -188,7 +189,7 @@
         ( \
         BOOST_PP_IIF \
             ( \
-            BOOST_VMD_EQUAL(imres,2), \
+            BOOST_VMD_EQUAL_D(d,imres,2), \
             CXXD_DETAIL_VV_RRMAC_MCHECK_DO_GET, \
             BOOST_VMD_IDENTITY(imres) \
             ) \
@@ -252,7 +253,7 @@
         BOOST_PP_IIF \
             ( \
             BOOST_VMD_IS_EMPTY(fv), \
-            BOOST_VMD_IDENTITY((1,(0,))), \
+            BOOST_VMD_IDENTITY((0,(0,))), \
             CXXD_DETAIL_VV_RRMAC_NORM_MATCH \
             ) \
         (row,idt,fv) \
@@ -267,8 +268,8 @@
             fv, \
             CXXD_DETAIL_VV_RRMAC_NORM_ROW_VALUE(row) \
             ), \
-        (0,(1,idt)), \
-        (1,(0,)) \
+        (1,(1,idt)), \
+        (0,(0,)) \
         ) \
 /**/
 

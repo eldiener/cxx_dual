@@ -168,7 +168,7 @@
                 CXXD_DETAIL_TABLE_FIND_STATE_ROW_FIND_VALUE(row,state) \
                 ), \
             CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC_FOUND, \
-            BOOST_VMD_IDENTITY((0,state)) \
+            BOOST_VMD_IDENTITY((1,state)) \
             ) \
         (d,row,state) \
         ) \
@@ -176,7 +176,7 @@
 
 #define CXXD_DETAIL_TABLE_FIND_PARAMS_RRMAC_FOUND(d,row,state) \
     ( \
-    1, \
+    0, \
     BOOST_PP_TUPLE_REPLACE_D \
         ( \
         d, \

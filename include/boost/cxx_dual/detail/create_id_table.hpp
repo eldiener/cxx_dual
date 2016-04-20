@@ -155,15 +155,15 @@
 /**/
 
 #define CXXD_DETAIL_IDT_IS_MODS_ALL_RRMAC_FIRST(value,ignore) \
-    (0,(value,value)) \
+    (1,(value,value)) \
 /**/
 
 #define CXXD_DETAIL_IDT_IS_MODS_ALL_RRMAC_NORMAL(value,state) \
     BOOST_PP_IIF \
         ( \
         BOOST_PP_EQUAL(value,CXXD_DETAIL_IDT_IS_MODS_ALL_STATE_PREV(state)), \
-        (0,state), \
-        (1,(value,)) \
+        (1,state), \
+        (0,(value,)) \
         ) \
 /**/
 

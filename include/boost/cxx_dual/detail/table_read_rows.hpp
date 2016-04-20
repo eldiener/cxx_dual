@@ -41,7 +41,7 @@
                        
                        if the second optional parameter is 1
                        the macro returns a tuple where the first
-                       tuple element is 1 ( stop reading ) or 0 ( continue reading ),
+                       tuple element is 0 ( stop reading ) or 1 ( continue reading ),
                        and the second tuple element is the new data.
                        
            The second optional variadic parameter is:
