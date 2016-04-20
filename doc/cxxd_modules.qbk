@@ -145,7 +145,7 @@ they happen:
 [heading Module header file dependency ]
 
 When the programmer includes the appropriate CXXD header file for a particular 
-CXXD-mod from within the boost/cxxd subdirectory there is no dependency
+CXXD-mod from within the boost/cxx_dual subdirectory there is no dependency
 being established on the CXXD-mod itself, whether the module represents a Boost
 library or a C++ standard library. Any one of the CXXD header files 
 merely defines macros which the programmer may choose to use or not.

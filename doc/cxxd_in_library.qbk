@@ -71,7 +71,7 @@ creating an interface using CXXD in an example 'MyLibrary'.
 Our CXXD example would look like:
 
     // Header file MyHeader.hpp
-    #include <cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
     class MyClass
         {
@@ -131,7 +131,7 @@ Boost or C++ standard dual library for that CXXD-mod otherwise.
 Given in OtherLibrary:
 
     // Header file OtherHeader.hpp
-    #include <cxxd/regex.hpp>
+    #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
     class OtherClass
         {
