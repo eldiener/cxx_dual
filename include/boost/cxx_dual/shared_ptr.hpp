@@ -15,7 +15,7 @@
     @brief The shared pointer header file name.
     
     The object-like macro expands to the include header file designation for the shared pointer header file.
-    The macro is used with the syntax: #include CXXD_SHARED_PTR_HEADER
+    The macro is used with the syntax: \#include CXXD_SHARED_PTR_HEADER
 */
 
 /** @def CXXD_SHARED_PTR_NS

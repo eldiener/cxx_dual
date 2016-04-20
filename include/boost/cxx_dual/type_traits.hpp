@@ -15,7 +15,7 @@
     @brief The type traits header file name.
     
     The object-like macro expands to the include header file designation for the type traits header file.
-    The macro is used with the syntax: #include CXXD_TYPE_TRAITS_HEADER
+    The macro is used with the syntax: \#include CXXD_TYPE_TRAITS_HEADER
 */
 
 /** @def CXXD_TYPE_TRAITS_NS

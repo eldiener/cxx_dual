@@ -15,7 +15,7 @@
     @brief The regex header file name.
     
     The object-like macro expands to the include header file designation for the regex header file.
-    The macro is used with the syntax: #include CXXD_REGEX_HEADER
+    The macro is used with the syntax: \#include CXXD_REGEX_HEADER
 */
 
 /** @def CXXD_REGEX_NS

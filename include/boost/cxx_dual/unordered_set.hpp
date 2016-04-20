@@ -15,7 +15,7 @@
     @brief The unordered set header file name.
     
     The object-like macro expands to the include header file designation for the unordered set header file.
-    The macro is used with the syntax: #include CXXD_UNORDERED_SET_HEADER
+    The macro is used with the syntax: \#include CXXD_UNORDERED_SET_HEADER
 */
 
 /** @def CXXD_UNORDERED_SET_NS

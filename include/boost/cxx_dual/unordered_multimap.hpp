@@ -15,7 +15,7 @@
     @brief The unordered multimap header file name.
     
     The object-like macro expands to the include header file designation for the unordered multimap header file.
-    The macro is used with the syntax: #include CXXD_UNORDERED_MULTIMAP_HEADER
+    The macro is used with the syntax: \#include CXXD_UNORDERED_MULTIMAP_HEADER
 */
 
 /** @def CXXD_UNORDERED_MULTIMAP_NS

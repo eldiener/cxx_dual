@@ -15,7 +15,7 @@
     @brief The thread header file name.
     
     The object-like macro expands to the include header file designation for the thread header file.
-    The macro is used with the syntax: #include CXXD_THREAD_HEADER
+    The macro is used with the syntax: \#include CXXD_THREAD_HEADER
 */
 
 /** @def CXXD_THREAD_NS

@@ -15,7 +15,7 @@
     @brief The bind header file name.
     
     The object-like macro expands to the include header file designation for the bind header file.
-    The macro is used with the syntax: #include CXXD_BIND_HEADER
+    The macro is used with the syntax: \#include CXXD_BIND_HEADER
 */
 
 /** @def CXXD_BIND_NS

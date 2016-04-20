@@ -15,7 +15,7 @@
     @brief The condition variable header file name.
     
     The object-like macro expands to the include header file designation for the condition variable header file.
-    The macro is used with the syntax: #include CXXD_CONDITION_VARIABLE_HEADER
+    The macro is used with the syntax: \#include CXXD_CONDITION_VARIABLE_HEADER
 */
 
 /** @def CXXD_CONDITION_VARIABLE_NS

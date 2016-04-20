@@ -15,7 +15,7 @@
     @brief The shared mutex header file name.
     
     The object-like macro expands to the include header file designation for the shared mutex header file.
-    The macro is used with the syntax: #include CXXD_SHARED_MUTEX_HEADER
+    The macro is used with the syntax: \#include CXXD_SHARED_MUTEX_HEADER
 */
 
 /** @def CXXD_SHARED_MUTEX_NS

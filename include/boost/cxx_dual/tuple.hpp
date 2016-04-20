@@ -15,7 +15,7 @@
     @brief The tuple header file name.
     
     The object-like macro expands to the include header file designation for the tuple header file.
-    The macro is used with the syntax: #include CXXD_TUPLE_HEADER
+    The macro is used with the syntax: \#include CXXD_TUPLE_HEADER
 */
 
 /** @def CXXD_TUPLE_NS

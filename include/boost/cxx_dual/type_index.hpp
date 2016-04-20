@@ -15,7 +15,7 @@
     @brief The type index header file name.
     
     The object-like macro expands to the include header file designation for the type index header file.
-    The macro is used with the syntax: #include CXXD_TYPE_INDEX_HEADER
+    The macro is used with the syntax: \#include CXXD_TYPE_INDEX_HEADER
 */
 
 /** @def CXXD_TYPE_INDEX_NS

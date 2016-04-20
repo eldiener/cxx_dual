@@ -15,7 +15,7 @@
     @brief The unordered map header file name.
     
     The object-like macro expands to the include header file designation for the unordered map header file.
-    The macro is used with the syntax: #include CXXD_UNORDERED_MAP_HEADER
+    The macro is used with the syntax: \#include CXXD_UNORDERED_MAP_HEADER
 */
 
 /** @def CXXD_UNORDERED_MAP_NS

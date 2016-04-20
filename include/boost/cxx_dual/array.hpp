@@ -15,7 +15,7 @@
     @brief The array header file name.
     
     The object-like macro expands to the include header file designation for the array header file.
-    The macro is used with the syntax: #include CXXD_ARRAY_HEADER
+    The macro is used with the syntax: \#include CXXD_ARRAY_HEADER
 */
 
 /** @def CXXD_ARRAY_NS

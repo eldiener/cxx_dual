@@ -15,7 +15,7 @@
     @brief The mem_fn header file name.
     
     The object-like macro expands to the include header file designation for the mem_fn header file.
-    The macro is used with the syntax: #include CXXD_MEM_FN_HEADER
+    The macro is used with the syntax: \#include CXXD_MEM_FN_HEADER
 */
 
 /** @def CXXD_MEM_FN_NS

@@ -15,7 +15,7 @@
     @brief The chrono header file name.
     
     The object-like macro expands to the include header file designation for the chrono header file.
-    The macro is used with the syntax: #include CXXD_CHRONO_HEADER
+    The macro is used with the syntax: \#include CXXD_CHRONO_HEADER
 */
 
 /** @def CXXD_CHRONO_NS

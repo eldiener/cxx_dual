@@ -54,7 +54,7 @@
     If an optional parameter is not specified for a particular CXXD-mod which is included,
     a default value is appended as a mnemonic for the particular CXXD-mod if the CXXD-mod
     is using its C++ standard implementation; otherwise by default if the CXXD-mod is using its Boost
-    C++ standard implementation no value is appended by default.
+    implementation no value is appended by default.
     
     The CXXD-mod identifiers and their default values for the C++ standard implementation are:
     

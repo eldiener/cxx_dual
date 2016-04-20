@@ -19,7 +19,7 @@
     a variadic parameter. A CXXD-mod choice refers to whether the
     CXXD-mod chooses the C++ standard implementation or the Boost implementation.
     
-    If the CXXD-mod choices, based on the CXXD-mod headers being included 
+    If the CXXD-mod choices, based on the CXXD headers being included 
     before the macro, is invoked match any one of the variants, the macro expands to 1, 
     otherwise the macro expands to 0.
     
@@ -70,7 +70,7 @@
     As can be seen each CXXD-mod identifier is 'CXXD_' followed
     by the uppercase name of the CXXD-mod.
     
-    The CXXD_MODS_ALL identifier refers to all of the include CXXD-mod headers
+    The CXXD_MODS_ALL identifier refers to all of the included CXXD headers
     choosing either the C++ standard implementation or the Boost implementation.
     Therefore if this identifier is used its Boost PP tuple should be the only
     one in the VMD sequence for that variant.
