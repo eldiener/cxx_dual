@@ -7,7 +7,7 @@
 
 [section Modules]
 
-A library which CXXD supports with its system of macros is called a 
+A dual library which CXXD supports with its system of macros is called a 
 "CXXD-mod" in this documentation, to distinguish the name from 
 the general term of "library". A CXXD-mod is a Boost library 
 whose functionality largely exists as a C++ standard library,
@@ -20,7 +20,7 @@ largely the exact same syntax.
 I want to make it clear that the choice of using, for example, Boost regex
 or C++ standard regex, has little to do with the technical quality of the library.
 Both versions are of an extremely high quality and this is true for every Boost library 
-which has an equivalent C++ standard library version. 
+which has an equivalent C++ standard library version.
 
 The CXXD-mods supported by CXXD are simply those Boost libraries which have 
 a C++ standard equivalent where the syntactical use of either is very largely
@@ -29,33 +29,44 @@ the same except for the namespace involved.
 The following table lists the CXXD-mods supported by CXXD, in alphabetical order, 
 and the appropriate information for each one:
 
-[table CXXD-Mods
+[table:cxxdmods CXXD-Mods
 [[CXXD-Mod][Header file][Include macro][Namespace macro][Check C++ standard version macro]]
-[[array][<boost/cxx_dual/array.hpp>][CXXD_ARRAY_HDR][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
-[[atomic][<boost/cxx_dual/atomic.hpp>][CXXD_ATOMIC_HDR][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
-[[bind][<boost/cxx_dual/bind.hpp>][CXXD_BIND_HDR][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
-[[chrono][<boost/cxx_dual/chrono.hpp>][CXXD_CHRONO_HDR][CXXD_CHRONO_NS][CXXD_HAS_STD_CHRONO]]
-[[condition variable][<boost/cxx_dual/condition_variable.hpp>][CXXD_CONDITION_VARIABLE_HDR][CXXD_CONDITION_VARIABLE_NS][CXXD_HAS_STD_CONDITION_VARIABLE]]
-[[function][<boost/cxx_dual/function.hpp>][CXXD_FUNCTION_HDR][CXXD_FUNCTION_NS][CXXD_HAS_STD_FUNCTION]]
-[[hash][<boost/cxx_dual/hash.hpp>][CXXD_HASH_HDR][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
-[[mem_fn][<boost/cxx_dual/mem_fn.hpp>][CXXD_MEM_FN_HDR][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
-[[mutex][<boost/cxx_dual/mutex.hpp>][CXXD_MUTEX_HDR][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
-[[random][<boost/cxx_dual/random.hpp>][CXXD_RANDOM_HDR][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
-[[ratio][<boost/cxx_dual/ratio.hpp>][CXXD_RATIO_HDR][CXXD_RATIO_NS][CXXD_HAS_STD_RATIO]]
-[[ref][<boost/cxx_dual/ref.hpp>][CXXD_REF_HDR][CXXD_REF_NS][CXXD_HAS_STD_REF]]
-[[regex][<boost/cxx_dual/regex.hpp>][CXXD_REGEX_HDR][CXXD_REGEX_NS][CXXD_HAS_STD_REGEX]]
-[[shared_mutex][<boost/cxx_dual/shared_mutex.hpp>][CXXD_SHARED_MUTEX_HDR][CXXD_SHARED_MUTEX_NS][CXXD_HAS_STD_SHARED_MUTEX]]
-[[shared_ptr][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SHARED_PTR_HDR][CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
-[[system][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_HDR][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
-[[thread][<boost/cxx_dual/thread.hpp>][CXXD_THREAD_HDR][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
-[[tuple][<boost/cxx_dual/tuple.hpp>][CXXD_TUPLE_HDR][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
-[[type_index][<boost/cxx_dual/type_index.hpp>][CXXD_TYPE_INDEX_HDR][CXXD_TYPE_INDEX_NS][CXXD_HAS_STD_TYPE_INDEX]]
-[[type_traits][<boost/cxx_dual/type_traits.hpp>][CXXD_TYPE_TRAITS_HDR][CXXD_TYPE_TRAITS_NS][CXXD_HAS_STD_TYPE_TRAITS]]
-[[unordered_map][<boost/cxx_dual/unordered_map.hpp>][CXXD_UNORDERED_MAP_HDR][CXXD_UNORDERED_MAP_NS][CXXD_HAS_STD_UNORDERED_MAP]]
-[[unordered_multimap][<boost/cxx_dual/unordered_multimap.hpp>][CXXD_UNORDERED_MULTIMAP_HDR][CXXD_UNORDERED_MULTIMAP_NS][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
-[[unordered_multiset][<boost/cxx_dual/unordered_multiset.hpp>][CXXD_UNORDERED_MULTISET_HDR][CXXD_UNORDERED_MULTISET_NS][CXXD_HAS_STD_UNORDERED_MULTISET]]
-[[unordered_set][<boost/cxx_dual/unordered_set.hpp>][CXXD_UNORDERED_SET_HDR][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
+[[array][<boost/cxx_dual/array.hpp>][CXXD_ARRAY_HEADER][CXXD_ARRAY_NS][CXXD_HAS_STD_ARRAY]]
+[[atomic][<boost/cxx_dual/atomic.hpp>][CXXD_ATOMIC_HEADER][CXXD_ATOMIC_NS][CXXD_HAS_STD_ATOMIC]]
+[[bind][<boost/cxx_dual/bind.hpp>][CXXD_BIND_HEADER][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
+[[chrono][<boost/cxx_dual/chrono.hpp>][CXXD_CHRONO_HEADER][CXXD_CHRONO_NS][CXXD_HAS_STD_CHRONO]]
+[[condition variable][<boost/cxx_dual/condition_variable.hpp>][CXXD_CONDITION_VARIABLE_HEADER][CXXD_CONDITION_VARIABLE_NS][CXXD_HAS_STD_CONDITION_VARIABLE]]
+[[function][<boost/cxx_dual/function.hpp>][CXXD_FUNCTION_HEADER][CXXD_FUNCTION_NS][CXXD_HAS_STD_FUNCTION]]
+[[hash][<boost/cxx_dual/hash.hpp>][CXXD_HASH_HEADER][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
+[[mem_fn][<boost/cxx_dual/mem_fn.hpp>][CXXD_MEM_FN_HEADER][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
+[[mutex][<boost/cxx_dual/mutex.hpp>][CXXD_MUTEX_HEADER][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
+[[random][<boost/cxx_dual/random.hpp>][CXXD_RANDOM_HEADER][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
+[[ratio][<boost/cxx_dual/ratio.hpp>][CXXD_RATIO_HEADER][CXXD_RATIO_NS][CXXD_HAS_STD_RATIO]]
+[[ref][<boost/cxx_dual/ref.hpp>][CXXD_REF_HEADER][CXXD_REF_NS][CXXD_HAS_STD_REF]]
+[[regex][<boost/cxx_dual/regex.hpp>][CXXD_REGEX_HEADER][CXXD_REGEX_NS][CXXD_HAS_STD_REGEX]]
+[[shared_mutex][<boost/cxx_dual/shared_mutex.hpp>][CXXD_SHARED_MUTEX_HEADER][CXXD_SHARED_MUTEX_NS][CXXD_HAS_STD_SHARED_MUTEX]]
+[[shared_ptr][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SHARED_PTR_HEADER][CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
+[[system][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_HEADER][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
+[[thread][<boost/cxx_dual/thread.hpp>][CXXD_THREAD_HEADER][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
+[[tuple][<boost/cxx_dual/tuple.hpp>][CXXD_TUPLE_HEADER][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
+[[type_index][<boost/cxx_dual/type_index.hpp>][CXXD_TYPE_INDEX_HEADER][CXXD_TYPE_INDEX_NS][CXXD_HAS_STD_TYPE_INDEX]]
+[[type_traits][<boost/cxx_dual/type_traits.hpp>][CXXD_TYPE_TRAITS_HEADER][CXXD_TYPE_TRAITS_NS][CXXD_HAS_STD_TYPE_TRAITS]]
+[[unordered_map][<boost/cxx_dual/unordered_map.hpp>][CXXD_UNORDERED_MAP_HEADER][CXXD_UNORDERED_MAP_NS][CXXD_HAS_STD_UNORDERED_MAP]]
+[[unordered_multimap][<boost/cxx_dual/unordered_multimap.hpp>][CXXD_UNORDERED_MULTIMAP_HEADER][CXXD_UNORDERED_MULTIMAP_NS][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
+[[unordered_multiset][<boost/cxx_dual/unordered_multiset.hpp>][CXXD_UNORDERED_MULTISET_HEADER][CXXD_UNORDERED_MULTISET_NS][CXXD_HAS_STD_UNORDERED_MULTISET]]
+[[unordered_set][<boost/cxx_dual/unordered_set.hpp>][CXXD_UNORDERED_SET_HEADER][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
 ]
+
+The naming scheme for each CXXD-mod follows common conventions:
+
+* Each include macro is named starting with the mnemonic CXXD_,
+followed by the name CXXD-mod name in uppercase,
+followed by the mnemonic _HEADER.
+* Each namespace macro is named starting with the mnemonic CXXD_,
+followed by the name CXXD-mod name in uppercase,
+followed by the mnemonic _NS.
+* Each checking macro is named starting with the mnemonic CXXD_HAS_STD_,
+followed by the name CXXD-mod name in uppercase.
 
 Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
 defined for a CXXD-mod XXX which has equivalent macro names between the C++ standard library 
@@ -93,7 +104,7 @@ version of the library is being used, returning '1' if the Boost version of the 
 is being used or '0' if it is not being used.
 
 The CXXD_HAS_STD_... macro for any given CXXD-mod is a more understandable form of macro than
-Boost.config already has for determining whether the compiler supports certain C++ libraries.
+Boost.Config already has for determining whether the compiler supports certain C++ libraries.
 Most of these macros are taken from whether or not a given BOOST_NO_CXX11_HDR_ is defined.
 
 You may decide, for a particular code path which will occur very rarely, you need the 
@@ -144,30 +155,30 @@ they happen:
   
 [heading Module header file dependency ]
 
-When the programmer includes the appropriate CXXD header file for a particular 
-CXXD-mod from within the boost/cxx_dual subdirectory there is no dependency
+When the programmer includes the appropriate CXXD-mod header file for a particular 
+dual library from within the cxx_dual directory there is no dependency
 being established on the CXXD-mod itself, whether the module represents a Boost
 library or a C++ standard library. Any one of the CXXD header files 
 merely defines macros which the programmer may choose to use or not.
 
-Therefore the CXXD library itself does not depend on any of the CXXD-mod it supports.
+Therefore the CXXD library itself does not depend on any of the CXXD-mods it supports.
 
-It is only when using a particular CXXD-mod header, along with a particular CXXD-mode namespace,
+It is only when using a particular CXXD-mod macro header, along with a particular CXXD-mod namespace,
 that a dependency is established.
 
 Because there is no dependency on the CXXD-mod itself when a particular CXXD header is included,
-CXXD allows inclusion of all CXDD-mode headers with a single include:
+CXXD allows inclusion of all CXDD-mod headers with a single include:
 
   #include <boost/cxx_dual/cxx_mods.hpp>
+  
+This is called the "general mod header".
 
-I call this the "all-purpose" header.
-
-This includes macros, starting with CXXD_, for each CXXD-mode, but as long 
+The general mod header includes macros, starting with CXXD_, for each CXXD-mod. As long 
 as the prefix CXXD_ does not conflict with macros from any other software 
 library in the translation unit there should be no problems even including this
-all-purpose header. Furthermore, since including any individual CXXD header
+general mod header. Furthermore, since including any individual CXXD-mod header
 imposes no dependency on either the Boost version or the C++ standard version of the
-module itself, including the all-purpose header above introduces no dependencies
-on any of the CXXD-mod in that all-purpose header.
+dual library itself, including the general mod header above introduces no dependencies
+on any of the CXXD-mods in that header file.
 
 [endsect]

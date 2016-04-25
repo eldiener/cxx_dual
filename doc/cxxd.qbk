@@ -6,7 +6,7 @@
 ]
 
 [library The Cxx Dual Library
-    [quickbook 1.6]
+    [quickbook 1.7]
     [id cxxd]
     [dirname cxxd]
     [copyright 2015-2016 Tropic Software East Inc]
@@ -21,11 +21,12 @@
     ]
 ]
  
-[include cxxd_templates.qbk]
+[import cxxd_templates.qbk]
 [include cxxd_introduction.qbk]
 [include cxxd_modules.qbk]
 [include cxxd_mechanism.qbk]
 [include cxxd_in_library.qbk]
 [include cxxd_errors.qbk]
+[include cxxd_headers.qbk]
 [include cxxd_reference.qbk]
 [include cxxd_index.qbk]

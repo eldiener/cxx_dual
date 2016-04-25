@@ -64,7 +64,7 @@ doxygen cxxd_reference
     <doxygen:param>VERBATIM_HEADERS=NO
     <doxygen:param>PREDEFINED=BOOST_PP_VARIADICS
     <doxygen:param>SEARCH_INCLUDES=NO
-    <reftitle>"CXX Dual Reference"
+    <reftitle>"Reference"
 ;
 
 xml cxxd

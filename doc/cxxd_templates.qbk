@@ -5,4 +5,4 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[template power[x y]'''[x]<superscript>[y]</superscript>''']
+[template power[x y] [x]'''<superscript>'''[y]'''</superscript>''']
