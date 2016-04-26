@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the function implementation.
 */
 
+/** @def CXXD_FUNCTION_USE_BOOST
+    @brief Override macro for Boost function implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost function implementation.
+*/
+
+/** @def CXXD_FUNCTION_USE_STD
+    @brief Override macro for C++ standard function implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard function implementation. If the
+    C++ standard function implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_FUNCTION
     @brief Determines whether the C++ standard function implementation or the Boost function implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_FUNCTION_USE_STD
+    #define CXXD_FUNCTION_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

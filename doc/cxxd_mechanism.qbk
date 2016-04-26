@@ -69,6 +69,36 @@ be defined to nothing, as in:
     
 where XXX is the uppercase name of the module.
 
+The specific override macros for each CXXD-mod are:
+
+[table:spovmac Specific override macros
+[[CXXD-mod][Boost override macro][C++ standard override macro]]
+[[array][CXXD_ARRAY_USE_BOOST][CXXD_ARRAY_USE_STD]]
+[[atomic][CXXD_ATOMIC_USE_BOOST][CXXD_ATOMIC_USE_STD]]
+[[bind][CXXD_BIND_USE_BOOST][CXXD_BIND_USE_STD]]
+[[chrono][CXXD_CHRONO_USE_BOOST][CXXD_CHRONO_USE_STD]]
+[[condition_variable][CXXD_CONDITION_VARIABLE_USE_BOOST][CXXD_CONDITION_VARIABLE_USE_STD]]
+[[function][CXXD_FUNCTION_USE_BOOST][CXXD_FUNCTION_USE_STD]]
+[[hash][CXXD_HASH_USE_BOOST][CXXD_HASH_USE_STD]]
+[[mem_fn][CXXD_MEM_FN_USE_BOOST][CXXD_MEM_FN_USE_STD]]
+[[mutex][CXXD_MUTEX_USE_BOOST][CXXD_MUTEX_USE_STD]]
+[[random][CXXD_RANDOM_USE_BOOST][CXXD_RANDOM_USE_STD]]
+[[ratio][CXXD_RATIO_USE_BOOST][CXXD_RATIO_USE_STD]]
+[[ref][CXXD_REF_USE_BOOST][CXXD_REF_USE_STD]]
+[[regex][CXXD_REGEX_USE_BOOST][CXXD_REGEX_USE_STD]]
+[[shared_mutex][CXXD_SHARED_MUTEX_USE_BOOST][CXXD_SHARED_MUTEX_USE_STD]]
+[[shared_ptr][CXXD_SHARED_PTR_USE_BOOST][CXXD_SHARED_PTR_USE_STD]]
+[[system][CXXD_SYSTEM_USE_BOOST][CXXD_SYSTEM_USE_STD]]
+[[thread][CXXD_THREAD_USE_BOOST][CXXD_THREAD_USE_STD]]
+[[tuple][CXXD_TUPLE_USE_BOOST][CXXD_TUPLE_USE_STD]]
+[[type_index][CXXD_TYPE_INDEX_USE_BOOST][CXXD_TYPE_INDEX_USE_STD]]
+[[type_traits][CXXD_TYPE_TRAITS_USE_BOOST][CXXD_TYPE_TRAITS_USE_STD]]
+[[unordered_map][CXXD_UNORDERED_MAP_USE_BOOST][CXXD_UNORDERED_MAP_USE_STD]]
+[[unordered_multimap][CXXD_UNORDERED_MULTIMAP_USE_BOOST][CXXD_UNORDERED_MULTIMAP_USE_STD]]
+[[unordered_multiset][CXXD_UNORDERED_MULTISET_USE_BOOST][CXXD_UNORDERED_MULTISET_USE_STD]]
+[[unordered_set][CXXD_UNORDERED_SET_USE_BOOST][CXXD_UNORDERED_SET_USE_STD]]
+]
+
 If for any given CXXD-mod 'xxx' both CXXD_XXX_USE_BOOST and CXXD_XXX_USE_STD is defined a preprocessing
 error will occur when the CXXD header for 'xxx' is included.
 

@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the type traits implementation.
 */
 
+/** @def CXXD_TYPE_TRAITS_USE_BOOST
+    @brief Override macro for Boost type_traits implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost type_traits implementation.
+*/
+
+/** @def CXXD_TYPE_TRAITS_USE_STD
+    @brief Override macro for C++ standard type_traits implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard type_traits implementation. If the
+    C++ standard type_traits implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_TYPE_TRAITS
     @brief Determines whether the C++ standard type traits implementation or the Boost type traits implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_TYPE_TRAITS_USE_STD
+    #define CXXD_TYPE_TRAITS_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

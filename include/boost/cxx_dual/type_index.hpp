@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the type index implementation.
 */
 
+/** @def CXXD_TYPE_INDEX_USE_BOOST
+    @brief Override macro for Boost type_index implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost type_index implementation.
+*/
+
+/** @def CXXD_TYPE_INDEX_USE_STD
+    @brief Override macro for C++ standard type_index implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard type_index implementation. If the
+    C++ standard type_index implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_TYPE_INDEX
     @brief Determines whether the C++ standard type index implementation or the Boost type index implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_TYPE_INDEX_USE_STD
+    #define CXXD_TYPE_INDEX_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

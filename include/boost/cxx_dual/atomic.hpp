@@ -31,6 +31,21 @@
     The object-like macro expands to the namespace for the atomic implementation.
 */
 
+/** @def CXXD_ATOMIC_USE_BOOST
+    @brief Override macro for Boost atomic implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost atomic implementation.
+*/
+
+/** @def CXXD_ATOMIC_USE_STD
+    @brief Override macro for C++ standard atomic implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard atomic implementation. If the
+    C++ standard atomic implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_ATOMIC
     @brief Determines whether the C++ standard atomic implementation or the Boost atomic implementation has been chosen.
     
@@ -83,3 +98,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_ATOMIC_USE_STD
+    #define CXXD_ATOMIC_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

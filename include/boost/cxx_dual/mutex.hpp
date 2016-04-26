@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the mutex implementation.
 */
 
+/** @def CXXD_MUTEX_USE_BOOST
+    @brief Override macro for Boost mutex implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost mutex implementation.
+*/
+
+/** @def CXXD_MUTEX_USE_STD
+    @brief Override macro for C++ standard mutex implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard mutex implementation. If the
+    C++ standard mutex implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_MUTEX
     @brief Determines whether the C++ standard mutex implementation or the Boost mutex implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_MUTEX_USE_STD
+    #define CXXD_MUTEX_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

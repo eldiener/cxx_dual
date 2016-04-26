@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the condition variable implementation.
 */
 
+/** @def CXXD_CONDITION_VARIABLE_USE_BOOST
+    @brief Override macro for Boost condition_variable implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost condition variable implementation.
+*/
+
+/** @def CXXD_CONDITION_VARIABLE_USE_STD
+    @brief Override macro for C++ standard condition_variable implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard condition variable implementation. If the
+    C++ standard condition variable implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_CONDITION_VARIABLE
     @brief Determines whether the C++ standard condition variable implementation or the Boost condition variable implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_CONDITION_VARIABLE_USE_STD
+    #define CXXD_CONDITION_VARIABLE_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

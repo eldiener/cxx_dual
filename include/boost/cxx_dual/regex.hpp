@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the regex implementation.
 */
 
+/** @def CXXD_REGEX_USE_BOOST
+    @brief Override macro for Boost regex implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost regex implementation.
+*/
+
+/** @def CXXD_REGEX_USE_STD
+    @brief Override macro for C++ standard regex implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard regex implementation. If the
+    C++ standard regex implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_REGEX
     @brief Determines whether the C++ standard regex implementation or the Boost regex implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_REGEX_USE_STD
+    #define CXXD_REGEX_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)

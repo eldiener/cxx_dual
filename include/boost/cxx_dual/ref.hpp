@@ -24,6 +24,21 @@
     The object-like macro expands to the namespace for the ref implementation.
 */
 
+/** @def CXXD_REF_USE_BOOST
+    @brief Override macro for Boost ref implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file, 
+    forces the dual library choice of the Boost ref implementation.
+*/
+
+/** @def CXXD_REF_USE_STD
+    @brief Override macro for C++ standard ref implementation.
+    
+    The object-like macro, when defined to nothing prior to including this header file,
+    forces the dual library choice of the C++ standard ref implementation. If the
+    C++ standard ref implementation is not available a preprocessor error is generated.
+*/
+
 /** @def CXXD_HAS_STD_REF
     @brief Determines whether the C++ standard ref implementation or the Boost ref implementation has been chosen.
     
@@ -72,3 +87,18 @@
         #endif
     #endif
 #endif
+
+/*
+
+  CXXD_DOXYGEN is only defined when building the docs for doxygen
+  so that doxygen will document macros which are not defined
+  in the library.
+  
+  It should never be defined by an end-user of CXXD.
+
+*/
+
+#if defined(CXXD_DOXYGEN)
+    #define CXXD_REF_USE_STD
+    #define CXXD_REF_USE_BOOST
+#endif // defined(CXXD_DOXYGEN)
