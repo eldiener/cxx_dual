@@ -498,7 +498,7 @@ can use to test for all his valid variant possibilities with a single macro invo
 
 Suppose we simplify further in a manner I suggested previously where we
 will only support the two variants which most likely corresponds to the end-user
-compiling with C++11 on up support or not. Now are MyLibName.hpp gets much simpler:
+compiling with C++11 on up support or not. Now our MyLibName.hpp gets much simpler:
     
     // Header file MyLibName.hpp
     #include <boost/cxx_dual/array.hpp>
@@ -623,7 +623,7 @@ which have been previously documented.
 [heading Macro naming a library variant]
 
 There is a macro in CXXD for naming a library variant based on the dual library chosen
-for the CXXD-mods are being included when the macro is actually invoked. This macro provides
+for the CXXD-mods being included when the macro is actually invoked. This macro provides
 an automatic methodology for naming which can replace a manual method the end-user
 may have chosen to use. The macro is a variadic macro whose name and signature is:
 
@@ -694,7 +694,7 @@ Boost library has been chosen for a particular CXXD-mod.
 This was done to provide the smallest unique identifier while more clearly separating each mnemonic
 in the final name.
 
-The 'CXXD_MODS_ALL' row specifies a single mnemonic, in place of all the individual mnemonics, 
+The 'CXXD_MODS_ALL' identifier specifies a single mnemonic, in place of all the individual mnemonics, 
 to be added to the base name if all the CXXD-mods being used have either their C++ standard
 chosen as the dual library or their Boost library chosen as the dual library. In the default
 case above if all the CXXD-mods being used have the C++ standard library as the dual library
@@ -710,7 +710,7 @@ The way that the CXXD_LIBRARY_NAME works, when the single required base name is 
 is exactly the manual method I have previously used when specifying unique variant names in the 
 MyLibName.hpp samples given above. I chose to illustrate the manual method in the documentation 
 based on the way that the CXXD_LIBRARY_NAME macro is designed to work when no optional parameters
-are specified, but of course an end-user manually specifying unique library variant names,
+are specified, but of course an end-user, manually specifying unique library variant names
 instead of using the CXXD_LIBRARY_NAME macro, can use any schema he wants.
 
 The default naming of CXXD_LIBRARY_NAME guarantees that if Boost is consistently being 

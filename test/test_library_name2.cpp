@@ -4,6 +4,14 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
+#include <boost/preprocessor/config/config.hpp>
+
+#if !BOOST_PP_VARIADICS
+
+#error Variadic macros must be supported for test_library_name2 test
+
+#else
+
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/cxx_dual/library_name.hpp>
@@ -48,3 +56,5 @@ int main()
     
   return boost::report_errors();
   }
+
+#endif

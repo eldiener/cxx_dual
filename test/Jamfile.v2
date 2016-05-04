@@ -14,60 +14,72 @@ import ../../predef/check/predef
 project cxxd_tests : requirements <warnings>on
                                   <test-info>always_show_run_output
                                   <toolset>msvc:<warnings>all
-                                  <toolset>intel-linux:<cxxflags>-std=c++11
-                                  <toolset>clang-linux:<cxxflags>-std=c++11
-                                  <toolset>clang-linux:<cxxflags>-pedantic-errors
                                   <toolset>gcc:<warnings>all
-                                  <toolset>gcc:<cxxflags>-pedantic-errors
                                   [ predef-check "BOOST_COMP_GNUC >= 4.7.4" : : <cxxflags>-ftrack-macro-expansion=0 ]
                                   [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-variadic-macros ]
+                                  [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-pedantic ]
                                   <toolset>gcc-4.3.0:<cxxflags>-U__STRICT_ANSI__
                                   <toolset>gcc-4.4.0:<cxxflags>-U__STRICT_ANSI__
                                   <toolset>gcc-4.5.2:<linkflags>"-Wl,--enable-auto-import"
                                   ;
                                                  
-local l_gcc_c11 = [ predef-check "BOOST_COMP_GNUC >= 4.3" "BOOST_OS_QNX == 0" : : <cxxflags>-std=c++0x ] ;
-
-test-suite cxxd_data
+alias cxxd_tall
     : 
-       [ run test_all.cpp : : : $(l_gcc_c11) ]
-       [ run test_all_mods.cpp : : : $(l_gcc_c11) ]
-       [ run test_array.cpp : : : $(l_gcc_c11) ]
-       [ run test_atomic.cpp : : : $(l_gcc_c11) ]
-       [ run test_bind.cpp : : : $(l_gcc_c11) ]
-       [ run test_chrono.cpp : : : $(l_gcc_c11) ]
-       [ run test_condition_variable.cpp : : : $(l_gcc_c11) ]
-       [ run test_function.cpp : : : $(l_gcc_c11) ]
-       [ run test_hash.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name1.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name2.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name3.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name4.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name5.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name6.cpp : : : $(l_gcc_c11) ]
-       [ run test_library_name7.cpp : : : $(l_gcc_c11) ]
-       [ run test_mutex.cpp : : : $(l_gcc_c11) ]
-       [ run test_mem_fn.cpp : : : $(l_gcc_c11) ]
-       [ run test_random.cpp : : : $(l_gcc_c11) ]
-       [ run test_ratio.cpp : : : $(l_gcc_c11) ]
-       [ run test_ref.cpp : : : $(l_gcc_c11) ]
-       [ run test_regex.cpp : : : $(l_gcc_c11) ]
-       [ run test_shared_mutex.cpp : : : $(l_gcc_c11) ]
-       [ run test_shared_ptr.cpp : : : $(l_gcc_c11) ]
-       [ run test_system.cpp : : : $(l_gcc_c11) ]
-       [ run test_thread.cpp : : : $(l_gcc_c11) ]
-       [ run test_tuple.cpp : : : $(l_gcc_c11) ]
-       [ run test_type_index.cpp : : : $(l_gcc_c11) ]
-       [ run test_type_traits.cpp : : : $(l_gcc_c11) ]
-       [ run test_unordered_map.cpp : : : $(l_gcc_c11) ]
-       [ run test_unordered_multimap.cpp : : : $(l_gcc_c11) ]
-       [ run test_unordered_multiset.cpp : : : $(l_gcc_c11) ]
-       [ run test_unordered_set.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants1.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants2.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants3.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants4.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants5.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants6.cpp : : : $(l_gcc_c11) ]
-       [ run test_valid_variants7.cpp : : : $(l_gcc_c11) ]
+       [ run test_all.cpp ]
+       [ run test_all_mods.cpp ]
+    ;
+
+alias cxxd_tln
+    :
+       [ run test_library_name.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name2.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name3.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name4.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name5.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name6.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name7.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+    ;
+
+alias cxxd_tvv
+    : 
+       [ run test_valid_variants.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants2.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants3.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants4.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants5.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants6.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants7.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+    ;
+
+alias cxxd_mods
+    : 
+       [ run test_array.cpp ]
+       [ compile test_atomic.cpp ]
+       [ compile test_atomic2.cpp ]
+       [ compile test_atomic3.cpp ]
+       [ compile test_atomic4.cpp ]
+       [ compile test_atomic5.cpp ]
+       [ compile test_atomic6.cpp ]
+       [ run test_bind.cpp ]
+       [ run test_chrono.cpp ]
+       [ run test_condition_variable.cpp ]
+       [ run test_function.cpp ]
+       [ run test_hash.cpp ]
+       [ run test_mutex.cpp ]
+       [ run test_mem_fn.cpp ]
+       [ run test_random.cpp ]
+       [ run test_ratio.cpp ]
+       [ run test_ref.cpp ]
+       [ run test_regex.cpp ]
+       [ run test_shared_mutex.cpp ]
+       [ run test_shared_ptr.cpp ]
+       [ run test_system.cpp ]
+       [ run test_thread.cpp ]
+       [ run test_tuple.cpp ]
+       [ run test_type_index.cpp ]
+       [ run test_type_traits.cpp ]
+       [ run test_unordered_map.cpp ]
+       [ run test_unordered_multimap.cpp ]
+       [ run test_unordered_multiset.cpp ]
+       [ run test_unordered_set.cpp ]
     ;
