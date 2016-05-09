@@ -36,8 +36,10 @@ and the appropriate information for each one:
 [[bind][<boost/cxx_dual/bind.hpp>][CXXD_BIND_HEADER][CXXD_BIND_NS][CXXD_HAS_STD_BIND]]
 [[chrono][<boost/cxx_dual/chrono.hpp>][CXXD_CHRONO_HEADER][CXXD_CHRONO_NS][CXXD_HAS_STD_CHRONO]]
 [[condition variable][<boost/cxx_dual/condition_variable.hpp>][CXXD_CONDITION_VARIABLE_HEADER][CXXD_CONDITION_VARIABLE_NS][CXXD_HAS_STD_CONDITION_VARIABLE]]
+[[enable_shared_from_this][<boost/cxx_dual/enable_shared_from_this.hpp>][CXXD_ENABLE_SHARED_FROM_THIS_HEADER][CXXD_ENABLE_SHARED_FROM_THIS_NS][CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS]]
 [[function][<boost/cxx_dual/function.hpp>][CXXD_FUNCTION_HEADER][CXXD_FUNCTION_NS][CXXD_HAS_STD_FUNCTION]]
 [[hash][<boost/cxx_dual/hash.hpp>][CXXD_HASH_HEADER][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
+[[make_shared][<boost/cxx_dual/make_shared.hpp>][CXXD_MAKE_SHARED_HEADER][CXXD_MAKE_SHARED_NS][CXXD_HAS_STD_MAKE_SHARED]]
 [[mem_fn][<boost/cxx_dual/mem_fn.hpp>][CXXD_MEM_FN_HEADER][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
 [[mutex][<boost/cxx_dual/mutex.hpp>][CXXD_MUTEX_HEADER][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
 [[random][<boost/cxx_dual/random.hpp>][CXXD_RANDOM_HEADER][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
@@ -45,7 +47,12 @@ and the appropriate information for each one:
 [[ref][<boost/cxx_dual/ref.hpp>][CXXD_REF_HEADER][CXXD_REF_NS][CXXD_HAS_STD_REF]]
 [[regex][<boost/cxx_dual/regex.hpp>][CXXD_REGEX_HEADER][CXXD_REGEX_NS][CXXD_HAS_STD_REGEX]]
 [[shared_mutex][<boost/cxx_dual/shared_mutex.hpp>][CXXD_SHARED_MUTEX_HEADER][CXXD_SHARED_MUTEX_NS][CXXD_HAS_STD_SHARED_MUTEX]]
-[[shared_ptr][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SHARED_PTR_HEADER][CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
+[[shared_ptr][<boost/cxx_dual/shared_ptr.hpp>]
+[
+* CXXD_SHARED_PTR_HEADER - all shared_ptr related header files
+* CXXD_SHARED_PTR_ONLY_HEADER - only the shared_ptr header file
+]
+[CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
 [[system][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_HEADER][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
 [[thread][<boost/cxx_dual/thread.hpp>][CXXD_THREAD_HEADER][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
 [[tuple][<boost/cxx_dual/tuple.hpp>][CXXD_TUPLE_HEADER][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
@@ -55,16 +62,17 @@ and the appropriate information for each one:
 [[unordered_multimap][<boost/cxx_dual/unordered_multimap.hpp>][CXXD_UNORDERED_MULTIMAP_HEADER][CXXD_UNORDERED_MULTIMAP_NS][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
 [[unordered_multiset][<boost/cxx_dual/unordered_multiset.hpp>][CXXD_UNORDERED_MULTISET_HEADER][CXXD_UNORDERED_MULTISET_NS][CXXD_HAS_STD_UNORDERED_MULTISET]]
 [[unordered_set][<boost/cxx_dual/unordered_set.hpp>][CXXD_UNORDERED_SET_HEADER][CXXD_UNORDERED_SET_NS][CXXD_HAS_STD_UNORDERED_SET]]
+[[weak_ptr][<boost/cxx_dual/weak_ptr.hpp>][CXXD_WEAK_PTR_HEADER][CXXD_WEAK_PTR_NS][CXXD_HAS_STD_WEAK_PTR]]
 ]
 
 The naming scheme for each CXXD-mod follows common conventions:
 
 * Each include macro is named starting with the mnemonic CXXD_,
 followed by the name CXXD-mod name in uppercase,
-followed by the mnemonic _HEADER.
+followed by the mnemonic \_HEADER.
 * Each namespace macro is named starting with the mnemonic CXXD_,
 followed by the name CXXD-mod name in uppercase,
-followed by the mnemonic _NS.
+followed by the mnemonic \_NS.
 * Each checking macro is named starting with the mnemonic CXXD_HAS_STD_,
 followed by the name CXXD-mod name in uppercase.
 
@@ -76,6 +84,14 @@ matter which implementation is being used. Currently, among the CXXD-mods listed
 one which uses this form is the 'atomic' CXXD-mod. It's name therefore is CXXD_ATOMIC_MACRO 
 and it can be used in the form of CXXD_ATOMIC_MACRO(SOME_ATOMIC_MACRO) to produce the correct 
 equivalent macro name for the 'atomic' CXXD-mod.
+
+For the 'shared_ptr' dual library the normal header file macro, CXXD_SHARED_PTR_HEADER,
+when included brings in the implementations for shared_ptr, weak_ptr, make_shared, and
+enable_shared_from_this for either the Boost library or the C++ standard library. The
+header file macro, CXXD_SHARED_PTR_ONLY_HEADER, when included brings in only the 
+implementation for shared_ptr for either the Boost library or the C++ standard library;
+the end-user can then use the separate CXXD functionality for weak_ptr, make_shared,
+and enable_shared_from_this in their respective CXXD-mods.
 
 [heading Using the macros ]
 

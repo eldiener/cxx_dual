@@ -20,7 +20,7 @@ The library does this by defining object-like macros
 for including the appropriate header file and namespace
 for using either the Boost library version or the C++ standard
 library version of a particular dual library. CXXD
-currently supports twenty four different dual libraries,
+currently supports twenty seven different dual libraries,
 where the Boost version and the C++ standard version is
 nearly interchangeable. CXXD also provides a macro-based solution for
 distinguishing between the Boost version and the C++ standard
@@ -169,7 +169,7 @@ The subsequent usage of these CXXD_ macros in code for any given CXXD-mod is ver
 
 # Include the correct CXXD-mod macro header file using '#include CXXD_XXX_HEADER'.
 # Access any functionality in the CXXD-mod namespace using 'CXXD_XXX_NS::some_functionality etc...'
-or, if there are no name clashes with another namespace, through 'using CXXD_XXX_NS; some_functionality etc...'.
+or, if there are no name clashes with another namespace, through 'using namespace CXXD_XXX_NS; some_functionality etc...'.
 # Use any macro MMM, which is part of the CXXD-mod implementation, 
 by specifying 'CXXD_XXX_MACRO(MMM)' as the macro name.
 # Optionally it is possible to write specific code for the Boost version of the module

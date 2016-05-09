@@ -34,9 +34,11 @@ doxygen cxxd_reference
     $(here)/../../../boost/cxx_dual/bind.hpp
     $(here)/../../../boost/cxx_dual/chrono.hpp
     $(here)/../../../boost/cxx_dual/condition_variable.hpp
+    $(here)/../../../boost/cxx_dual/enable_shared_from_this.hpp
     $(here)/../../../boost/cxx_dual/function.hpp
     $(here)/../../../boost/cxx_dual/hash.hpp
     $(here)/../../../boost/cxx_dual/library_name.hpp
+    $(here)/../../../boost/cxx_dual/make_shared.hpp
     $(here)/../../../boost/cxx_dual/mem_fn.hpp
     $(here)/../../../boost/cxx_dual/mutex.hpp
     $(here)/../../../boost/cxx_dual/random.hpp
@@ -55,6 +57,7 @@ doxygen cxxd_reference
     $(here)/../../../boost/cxx_dual/unordered_multiset.hpp
     $(here)/../../../boost/cxx_dual/unordered_set.hpp
     $(here)/../../../boost/cxx_dual/valid_variants.hpp
+    $(here)/../../../boost/cxx_dual/weak_ptr.hpp
     $(here)/../../../boost/cxx_dual/cxx_mods.hpp
   : 
     <doxygen:param>PROJECT_NAME="CXXD"

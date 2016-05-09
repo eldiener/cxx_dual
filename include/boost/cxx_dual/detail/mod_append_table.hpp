@@ -17,8 +17,10 @@
     (CXXD_BIND,_bd), \
     (CXXD_CHRONO,_ch), \
     (CXXD_CONDITION_VARIABLE,_cv), \
+    (CXXD_ENABLE_SHARED_FROM_THIS,_es), \
     (CXXD_FUNCTION,_fn), \
     (CXXD_HASH,_ha), \
+    (CXXD_MAKE_SHARED,_ms), \
     (CXXD_MEM_FN,_mf), \
     (CXXD_MUTEX,_mx), \
     (CXXD_RANDOM,_rd), \
@@ -36,6 +38,7 @@
     (CXXD_UNORDERED_MULTIMAP,_up), \
     (CXXD_UNORDERED_MULTISET,_ut), \
     (CXXD_UNORDERED_SET,_us), \
+    (CXXD_WEAK_PTR,_wp), \
     (CXXD_MODS_ALL,_std) \
     ) \
 /**/

@@ -314,7 +314,7 @@ may choose to support only two variants, either all Boost libraries or all C++ s
 equivalents.
 
 Whatever the choice of the number of variants supported in a non-header only library compared
-to the maximum number of variants possible based on the CXXD modules used by that library in its
+to the maximum number of variants possible based on the CXXD-mods used by that library in its
 built portion, we need some way to name each of the variants supported and we may 
 need some way to intelligently limit the number of variants supported.
 
@@ -590,8 +590,10 @@ particular CXXD-mod are given in this table:
 [[bind][CXXD_BIND]]
 [[chrono][CXXD_CHRONO]]
 [[condition_variable][CXXD_CONDITION_VARIABLE]]
+[[enable_shared_from_this][CXXD_ENABLE_SHARED_FROM_THIS]]
 [[function][CXXD_FUNCTION]]
 [[hash][CXXD_HASH]]
+[[make_shared][CXXD_MAKE_SHARED]]
 [[mem_fn][CXXD_MEM_FN]]
 [[mutex][CXXD_MUTEX]]
 [[random][CXXD_RANDOM]]
@@ -609,6 +611,7 @@ particular CXXD-mod are given in this table:
 [[unordered_multimap][CXXD_UNORDERED_MULTIMAP]]
 [[unordered_multiset][CXXD_UNORDERED_MULTISET]]
 [[unordered_set][CXXD_UNORDERED_SET]]
+[[weak_ptr][CXXD_WEAK_PTR]]
 [[all CXXD-mods][CXXD_MODS_ALL]]
 ]
 
@@ -629,7 +632,7 @@ may have chosen to use. The macro is a variadic macro whose name and signature i
 
     CXXD_LIBRARY_NAME(...)
     
-The macro is in the header file <cxxd/library_name.hpp>
+The macro is in the header file <boost/cxx_dual/library_name.hpp>
     
 The macro takes one or more variadic parameters. The single required variadic parameter is
 the base name of the library. The remaining variadic parameters are optional and are
@@ -663,8 +666,10 @@ are given in the following table:
 [[CXXD_BIND][_bd]]
 [[CXXD_CHRONO][_ch]]
 [[CXXD_CONDITION_VARIABLE][_cv]]
+[[CXXD_ENABLE_SHARED_FROM_THIS][_es]]
 [[CXXD_FUNCTION][_fn]]
 [[CXXD_HASH][_ha]]
+[[CXXD_MAKE_SHARED][_ms]]
 [[CXXD_MEM_FN][_mf]]
 [[CXXD_MUTEX][_mx]]
 [[CXXD_RANDOM][_rd]]
@@ -682,6 +687,7 @@ are given in the following table:
 [[CXXD_UNORDERED_MULTIMAP][_up]]
 [[CXXD_UNORDERED_MULTISET][_ut]]
 [[CXXD_UNORDERED_SET][_us]]
+[[CXXD_WEAK_PTR][_wp]]
 [[CXXD_MODS_ALL][_std]]
 ]
     
@@ -824,7 +830,7 @@ may have chosen to use. The macro is a variadic macro whose name and signature i
 
     CXXD_VALID_VARIANTS(...)
     
-The macro is in the header file <cxxd/valid_variants.hpp>
+The macro is in the header file <boost/cxx_dual/valid_variants.hpp>
 
 The variadic parameters are ways of encoding the various CXXD dual library
 combinations which the library author considers valid for his library. If the

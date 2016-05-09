@@ -58,8 +58,10 @@
 #include <boost/cxx_dual/bind.hpp>
 #include <boost/cxx_dual/chrono.hpp>
 #include <boost/cxx_dual/condition_variable.hpp>
+#include <boost/cxx_dual/enable_shared_from_this.hpp>
 #include <boost/cxx_dual/function.hpp>
 #include <boost/cxx_dual/hash.hpp>
+#include <boost/cxx_dual/make_shared.hpp>
 #include <boost/cxx_dual/mem_fn.hpp>
 #include <boost/cxx_dual/mutex.hpp>
 #include <boost/cxx_dual/random.hpp>
@@ -77,6 +79,7 @@
 #include <boost/cxx_dual/unordered_multimap.hpp>
 #include <boost/cxx_dual/unordered_multiset.hpp>
 #include <boost/cxx_dual/unordered_set.hpp>
+#include <boost/cxx_dual/weak_ptr.hpp>
 
 /*
 

@@ -3,9 +3,11 @@
 !scan boost/cxx_dual/bind.hpp
 !scan boost/cxx_dual/chrono.hpp
 !scan boost/cxx_dual/condition_variable.hpp
+!scan boost/cxx_dual/enable_shared_from_this.hpp
 !scan boost/cxx_dual/function.hpp
 !scan boost/cxx_dual/hash.hpp
 !scan boost/cxx_dual/library_name.hpp
+!scan boost/cxx_dual/make_shared.hpp
 !scan boost/cxx_dual/mem_fn.hpp
 !scan boost/cxx_dual/mutex.hpp
 !scan boost/cxx_dual/random.hpp
@@ -24,6 +26,7 @@
 !scan boost/cxx_dual/unordered_multiset.hpp
 !scan boost/cxx_dual/unordered_set.hpp
 !scan boost/cxx_dual/valid_variants.hpp
+!scan boost/cxx_dual/weak_ptr.hpp
 CXXD_USE_BOOST "" "" macro_name
 CXXD_USE_STD "" "" macro_name
 CXXD_NO_CONSISTENCY "" "" macro_name
@@ -38,10 +41,14 @@ CXXD_CHRONO_USE_BOOST "" "" macro_name
 CXXD_CHRONO_USE_STD "" "" macro_name
 CXXD_CONDITION_VARIABLE_USE_BOOST "" "" macro_name
 CXXD_CONDITION_VARIABLE_USE_STD "" "" macro_name
+CXXD_ENABLE_SHARED_FROM_THIS_USE_BOOST "" "" macro_name
+CXXD_ENABLE_SHARED_FROM_THIS_USE_STD "" "" macro_name
 CXXD_FUNCTION_USE_BOOST "" "" macro_name
 CXXD_FUNCTION_USE_STD "" "" macro_name
 CXXD_HASH_USE_BOOST "" "" macro_name
 CXXD_HASH_USE_STD "" "" macro_name
+CXXD_MAKE_SHARED_USE_BOOST "" "" macro_name
+CXXD_MAKE_SHARED_USE_STD "" "" macro_name
 CXXD_MEM_FN_USE_BOOST "" "" macro_name
 CXXD_MEM_FN_USE_STD "" "" macro_name
 CXXD_MUTEX_USE_BOOST "" "" macro_name
@@ -76,3 +83,5 @@ CXXD_UNORDERED_MULTISET_USE_BOOST "" "" macro_name
 CXXD_UNORDERED_MULTISET_USE_STD "" "" macro_name
 CXXD_UNORDERED_SET_USE_BOOST "" "" macro_name
 CXXD_UNORDERED_SET_USE_STD "" "" macro_name
+CXXD_WEAK_PTR_USE_BOOST "" "" macro_name
+CXXD_WEAK_PTR_USE_STD "" "" macro_name

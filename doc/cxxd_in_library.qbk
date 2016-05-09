@@ -98,7 +98,7 @@ that 'CXXD_REGEX_NS' represents the name of a namespace, functionality
 using MyLibrary's MyClass functionality could also be coded as:
 
     #include <MyHeader.hpp>
-    using CXXD_REGEX_NS;
+    using namespace CXXD_REGEX_NS;
     MyClass an_object;
     regex a_regular_expression(...some regular expression etc.);
     an_object.MyFunction(a_regular_expression);

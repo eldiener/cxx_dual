@@ -6,65 +6,65 @@
 /* Multiple inclusion must be allowed */
 
 /** @file unordered_multiset.hpp
-    @brief Dual library for the unordered multiset implementation.
+    @brief Dual library for the unordered_multiset implementation.
     
-    Chooses either the Boost unordered multiset implementation or the C++ standard unordered multiset implementation.
+    Chooses either the Boost unordered_multiset implementation or the C++ standard unordered_multiset implementation.
 */
 
 /** @def CXXD_UNORDERED_MULTISET_HEADER
-    @brief The unordered multiset header file name.
+    @brief The unordered_multiset header file name.
     
-    The object-like macro expands to the include header file designation for the unordered multiset header file.
+    The object-like macro expands to the include header file designation for the unordered_multiset header file.
     The macro is used with the syntax: \#include CXXD_UNORDERED_MULTISET_HEADER
 */
 
 /** @def CXXD_UNORDERED_MULTISET_NS
-    @brief The unordered multiset namespace.
+    @brief The unordered_multiset namespace.
     
-    The object-like macro expands to the namespace for the unordered multiset implementation.
+    The object-like macro expands to the namespace for the unordered_multiset implementation.
 */
 
 /** @def CXXD_UNORDERED_MULTISET_USE_BOOST
-    @brief Override macro for Boost unordered multiset implementation.
+    @brief Override macro for Boost unordered_multiset implementation.
     
     The object-like macro, when defined to nothing prior to including this header file, 
-    forces the dual library choice of the Boost unordered multiset implementation.
+    forces the dual library choice of the Boost unordered_multiset implementation.
 */
 
 /** @def CXXD_UNORDERED_MULTISET_USE_STD
-    @brief Override macro for C++ standard unordered multiset implementation.
+    @brief Override macro for C++ standard unordered_multiset implementation.
     
     The object-like macro, when defined to nothing prior to including this header file,
-    forces the dual library choice of the C++ standard unordered multiset implementation. If the
-    C++ standard unordered multiset implementation is not available a preprocessor error is generated.
+    forces the dual library choice of the C++ standard unordered_multiset implementation. If the
+    C++ standard unordered_multiset implementation is not available a preprocessor error is generated.
 */
 
 /** @def CXXD_HAS_STD_UNORDERED_MULTISET
-    @brief Determines whether the C++ standard unordered multiset implementation or the Boost unordered multiset implementation has been chosen.
+    @brief Determines whether the C++ standard unordered_multiset implementation or the Boost unordered_multiset implementation has been chosen.
     
     The object-like macro expands to:
-    1 if the C++ standard unordered multiset implementation has been chosen
-    0 if the Boost unordered multiset implementation has been chosen.
+    1 if the C++ standard unordered_multiset implementation has been chosen
+    0 if the Boost unordered_multiset implementation has been chosen.
 */
 
 #if !defined(CXXD_UNORDERED_MULTISET_ERROR)
 	#if (defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST)) && (defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD))
 		#define CXXD_UNORDERED_MULTISET_ERROR
-		#error CXXD: Using C++ standard and using Boost are both defined for unordered multiset
+		#error CXXD: Using C++ standard and using Boost are both defined for unordered_multiset
 	#elif defined(CXXD_HAS_STD_UNORDERED_MULTISET) && !defined(CXXD_NO_CONSISTENCY)
         #if CXXD_HAS_STD_UNORDERED_MULTISET && (defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST))
             #define CXXD_UNORDERED_MULTISET_ERROR
-            #error CXXD: Previous use of C++ standard unordered multiset erroneously overridden
+            #error CXXD: Previous use of C++ standard unordered_multiset erroneously overridden
         #elif !CXXD_HAS_STD_UNORDERED_MULTISET && (defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD))
             #define CXXD_UNORDERED_MULTISET_ERROR
-            #error CXXD: Previous use of Boost unordered multiset erroneously overridden
+            #error CXXD: Previous use of Boost unordered_multiset erroneously overridden
         #endif
     #elif !defined(CXXD_HAS_STD_UNORDERED_MULTISET) || defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST) || defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD)
         #include <boost/config.hpp>
         #if (!defined(CXXD_NO_CONFIG) && defined(BOOST_NO_CXX11_HDR_UNORDERED_SET)) || defined(CXXD_UNORDERED_MULTISET_USE_BOOST) || defined(CXXD_USE_BOOST)
             #if defined(CXXD_UNORDERED_MULTISET_USE_STD) || defined(CXXD_USE_STD)
                 #define CXXD_UNORDERED_MULTISET_ERROR
-                #error CXXD: C++ standard unordered multiset is not available
+                #error CXXD: C++ standard unordered_multiset is not available
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MULTISET)
                     #undef CXXD_HAS_STD_UNORDERED_MULTISET

@@ -17,32 +17,7 @@
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/cxx_dual/library_name.hpp>
-
-#define CXXD_ARRAY_USE_STD
-#define CXXD_ATOMIC_USE_STD
-#define CXXD_BIND_USE_STD
-#define CXXD_CHRONO_USE_STD
-#define CXXD_CONDITION_VARIABLE_USE_STD
-#define CXXD_FUNCTION_USE_STD
-#define CXXD_HASH_USE_STD
-#define CXXD_MEM_FN_USE_STD
-#define CXXD_MUTEX_USE_STD
-#define CXXD_RANDOM_USE_STD
-#define CXXD_RATIO_USE_STD
-#define CXXD_REF_USE_STD
-#define CXXD_REGEX_USE_STD
-#define CXXD_SHARED_MUTEX_USE_STD
-#define CXXD_SHARED_PTR_USE_STD
-#define CXXD_SYSTEM_USE_STD
-#define CXXD_THREAD_USE_STD
-#define CXXD_TUPLE_USE_STD
-#define CXXD_TYPE_INDEX_USE_STD
-#define CXXD_TYPE_TRAITS_USE_STD
-#define CXXD_UNORDERED_MAP_USE_STD
-#define CXXD_UNORDERED_MULTIMAP_USE_STD
-#define CXXD_UNORDERED_MULTISET_USE_STD
-#define CXXD_UNORDERED_SET_USE_STD
-
+#include <libs/cxx_dual/test/test_library_name_use_std.hpp>
 #include <boost/cxx_dual/cxx_mods.hpp>
 
 int main()
