@@ -29,7 +29,7 @@
     (CXXD_REGEX,_rx), \
     (CXXD_SHARED_MUTEX,_sm), \
     (CXXD_SHARED_PTR,_sp), \
-    (CXXD_SYSTEM,_sy), \
+    (CXXD_SYSTEM_ERROR,_se), \
     (CXXD_THREAD,_th), \
     (CXXD_TUPLE,_tu), \
     (CXXD_TYPE_INDEX,_ti), \

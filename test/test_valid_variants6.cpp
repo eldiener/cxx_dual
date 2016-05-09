@@ -21,7 +21,7 @@
 #define CXXD_REF_USE_BOOST
 #define CXXD_SHARED_MUTEX_USE_BOOST
 #define CXXD_SHARED_PTR_USE_BOOST
-#define CXXD_SYSTEM_USE_STD
+#define CXXD_SYSTEM_ERROR_USE_STD
 #define CXXD_THREAD_USE_STD
 #define CXXD_TUPLE_USE_BOOST
 #define CXXD_TYPE_INDEX_USE_STD
@@ -31,7 +31,7 @@
 #include <boost/cxx_dual/ref.hpp>
 #include <boost/cxx_dual/shared_mutex.hpp>
 #include <boost/cxx_dual/shared_ptr.hpp>
-#include <boost/cxx_dual/system.hpp>
+#include <boost/cxx_dual/system_error.hpp>
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/cxx_dual/tuple.hpp>
 #include <boost/cxx_dual/type_index.hpp>
@@ -44,8 +44,8 @@ int main()
     (
     CXXD_VALID_VARIANTS
         (
-        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
-        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,0)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1),
+        (CXXD_SYSTEM_ERROR,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
+        (CXXD_SYSTEM_ERROR,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,0)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1),
         (CXXD_MODS_ALL,1)
         )
     );
@@ -56,8 +56,8 @@ int main()
     CXXD_VALID_VARIANTS
         (
         (CXXD_MODS_ALL,1),
-        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
-        (CXXD_SYSTEM,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,1)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1)
+        (CXXD_SYSTEM_ERROR,1)(CXXD_THREAD,1)(CXXD_TUPLE,1),
+        (CXXD_SYSTEM_ERROR,1)(CXXD_THREAD,1)(CXXD_TUPLE,0)(CXXD_TYPE_INDEX,1)(CXXD_RATIO,0)(CXXD_REF,1)(CXXD_SHARED_MUTEX,0)(CXXD_SHARED_PTR,0)(CXXD_TYPE_TRAITS,1)
         )
     );
     

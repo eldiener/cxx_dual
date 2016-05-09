@@ -70,7 +70,7 @@
 #include <boost/cxx_dual/regex.hpp>
 #include <boost/cxx_dual/shared_mutex.hpp>
 #include <boost/cxx_dual/shared_ptr.hpp>
-#include <boost/cxx_dual/system.hpp>
+#include <boost/cxx_dual/system_error.hpp>
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/cxx_dual/tuple.hpp>
 #include <boost/cxx_dual/type_index.hpp>

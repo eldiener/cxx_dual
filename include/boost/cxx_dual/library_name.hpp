@@ -63,8 +63,10 @@
     - CXXD_BIND,_bd
     - CXXD_CHRONO,_ch
     - CXXD_CONDITION_VARIABLE,_cv
+    - CXXD_ENABLE_SHARED_FROM_THIS,_es
     - CXXD_FUNCTION,_fn
     - CXXD_HASH,_ha
+    - CXXD_MAKE_SHARED,_ms
     - CXXD_MEM_FN,_mf
     - CXXD_MUTEX,_mx
     - CXXD_RANDOM,_rd
@@ -73,7 +75,7 @@
     - CXXD_REGEX,_rx
     - CXXD_SHARED_MUTEX,_sm
     - CXXD_SHARED_PTR,_sp
-    - CXXD_SYSTEM,_sy
+    - CXXD_SYSTEM_ERROR,_se
     - CXXD_THREAD,_th
     - CXXD_TUPLE,_tu
     - CXXD_TYPE_INDEX,_ti
@@ -82,6 +84,7 @@
     - CXXD_UNORDERED_MULTIMAP,_up
     - CXXD_UNORDERED_MULTISET,_ut
     - CXXD_UNORDERED_SET,_us
+    - CXXD_WEAK_PTR,_wp
     - CXXD_MODS_ALL,_std
     
     The CXXD_MODS_ALL name refers to what happens if all the included CXXD-mods

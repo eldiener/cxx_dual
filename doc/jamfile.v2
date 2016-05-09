@@ -47,7 +47,7 @@ doxygen cxxd_reference
     $(here)/../../../boost/cxx_dual/regex.hpp
     $(here)/../../../boost/cxx_dual/shared_mutex.hpp
     $(here)/../../../boost/cxx_dual/shared_ptr.hpp
-    $(here)/../../../boost/cxx_dual/system.hpp
+    $(here)/../../../boost/cxx_dual/system_error.hpp
     $(here)/../../../boost/cxx_dual/thread.hpp
     $(here)/../../../boost/cxx_dual/tuple.hpp
     $(here)/../../../boost/cxx_dual/type_index.hpp

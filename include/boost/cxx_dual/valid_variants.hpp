@@ -46,8 +46,10 @@
     - CXXD_BIND,bind
     - CXXD_CHRONO,chrono
     - CXXD_CONDITION_VARIABLE,condition_variable
+    - CXXD_ENABLE_SHARED_FROM_THIS,enable_shared_from_this
     - CXXD_FUNCTION,function
     - CXXD_HASH,hash
+    - CXXD_MAKE_SHARED,make_shared
     - CXXD_MEM_FN,mem_fn
     - CXXD_MUTEX,mutex
     - CXXD_RANDOM,random
@@ -56,7 +58,7 @@
     - CXXD_REGEX,regex
     - CXXD_SHARED_MUTEX,shared_mutex
     - CXXD_SHARED_PTR,shared_ptr
-    - CXXD_SYSTEM,system
+    - CXXD_SYSTEM_ERROR,system_error
     - CXXD_THREAD,thread
     - CXXD_TUPLE,tuple
     - CXXD_TYPE_INDEX,type_index
@@ -65,6 +67,7 @@
     - CXXD_UNORDERED_MULTIMAP,unordered_multimap
     - CXXD_UNORDERED_MULTISET,unordered_multiset
     - CXXD_UNORDERED_SET,unorderd_set
+    - CXXD_WEAK_PTR,weak_ptr
     - CXXD_MODS_ALL,all mods
     
     As can be seen each CXXD-mod identifier is 'CXXD_' followed

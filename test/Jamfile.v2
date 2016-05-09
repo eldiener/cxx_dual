@@ -79,7 +79,7 @@ alias cxxd_mods
        [ run test_shared_mutex.cpp ]
        [ run test_shared_ptr.cpp ]
        [ run test_shared_ptr2.cpp test_shared_ptr2_example.cpp ]
-       [ run test_system.cpp ]
+       [ compile test_system_error.cpp ]
        [ run test_thread.cpp ]
        [ run test_tuple.cpp ]
        [ run test_type_index.cpp ]

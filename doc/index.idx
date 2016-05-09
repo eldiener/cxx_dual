@@ -16,7 +16,7 @@
 !scan boost/cxx_dual/regex.hpp
 !scan boost/cxx_dual/shared_mutex.hpp
 !scan boost/cxx_dual/shared_ptr.hpp
-!scan boost/cxx_dual/system.hpp
+!scan boost/cxx_dual/system_error.hpp
 !scan boost/cxx_dual/thread.hpp
 !scan boost/cxx_dual/tuple.hpp
 !scan boost/cxx_dual/type_index.hpp
@@ -65,8 +65,8 @@ CXXD_SHARED_MUTEX_USE_BOOST "" "" macro_name
 CXXD_SHARED_MUTEX_USE_STD "" "" macro_name
 CXXD_SHARED_PTR_USE_BOOST "" "" macro_name
 CXXD_SHARED_PTR_USE_STD "" "" macro_name
-CXXD_SYSTEM_USE_BOOST "" "" macro_name
-CXXD_SYSTEM_USE_STD "" "" macro_name
+CXXD_SYSTEM_ERROR_USE_BOOST "" "" macro_name
+CXXD_SYSTEM_ERROR_USE_STD "" "" macro_name
 CXXD_THREAD_USE_BOOST "" "" macro_name
 CXXD_THREAD_USE_STD "" "" macro_name
 CXXD_TUPLE_USE_BOOST "" "" macro_name

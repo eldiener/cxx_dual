@@ -53,7 +53,7 @@ and the appropriate information for each one:
 * CXXD_SHARED_PTR_ONLY_HEADER - only the shared_ptr header file
 ]
 [CXXD_SHARED_PTR_NS][CXXD_HAS_STD_SHARED_PTR]]
-[[system][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_HEADER][CXXD_SYSTEM_NS][CXXD_HAS_STD_SYSTEM]]
+[[system_error][<boost/cxx_dual/shared_ptr.hpp>][CXXD_SYSTEM_ERROR_HEADER][CXXD_SYSTEM_ERROR_NS][CXXD_HAS_STD_SYSTEM_ERROR]]
 [[thread][<boost/cxx_dual/thread.hpp>][CXXD_THREAD_HEADER][CXXD_THREAD_NS][CXXD_HAS_STD_THREAD]]
 [[tuple][<boost/cxx_dual/tuple.hpp>][CXXD_TUPLE_HEADER][CXXD_TUPLE_NS][CXXD_HAS_STD_TUPLE]]
 [[type_index][<boost/cxx_dual/type_index.hpp>][CXXD_TYPE_INDEX_HEADER][CXXD_TYPE_INDEX_NS][CXXD_HAS_STD_TYPE_INDEX]]
