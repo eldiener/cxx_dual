@@ -21,15 +21,15 @@
 
 int main()
   {
-  CXXD_CHRONO_NS::chrono::system_clock::time_point now = CXXD_CHRONO_NS::chrono::system_clock::now();
-  std::time_t now_c = CXXD_CHRONO_NS::chrono::system_clock::to_time_t(now - CXXD_CHRONO_NS::chrono::hours(24));
+  CXXD_CHRONO_NS::system_clock::time_point now = CXXD_CHRONO_NS::system_clock::now();
+  std::time_t now_c = CXXD_CHRONO_NS::system_clock::to_time_t(now - CXXD_CHRONO_NS::hours(24));
   std::cout << "24 hours ago, the time was "
             << std::ctime(&now_c) << '\n';
-  CXXD_CHRONO_NS::chrono::steady_clock::time_point start = CXXD_CHRONO_NS::chrono::steady_clock::now();
+  CXXD_CHRONO_NS::steady_clock::time_point start = CXXD_CHRONO_NS::steady_clock::now();
   std::cout << "Hello World\n";
-  CXXD_CHRONO_NS::chrono::steady_clock::time_point end = CXXD_CHRONO_NS::chrono::steady_clock::now();
+  CXXD_CHRONO_NS::steady_clock::time_point end = CXXD_CHRONO_NS::steady_clock::now();
   std::cout << "Printing took "
-            << CXXD_CHRONO_NS::chrono::duration_cast<CXXD_CHRONO_NS::chrono::microseconds>(end - start).count()
+            << CXXD_CHRONO_NS::duration_cast<CXXD_CHRONO_NS::microseconds>(end - start).count()
             << "us.\n";
   return boost::report_errors();
   }

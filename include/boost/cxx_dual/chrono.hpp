@@ -72,7 +72,7 @@
                     #undef CXXD_CHRONO_HEADER
                 #endif
                 #define CXXD_HAS_STD_CHRONO 0
-                #define CXXD_CHRONO_NS boost
+                #define CXXD_CHRONO_NS boost::chrono
                 #define CXXD_CHRONO_HEADER <boost/chrono.hpp>
             #endif
         #else
@@ -82,7 +82,7 @@
                 #undef CXXD_CHRONO_HEADER
             #endif
             #define CXXD_HAS_STD_CHRONO 1
-            #define CXXD_CHRONO_NS std
+            #define CXXD_CHRONO_NS std::chrono
             #define CXXD_CHRONO_HEADER <chrono>
         #endif
     #endif

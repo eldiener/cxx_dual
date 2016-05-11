@@ -21,18 +21,18 @@
 
 int main()
   {
-  typedef CXXD_CHRONO_NS::chrono::duration<int, CXXD_RATIO_NS::ratio<1, 100000000> > shakes;
-  typedef CXXD_CHRONO_NS::chrono::duration<int, CXXD_RATIO_NS::centi> jiffies;
-  typedef CXXD_CHRONO_NS::chrono::duration<float, CXXD_RATIO_NS::ratio<12096,10000> > microfortnights;
-  typedef CXXD_CHRONO_NS::chrono::duration<float, CXXD_RATIO_NS::ratio<3155,1000> > nanocenturies;
+  typedef CXXD_CHRONO_NS::duration<int, CXXD_RATIO_NS::ratio<1, 100000000> > shakes;
+  typedef CXXD_CHRONO_NS::duration<int, CXXD_RATIO_NS::centi> jiffies;
+  typedef CXXD_CHRONO_NS::duration<float, CXXD_RATIO_NS::ratio<12096,10000> > microfortnights;
+  typedef CXXD_CHRONO_NS::duration<float, CXXD_RATIO_NS::ratio<3155,1000> > nanocenturies;
   
-  CXXD_CHRONO_NS::chrono::seconds sec(1);
+  CXXD_CHRONO_NS::seconds sec(1);
  
   std::cout << "1 second is:\n";
  
-  std::cout << CXXD_CHRONO_NS::chrono::duration_cast<shakes>(sec).count()
+  std::cout << CXXD_CHRONO_NS::duration_cast<shakes>(sec).count()
               << " shakes\n";
-  std::cout << CXXD_CHRONO_NS::chrono::duration_cast<jiffies>(sec).count()
+  std::cout << CXXD_CHRONO_NS::duration_cast<jiffies>(sec).count()
               << " jiffies\n";
   std::cout << microfortnights(sec).count() << " microfortnights\n";
   std::cout << nanocenturies(sec).count() << " nanocenturies\n";
