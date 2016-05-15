@@ -13,8 +13,6 @@ import ../../predef/check/predef
 
 project cxxd_tests : requirements <warnings>on
                                   <test-info>always_show_run_output
-                                  <toolset>msvc:<warnings>all
-                                  <toolset>gcc:<warnings>all
                                   [ predef-check "BOOST_COMP_GNUC >= 4.7.4" : : <cxxflags>-ftrack-macro-expansion=0 ]
                                   [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-variadic-macros ]
                                   [ predef-check "BOOST_COMP_GNUC >= 4.3.0" : : <cxxflags>-Wno-pedantic ]
@@ -31,24 +29,24 @@ alias cxxd_tall
 
 alias cxxd_tln
     :
-       [ run test_library_name.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name2.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name3.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name4.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name5.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name6.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_library_name7.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_library_name.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name2.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name3.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name4.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name5.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name6.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_library_name7.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
     ;
 
 alias cxxd_tvv
     : 
-       [ run test_valid_variants.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants2.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants3.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants4.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants5.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants6.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
-       [ run test_valid_variants7.cpp : : : <define>BOOST_PP_VARIADICS=1 ]
+       [ run test_valid_variants.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants2.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants3.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants4.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants5.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants6.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
+       [ run test_valid_variants7.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
     ;
 
 alias cxxd_mods
@@ -91,3 +89,5 @@ alias cxxd_mods
        [ run test_weak_ptr.cpp ]
        [ run test_weak_ptr2.cpp ]
     ;
+    
+explicit cxxd_mods ;
