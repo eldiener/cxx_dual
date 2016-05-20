@@ -71,5 +71,6 @@ int main()
         // process tmp->data, probably delete it afterwards
         delete tmp;
         } 
-    
+        
+    return 0;
     }

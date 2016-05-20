@@ -4,7 +4,6 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <map>
 #include <typeinfo>
 #include <string>
@@ -40,12 +39,12 @@ int main()
     // note that we're storing pointer to type A
     CXXD_SHARED_PTR_NS::shared_ptr<A> b(new B);
     CXXD_SHARED_PTR_NS::shared_ptr<A> c(new C);
+    
+    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(i))],"int");
+    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(d))],"double");
+    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(a))],"A");
+    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*b))],"B");
+    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*c))],"C");
  
-    std::cout << "i is " << type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(i))] << '\n';
-    std::cout << "d is " << type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(d))] << '\n';
-    std::cout << "a is " << type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(a))] << '\n';
-    std::cout << "b is " << type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*b))] << '\n';
-    std::cout << "c is " << type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*c))] << '\n';
-  
     return boost::report_errors();
     }   

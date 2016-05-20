@@ -4,7 +4,6 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <cassert>
 #include <boost/cxx_dual/enable_shared_from_this.hpp>
 #include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
@@ -27,8 +26,8 @@ int main()
   
   CXXD_SHARED_PTR_NS::shared_ptr<Y> p(new Y);
   CXXD_SHARED_PTR_NS::shared_ptr<Y> q = p->f();
-  assert(p == q);
-  assert(!(p < q || q < p)); // p and q must share ownership
+  BOOST_TEST_EQ(p,q);
+  BOOST_TEST(!(p < q || q < p));
   
   return boost::report_errors();
   }

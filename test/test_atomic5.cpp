@@ -4,39 +4,28 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <boost/cxx_dual/atomic.hpp>
+#include <boost/detail/lightweight_test.hpp>
+
 #include CXXD_ATOMIC_HEADER
 
 CXXD_ATOMIC_NS::atomic<int>  ai;
  
 int  tst_val= 4;
 int  new_val= 5;
-bool exchanged= false;
  
-void valsout()
-{
-    std::cout << "ai= " << ai
-	      << "  tst_val= " << tst_val
-	      << "  new_val= " << new_val
-	      << "  exchanged= " << std::boolalpha << exchanged
-	      << "\n";
-}
-
 int main()
     {
     
-    ai= 3;
-    valsout();
+    ai = 3;
  
     // tst_val != ai   ==>  tst_val is modified
-    exchanged= ai.compare_exchange_strong( tst_val, new_val );
-    valsout();
+    ai.compare_exchange_strong( tst_val, new_val );
+    BOOST_TEST_EQ(ai,tst_val);
  
     // tst_val == ai   ==>  ai is modified
-    exchanged= ai.compare_exchange_strong( tst_val, new_val );
-    valsout();
+    ai.compare_exchange_strong( tst_val, new_val );
+    BOOST_TEST_EQ(ai,new_val);
  
-    return 0;
-    
+    return boost::report_errors();
     }

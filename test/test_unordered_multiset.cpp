@@ -4,7 +4,6 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <boost/cxx_dual/unordered_multiset.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
@@ -13,8 +12,9 @@
 int main()
     {
   
-    CXXD_UNORDERED_MULTISET_NS::unordered_set<int> numbers;
-    std::cout << "Initially, numbers.empty(): " << numbers.empty() << '\n';
+    CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int> numbers;
+    
+    BOOST_TEST(numbers.empty());
  
     numbers.insert(42);
     numbers.insert(13317); 
@@ -23,27 +23,22 @@ int main()
     numbers.insert(688); 
     numbers.insert(688); 
     numbers.insert(689); 
-    std::cout << "After adding elements, numbers.empty(): " << numbers.empty() << '\n';
     
-    typedef CXXD_UNORDERED_MULTISET_NS::unordered_set<int>::iterator it;
+    BOOST_TEST_NOT(numbers.empty());
+    
+    typedef CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int>::iterator it;
     
     it search = numbers.find(13317);
     
-    if(search != numbers.end())
-        {
-        std::cout << "Found " << (*search) << '\n';
-        }
-    else 
-        {
-        std::cout << "Not found\n";
-        }
-        
-    CXXD_UNORDERED_MULTISET_NS::unordered_set<int>::size_type cnt(numbers.count(688));
-    std::cout << "Number of '688' in multiset is '" << cnt << "'.\n";
+    BOOST_TEST(search != numbers.end());
+    
+    CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int>::size_type cnt(numbers.count(688));
+    
+    BOOST_TEST_EQ(cnt,static_cast<unsigned>(3));
     
     numbers.erase(688);
     cnt = numbers.count(688);
-    std::cout << "Number of '688' in multiset is '" << cnt << "'.\n";
+    BOOST_TEST_EQ(cnt,static_cast<unsigned>(0));
   
     return boost::report_errors();
     }

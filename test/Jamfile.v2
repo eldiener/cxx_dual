@@ -21,13 +21,13 @@ project cxxd_tests : requirements <warnings>on
                                   <toolset>gcc-4.5.2:<linkflags>"-Wl,--enable-auto-import"
                                   ;
                                                  
-alias cxxd_tall
+alias tall
     : 
        [ run test_all.cpp ]
        [ run test_all_mods.cpp ]
     ;
 
-alias cxxd_tln
+alias tln
     :
        [ run test_library_name.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
        [ run test_library_name2.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
@@ -38,7 +38,7 @@ alias cxxd_tln
        [ run test_library_name7.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
     ;
 
-alias cxxd_tvv
+alias tvv
     : 
        [ run test_valid_variants.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
        [ run test_valid_variants2.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
@@ -49,7 +49,7 @@ alias cxxd_tvv
        [ run test_valid_variants7.cpp : : : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
     ;
 
-alias cxxd_mods
+alias mods
     : 
        [ run test_array.cpp ]
        [ run test_atomic.cpp : : : <library>/boost/atomic//boost_atomic ]
@@ -90,4 +90,4 @@ alias cxxd_mods
        [ run test_weak_ptr2.cpp ]
     ;
     
-explicit cxxd_mods ;
+explicit mods ;

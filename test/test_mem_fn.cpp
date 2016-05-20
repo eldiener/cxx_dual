@@ -4,18 +4,17 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <boost/cxx_dual/mem_fn.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include CXXD_MEM_FN_HEADER
  
 struct Foo {
-    void display_greeting() {
-        std::cout << "Hello, world.\n";
+    char display_greeting() {
+        return 'g';
     }
-    void display_number(int i) {
-        std::cout << "number: " << i << '\n';
+    int display_number(int i) {
+        return (i + data + 26);
     }
     int data;
 };
@@ -26,11 +25,11 @@ int main()
   Foo f;
   f.data = 7;
  
-  CXXD_MEM_FN_NS::mem_fn(&Foo::display_greeting)(f);
+  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::display_greeting)(f),'g');
  
-  CXXD_MEM_FN_NS::mem_fn(&Foo::display_number)(f,42);
+  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::display_number)(f,42),75);
  
-  std::cout << "data: " << CXXD_MEM_FN_NS::mem_fn(&Foo::data)(f) << '\n';
+  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::data)(f),7);
   
   return boost::report_errors();
   }

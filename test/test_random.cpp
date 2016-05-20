@@ -11,9 +11,11 @@
 #include <cmath>
 
 #include <boost/cxx_dual/random.hpp>
-#include <boost/detail/lightweight_test.hpp>
-#include <boost/foreach.hpp>
 #include <boost/math/special_functions/round.hpp>
+
+#if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
+#include <boost/foreach.hpp>
+#endif
 
 #include CXXD_RANDOM_HEADER
 
@@ -74,5 +76,5 @@ int main()
   
 #endif
   
-  return boost::report_errors();
+  return 0;
   }

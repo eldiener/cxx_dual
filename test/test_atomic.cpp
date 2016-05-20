@@ -43,5 +43,6 @@ int main()
     s.lock();
     // access data structure here
     s.unlock();
-        
+    
+    return 0;
     }

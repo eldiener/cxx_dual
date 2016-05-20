@@ -4,7 +4,6 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <boost/cxx_dual/bind.hpp>
 #include <boost/cxx_dual/function.hpp>
 #include <boost/cxx_dual/ref.hpp>
@@ -16,7 +15,9 @@
 
 void f(int& n1, int& n2, const int& n3)
 {
-    std::cout << "In function: " << n1 << ' ' << n2 << ' ' << n3 << '\n';
+  BOOST_TEST_EQ(n1,1);
+  BOOST_TEST_EQ(n2,11);
+  BOOST_TEST_EQ(n3,12);
     ++n1; // increments the copy of n1 stored in the function object
     ++n2; // increments the main()'s n2
     // ++n3; // compile error
@@ -31,9 +32,11 @@ int main()
   n1 = 10;
   n2 = 11;
   n3 = 12;
-  std::cout << "Before function: " << n1 << ' ' << n2 << ' ' << n3 << '\n';
   bound_f();
-  std::cout << "After function: " << n1 << ' ' << n2 << ' ' << n3 << '\n';
+  
+  BOOST_TEST_EQ(n1,10);
+  BOOST_TEST_EQ(n2,12);
+  BOOST_TEST_EQ(n3,12);
   
   return boost::report_errors();
   }

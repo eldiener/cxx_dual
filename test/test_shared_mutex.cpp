@@ -17,6 +17,10 @@
 #include CXXD_REF_HEADER
 #include CXXD_THREAD_HEADER
 
+#if !CXXD_HAS_STD_SHARED_MUTEX
+#include <boost/thread/locks.hpp>
+#endif
+
 class ThreadSafeCounter {
  public:
   ThreadSafeCounter() : value_(0) {}

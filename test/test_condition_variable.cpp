@@ -10,7 +10,6 @@
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/cxx_dual/mutex.hpp>
 #include <boost/cxx_dual/condition_variable.hpp>
-#include <boost/detail/lightweight_test.hpp>
  
 #include CXXD_CONDITION_VARIABLE_HEADER
 #include CXXD_THREAD_HEADER
@@ -90,6 +89,6 @@ int main()
     std::cout << "Back in main(), data = " << data << '\n';
  
     worker.join();
-
-    return boost::report_errors();
+    
+    return 0;
   }

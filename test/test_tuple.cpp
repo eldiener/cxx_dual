@@ -4,7 +4,6 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <string>
 #include <stdexcept>
 
@@ -25,19 +24,17 @@ int main()
     {
   
     CXXD_TUPLE_NS::tuple<double, char, std::string> student0 = get_student(0);
-    std::cout << "ID: 0, "
-              << "GPA: " << CXXD_TUPLE_NS::get<0>(student0) << ", "
-              << "grade: " << CXXD_TUPLE_NS::get<1>(student0) << ", "
-              << "name: " << CXXD_TUPLE_NS::get<2>(student0) << '\n';
- 
+    
+    BOOST_TEST_EQ(CXXD_TUPLE_NS::get<1>(student0),'A');
+    BOOST_TEST_EQ(CXXD_TUPLE_NS::get<2>(student0),"Lisa Simpson");
+    
     double gpa1;
     char grade1;
     std::string name1;
     CXXD_TUPLE_NS::tie(gpa1, grade1, name1) = get_student(1);
-    std::cout << "ID: 1, "
-              << "GPA: " << gpa1 << ", "
-              << "grade: " << grade1 << ", "
-              << "name: " << name1 << '\n';
+    
+    BOOST_TEST_EQ(grade1,'C');
+    BOOST_TEST_EQ(name1,"Milhouse Van Houten");
   
     return boost::report_errors();
     }

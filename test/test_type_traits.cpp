@@ -4,11 +4,10 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <iostream>
 #include <string>
-#include <stdexcept>
 #include <boost/cxx_dual/type_traits.hpp>
-#include <boost/detail/lightweight_test.hpp>
+#include <boost/core/lightweight_test.hpp>
+#include <boost/core/lightweight_test_trait.hpp>
 #include <boost/static_assert.hpp>
 
 #include CXXD_TYPE_TRAITS_HEADER
@@ -38,14 +37,14 @@ T f(T i)
 
 struct foo
 {
-    void m() { std::cout << "Non-cv\n"; }
-    void m() const { std::cout << "Const\n"; }
+    int m() { return 1; }
+    int m() const { return 0; }
 };
  
 template <class T>
-void call_m()
+int call_m()
 {
-    T().m();
+    return (T().m());
 }
 
 template <typename T, typename U>
@@ -56,80 +55,66 @@ struct decay_equiv :
 int main()
     {
   
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_void<void>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_void<int>::value << '\n';
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_void<void>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_void<int>));
     
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_integral<A>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_integral<float>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_integral<int>::value << '\n';
-    std::cout << f(123) << '\n';
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_integral<A>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_integral<float>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_integral<int>));
+    f(123);
     
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_floating_point<A>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_floating_point<float>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_floating_point<int>::value << '\n';
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_floating_point<A>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_floating_point<float>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_floating_point<int>));
     
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<A>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<A[]>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<A[3]>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<float>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<int>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<int[]>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_array<int[3]>::value << '\n';
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_array<A>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_array<A[]>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_array<A[3]>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_array<float>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_array<int>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_array<int[]>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_array<int[3]>));
     
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_enum<A>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_enum<E>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_enum<int>::value << '\n';
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_enum<A>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_enum<E>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_enum<int>));
     
-    std::cout << (CXXD_TYPE_TRAITS_NS::is_compound<A>::value
-                     ? "T is compound"
-                     : "T is not a compound") << '\n';
-    std::cout << (CXXD_TYPE_TRAITS_NS::is_compound<int>::value
-                     ? "T is compound"
-                     : "T is not a compound") << '\n';
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_compound<A>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_compound<int>));
                      
-    std::cout << std::boolalpha;
-    std::cout << CXXD_TYPE_TRAITS_NS::is_empty<A>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_empty<B>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::is_empty<C>::value << '\n';
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::is_empty<A>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_empty<B>));
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::is_empty<C>));
     
-    std::cout << std::boolalpha
-              << "std::string has a virtual destructor? "
-              << CXXD_TYPE_TRAITS_NS::has_virtual_destructor<std::string>::value << '\n'
-              << "std::runtime_error has a virtual destructor? "
-              << CXXD_TYPE_TRAITS_NS::has_virtual_destructor<std::runtime_error>::value << '\n';
+    BOOST_TEST_TRAIT_FALSE((CXXD_TYPE_TRAITS_NS::has_virtual_destructor<std::string>));
+    BOOST_TEST_TRAIT_TRUE((CXXD_TYPE_TRAITS_NS::has_virtual_destructor<std::runtime_error>));
               
-    std::cout << CXXD_TYPE_TRAITS_NS::extent<int[3]>::value << '\n'; //< default dimension is 0
-    std::cout << CXXD_TYPE_TRAITS_NS::extent<int[3][4], 0>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::extent<int[3][4], 1>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::extent<int[3][4], 2>::value << '\n';
-    std::cout << CXXD_TYPE_TRAITS_NS::extent<int[]>::value << '\n';
+    BOOST_TEST_EQ(CXXD_TYPE_TRAITS_NS::extent<int[3]>::value,static_cast<unsigned int>(3));
+    BOOST_TEST_EQ((CXXD_TYPE_TRAITS_NS::extent<int[3][4], 0>::value),static_cast<unsigned int>(3));
+    BOOST_TEST_EQ((CXXD_TYPE_TRAITS_NS::extent<int[3][4], 1>::value),static_cast<unsigned int>(4));
+    BOOST_TEST_EQ((CXXD_TYPE_TRAITS_NS::extent<int[3][4], 2>::value),static_cast<unsigned int>(0));
+    BOOST_TEST_EQ(CXXD_TYPE_TRAITS_NS::extent<int[]>::value,static_cast<unsigned int>(0));
  
     const int ext = CXXD_TYPE_TRAITS_NS::extent<int[9]>();
-    std::cout << ext << '\n'; //< implicit conversion to std::size_t
     
-    bool b2a = CXXD_TYPE_TRAITS_NS::is_convertible<B*, A*>::value;
-    bool a2b = CXXD_TYPE_TRAITS_NS::is_convertible<A*, B*>::value;
-    bool b2c = CXXD_TYPE_TRAITS_NS::is_convertible<B*, C*>::value;
+    BOOST_TEST_EQ(ext,9);
+    
+    bool y2x = CXXD_TYPE_TRAITS_NS::is_convertible<Y*, X*>::value;
+    bool x2y = CXXD_TYPE_TRAITS_NS::is_convertible<X*, Y*>::value;
+    bool y2z = CXXD_TYPE_TRAITS_NS::is_convertible<Y*, Z*>::value;
  
-    std::cout << std::boolalpha;
-    std::cout << b2a << '\n';
-    std::cout << a2b << '\n';
-    std::cout << b2c << '\n';
+    BOOST_TEST(y2x);
+    BOOST_TEST_NOT(x2y);
+    BOOST_TEST_NOT(y2z);
     
-    call_m<foo>();
-    call_m<CXXD_TYPE_TRAITS_NS::add_const<foo>::type>();
+    BOOST_TEST_EQ(call_m<foo>(),1);
+    BOOST_TEST_EQ(call_m<CXXD_TYPE_TRAITS_NS::add_const<foo>::type>(),0);
     
-    std::cout << std::boolalpha
-              << decay_equiv<int, int>::value << '\n'
-              << decay_equiv<int&, int>::value << '\n'
-              << decay_equiv<const int&, int>::value << '\n'
-              << decay_equiv<int[2], int*>::value << '\n'
-              << decay_equiv<int(int), int(*)(int)>::value << '\n';
+    BOOST_TEST((decay_equiv<int, int>::value));
+    BOOST_TEST((decay_equiv<int&, int>::value));
+    BOOST_TEST((decay_equiv<const int&, int>::value));
+    BOOST_TEST((decay_equiv<int[2], int*>::value));
+    BOOST_TEST((decay_equiv<int(int), int(*)(int)>::value));
   
     return boost::report_errors();
     }

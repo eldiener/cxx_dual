@@ -7,11 +7,13 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include <boost/foreach.hpp>
 #include <boost/cxx_dual/chrono.hpp>
 #include <boost/cxx_dual/mutex.hpp>
 #include <boost/cxx_dual/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
+
+#if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
+#include <boost/foreach.hpp>
+#endif
 
 #include CXXD_CHRONO_HEADER
 #include CXXD_MUTEX_HEADER
@@ -55,5 +57,5 @@ int main()
       
 #endif
   
-    return boost::report_errors();
+    return 0;
     }

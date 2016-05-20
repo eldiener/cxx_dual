@@ -15,8 +15,6 @@
 // #define BOOST_SYSTEM_NO_DEPRECATED
 #endif                                                                         
 
-#include <boost/detail/lightweight_test.hpp>
-                                                       
 #include CXXD_CHRONO_HEADER
 
 int main()
@@ -31,5 +29,5 @@ int main()
   std::cout << "Printing took "
             << CXXD_CHRONO_NS::duration_cast<CXXD_CHRONO_NS::microseconds>(end - start).count()
             << "us.\n";
-  return boost::report_errors();
+  return 0;
   }

@@ -59,5 +59,6 @@ int main()
     int value;
     if (r.pop(value)) { /* succeeded */ }
     else { /* buffer empty */ }
-  
+    
+    return 0;
     }

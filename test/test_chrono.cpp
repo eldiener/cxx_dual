@@ -14,7 +14,6 @@
 #endif
 
 #include <boost/cxx_dual/ratio.hpp>
-#include <boost/detail/lightweight_test.hpp>
 
 #include CXXD_CHRONO_HEADER
 #include CXXD_RATIO_HEADER
@@ -36,5 +35,5 @@ int main()
               << " jiffies\n";
   std::cout << microfortnights(sec).count() << " microfortnights\n";
   std::cout << nanocenturies(sec).count() << " nanocenturies\n";
-  return boost::report_errors();
+  return 0;
   }
