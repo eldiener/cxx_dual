@@ -9,6 +9,7 @@
 #include <boost/cxx_dual/detail/table_find.hpp>
 #include <boost/cxx_dual/detail/library_name_register.hpp>
 #include <boost/cxx_dual/detail/mods_all_register.hpp>
+#include <boost/cxx_dual/detail/mod_append_table_pre.hpp>
 
 #define CXXD_DETAIL_MOD_APPEND_TABLE \
     ( \
@@ -22,6 +23,7 @@
     (CXXD_HASH,_ha), \
     (CXXD_MAKE_SHARED,_ms), \
     (CXXD_MEM_FN,_mf), \
+    (CXXD_MOVE,_mv), \
     (CXXD_MUTEX,_mx), \
     (CXXD_RANDOM,_rd), \
     (CXXD_RATIO,_ra), \

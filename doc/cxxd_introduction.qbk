@@ -20,13 +20,24 @@ The library does this by defining object-like macros
 for including the appropriate header file and namespace
 for using either the Boost library version or the C++ standard
 library version of a particular dual library. CXXD
-currently supports twenty seven different dual libraries,
+currently supports twenty eight different dual libraries,
 where the Boost version and the C++ standard version is
-nearly interchangeable. CXXD also provides a macro-based solution for
+nearly interchangeable in some respects. CXXD also provides a macro-based solution for
 distinguishing between the Boost version and the C++ standard
 version of a dual library so that specific code for a
 particular dual library choice may be written in those cases
 where the public interfaces diverge.
+
+[heading Who the library is for]
+
+The CXXD library is for:
+
+# Programmers writing code not using C++11 on up syntax
+who still want to target some C++11 on up libraries if the code
+is compiled in C++11 on up mode.
+# Programmers writing code using C++11 on up syntax who still
+want the option of targeting some Boost libraries if the
+equivalent C++11 library does not exist for a given implementation.
 
 [heading The problem]
 
@@ -64,12 +75,12 @@ to support both BBB and SSS.
 
 As mentioned above the first choice is easily the most popular
 since Boost library developers, and those involved using
-any one of the approximately current 120+ Boost libraries, assume
+any one of the approximately current 130+ Boost libraries, assume
 that a Boost distribution is always available for the
 programmer to use. If you see this choice as always the
 single most viable one you need not continue reading
 about this library and can move on to what you have always
-used with perfect ease of mind.
+used.
 
 What are the possible downsides to the first choice ?
 
@@ -133,7 +144,8 @@ and C++ standard version of a library.
 
 The solution is not problem free but will work painlessly most of the 
 time, and when it does not work will inform the end-user why during compilation
-with preprocessing errors. This documentation will also discuss issues with the solution.
+with preprocessing errors. This documentation will also discuss issues with this solution
+when it does not work as desired.
 
 The solution involves the use of macros, all starting with this library's
 common mnemonic of CXXD_, which allow a programmer to use the functionality
@@ -159,13 +171,15 @@ These definitions, for a particular 'XXX' CXXD-mod, are:
 * CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor 
 '#include' statement. This is called the "CXXD-mod macro header" to distinguish it from
 the 'CXXD-mod header', the latter referring to to the initial CXXD-mod header file
-which must be included to generate the correct macros.
+which must be included to generate the correct macros. Occasionally this CCXD-mod macro
+header is an internal CXXD header which includes more than one dual library header file.
 * CXXD_XXX_NS, the name of XXX CXXD-mod's namespace. This is called the "CXXD-mod namespace".
 * CXXD_HAS_STD_XXX, 1 if XXX CXXD-mod's C++ standard library version is being used or
 0 if XXX CXXD-mod's Boost library version is being used.
 * Optionally CXXD_XXX_MACRO(macro), transforms any XXX CXXD-mod 'macro' to its actual name.
 
-The subsequent usage of these CXXD_ macros in code for any given CXXD-mod is very simple:
+The subsequent usage of these CXXD_ macros in code for any given CXXD-mod,
+once the appropriate CXXD-mod header has been included, is very simple:
 
 # Include the correct CXXD-mod macro header file using '#include CXXD_XXX_HEADER'.
 # Access any functionality in the CXXD-mod namespace using 'CXXD_XXX_NS::some_functionality etc...'
@@ -177,7 +191,7 @@ or the C++ standard version of the particular CXXD-mod by using the CXXD_HAS_STD
 preprocessor #if statement.
 
 A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to use any of the
-macros defined by that CXXD-mod header, is said to 'use s CXXD-mod'. Please note the distinction between
+macros defined by that CXXD-mod header, is said to 'use a CXXD-mod'. Please note the distinction between
 including a CXXD-mod and using a CXXD-mod. Including a CXXD-mod just defines a set of macros and
 is not dependent on any other Boost library or outside implementation. Using a CXXD-mod establishes
 dependency on either a Boost library or its equivalent C++ standard library.
@@ -189,7 +203,7 @@ you are using the Boost version or the C++ standard library version of XXX. Your
 in general may look like:
 
     #include <boost/cxx_dual/XXX.hpp> // Creates the macros for module XXX by including the appropriate CXXD-mod header
-    #include CXXD_XXX_HEADER      // Includes the appropriate CXXD-mod macro header file
+    #include CXXD_XXX_HEADER          // Includes the appropriate CXXD-mod macro header file
 
     void SomeFunction()
         {
@@ -205,8 +219,8 @@ in general may look like:
         
 By far the major use of these CXXD macros, which including a particular CXXD-mod header defines,
 will be in the use of the CXXD-mod macro header CXXD_XXX_HEADER, to include the correct 
-header file for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX;
-whereas CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not even exist for the given 
+header file for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX.
+On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not even exist for the given 
 XXX CXXD-mod.
 
 [endsect]

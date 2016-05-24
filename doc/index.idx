@@ -9,6 +9,7 @@
 !scan boost/cxx_dual/library_name.hpp
 !scan boost/cxx_dual/make_shared.hpp
 !scan boost/cxx_dual/mem_fn.hpp
+!scan boost/cxx_dual/move.hpp
 !scan boost/cxx_dual/mutex.hpp
 !scan boost/cxx_dual/random.hpp
 !scan boost/cxx_dual/ratio.hpp
@@ -51,6 +52,8 @@ CXXD_MAKE_SHARED_USE_BOOST "" "" macro_name
 CXXD_MAKE_SHARED_USE_STD "" "" macro_name
 CXXD_MEM_FN_USE_BOOST "" "" macro_name
 CXXD_MEM_FN_USE_STD "" "" macro_name
+CXXD_MOVE_USE_BOOST "" "" macro_name
+CXXD_MOVE_USE_STD "" "" macro_name
 CXXD_MUTEX_USE_BOOST "" "" macro_name
 CXXD_MUTEX_USE_STD "" "" macro_name
 CXXD_RANDOM_USE_BOOST "" "" macro_name

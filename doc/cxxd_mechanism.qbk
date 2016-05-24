@@ -49,7 +49,7 @@ is to define a particular macro before including a particular CXXD header.
 
 The programmer may override the automatic choice of CXXD by specifying that the Boost library be used
 or by specifying that the C++ standard library be used. If the programmer specifies that the C++ standard
-library be used and that library is not available for use, a preprocessor error will be generated.
+library be used and that library is not available for use, a preprocessor error will normally be generated.
 
 [heading Specific overriding]
 
@@ -83,6 +83,7 @@ The specific override macros for each CXXD-mod are:
 [[hash][CXXD_HASH_USE_BOOST][CXXD_HASH_USE_STD]]
 [[make_shared][CXXD_MAKE_SHARED_USE_BOOST][CXXD_MAKE_SHARED_USE_STD]]
 [[mem_fn][CXXD_MEM_FN_USE_BOOST][CXXD_MEM_FN_USE_STD]]
+[[move][CXXD_MOVE_USE_BOOST][CXXD_MOVE_USE_STD]]
 [[mutex][CXXD_MUTEX_USE_BOOST][CXXD_MUTEX_USE_STD]]
 [[random][CXXD_RANDOM_USE_BOOST][CXXD_RANDOM_USE_STD]]
 [[ratio][CXXD_RATIO_USE_BOOST][CXXD_RATIO_USE_STD]]
@@ -339,7 +340,7 @@ Recall that the default algorithm is used to choose between the Boost library or
 C++ standard equivalent for a CXXD-mod when no overriding macros are relevant
 for that CXXD-mod. Because CXXD-mod header content is processed each time the header is included 
 the default algorithm is slightly different the second and subsequent times a particular CXXD-mod header 
-is included. In that case the default algorithm simply accepts which of the dual libraries of the module
+is included. In that particular case the default algorithm simply accepts which of the dual libraries of the module
 has been previously chosen. This saves preprocessing time and also makes sure that the choice for a given
 module is consistent throughout the TU.
 

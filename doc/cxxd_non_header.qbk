@@ -33,7 +33,7 @@ eliminated in such a case.
 But there is a solution. It consists of generating more than one variant for the non-header
 only library based on different CXXD dual possibilities. Each variant would have:
 
-* The same code, but possibly slightly different functionality, based on which dual library(s) are chosen.
+* The same code, with more or less the same functionality, based on which dual library(s) are chosen.
 * A slightly different base library name based on which dual library(s) are chosen.
 
 For a particular non-header only library different variants of the library, 
@@ -276,7 +276,7 @@ to the Boost.config auto-linking mechanism and the actual generated final name o
 library is automatically handled. For compilers that do not support
 auto-linking it is up to the end-user to understand what the generated final name
 of the library will be as compared to the name given by the library author. The
-MyLibName will generate the correct name given by the library author, so it is then
+MyLibName program will generate the correct name given by the library author, so it is then
 up to the user of the library to understand the generated final name. This is no
 different from what happens when CXXD is not being used.
     
@@ -308,7 +308,7 @@ developer will choose to support many less variants. In fact very often he may c
 Those two variants are often divided by whether or not the library is being compiled in C++11 on up mode or 
 not. For most, if not all, of the CXXD-mods in a given compiler implementation, when compiling in C++11 on up
 mode the C++ standard library version of the dual library is available and when not compiling in C++11
-mode on up only the Boost version will be available. So realistically, even when the number 'n' of different
+mode on up only the Boost version will be available. So realistically, even when 'n' different
 CXXD modules are being used by the built portion of a non-header only library, the library developer
 may choose to support only two variants, either all Boost libraries or all C++ standard library
 equivalents.
@@ -595,6 +595,7 @@ particular CXXD-mod are given in this table:
 [[hash][CXXD_HASH]]
 [[make_shared][CXXD_MAKE_SHARED]]
 [[mem_fn][CXXD_MEM_FN]]
+[[move][CXXD_MOVE]]
 [[mutex][CXXD_MUTEX]]
 [[random][CXXD_RANDOM]]
 [[ratio][CXXD_RATIO]]
@@ -638,7 +639,7 @@ The macro takes one or more variadic parameters. The single required variadic pa
 the base name of the library. The remaining variadic parameters are optional and are
 Boost PP tuples. 
 
-Each tuple has one to three elements. The first element, which is mandatory,
+Each Boost PP tuple has one to three elements. The first element, which is mandatory,
 is one of the CXXD-mod identifiers given above.
 The second optional element, which may be empty, is a preprocessor identifier to be appended 
 to the base name if the particular CXXD-mod is being included and the C++ standard library has been 
@@ -646,7 +647,7 @@ chosen as the dual library. The third optional element, which may also be empty,
 identifier to be added to the base name if the particular
 CXXD-mod is being included and the Boost library has been chosen as the dual library.
 
-If the first element CXXD-mod identifier is not recognized, the entire tuple is ignored.
+If the first element CXXD-mod identifier of the Boost PP tuple is not recognized, the entire tuple is ignored.
 
 The optional parameters allow the macro invoker to specify his own identifiers to be appended to the base
 library name for each CXXD-mod being included. If he does not specify his own identifier
@@ -671,6 +672,7 @@ are given in the following table:
 [[CXXD_HASH][_ha]]
 [[CXXD_MAKE_SHARED][_ms]]
 [[CXXD_MEM_FN][_mf]]
+[[CXXD_MOVE][_mv]]
 [[CXXD_MUTEX][_mx]]
 [[CXXD_RANDOM][_rd]]
 [[CXXD_RATIO][_ra]]
@@ -706,7 +708,7 @@ chosen as the dual library or their Boost library chosen as the dual library. In
 case above if all the CXXD-mods being used have the C++ standard library as the dual library
 the final library variant name is the base name of the library with '_std' appended, while
 if all the CXXD-mods being used have the Boost library as the dual library the final library 
-variant name is just the base name.
+variant name is just the base name with nothing further appended.
 
 In the default case any appended mnemonics are added to the base name in the alphabetical
 order in which the individual CXXD-mods occur in the default table above and not in the order in which
@@ -716,8 +718,10 @@ The way that the CXXD_LIBRARY_NAME works, when the single required base name is 
 is exactly the manual method I have previously used when specifying unique variant names in the 
 MyLibName.hpp samples given above. I chose to illustrate the manual method in the documentation 
 based on the way that the CXXD_LIBRARY_NAME macro is designed to work when no optional parameters
-are specified, but of course an end-user, manually specifying unique library variant names
-instead of using the CXXD_LIBRARY_NAME macro, can use any schema he wants.
+are specified and the default values are chosen. But of course an end-user, either manually specifying 
+unique library variant names instead of using the CXXD_LIBRARY_NAME macro, or using the 
+CXXD_LIBRARY_NAME macro and providing his own appended mnemonics as optional parameters, 
+can create any schema he wants.
 
 The default naming of CXXD_LIBRARY_NAME guarantees that if Boost is consistently being 
 chosen as the dual library instead of the equivalent C++ standard library, which is what will naturally

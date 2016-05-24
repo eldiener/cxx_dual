@@ -40,6 +40,7 @@ doxygen cxxd_reference
     $(here)/../../../boost/cxx_dual/library_name.hpp
     $(here)/../../../boost/cxx_dual/make_shared.hpp
     $(here)/../../../boost/cxx_dual/mem_fn.hpp
+    $(here)/../../../boost/cxx_dual/move.hpp
     $(here)/../../../boost/cxx_dual/mutex.hpp
     $(here)/../../../boost/cxx_dual/random.hpp
     $(here)/../../../boost/cxx_dual/ratio.hpp

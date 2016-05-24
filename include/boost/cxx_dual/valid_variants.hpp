@@ -51,6 +51,7 @@
     - CXXD_HASH,hash
     - CXXD_MAKE_SHARED,make_shared
     - CXXD_MEM_FN,mem_fn
+    - CXXD_MOVE,move
     - CXXD_MUTEX,mutex
     - CXXD_RANDOM,random
     - CXXD_RATIO,ratio

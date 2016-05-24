@@ -68,6 +68,7 @@
     - CXXD_HASH,_ha
     - CXXD_MAKE_SHARED,_ms
     - CXXD_MEM_FN,_mf
+    - CXXD_MOVE,_mv
     - CXXD_MUTEX,_mx
     - CXXD_RANDOM,_rd
     - CXXD_RATIO,_ra

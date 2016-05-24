@@ -8,7 +8,7 @@
 [library The Cxx Dual Library
     [quickbook 1.7]
     [id cxxd]
-    [dirname cxxd]
+    [dirname cxx_dual]
     [copyright 2015-2016 Tropic Software East Inc]
     [purpose Choose Boost or standard library]
     [category generic]
@@ -28,5 +28,6 @@
 [include cxxd_in_library.qbk]
 [include cxxd_errors.qbk]
 [include cxxd_headers.qbk]
+[include cxxd_tests.qbk]
 [include cxxd_reference.qbk]
 [include cxxd_index.qbk]

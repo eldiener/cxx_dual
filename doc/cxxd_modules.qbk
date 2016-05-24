@@ -41,6 +41,7 @@ and the appropriate information for each one:
 [[hash][<boost/cxx_dual/hash.hpp>][CXXD_HASH_HEADER][CXXD_HASH_NS][CXXD_HAS_STD_HASH]]
 [[make_shared][<boost/cxx_dual/make_shared.hpp>][CXXD_MAKE_SHARED_HEADER][CXXD_MAKE_SHARED_NS][CXXD_HAS_STD_MAKE_SHARED]]
 [[mem_fn][<boost/cxx_dual/mem_fn.hpp>][CXXD_MEM_FN_HEADER][CXXD_MEM_FN_NS][CXXD_HAS_STD_MEM_FN]]
+[[move][<boost/cxx_dual/move.hpp>][CXXD_MOVE_HEADER][CXXD_MOVE_NS][CXXD_HAS_STD_MOVE]]
 [[mutex][<boost/cxx_dual/mutex.hpp>][CXXD_MUTEX_HEADER][CXXD_MUTEX_NS][CXXD_HAS_STD_MUTEX]]
 [[random][<boost/cxx_dual/random.hpp>][CXXD_RANDOM_HEADER][CXXD_RANDOM_NS][CXXD_HAS_STD_RANDOM]]
 [[ratio][<boost/cxx_dual/ratio.hpp>][CXXD_RATIO_HEADER][CXXD_RATIO_NS][CXXD_HAS_STD_RATIO]]

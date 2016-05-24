@@ -69,6 +69,7 @@ alias mods
        [ run test_make_shared.cpp ]
        [ run test_make_shared2.cpp ]
        [ run test_mem_fn.cpp ]
+       [ run test_move.cpp ]
        [ run test_mutex.cpp : : : <library>/boost/thread//boost_thread ]
        [ run test_random.cpp : : : <library>/boost/random//boost_random ]
        [ run test_ratio.cpp ]

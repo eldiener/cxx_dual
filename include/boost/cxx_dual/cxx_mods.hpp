@@ -63,6 +63,7 @@
 #include <boost/cxx_dual/hash.hpp>
 #include <boost/cxx_dual/make_shared.hpp>
 #include <boost/cxx_dual/mem_fn.hpp>
+#include <boost/cxx_dual/move.hpp>
 #include <boost/cxx_dual/mutex.hpp>
 #include <boost/cxx_dual/random.hpp>
 #include <boost/cxx_dual/ratio.hpp>
