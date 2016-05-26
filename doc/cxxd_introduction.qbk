@@ -220,7 +220,7 @@ in general may look like:
 By far the major use of these CXXD macros, which including a particular CXXD-mod header defines,
 will be in the use of the CXXD-mod macro header CXXD_XXX_HEADER, to include the correct 
 header file for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX.
-On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not even exist for the given 
-XXX CXXD-mod.
+On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not
+even exist for the given XXX CXXD-mod.
 
 [endsect]

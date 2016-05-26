@@ -25,9 +25,9 @@ CXXD-mod and are therefore always run when the tests are run.
 The tests for the individual CXXD-mods do depend on other Boost libraries
 when the Boost dual library is chosen for the individual CXXD-mod. Therefore
 these tests are marked 'explicit' in terms of Boost Build, which means that
-they are not run normally when running the CXXD tests. All of these tests are
-under a Boost Build alias called 'mods'. Therefore in order to just run these tests
-the command line should be:
+they are not run normally when running the CXXD tests. All of these tests for the 
+individual CXXD-mods are under a Boost Build alias called 'mods'. Therefore in 
+order to just run these tests the command line should be:
 
   b2 mods ...any_other_b2_parameters
   

@@ -118,12 +118,12 @@ able to use it correctly.
 [heading Overriding a CXXD module]
 
 As explained when generally discussing the purpose of the overriding macros
-it is foolish for code to override its own interface(s) which use
+it is usually foolish for code to override its own interface(s) which use
 CXXD, rather than simply dropping a CXXD dual library in order to directly
 use either a Boost library or its standard C++ equivalent library in the
 interface.
 
-Overriding macros for a CXXD-mod in a library should occur
+Overriding macros for a CXXD-mod in a library should normally occur
 when that CXXD-mod is being used in a second library
 and the second library doing the overriding consistently uses the
 Boost or C++ standard dual library for that CXXD-mod otherwise.

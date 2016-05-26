@@ -5,7 +5,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section Modules]
+[section:smods Modules]
 
 A dual library which CXXD supports with its system of macros is called a 
 "CXXD-mod" in this documentation, to distinguish the name from 
@@ -170,7 +170,63 @@ they happen:
   
   #endif
   
-[heading Module header file dependency ]
+[heading:hids CXXD-mod identifiers ]
+
+Each CXXD-mod also has an identifier, called a "mod-ID", by which that
+CXXD-mod is identified. The mod-ID is a VMD identifier. This means that
+it is registered and pre-detected so that CXXD can identify it in macro code.
+
+The mod-IDs are not part of the individual CXXD-mod header files
+and do not take part in the individual CXXD-mod processing.
+Instead the mod-IDs are used in optional CXXD helper macros,
+which will be described later in the documentation, to allow the user of
+the particular macro to identify a particular CXXD-mod. Each mod-ID is simply
+the name of the CXXD-mod in upper case with 'CXXD_' prepended:
+
+[table:modids Identifiers
+[[CXXD-mod][mod-ID]]
+[[array][CXXD_ARRAY]]
+[[atomic][CXXD_ATOMIC]]
+[[bind][CXXD_BIND]]
+[[chrono][CXXD_CHRONO]]
+[[condition_variable][CXXD_CONDITION_VARIABLE]]
+[[enable_shared_from_this][CXXD_ENABLE_SHARED_FROM_THIS]]
+[[function][CXXD_FUNCTION]]
+[[hash][CXXD_HASH]]
+[[make_shared][CXXD_MAKE_SHARED]]
+[[mem_fn][CXXD_MEM_FN]]
+[[move][CXXD_MOVE]]
+[[mutex][CXXD_MUTEX]]
+[[random][CXXD_RANDOM]]
+[[ratio][CXXD_RATIO]]
+[[ref][CXXD_REF]]
+[[regex][CXXD_REGEX]]
+[[shared_mutex][CXXD_SHARED_MUTEX]]
+[[shared_ptr][CXXD_SHARED_PTR]]
+[[system_error][CXXD_SYSTEM_ERROR]]
+[[thread][CXXD_THREAD]]
+[[tuple][CXXD_TUPLE]]
+[[type_index][CXXD_TYPE_INDEX]]
+[[type_traits][CXXD_TYPE_TRAITS]]
+[[unordered_map][CXXD_UNORDERED_MAP]]
+[[unordered_multimap][CXXD_UNORDERED_MULTIMAP]]
+[[unordered_multiset][CXXD_UNORDERED_MULTISET]]
+[[unordered_set][CXXD_UNORDERED_SET]]
+[[weak_ptr][CXXD_WEAK_PTR]]
+]
+
+The mod-IDs have their own header file:
+
+  #include <boost/cxx_dual/mod_ids.hpp>
+  
+We will see a use for these mod identifiers when I
+discuss optional helper macros which CXXD offers
+for the end-user later in the documentation. An end-user,
+who wishes to design his own macros to be used with CXXD,
+can use the mod-IDs as a means of specifying a particular 
+CXXD-mod by including the header file above in his own code.
+
+[heading Mod header file dependency ]
 
 When the programmer includes the appropriate CXXD-mod header file for a particular 
 dual library from within the cxx_dual directory there is no dependency

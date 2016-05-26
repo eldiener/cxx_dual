@@ -196,7 +196,7 @@ The purpose of using overriding macros, for any CXXD-mod with the
 specific overriding macros or for CXXD as a whole with the general
 overriding macros, is to override the default algorithm which CXXD
 uses to choose a dual library. However using overriding macros 
-for one's own direct use(s) of CXXD is foolish. This is because the easiest
+for one's own direct use(s) of CXXD is generally foolish. This is because the easiest
 implementation, rather than using an overriding macro, is to just
 drop CXXD in favor of using either the Boost library or C++ standard
 library directly. 
@@ -233,7 +233,7 @@ In this sense the examples given above of using specific or
 general overriding macros are purely artificial in order to
 merely show what the meaning of these overriding macros entail.
 In actual code directly overriding a particular CXXD-mod
-should never be done in favor of directly using either the
+should almost never be done in favor of directly using either the
 Boost or C++ standard implementations of a dual library.
     
 So what is the actual purpose of the overriding macros ? The purpose
@@ -290,7 +290,45 @@ In other words using the overriding macros of CXXD serves the purpose
 of using some already established interface involving CXXD without
 changing that interface's own code, at the same time forcing the choice
 of a particular dual library to be used.
-    
+
+[heading Overriding one's own interface]
+
+There is a situation where the programmer may choose to override
+his own use of a particular CXXD-mod. This is when he programs his own interface
+using a particular CXXD-mod but decides for a particular combination of compiler
+and/or OS that he wants to override that choice. In other words the programmer
+wishes to use a dual library for the benefits that CXXD has to offer but knows
+that for some combination of compiler and/or operating system that the particular
+dual library choice must be overridden to prevent a faulty implementation from
+being used. 
+
+Let's imagine that for a particular compiler version 'CCC' version 'NNN' on a particular
+OS 'OOO' we know that the standard library version of CXXD-mod 'XXX' is buggy.
+Also let's imagine that we can test for the buggy combination through using the
+preprocessor defines, as we can do in Boost through either Boost.Config 
+or even more easily through Boost.Predef. Our pseudocode for overriding our 
+own use of the dual library in a header file might look like:
+
+    // Header file OwnOverrideHeader.hpp
+    #if CCCNNN && OOO
+    #define CXXD_XXX_USE_BOOST
+    #endif
+    #include <boost/cxxd/XXX.hpp>
+    #include CXXD_XXX_HEADER
+    class OwnOverrideClass
+        {
+        public:
+        void SomeOwnOverrideFunction(CXXD_XXX_NS::xxx_object &);
+        ... // other functionality
+        };
+        
+So essentially where the purpose of the override macros is to
+change another interface's dual library choice for a 
+particular CXXD-mod to a single implementation, you can use
+the override macros with one's own interface in order to
+provide one-off situations where you want to specifically control 
+the implementation for a particular compiling environment.
+        
 [endsect]
 
 [section Header file inclusion]

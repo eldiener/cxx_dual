@@ -8,6 +8,7 @@
 
 #include <boost/cxx_dual/cxx_mods.hpp>
 #include <boost/cxx_dual/library_name.hpp>
+#include <boost/cxx_dual/mod_ids.hpp>
 #include <boost/cxx_dual/valid_variants.hpp>
 
 #endif // !defined(CXX_DUAL_HPP)

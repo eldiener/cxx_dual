@@ -579,50 +579,13 @@ in the manual methods employed in the MyLibName.hpp sample headers specified pre
 up to the end-user of CXXD whether he finds it easier to use the macros which I will describe
 or whether he finds it easier to use the manual methods previously explained and illustrated.
 
-Both macros I will be discussing use preprocessor identifiers known to CXXD for
-identifying the various CXXD-mods. These preprocessor identifiers and their
-particular CXXD-mod are given in this table:
+Both macros I will be discussing use the [link cxxd.smods.hids mod-IDs] which have been previously
+explained for identifying the various CXXD-mods.
 
-[table:modids CXXD-mod identifiers
-[[CXXD-mod][CXXD-mod id]]
-[[array][CXXD_ARRAY]]
-[[atomic][CXXD_ATOMIC]]
-[[bind][CXXD_BIND]]
-[[chrono][CXXD_CHRONO]]
-[[condition_variable][CXXD_CONDITION_VARIABLE]]
-[[enable_shared_from_this][CXXD_ENABLE_SHARED_FROM_THIS]]
-[[function][CXXD_FUNCTION]]
-[[hash][CXXD_HASH]]
-[[make_shared][CXXD_MAKE_SHARED]]
-[[mem_fn][CXXD_MEM_FN]]
-[[move][CXXD_MOVE]]
-[[mutex][CXXD_MUTEX]]
-[[random][CXXD_RANDOM]]
-[[ratio][CXXD_RATIO]]
-[[ref][CXXD_REF]]
-[[regex][CXXD_REGEX]]
-[[shared_mutex][CXXD_SHARED_MUTEX]]
-[[shared_ptr][CXXD_SHARED_PTR]]
-[[system_error][CXXD_SYSTEM_ERROR]]
-[[thread][CXXD_THREAD]]
-[[tuple][CXXD_TUPLE]]
-[[type_index][CXXD_TYPE_INDEX]]
-[[type_traits][CXXD_TYPE_TRAITS]]
-[[unordered_map][CXXD_UNORDERED_MAP]]
-[[unordered_multimap][CXXD_UNORDERED_MULTIMAP]]
-[[unordered_multiset][CXXD_UNORDERED_MULTISET]]
-[[unordered_set][CXXD_UNORDERED_SET]]
-[[weak_ptr][CXXD_WEAK_PTR]]
-[[all CXXD-mods][CXXD_MODS_ALL]]
-]
-
-All the CXXD-mod identifiers are essentially 'CXXD_'
-followed by the common name of a CXXD-mod in uppercase.
-The CXXD_MODS_ALL identifier refers to all CXXD-mods
-in slightly different ways in the two macros which follow.
-These CXXD-mod identifiers only have significance in the
-following macros and play no role in the CXXD-mod headers
-which have been previously documented.
+In additional a further identifier of 'CXXD_MODS_ALL'
+is used in each macro. The CXXD_MODS_ALL identifier 
+refers to all CXXD-mods in slightly different ways in
+the two macros which follow.
 
 [heading Macro naming a library variant]
 
@@ -640,7 +603,7 @@ the base name of the library. The remaining variadic parameters are optional and
 Boost PP tuples. 
 
 Each Boost PP tuple has one to three elements. The first element, which is mandatory,
-is one of the CXXD-mod identifiers given above.
+is a mod-ID or the CXXD_MODS_ALL identifier.
 The second optional element, which may be empty, is a preprocessor identifier to be appended 
 to the base name if the particular CXXD-mod is being included and the C++ standard library has been 
 chosen as the dual library. The third optional element, which may also be empty, is a preprocessor 
@@ -661,7 +624,7 @@ depending on whether that CXXD-mod uses the C++ standard library or the Boost li
 are given in the following table:
 
 [table:library_name Library name defaults
-[[CXXD-mod id][C++ standard]]
+[[CXXD-mod ID][C++ standard]]
 [[CXXD_ARRAY][_ar]]
 [[CXXD_ATOMIC][_at]]
 [[CXXD_BIND][_bd]]
@@ -846,7 +809,7 @@ Each variadic parameter represents a 'possibility'. Each possibility is
 a series of Boost PP tuples. This 'series' in the VMD library is called a VMD sequence.
 
 Each Boost PP tuple in the series has two elements. The first Boost PP tuple element is a
-CXXD-mod identifier as listed previously.
+mod-ID or CXXD_MODS_ALL.
 The second Boost PP tuple element is either 0 or 1,
 meaning respectively that for the CXXD-mod specified the dual library is Boost (0) or 
 the dual library is the C++ standard library (1). If a CXXD-mod identifier as the
