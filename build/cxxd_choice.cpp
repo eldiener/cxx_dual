@@ -11,6 +11,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/cxx_dual/cxx_mods.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
 int main(int argc, char *argv[])
@@ -94,6 +95,17 @@ int main(int argc, char *argv[])
                 {
                 std::cout << "Parameter \'" << s << "\' is an invalid format.\n";
                 }
+            }
+        }
+        
+    if (argc == 1)
+        {
+        
+        typedef std::map<std::string,int>::value_type vt;
+        
+        BOOST_FOREACH(vt const & elem,sm)
+            {
+            std::cout << elem.first << " = " << elem.second << "\n";
             }
         }
         
