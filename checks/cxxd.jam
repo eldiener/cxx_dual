@@ -1,0 +1,32 @@
+#  (C) Copyright Edward Diener 2016.
+#  Use, modification and distribution are subject to the 
+#  Boost Software License, Version 1.0. (See accompanying file 
+#  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+import modules ;
+
+module cxxd
+    {
+    rule requires.boost ( names + : tprops * : fprops * )
+        {
+        return [ requires.append "boost" : $(names) : $(tprops) : $(fprops) ] ;
+        }
+    
+    rule requires.std ( names + : tprops * : fprops * )
+        {
+        return [ requires.append "std" : $(names) : $(tprops) : $(fprops) ] ;
+        }   
+
+    local rule requires.append ( nappend : names + : tprops * : fprops * )
+        {
+        local config-binding = [ modules.binding $(__name__) ] ;
+    
+        local result ;
+        for name in $(names)
+            {
+            result += [ check-target-builds $(config-binding:D)//$(name)_$(nappend) : $(tprops) : $(fprops) ] ;
+            }
+       
+        return $(result) ;
+        }   
+   }
