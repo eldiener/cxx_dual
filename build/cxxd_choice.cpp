@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
         
         std::vector<std::string> vec;
         
-        boost::algorithm::split(vec,s,boost::algorithm::is_any_of("="));
+        boost::algorithm::split(vec,s,boost::algorithm::is_any_of(","));
         if (vec.size() == 2 && vec[1].size() == 1 && (vec[1][0] == '0' || vec[1][0] == '1'))
             {
             

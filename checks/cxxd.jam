@@ -3,30 +3,94 @@
 #  Boost Software License, Version 1.0. (See accompanying file 
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-import modules ;
+import regex ;
+import sequence ;
 
 module cxxd
     {
+    
+    reqs = ;
+    
     rule requires.boost ( names + : tprops * : fprops * )
         {
-        return [ requires.append "boost" : $(names) : $(tprops) : $(fprops) ] ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) : "boost" ] ;
         }
     
     rule requires.std ( names + : tprops * : fprops * )
         {
-        return [ requires.append "std" : $(names) : $(tprops) : $(fprops) ] ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) : "std" ] ;
         }   
 
-    local rule requires.append ( nappend : names + : tprops * : fprops * )
+    rule requires.specify ( names + : tprops * : fprops * )
         {
-        local config-binding = [ modules.binding $(__name__) ] ;
-    
-        local result ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) ] ;
+        }
+
+    local rule requires.append ( names + : tprops * : fprops * : nappend ? )
+        {
+        reqs = ;
+        
         for name in $(names)
             {
-            result += [ check-target-builds $(config-binding:D)//$(name)_$(nappend) : $(tprops) : $(fprops) ] ;
+            local tres = [ requires.transform $(name) : $(nappend) ] ;
+            reqs += [ sequence.join "<define>" $(tres) ] ;
             }
        
+        local config-binding = [ modules.binding $(__name__) ] ;
+        local result = [ check-target-builds $(config-binding:D)//cxxd_mod : $(tprops) : $(fprops) ] ;
+        
         return $(result) ;
-        }   
+        }
+        
+    local rule requires.transform ( name : nappend ? )
+        {
+        
+        local nparts = [ regex.split $(name) "," ] ;
+        local jname ;
+        local jappend ;
+        local result ;
+        
+        if ( [ sequence.length $(nparts) ] = 1 )
+            {
+            jname = $(name) ;
+            jappend = $(nappend) ;
+            }
+        else
+            {
+            jname = $(nparts[1]) ;
+            jappend = $(nparts[2]) ;
+            }
+        switch $(jname)
+            {
+            case cxxd_array : result = [ sequence.join CXXD_TEST_ARRAY "," $(jappend) ] ;
+            case cxxd_atomic : result = [ sequence.join CXXD_TEST_ATOMIC "," $(jappend) ] ;
+            case cxxd_bind : result = [ sequence.join CXXD_TEST_BIND "," $(jappend) ] ;
+            case cxxd_chrono : result = [ sequence.join CXXD_TEST_CHRONO "," $(jappend) ] ;
+            case cxxd_condition_variable : result = [ sequence.join CXXD_TEST_CONDITION_VARIABLE "," $(jappend) ] ;
+            case cxxd_enable_shared_from_this : result = [ sequence.join CXXD_TEST_ENABLE_SHARED_FROM_THIS "," $(jappend) ] ;
+            case cxxd_function : result = [ sequence.join CXXD_TEST_FUNCTION "," $(jappend) ] ;
+            case cxxd_hash : result = [ sequence.join CXXD_TEST_HASH "," $(jappend) ] ;
+            case cxxd_make_shared : result = [ sequence.join CXXD_TEST_MAKE_SHARED "," $(jappend) ] ;
+            case cxxd_mem_fn : result = [ sequence.join CXXD_TEST_MEM_FN "," $(jappend) ] ;
+            case cxxd_move : result = [ sequence.join CXXD_TEST_MOVE "," $(jappend) ] ;
+            case cxxd_mutex : result = [ sequence.join CXXD_TEST_MUTEX "," $(jappend) ] ;
+            case cxxd_random : result = [ sequence.join CXXD_TEST_RANDOM "," $(jappend) ] ;
+            case cxxd_ratio : result = [ sequence.join CXXD_TEST_RATIO "," $(jappend) ] ;
+            case cxxd_ref : result = [ sequence.join CXXD_TEST_REF "," $(jappend) ] ;
+            case cxxd_regex : result = [ sequence.join CXXD_TEST_REGEX "," $(jappend) ] ;
+            case cxxd_shared_mutex : result = [ sequence.join CXXD_TEST_SHARED_MUTEX "," $(jappend) ] ;
+            case cxxd_shared_ptr : result = [ sequence.join CXXD_TEST_SHARED_PTR "," $(jappend) ] ;
+            case cxxd_system_error : result = [ sequence.join CXXD_TEST_SYSTEM_ERROR "," $(jappend) ] ;
+            case cxxd_thread : result = [ sequence.join CXXD_TEST_THREAD "," $(jappend) ] ;
+            case cxxd_tuple : result = [ sequence.join CXXD_TEST_TUPLE "," $(jappend) ] ;
+            case cxxd_type_index : result = [ sequence.join CXXD_TEST_TYPE_INDEX "," $(jappend) ] ;
+            case cxxd_type_traits : result = [ sequence.join CXXD_TEST_TYPE_TRAITS "," $(jappend) ] ;
+            case cxxd_unordered_map : result = [ sequence.join CXXD_TEST_UNORDERED_MAP "," $(jappend) ] ;
+            case cxxd_unordered_multimap : result = [ sequence.join CXXD_TEST_UNORDERED_MULTIMAP "," $(jappend) ] ;
+            case cxxd_unordered_multiset : result = [ sequence.join CXXD_TEST_UNORDERED_MULTISET "," $(jappend) ] ;
+            case cxxd_unordered_set : result = [ sequence.join CXXD_TEST_UNORDERED_SET "," $(jappend) ] ;
+            case cxxd_weak_ptr : result = [ sequence.join CXXD_TEST_WEAK_PTR "," $(jappend) ] ;
+            }
+        return $(result) ;
+        }
    }
