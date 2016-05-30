@@ -30,5 +30,6 @@
 [include cxxd_errors.qbk]
 [include cxxd_headers.qbk]
 [include cxxd_tests.qbk]
+[include cxxd_build.qbk]
 [include cxxd_reference.qbk]
 [include cxxd_index.qbk]

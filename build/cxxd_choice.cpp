@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
                 }
             else if (debug)
                 {
-                std::cout << "Parameter \'" << s << "\' is succeeds.\n";
+                std::cout << "Parameter \'" << s << "\' succeeds.\n";
                 }
             }
         else
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
             ++ret;
             if (debug)
                 {
-                std::cout << "Parameter \'" << s << "\' is an invalid format.\n";
+                std::cout << "Parameter \'" << s << "\' has an invalid format.\n";
                 }
             }
         }

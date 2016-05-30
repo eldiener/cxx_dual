@@ -54,22 +54,22 @@ alias mods
     : 
        [ run test_array.cpp ]
        [ run test_atomic.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_atomic2.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_atomic3.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_atomic4.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_atomic5.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_atomic6.cpp : : : 
-            [ cxxd.requires.boost cxxd_atomic : <library>/boost/atomic//boost_atomic ] ]
+            [ cxxd.requires.boost atomic : <library>/boost/atomic//boost_atomic ] ]
        [ run test_bind.cpp ]
        [ run test_chrono.cpp ]
        [ run test_chrono2.cpp ]
        [ run test_condition_variable.cpp : : : 
-            [ cxxd.requires.boost cxxd_thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
        [ run test_enable_shared_from_this.cpp ]
        [ run test_enable_shared_from_this2.cpp ]
        [ run test_function.cpp ]
@@ -79,22 +79,22 @@ alias mods
        [ run test_mem_fn.cpp ]
        [ run test_move.cpp ]
        [ run test_mutex.cpp : : : 
-            [ cxxd.requires.boost cxxd_thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
        [ run test_random.cpp : : : 
-            [ cxxd.requires.boost cxxd_random : <library>/boost/random//boost_random ] ]
+            [ cxxd.requires.boost random : <library>/boost/random//boost_random ] ]
        [ run test_ratio.cpp ]
        [ run test_ref.cpp ]
        [ run test_regex.cpp : : : 
-            [ cxxd.requires.boost cxxd_regex : <library>/boost/regex//boost_regex ] ]
+            [ cxxd.requires.boost regex : <library>/boost/regex//boost_regex ] ]
        [ run test_shared_mutex.cpp : : : 
-            [ cxxd.requires.boost cxxd_thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
        [ run test_shared_ptr.cpp ]
        [ run test_shared_ptr2.cpp test_shared_ptr2_example.cpp ]
        [ run test_system_error.cpp : : : 
-            [ cxxd.requires.boost cxxd_system_error : <library>/boost/system//boost_system ] 
-            [ cxxd.requires.boost cxxd_thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost system_error : <library>/boost/system//boost_system ] 
+            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
        [ run test_thread.cpp : : : 
-            [ cxxd.requires.boost cxxd_thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
        [ run test_tuple.cpp ]
        [ run test_type_index.cpp ]
        [ run test_type_traits.cpp ]
@@ -108,9 +108,9 @@ alias mods
     
 explicit mods ;
 
-alias tvar
+alias tvv
     :
        [ compile test_vv.cpp : <define>BOOST_PP_VARIADICS=1 <warnings>off ]
     ;
 
-explicit tvar ;
+explicit tvv ;
