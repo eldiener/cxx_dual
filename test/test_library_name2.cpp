@@ -14,7 +14,6 @@
 
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/cxx_dual/library_name.hpp>
 #include <libs/cxx_dual/test/test_library_name_use_boost.hpp>
 #include <boost/cxx_dual/cxx_mods.hpp>
 
@@ -26,10 +25,18 @@ int main()
 #define BOOST_VMD_REGISTER_ALibAllBoost (ALibAllBoost)
 #define BOOST_VMD_DETECT_ALibAllBoost_ALibAllBoost
 
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib));
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib,(CXXD_MODS_ALL,AllStd,AllBoost)),ALibAllBoost));
+#include <boost/cxx_dual/library_name.hpp>
+
+  #define CXXD_TEST_LBN_RESULT1 CXXD_LIBRARY_NAME(ALib)
+  #define CXXD_TEST_LBN_RESULT2 CXXD_LIBRARY_NAME(ALib,(CXXD_MODS_ALL,AllStd,AllBoost))
+
+#include <boost/cxx_dual/library_name_post.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN_RESULT1,ALib));
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN_RESULT2,ALibAllBoost));
     
   return boost::report_errors();
   }
+
 
 #endif

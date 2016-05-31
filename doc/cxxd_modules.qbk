@@ -132,6 +132,7 @@ does not support the C++ standard type_traits library, even though the Boost typ
 library could also normally be used.
 
   #include <boost/cxx_dual/type_traits.hpp>
+  // Some_code
   #if !CXXD_HAS_STD_TYPE_TRAITS
   #error C++ standard type_traits library needed and not present.
   #endif

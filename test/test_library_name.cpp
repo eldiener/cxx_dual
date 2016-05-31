@@ -16,7 +16,6 @@
 
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/cxx_dual/library_name.hpp>
 
 #define CXXD_ARRAY_USE_BOOST
 #define CXXD_ATOMIC_USE_STD
@@ -38,22 +37,23 @@ int main()
 #define BOOST_VMD_REGISTER_ALib_arrayBoostChStandard_at_cv (ALib_arrayBoostChStandard_at_cv)
 #define BOOST_VMD_DETECT_ALib_arrayBoostChStandard_at_cv_ALib_arrayBoostChStandard_at_cv
 
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib_at_ch_cv));
+#include <boost/cxx_dual/library_name.hpp>
+
+  #define CXXD_TEST_LBN1_RESULT CXXD_LIBRARY_NAME(ALib)
+  #define CXXD_TEST_LBN2_RESULT CXXD_LIBRARY_NAME \
+                                    ( \
+                                    ALib, \
+                                    (CXXD_BIND,StandardBind,), \
+                                    (CXXD_ARRAY,_arrayStandard,_arrayBoost), \
+                                    (CXXD_CHRONO,ChStandard,ChBoost) \
+                                    ) \
+  /**/
+
   
-  BOOST_TEST
-    (
-    BOOST_VMD_EQUAL
-        (
-        CXXD_LIBRARY_NAME
-            (
-            ALib,
-            (CXXD_BIND,StandardBind,),
-            (CXXD_ARRAY,_arrayStandard,_arrayBoost),
-            (CXXD_CHRONO,ChStandard,ChBoost)
-            ),
-        ALib_arrayBoostChStandard_at_cv
-        )
-    );
+#include <boost/cxx_dual/library_name_post.hpp>
+  
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN1_RESULT,ALib_at_ch_cv));
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN2_RESULT,ALib_arrayBoostChStandard_at_cv));
     
   return boost::report_errors();
   }

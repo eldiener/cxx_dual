@@ -6,6 +6,6 @@
 #if !defined(CXXD_MOD_IDS_HPP)
 #define CXXD_MOD_IDS_HPP
 
-#include <boost/cxx_dual/detail/library_name_register.hpp>
+#include <boost/cxx_dual/detail/mod_ids_register.hpp>
 
 #endif // !defined(CXXD_MOD_IDS_HPP)

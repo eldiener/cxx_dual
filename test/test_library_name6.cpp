@@ -16,7 +16,6 @@
 
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/cxx_dual/library_name.hpp>
 
 #define CXXD_SYSTEM_ERROR_USE_STD
 #define CXXD_THREAD_USE_STD
@@ -40,24 +39,24 @@ int main()
 #define BOOST_VMD_REGISTER_ALib_bmmpStdTI_th_tt (ALib_bmmpStdTI_th_tt)
 #define BOOST_VMD_DETECT_ALib_bmmpStdTI_th_tt_ALib_bmmpStdTI_th_tt
 
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib_se_th_ti_tt));
-  
-  BOOST_TEST
-    (
-    BOOST_VMD_EQUAL
-        (
-        CXXD_LIBRARY_NAME
-            (
-            ALib,
-            (),
-            (DUBIOUS),
-            (CXXD_UNORDERED_MULTIMAP,_smmp,_bmmp),
-            (CXXD_TYPE_INDEX,StdTI,BoostTI),
-            (CXXD_SYSTEM_ERROR,,BoostSys)
-            ),
-        ALib_bmmpStdTI_th_tt
-        )
-    );
+#include <boost/cxx_dual/library_name.hpp>
+
+  #define CXXD_TEST_LBN1_RESULT CXXD_LIBRARY_NAME(ALib)
+  #define CXXD_TEST_LBN2_RESULT CXXD_LIBRARY_NAME \
+                                    ( \
+                                    ALib, \
+                                    (), \
+                                    (DUBIOUS), \
+                                    (CXXD_UNORDERED_MULTIMAP,_smmp,_bmmp), \
+                                    (CXXD_TYPE_INDEX,StdTI,BoostTI), \
+                                    (CXXD_SYSTEM_ERROR,,BoostSys) \
+                                    ) \
+  /**/
+
+#include <boost/cxx_dual/library_name_post.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN1_RESULT,ALib_se_th_ti_tt));
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN2_RESULT,ALib_bmmpStdTI_th_tt));
     
   return boost::report_errors();
   }

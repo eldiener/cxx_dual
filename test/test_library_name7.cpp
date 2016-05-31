@@ -16,7 +16,6 @@
 
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/cxx_dual/library_name.hpp>
 
 #define CXXD_TUPLE_USE_BOOST
 #define CXXD_UNORDERED_MAP_USE_BOOST
@@ -38,23 +37,24 @@ int main()
 #define BOOST_VMD_REGISTER_ALib_bumpBoostSysMSetStd_up (ALib_bumpBoostSysMSetStd_up)
 #define BOOST_VMD_DETECT_ALib_bumpBoostSysMSetStd_up_ALib_bumpBoostSysMSetStd_up
 
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib_up_ut));
+#include <boost/cxx_dual/library_name.hpp>
+
+  #define CXXD_TEST_LBN1_RESULT CXXD_LIBRARY_NAME(ALib)
+  #define CXXD_TEST_LBN2_RESULT CXXD_LIBRARY_NAME \
+                                    ( \
+                                    ALib, \
+                                    (CXXD_UNORDERED_MAP,,_bump), \
+                                    (CXXD_TUPLE,,BoostSys), \
+                                    (CXXD_MODS_ALL,AllStd,AllBoost), \
+                                    (CXXD_UNORDERED_MULTISET,MSetStd,MSetBoost) \
+                                    ) \
+  /**/
+
   
-  BOOST_TEST
-    (
-    BOOST_VMD_EQUAL
-        (
-        CXXD_LIBRARY_NAME
-            (
-            ALib,
-            (CXXD_UNORDERED_MAP,,_bump),
-            (CXXD_TUPLE,,BoostSys),
-            (CXXD_MODS_ALL,AllStd,AllBoost),
-            (CXXD_UNORDERED_MULTISET,MSetStd,MSetBoost)
-            ),
-        ALib_bumpBoostSysMSetStd_up
-        )
-    );
+#include <boost/cxx_dual/library_name_post.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN1_RESULT,ALib_up_ut));
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN2_RESULT,ALib_bumpBoostSysMSetStd_up));
     
   return boost::report_errors();
   }

@@ -16,7 +16,6 @@
 
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/cxx_dual/library_name.hpp>
 
 #define CXXD_FUNCTION_USE_STD
 #define CXXD_HASH_USE_BOOST
@@ -38,8 +37,15 @@ int main()
 #define BOOST_VMD_REGISTER_ALibSrd_HB_fn (ALibSrd_HB_fn)
 #define BOOST_VMD_DETECT_ALibSrd_HB_fn_ALibSrd_HB_fn
 
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib),ALib_fn_rd));
-  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_LIBRARY_NAME(ALib,(CXXD_RANDOM,Srd,Brd),(CXXD_MUTEX,SMut),(CXXD_HASH,,_HB)),ALibSrd_HB_fn));
+#include <boost/cxx_dual/library_name.hpp>
+
+  #define CXXD_TEST_LBN1_RESULT CXXD_LIBRARY_NAME(ALib)
+  #define CXXD_TEST_LBN2_RESULT CXXD_LIBRARY_NAME(ALib,(CXXD_RANDOM,Srd,Brd),(CXXD_MUTEX,SMut),(CXXD_HASH,,_HB))
+
+#include <boost/cxx_dual/library_name_post.hpp>
+
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN1_RESULT,ALib_fn_rd));
+  BOOST_TEST(BOOST_VMD_EQUAL(CXXD_TEST_LBN2_RESULT,ALibSrd_HB_fn));
     
   return boost::report_errors();
   }

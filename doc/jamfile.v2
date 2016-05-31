@@ -113,5 +113,5 @@ boostbook standalone
 
 install pdfinstall
     : standalone
-    : <location>.. <install-type>PDF <name>cxxd.pdf
+    : <location>.. <install-type>PDF <name>cxx_dual.pdf
     ;

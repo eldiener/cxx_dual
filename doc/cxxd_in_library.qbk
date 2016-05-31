@@ -5,7 +5,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section Using in a library]
+[section:sec_lib Using in a library]
 
 Using CXXD in a library presents a number of
 situations which do not occur when using CXXD

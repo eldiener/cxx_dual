@@ -181,12 +181,12 @@ designations followed by a comma ( ',' ) and a 0 indicating a Boost
 implementation or a 1 indicating a C++ standard implementation. Examples
 for a single argument would be 'regex,0' to designate the Boost implementation
 for the regex CXXD-mod implementation or 'tuple,1' to designate the C++ standard
-implementation of the tuple CXXD-mod implementation. If the arguments all match
+implementation for the tuple CXXD-mod implementation. If the arguments all match
 the actual dual library implementations chosen the cxxd_choice program
 returns 0, otherwise it returns the number of arguments that did not match.
-This return value could then be susbsequently used in general build systems
+This return value could then be subsequently used in general build systems
 to add whatever general build features are needed when a particular CXXD-mod
-dual library choice is made.
+dual library choice, or a combination of choices, is made.
 
 It needs to be emphasized that the results of the dual libraries chosen
 by default is completely reliant on the compiler invocation used when
@@ -199,22 +199,11 @@ implementations but different compiler flags, such as ones designating
 the level of C++ support ( c++03, c++11, c++14 ), will change the dual
 library choices.
 
-By default when Boost Build builds the cxxd_choice program it will
-put its resulting exe in different directories depending on the
-compiler chosen when building the program. This means that each compiler
-will have its own copy of cxxd_choice, which is what the end-user wants,
-but the end-user needs to find the directory where Boost Build will put
-the exe. The jamfile for building cxxd_choice in the CXXD 'build' subdirectory
-has a commented out line, which the end-user could uncomment, for specifying
-the exact location for putting the resulting exe. He could use Boost Build
-conditional requirements with the <location> property in the commented out
-line to specify where the exe should be installed for each compiler he uses.
-as long as he gives the 'install' rule a different name for each compiler being used.
-
 The cxxd_choice program can also write to standard output the results of its
-dual library choices. If the first parameter is '-d' or '--debug', besides
+dual library choices. If the first command-line parameter is '-d' or '--debug', besides
 returning its 0 or non-zero value, the program will write to standard output
-the result of each dual library test made. The results are in the exact form of:
+the result of each dual library test made by the subsequent parameters.
+The results are in the exact form of:
 
   Processing 'argument'.
   Parameter 'argument' succeeds.
@@ -228,13 +217,87 @@ The cxxd_choice program, when passed no parameters, will return 0 but will
 also write to standard output the choice for every CXXD-mod in the form of
 individual lines of:
 
-  CXXD-modname = 0 or 1
+  CXXD-mod name = 0-or-1
   
-where CXXD-modname is the lowercase name of the CXXD-mod, such as 'regex' or 'tuple',
+where CXXD-mod name is the lowercase name of the CXXD-mod, such as 'regex' or 'tuple',
 and 0 means the Boost library being chosen while 1 means the C++ standard library
-being chosen. The CXXD-modnames are listed in alphabetical order.
+being chosen. The CXXD-mod names are listed in alphabetical order.
+
+By default when Boost Build builds the cxxd_choice program it will
+put its resulting exe in different directories depending on the
+compiler chosen when building the program. This means that each compiler
+will have its own copy of cxxd_choice, which is what the end-user wants,
+but the end-user needs to find the directory where Boost Build will put
+the exe. 
+
+The jamfile for building cxxd_choice in the CXXD 'build' subdirectory
+has a commented out line, which the end-user could uncomment, for specifying
+the exact location for putting the resulting exe. He could use Boost Build
+conditional requirements with the <location> property in the commented out
+line to specify where the exe should be installed for each compiler toolset he uses,
+as long as he gives the 'install' rule a different name for each compiler toolset being used.
+If he wanted to change the commented out install rule to manually specify different
+locations for different compilers his Boost Build code might look like:
+
+  install cxxd_choice_install_gcc : cxxd_choice : toolset=gcc:<location>gcc_path ;
+  install cxxd_choice_install_clang : cxxd_choice : toolset=clang:<location>clang_path ;
+  install cxxd_choice_install_msvc : cxxd_choice : toolset=msvc:<location>msvc_path ;
+  
+The names for the install rule are purely arbitrary, but need to be different
+for each toolset chosen.
 
 [heading Testing variants]
 
+For on-the-fly testing of dual library choices there is a source file
+in the 'test' directory called 'test_vv.cpp'. This test is represented by
+a Boost Build explicit alias called 'tvv'. This means that the test is
+only run when you explicitly pass the mnemonic 'tvv' to the command line
+when running tests for the CXXD library.
+
+The 'test_vv.cpp' test is just a compile of a program that either succeeds
+as a compile or fails. In order to succeed compilation the invoker
+of the test must pass on the command line a macro definition for a macro
+called 'CXXD_VV' which is equal to a single
+[link cxxd.sec_lib.sec_lvvv.vvmac valid variant] macro parameter.
+A valid variant macro parameter, which has previously been explained,
+is a way of encoding what dual library possibility is wanted. It takes
+the form of a VMD sequence of two element tuples where the first element
+is the mod-ID and the second element is 0 for the Boost implementation
+or 1 for the C++ standard library implementation.
+
+To test the compilation of test_vv.cpp the b2 command line, run in rhe
+CXXD test directory, would look like:
+
+  b2 toolset=some_compiler tvv define=CXXD_VV=some_vmd_sequence
+
+A typical VMD sequence might look like:
+
+  (CXXD_REGEX,0)
+  
+or
+
+  (CXXD_BIND,1)(CXXD_FUNCTION,1)(CXXD_REF,1)
+  
+so the command line might be something like:
+
+  b2 toolset=gcc tvv define=CXXD_VV=(CXXD_REGEX,0)
+  
+or 
+
+  b2 toolset=clang tvv define=CXXD_VV=(CXXD_BIND,1)(CXXD_FUNCTION,1)(CXXD_REF,1)
+  
+If the VMD sequence matches at compile time what the compiler
+provides in the way of the default dual library choice for
+the CXXD-mods in the sequence the compilation succeeds, otherwise
+the compilation fails.
+
+This on-the-fly invocation of a CXXD test to match dual library
+choices could be used by build tools which can specify different
+features based on whether a program execution fails or not.
+It can also be used by an end-user to determine on-the-fly
+whether or not particular CXXD-mods match in their dual library choices
+some desired configuration.
+
 [endsect]
+
 [endsect]

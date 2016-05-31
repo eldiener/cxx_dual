@@ -7,7 +7,7 @@
 #define CXXD_DETAIL_MOD_APPEND_TABLE_HPP
 
 #include <boost/cxx_dual/detail/table_find.hpp>
-#include <boost/cxx_dual/detail/library_name_register.hpp>
+#include <boost/cxx_dual/detail/mod_ids_register.hpp>
 #include <boost/cxx_dual/detail/mods_all_register.hpp>
 #include <boost/cxx_dual/detail/mod_append_table_pre.hpp>
 

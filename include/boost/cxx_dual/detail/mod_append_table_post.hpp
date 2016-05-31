@@ -31,11 +31,6 @@
 #undef CXXD_cv
 #endif
 
-#if defined(CXXD_ei)
-#define _ei CXXD_ei
-#undef CXXD_ei
-#endif
-
 #if defined(CXXD_es)
 #define _es CXXD_es
 #undef CXXD_es
@@ -59,6 +54,11 @@
 #if defined(CXXD_mf)
 #define _mf CXXD_mf
 #undef CXXD_mf
+#endif
+
+#if defined(CXXD_mv)
+#define _mv CXXD_mv
+#undef CXXD_mv
 #endif
 
 #if defined(CXXD_mx)

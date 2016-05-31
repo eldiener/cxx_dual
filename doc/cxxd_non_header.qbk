@@ -93,8 +93,6 @@ Our difference is that for our non-header only library we are going to compile t
 implementation of MyClass into a shared or static library.
 So we now have both our header file and a separate source code file MyHeader.cpp:
 
-we now have both our header file and a separate source code file MyHeader.cpp:
-
     // Source file MyHeader.cpp
     #include "MyHeader.hpp"
     void MyClass::MyFunction(CXXD_REGEX_NS::regex & rx)
@@ -155,7 +153,7 @@ command line switches which determine whether or not the C++ standard
 regex library is supported. If the C++ standard regex library is not 
 supported by appropriate command line switches the build of 'MyLib'
 should still succeed but the build of 'MyLib_std' will fail. This is
-as it should be. A build of MyLib with the appropriate commamnd line
+as it should be. A build of MyLib with the appropriate command line
 switches ( usually C++11 support ) will succeed in also building 'MyLib_std'.
 
 [heading Linking to the library]
@@ -181,6 +179,7 @@ our example because each dual library has a macro which will tell us at
 compile time which choice has been made. For our example with the regex
 library the macro is CXXD_HAS_STD_REGEX, which is 1 if the C++ standard
 regex library is being used and 0 if the Boost regex library is being used.
+
 Furthermore, for those compilers which support auto-linking, we want to
 provide whatever compiler mechanism is available to auto-link to our correct
 library name. For my example I will use the auto-linking mechanism that is
@@ -285,22 +284,22 @@ different from what happens when CXXD is not being used.
 I have chosen a very simple example in using CXXD in the built portion of a non-header only 
 library. This is because my example uses a single CXXD-mod in the built code, and the built code
 consists of a single source file with its corresponding header file. It is
-quite probable, however, that a non-header only library uses many more CXXD modules in the 
-built portion of the library and that the use of CXXD modules occurs in many more source files 
+quite probable, however, that a non-header only library uses many more CXXD-mods in the 
+built portion of the library and that the use of CXXD-mods occurs in many more source files 
 with their corresponding header files. While the exact same principles apply when using a number 
-of CXXD mods as using a single one, an important issue that comes up when using a number of CXXD 
-mods is whether we have to support all possible library variants and how we would limit the possible 
+of CXXD-mods as using a single one, an important issue that comes up when using a number of
+CXXD-mods is whether we have to support all possible library variants and how we would limit the possible 
 variants if necessary.
 
-Let's consider that if the number of separate CXXD mods in the built portion of a non-header
+Let's consider that if the number of separate CXXD-mods in the built portion of a non-header
 only library is designated as 'n', we have [power 2..n] of different CXXD combinations which the end-user
-of our library could use. As an example, for just 4 different CXXD moduled being included, we now
+of our library could use. As an example, for just 4 different CXXD-mods being included, we now
 have 16 different variants of our library to support and build. Furthermore, when counting
-the CXXD modules being included we must take into account
-the number of CXXD mods being used in the built portion of a non-header only library as not only
-being those CXXD mods our library is directly using but also possibly CXXD mods being used by
+the CXXD-mods being included we must take into account
+the number of CXXD-mods being used in the built portion of a non-header only library as not only
+being those CXXD-mods our library is directly using but also possibly CXXD-mods being used by
 other libraries which our own non-header only library is using in its built portion. Clearly the number
-of CXXD modules in the built portion of a non-header only library may proliferate to an unmanageable
+of CXXD-mods in the built portion of a non-header only library may proliferate to an unmanageable
 amount if we have to build every possible variant.
 
 Despite the fact that there are [power 2..n] possible variants it is quite possible that the library 
@@ -309,7 +308,7 @@ Those two variants are often divided by whether or not the library is being comp
 not. For most, if not all, of the CXXD-mods in a given compiler implementation, when compiling in C++11 on up
 mode the C++ standard library version of the dual library is available and when not compiling in C++11
 mode on up only the Boost version will be available. So realistically, even when 'n' different
-CXXD modules are being used by the built portion of a non-header only library, the library developer
+CXXD-mods are being used by the built portion of a non-header only library, the library developer
 may choose to support only two variants, either all Boost libraries or all C++ standard library
 equivalents.
 
@@ -523,8 +522,8 @@ compiling and link to the MyLib variant which supports all Boost libraries for t
 getting an error.
 
 In these examples the library author needs to adjust the build of his library
-to only build the variants which he allows. In Boost terms rhis means modifying
-jam file which builds his library. 
+to only build the variants which he allows. In Boost terms this means modifying
+the jam file which builds his library.
 
 With our first extended example, for all 16 variants, the updated jam file would be, at minimum:
     
@@ -570,7 +569,7 @@ The rest of the infrastructure in our example remains in place.
 
 [endsect]
 
-[section Support for naming library variants and testing all valid possibilities]
+[section:sec_lvvv Support for naming library variants and testing all valid possibilities]
 
 CXXD offers support, based on the CXXD-mods which are being included, in the form of macros 
 for naming a library variant and for testing all valid possibilities. These macros can be used
@@ -676,6 +675,26 @@ variant name is just the base name with nothing further appended.
 In the default case any appended mnemonics are added to the base name in the alphabetical
 order in which the individual CXXD-mods occur in the default table above and not in the order in which
 the CXXD-mods are included.
+
+[note
+The default appended mnemonics all begin with an underscore and lowercase letters
+so they should not clash with any macros of the same name.
+Nonetheless because there is a small chance of a macro clash if the compiler,
+or some other header file, defines macros with the same name as one of the default
+mnemonics, CXXD saves and restores possible macros definitions with the default
+appended mnemonics names. Saving is done automatically when the 
+<boost/cxx_dual/library_name.hpp> is included. Restoring must be done
+manually by the end-user by including the header file 
+<boost/cxx_dual/library_name_post.hpp> after the CXXD_LIBRARY_NAME
+macro is invoked. If you are sure that no other macro in the TU
+in which CXXD_LIBRARY_NAME is being used has the name of any one of the
+default appended mnemonics, you do not have to include 
+<boost/cxx_dual/library_name_post.hpp> after the CXXD_LIBRARY_NAME
+is invoked. Defining macro names that are not all uppercase letters
+and/or that start with an underscore is really bad macro design,
+but one never knows what compiler vendors or third-party libraries
+are capable of doing.
+]
 
 The way that the CXXD_LIBRARY_NAME works, when the single required base name is passed to the macro, 
 is exactly the manual method I have previously used when specifying unique variant names in the 
@@ -786,7 +805,7 @@ In all cases the invocation of the single CXXD_LIBRARY_NAME macro simplifies our
 Nonetheless the choice of using the CXXD_LIBRARY_NAME macro or manually name the
 library variants is totally up to the library author.
     
-[heading Macro testing all possibilities]
+[heading:vvmac Macro testing all possibilities]
 
 There is a macro in CXXD for testing whether the CXXD-mods which are included,
 when the macro is actually invoked, match one or more combinations of dual 
