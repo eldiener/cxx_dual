@@ -33,7 +33,7 @@
 
 </span>CXXD_LIBRARY_NAME(...)</pre></div>
 <div class="refsect1">
-<a name="id875777"></a><h2>Description</h2>
+<a name="id882043"></a><h2>Description</h2>
 <p>The function-like macro expands to the name of a non-header only library. It is useful for non-header only libraries in which different library variants are generated depending on the dual library choices for the CXXD-mods being used in the built portion of the library. The macro by default will expand to a unique library name depending on the dual library choices. The macro works based on the CXXD-mods included before the macro is invoked.</p>
 <p>The required first variadic parameter is the base library name. The generated library name will be the base library name and possibly other mnemonics appended to it. The base library name should be the library name as it would be called if no CXXD-mods were being used in the built portion of the library.</p>
 <p>Each optional variadic parameter is a Boost PP tuple with one to three elements. The Boost PP tuple designates:</p>

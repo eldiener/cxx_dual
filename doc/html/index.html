@@ -369,8 +369,8 @@
         </li>
 <li class="listitem">
           Optionally it is possible to write specific code for the Boost version
-          of the module or the C++ standard version of the particular CXXD-mod by
-          using the CXXD_HAS_STD_XXX macro with a preprocessor #if statement.
+          of the CXXD-mod or the C++ standard version of the particular CXXD-mod
+          by using the CXXD_HAS_STD_XXX macro with a preprocessor #if statement.
         </li>
 </ol></div>
 <p>
@@ -391,7 +391,7 @@
       you are using the Boost version or the C++ standard library version of XXX.
       Your code in general may look like:
     </p>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">XXX</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// Creates the macros for module XXX by including the appropriate CXXD-mod header</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">XXX</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header</span>
 <span class="preprocessor">#include</span> <span class="identifier">CXXD_XXX_HEADER</span>          <span class="comment">// Includes the appropriate CXXD-mod macro header file</span>
 
 <span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
@@ -417,7 +417,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 31, 2016 at 20:01:06 GMT</small></p></td>
+<td align="left"><p><small>Last revised: June 01, 2016 at 09:02:11 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

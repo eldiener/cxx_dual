@@ -39,7 +39,7 @@
         ) at any time within a translation unit. CXXD always makes sure that overriding
         macros do not conflict with each other, as discussed previously, and that
         the choice of either Boost or its equivalent standard library remains consistent
-        for any particular module within a TU.
+        for any particular CXXD-mod within a TU.
       </p>
 <p>
         In actual usage the programmer himself will usually not include the same
@@ -86,8 +86,8 @@
         each time the header is included the default algorithm is slightly different
         the second and subsequent times a particular CXXD-mod header is included.
         In that particular case the default algorithm simply accepts which of the
-        dual libraries of the module has been previously chosen. This saves preprocessing
-        time and also makes sure that the choice for a given module is consistent
+        dual libraries of the CXXD-mod has been previously chosen. This saves preprocessing
+        time and also makes sure that the choice for a given CXXD-mod is consistent
         throughout the TU.
       </p>
 <p>
@@ -199,7 +199,7 @@
         included. The first time the regex CXXD-mod header is included no overriding
         macro is in effect so that the default algorithm chooses the C++ standard
         library because it is available. The second time the regex CXXD-mod header
-        is included an overriding macro changes the regex module to use the Boost
+        is included an overriding macro changes the regex CXXD-mod to use the Boost
         regex library. Thus consistency between which dual library is chosen is broken
         and CXXD creates a preprocessing error.
       </p>
@@ -207,7 +207,7 @@
         This is one of the weaknesses of a macro based system such as CXXD. Normally
         the order of inclusion of header files should not affect the way that code
         compiles. But in CXXD it does affect the compilation since, by default, CXXD
-        does not allow the dual library choice for a particular module to change
+        does not allow the dual library choice for a particular CXXD-mod to change
         within a TU.
       </p>
 <p>
@@ -225,7 +225,7 @@
         more than once. In actuality, unless the end-user goes about undefining already
         defined overriding macros, the only case where overriding the dual library
         consistency by defining CXXD_NO_CONSISTENCY will normally cause the dual
-        library for a module to change within a TU is in the second example given
+        library for a CXXD-mod to change within a TU is in the second example given
         above, ie. when the default algorithm chooses a dual library the first time
         a CXXD-mod header is included and then an overriding macro changes the dual
         library with the opposite choice the second time the CXXD-mod header is included.
@@ -239,7 +239,7 @@
         programmer knows exactly what the code is doing in a particular TU including
         all intermediate header file code. When dual library consistency is turned
         off using CXXD_NO_CONSISTENCY the chance that CXXD macros for a particular
-        module will access the Boost library in some part of a TU and the C++ standard
+        CXXD-mod will access the Boost library in some part of a TU and the C++ standard
         library in another part of a TU, and the problems this may cause, are generally
         not worth the problems that could occur in code confusion. Nonetheless if
         the programmer feels he knows what he is doing in using this macro he can
