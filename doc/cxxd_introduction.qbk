@@ -8,7 +8,7 @@
 [section Introduction]
 
 The Cxx dual library, or CXXD for short, is a macro library
-which allows the choice between using a Boost library or its 
+which chooses between using a Boost library or its 
 C++ standard equivalent library for a number of different C++ 
 implementations, while using the same code to program either choice.
 An 'implementation' is a Boost library which has a C++ standard
