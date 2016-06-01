@@ -7,6 +7,8 @@
 #include <boost/cxx_dual/unordered_multiset.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
+
 #include CXXD_UNORDERED_MULTISET_HEADER
 
 int main()
@@ -24,7 +26,7 @@ int main()
     numbers.insert(688); 
     numbers.insert(689); 
     
-    BOOST_TEST_NOT(numbers.empty());
+    CXXD_TEST_NOT(numbers.empty());
     
     typedef CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int>::iterator it;
     

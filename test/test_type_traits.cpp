@@ -10,6 +10,8 @@
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/static_assert.hpp>
 
+#define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
+
 #include CXXD_TYPE_TRAITS_HEADER
 
 class A {};
@@ -104,8 +106,8 @@ int main()
     bool y2z = CXXD_TYPE_TRAITS_NS::is_convertible<Y*, Z*>::value;
  
     BOOST_TEST(y2x);
-    BOOST_TEST_NOT(x2y);
-    BOOST_TEST_NOT(y2z);
+    CXXD_TEST_NOT(x2y);
+    CXXD_TEST_NOT(y2z);
     
     BOOST_TEST_EQ(call_m<foo>(),1);
     BOOST_TEST_EQ(call_m<CXXD_TYPE_TRAITS_NS::add_const<foo>::type>(),0);

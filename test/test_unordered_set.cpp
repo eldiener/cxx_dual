@@ -7,6 +7,8 @@
 #include <boost/cxx_dual/unordered_set.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
+
 #include CXXD_UNORDERED_SET_HEADER
 
 int main()
@@ -19,7 +21,7 @@ int main()
     numbers.insert(42);
     numbers.insert(13317); 
     
-    BOOST_TEST_NOT(numbers.empty());
+    CXXD_TEST_NOT(numbers.empty());
     
     typedef CXXD_UNORDERED_SET_NS::unordered_set<int>::iterator it;
     
