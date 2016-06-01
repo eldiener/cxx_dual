@@ -57,8 +57,8 @@ be ordinarily run unless it is explicitly invoked by:
 The other b2 parameters necessary to run the valid variant test have
 previously been discussed.
   
-In order to the default tests as well as any of the explicit tests
-you can run:
+In order to run the default tests as well as any of the explicit tests
+you can execute:
 
   b2 . explicit_test_aliases... any_other_b2_parameters...
   

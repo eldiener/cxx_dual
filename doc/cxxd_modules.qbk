@@ -69,13 +69,13 @@ and the appropriate information for each one:
 The naming scheme for each CXXD-mod follows common conventions:
 
 * Each include macro is named starting with the mnemonic CXXD_,
-followed by the name CXXD-mod name in uppercase,
+followed by the CXXD-mod name in uppercase,
 followed by the mnemonic \_HEADER.
 * Each namespace macro is named starting with the mnemonic CXXD_,
-followed by the name CXXD-mod name in uppercase,
+followed by the CXXD-mod name in uppercase,
 followed by the mnemonic \_NS.
 * Each checking macro is named starting with the mnemonic CXXD_HAS_STD_,
-followed by the name CXXD-mod name in uppercase.
+followed by the CXXD-mod name in uppercase.
 
 Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
 defined for a CXXD-mod XXX which has equivalent macro names between the C++ standard library 

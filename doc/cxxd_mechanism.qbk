@@ -19,7 +19,7 @@ during compilation it is chosen and if it is not available during compilation it
 equivalent Boost library is chosen.
 
 The determination of availability for any given CXXD-mod is done by examining 
-Boost.Config macros. Boost config has quite a number of macros which will specify
+Boost.Config macros. Boost.Config has quite a number of macros which will specify
 which C++ standard library is available during compilation. The logic of determining
 which library is available is determined within Boost.Config, and CXXD just uses the
 results of that logic to configure the macros for a particular CXXD-mod.
@@ -35,7 +35,7 @@ As an example, using the regex CXXD-mod:
     
 If Boost.Config determines that the C++ standard regex library is available 
 CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', and 
-CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.config determines that the C++ standard regex library 
+CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.Config determines that the C++ standard regex library 
 is not available CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
 and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'. 
 
@@ -238,7 +238,7 @@ Boost or C++ standard implementations of a dual library.
     
 So what is the actual purpose of the overriding macros ? The purpose
 is to override the use of CXXD by another implementation whose source files
-should not be modified. A third-party library
+can not or should not be modified. A third-party library
 may choose to use CXXD to provide a dual library for a particular
 CXXD-mod. Your own code, which uses the third-party library but otherwise
 uses either the Boost version of the dual library or the C++ standard

@@ -230,7 +230,7 @@ macro:
     lib MyLib : MyHeader.cpp : <define>CXXD_REGEX_USE_BOOST <define>MYLIB_BEING_BUILT ;
     lib MyLib_std : MyHeader.cpp : <define>CXXD_REGEX_USE_STD <define>MYLIB_BEING_BUILT ;
     
-As part of the auto-linking mechanism of Boost config the end-user of our library 
+As part of the auto-linking mechanism of Boost.Config the end-user of our library 
 could also define the MYLIB_DYN_LINK, before including MyHeader.hpp in his code, 
 to auto-link to the shared library version instead of the
 static library version of the appropriate MyLib variant.
@@ -271,7 +271,7 @@ In Boost the library name as specified by the library author
 is often not the actual final generated name of the library, since Boost can decorate the
 library author's name for his library with other information. Using Boost
 auto-linking facilities this discrepancy between what the library author passes
-to the Boost.config auto-linking mechanism and the actual generated final name of the
+to the Boost.Config auto-linking mechanism and the actual generated final name of the
 library is automatically handled. For compilers that do not support
 auto-linking it is up to the end-user to understand what the generated final name
 of the library will be as compared to the name given by the library author. The

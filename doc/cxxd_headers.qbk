@@ -38,7 +38,7 @@ and the mod-ID header file. Including this header file is simply:
   
 All of the code in the header files is preprocessor code and the macros
 which allow the library to work. The macros are dependent on the Boost
-Preprocessor library, the Boost Config library, and for the supporting
+Preprocessor library, the Boost.Config library, and for the supporting
 macros and their header files the Boost VMD library. All of these
 other Boost libraries are header only libraries.
   

@@ -171,7 +171,7 @@ These definitions, for a particular 'XXX' CXXD-mod, are:
 * CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor 
 '#include' statement. This is called the "CXXD-mod macro header" to distinguish it from
 the 'CXXD-mod header', the latter referring to to the initial CXXD-mod header file
-which must be included to generate the correct macros. Occasionally this CCXD-mod macro
+which must be included to generate the correct macros. Occasionally this CXXD-mod macro
 header is an internal CXXD header which includes more than one dual library header file.
 * CXXD_XXX_NS, the name of XXX CXXD-mod's namespace. This is called the "CXXD-mod namespace".
 * CXXD_HAS_STD_XXX, 1 if XXX CXXD-mod's C++ standard library version is being used or
