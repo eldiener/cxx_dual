@@ -1,0 +1,71 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Tests]
+
+The CXXD tests encompass tests for the individual variadic macros which
+CXXD supports to make using CXXD in a library easier, for the individual
+CXXD-mods, and for the test_vv.cpp compilation previously discussed. The tests
+are in the CXXD 'test' sub-directory so running the tests in general is a matter
+of being in that subdirectory and invoking 'b2' as appropriate:
+
+  b2 any_other_b2_parameters...
+  
+The tests for the individual variadic macros aiding library support,
+CXXD_LIBRARY_NAME and CXXD_VALID_VARIANTS, require variadic macro
+support but do not necessarily require C++11 on up mode in most
+compilers, since the major compilers support variadic macros without
+necessarily supporting C++11. These include clang, gcc, and VC++. However
+because these compilers may issue numerous warnings about variadic macro
+usage without being in C++11 mode, while still working correctly as far as the
+two variadic macros are concerned, warnings are turned off in the tests so as not to flood
+the end-user with spurious warnings. These tests are not dependent on any
+CXXD-mod and are therefore always run when the tests are run. 
+
+These tests are divided
+into two separate Boost Build aliases, 'ln' for the library name tests
+and 'vv' for the valid variant tests. So you could decide to run
+only the tests for either of the particular aliases by specifying
+them on the command line, as in:
+
+  b2 ln any_other_b2_parameters...
+  
+or
+  
+  b2 vv any_other_b2_parameters...
+  
+The tests for the individual CXXD-mods do depend on other Boost libraries
+when the Boost dual library is chosen for the individual CXXD-mod. Therefore
+these tests are marked 'explicit' in terms of Boost Build, which means that
+they are not run normally when running the CXXD tests. All of these tests for the 
+individual CXXD-mods are under a Boost Build alias called 'mods'. Therefore in 
+order to just run these tests the command line should be:
+
+  b2 mods any_other_b2_parameters...
+  
+The valid variant test call test_vv.cpp under the alias 'tvv'
+has already been discussed. This test, like the tests for the individual
+CXXD-mods is also marked 'explicit', which means that it will not
+be ordinarily run unless it is explicitly invoked by:
+  
+  b2 tvv any_other_b2_parameters...
+  
+The other b2 parameters necessary to run the valid variant test have
+previously been discussed.
+  
+In order to the default tests as well as any of the explicit tests
+you can run:
+
+  b2 . explicit_test_aliases... any_other_b2_parameters...
+  
+as in:
+
+  b2 . mods any_other_b2_parameters...
+  
+in order to run the default tests and the CXXD-mod explicit tests.
+  
+[endsect]
