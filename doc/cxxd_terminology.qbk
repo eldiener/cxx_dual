@@ -17,6 +17,7 @@ in the documentation, rather than a full explanation:
 * CXXD-mod header = header file for a CXXD-mod
 * CXXD-mod macro header = header file macro for a CXXD-mod
 * mod-ID = preprocessing identifier for a CXXD-mod
+* module = executable or shared/static library
 * TU = translation unit
 * variant = a non-header only library generated with a different name but the same CXXD code.
 

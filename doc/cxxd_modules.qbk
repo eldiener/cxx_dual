@@ -69,13 +69,13 @@ and the appropriate information for each one:
 The naming scheme for each CXXD-mod follows common conventions:
 
 * Each include macro is named starting with the mnemonic CXXD_,
-followed by the name CXXD-mod name in uppercase,
+followed by the CXXD-mod name in uppercase,
 followed by the mnemonic \_HEADER.
 * Each namespace macro is named starting with the mnemonic CXXD_,
-followed by the name CXXD-mod name in uppercase,
+followed by the CXXD-mod name in uppercase,
 followed by the mnemonic \_NS.
 * Each checking macro is named starting with the mnemonic CXXD_HAS_STD_,
-followed by the name CXXD-mod name in uppercase.
+followed by the CXXD-mod name in uppercase.
 
 Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
 defined for a CXXD-mod XXX which has equivalent macro names between the C++ standard library 
@@ -220,7 +220,7 @@ The mod-IDs have their own header file:
 
   #include <boost/cxx_dual/mod_ids.hpp>
   
-We will see a use for these mod identifiers when I
+We will see a use for these CXXD-mod identifiers when I
 discuss optional helper macros which CXXD offers
 for the end-user later in the documentation. An end-user,
 who wishes to design his own macros to be used with CXXD,
@@ -231,7 +231,7 @@ CXXD-mod by including the header file above in his own code.
 
 When the programmer includes the appropriate CXXD-mod header file for a particular 
 dual library from within the cxx_dual directory there is no dependency
-being established on the CXXD-mod itself, whether the module represents a Boost
+being established on the CXXD-mod itself, whether the CXXD-mod represents a Boost
 library or a C++ standard library. Any one of the CXXD header files 
 merely defines macros which the programmer may choose to use or not.
 

@@ -7,6 +7,8 @@
 #include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
+#define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
+
 #include CXXD_SHARED_PTR_HEADER
 
 CXXD_SHARED_PTR_NS::weak_ptr<int> gw;
@@ -31,6 +33,6 @@ int main()
 	gw = sp;
 	BOOST_TEST(f());
     }
-  BOOST_TEST_NOT(f());
+  CXXD_TEST_NOT(f());
   return boost::report_errors();
   }

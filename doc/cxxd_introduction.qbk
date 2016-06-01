@@ -8,7 +8,7 @@
 [section Introduction]
 
 The Cxx dual library, or CXXD for short, is a macro library
-which allows the choice between using a Boost library or its 
+which chooses between using a Boost library or its 
 C++ standard equivalent library for a number of different C++ 
 implementations, while using the same code to program either choice.
 An 'implementation' is a Boost library which has a C++ standard
@@ -171,7 +171,7 @@ These definitions, for a particular 'XXX' CXXD-mod, are:
 * CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor 
 '#include' statement. This is called the "CXXD-mod macro header" to distinguish it from
 the 'CXXD-mod header', the latter referring to to the initial CXXD-mod header file
-which must be included to generate the correct macros. Occasionally this CCXD-mod macro
+which must be included to generate the correct macros. Occasionally this CXXD-mod macro
 header is an internal CXXD header which includes more than one dual library header file.
 * CXXD_XXX_NS, the name of XXX CXXD-mod's namespace. This is called the "CXXD-mod namespace".
 * CXXD_HAS_STD_XXX, 1 if XXX CXXD-mod's C++ standard library version is being used or
@@ -186,7 +186,7 @@ once the appropriate CXXD-mod header has been included, is very simple:
 or, if there are no name clashes with another namespace, through 'using namespace CXXD_XXX_NS; some_functionality etc...'.
 # Use any macro MMM, which is part of the CXXD-mod implementation, 
 by specifying 'CXXD_XXX_MACRO(MMM)' as the macro name.
-# Optionally it is possible to write specific code for the Boost version of the module
+# Optionally it is possible to write specific code for the Boost version of the CXXD-mod
 or the C++ standard version of the particular CXXD-mod by using the CXXD_HAS_STD_XXX macro with a 
 preprocessor #if statement.
 
@@ -202,7 +202,7 @@ Somewhere in your code you want to use the XXX CXXD-mod, without worrying whethe
 you are using the Boost version or the C++ standard library version of XXX. Your code
 in general may look like:
 
-    #include <boost/cxx_dual/XXX.hpp> // Creates the macros for module XXX by including the appropriate CXXD-mod header
+    #include <boost/cxx_dual/XXX.hpp> // Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header
     #include CXXD_XXX_HEADER          // Includes the appropriate CXXD-mod macro header file
 
     void SomeFunction()

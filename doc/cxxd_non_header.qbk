@@ -104,8 +104,8 @@ At this point we have two problems to solve:
 
 * We want to be able to build MyLib as two variants
 with different base names, one for compiling when
-the CXXD regex module uses the Boost regex library
-and one for compiling when the CXXD regex module
+the CXXD regex mod uses the Boost regex library
+and one for compiling when the CXXD regex mod
 uses the C++ standard regex library.
 * We want the end-user of MyLib to link to the correct
 MyLib variant depending on whether the end-user's
@@ -230,7 +230,7 @@ macro:
     lib MyLib : MyHeader.cpp : <define>CXXD_REGEX_USE_BOOST <define>MYLIB_BEING_BUILT ;
     lib MyLib_std : MyHeader.cpp : <define>CXXD_REGEX_USE_STD <define>MYLIB_BEING_BUILT ;
     
-As part of the auto-linking mechanism of Boost config the end-user of our library 
+As part of the auto-linking mechanism of Boost.Config the end-user of our library 
 could also define the MYLIB_DYN_LINK, before including MyHeader.hpp in his code, 
 to auto-link to the shared library version instead of the
 static library version of the appropriate MyLib variant.
@@ -271,7 +271,7 @@ In Boost the library name as specified by the library author
 is often not the actual final generated name of the library, since Boost can decorate the
 library author's name for his library with other information. Using Boost
 auto-linking facilities this discrepancy between what the library author passes
-to the Boost.config auto-linking mechanism and the actual generated final name of the
+to the Boost.Config auto-linking mechanism and the actual generated final name of the
 library is automatically handled. For compilers that do not support
 auto-linking it is up to the end-user to understand what the generated final name
 of the library will be as compared to the name given by the library author. The
@@ -427,10 +427,10 @@ our new variants could give us something like:
     
 That is some complicated-looking code to just give a name to each variant,
 but it is really just a series of tests of all 16 combinations of CXXD_HAS_STD_'XXX'
-for the possible 'XXX' CXXD mod being used. It is actually more tedious than
+for the possible 'XXX' CXXD-mod being used. It is actually more tedious than
 really complicated. We just have to choose a naming convention for our variants
 so that all variant names are unique. In our case the manual naming convention
-chosen is that each CXXD mod where the C++ standard library is being chosen has a
+chosen is that each CXXD-mod where the C++ standard library is being chosen has a
 two character abbreviation preceded by an underscore appended to the base 'MyLib'
 name, but if all the CXXD mods have the C++ standard library being chosen the mnemonic
 '_std' is appended to the base 'MyLib' name instead. Furthermore the appends are

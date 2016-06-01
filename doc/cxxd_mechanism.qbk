@@ -18,8 +18,8 @@ or its C++ standard equivalent for any CXXD-mod is very simple. If the C++ stand
 during compilation it is chosen and if it is not available during compilation its
 equivalent Boost library is chosen.
 
-The determination of availability for any given module is done by examining 
-Boost.Config macros. Boost config has quite a number of macros which will specify
+The determination of availability for any given CXXD-mod is done by examining 
+Boost.Config macros. Boost.Config has quite a number of macros which will specify
 which C++ standard library is available during compilation. The logic of determining
 which library is available is determined within Boost.Config, and CXXD just uses the
 results of that logic to configure the macros for a particular CXXD-mod.
@@ -35,7 +35,7 @@ As an example, using the regex CXXD-mod:
     
 If Boost.Config determines that the C++ standard regex library is available 
 CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', and 
-CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.config determines that the C++ standard regex library 
+CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.Config determines that the C++ standard regex library 
 is not available CXXD_HAS_STD_REGEX is defined as '0', CXXD_REGEX_NS is defined as 'boost', 
 and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'. 
 
@@ -59,7 +59,7 @@ be defined to nothing, as in:
 
     #define CXXD_'XXX'_USE_BOOST
     
-where XXX is the uppercase name of the module.
+where XXX is the uppercase name of the CXXD-mod.
 
 For any given CXXD-mod 'xxx' defining a macro called 'CXXD_XXX_USE_STD', where XXX is the uppercase name of
 the CXXD-mod, specifies that the C++ standard library will be used for 'xxx'. If used CXXD_XXX_USE_STD must always
@@ -67,7 +67,7 @@ be defined to nothing, as in:
 
     #define CXXD_'XXX'_USE_STD
     
-where XXX is the uppercase name of the module.
+where XXX is the uppercase name of the CXXD-mod.
 
 The specific override macros for each CXXD-mod are:
 
@@ -238,7 +238,7 @@ Boost or C++ standard implementations of a dual library.
     
 So what is the actual purpose of the overriding macros ? The purpose
 is to override the use of CXXD by another implementation whose source files
-should not be modified. A third-party library
+can not or should not be modified. A third-party library
 may choose to use CXXD to provide a dual library for a particular
 CXXD-mod. Your own code, which uses the third-party library but otherwise
 uses either the Boost version of the dual library or the C++ standard
@@ -342,7 +342,7 @@ The reason for processing CXXD-mod header content each time a CXXD-mod header is
 is because overriding macros could be defined ( or undefined ) at any time within a translation unit.
 CXXD always makes sure that overriding macros do not conflict with each other, as
 discussed previously, and that the choice of either Boost or its equivalent
-standard library remains consistent for any particular module within a TU.
+standard library remains consistent for any particular CXXD-mod within a TU.
     
 In actual usage the programmer himself will usually not include the same CXXD header
 more than once in a TU. 
@@ -378,9 +378,9 @@ Recall that the default algorithm is used to choose between the Boost library or
 C++ standard equivalent for a CXXD-mod when no overriding macros are relevant
 for that CXXD-mod. Because CXXD-mod header content is processed each time the header is included 
 the default algorithm is slightly different the second and subsequent times a particular CXXD-mod header 
-is included. In that particular case the default algorithm simply accepts which of the dual libraries of the module
+is included. In that particular case the default algorithm simply accepts which of the dual libraries of the CXXD-mod
 has been previously chosen. This saves preprocessing time and also makes sure that the choice for a given
-module is consistent throughout the TU.
+CXXD-mod is consistent throughout the TU.
 
 Let's look at how this works in practice with the default algorithm.
 
@@ -479,13 +479,13 @@ time the regex CXXD-mod header is included and the second time it is included.
 The first time the regex CXXD-mod header is included no overriding macro is in effect so that
 the default algorithm chooses the C++ standard library because it is available.
 The second time the regex CXXD-mod header is included an overriding macro changes the regex
-module to use the Boost regex library. Thus consistency between which dual library is chosen
+CXXD-mod to use the Boost regex library. Thus consistency between which dual library is chosen
 is broken and CXXD creates a preprocessing error.
 
 This is one of the weaknesses of a macro based system such as CXXD. Normally the
 order of inclusion of header files should not affect the way that code compiles.
 But in CXXD it does affect the compilation since, by default, CXXD does not allow
-the dual library choice for a particular module to change within a TU.
+the dual library choice for a particular CXXD-mod to change within a TU.
 
 [#mechanism_noconsistency] The end user can override the dual library consistency for all CXXD-mods by defining
 a macro, called CXXD_NO_CONSISTENCY. If used CXXD_NO_CONSISTENCY must always be defined to nothing, as in:
@@ -498,7 +498,7 @@ allows it. Overriding consistency allows the dual library for a CXXD-mod to chan
 CXXD-mod's CXXD header file is included more than once. In actuality, unless the end-user
 goes about undefining already defined overriding macros, the only case where overriding
 the dual library consistency by defining CXXD_NO_CONSISTENCY will normally cause the
-dual library for a module to change within a TU
+dual library for a CXXD-mod to change within a TU
 is in the second example given above, ie. when the default algorithm chooses a dual
 library the first time a CXXD-mod header is included and then an overriding macro changes the dual library
 with the opposite choice the second time the CXXD-mod header is included. In all other
@@ -510,7 +510,7 @@ in any further way.
 It is highly recommended that CXXD_NO_CONSISTENCY not be used unless the programmer knows
 exactly what the code is doing in a particular TU including all intermediate header
 file code. When dual library consistency is turned off using CXXD_NO_CONSISTENCY 
-the chance that CXXD macros for a particular module will access the Boost
+the chance that CXXD macros for a particular CXXD-mod will access the Boost
 library in some part of a TU and the C++ standard library in another part of a TU,
 and the problems this may cause, are generally not worth the problems that could occur in code
 confusion. Nonetheless if the programmer feels he knows what he is doing in using this
