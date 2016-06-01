@@ -115,7 +115,7 @@ is being chosen. As long as the documentation for an interface using
 CXXD specifies this usage the end-user of such an interface should be
 able to use it correctly.
     
-[heading Overriding a CXXD module]
+[heading Overriding a CXXD-mod]
 
 As explained when generally discussing the purpose of the overriding macros
 it is usually foolish for code to override its own interface(s) which use
