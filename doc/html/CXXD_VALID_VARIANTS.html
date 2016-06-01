@@ -33,7 +33,7 @@
 
 </span>CXXD_VALID_VARIANTS(...)</pre></div>
 <div class="refsect1">
-<a name="id888383"></a><h2>Description</h2>
+<a name="id885243"></a><h2>Description</h2>
 <p>The function-like macro tests for valid dual library variants. A variant consists of a series of CXXD-mod choices encoded as a variadic parameter. A CXXD-mod choice refers to whether the CXXD-mod chooses the C++ standard implementation or the Boost implementation.</p>
 <p>If the CXXD-mod choices, based on the CXXD headers being included before the macro, is invoked match any one of the variants, the macro expands to 1, otherwise the macro expands to 0.</p>
 <p>The macro provides a single invocation where the creator of a library or executable can test whether or not combinations of CXXD-mod choices match what the programmer wants to allow. In cases of header-only libraries or executables it should never be necessary to limit the combinations in any way, but in the case of a non-header only library the library implementor may well want to limit the acceptable combinations because supporting all possible variants, each with their own name and need to be built, might well prove onerous.</p>
