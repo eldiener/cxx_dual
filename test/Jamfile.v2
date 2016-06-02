@@ -87,7 +87,7 @@ alias mods
        [ run test_regex.cpp : : : 
             [ cxxd.requires.boost regex : <library>/boost/regex//boost_regex ] ]
        [ run test_shared_mutex.cpp : : : 
-            [ cxxd.requires.boost thread : <library>/boost/thread//boost_thread ] ]
+            [ cxxd.requires.boost shared_mutex : <library>/boost/thread//boost_thread <library>/boost/system//boost_system ] ]
        [ run test_shared_ptr.cpp ]
        [ run test_shared_ptr2.cpp test_shared_ptr2_example.cpp ]
        [ run test_system_error.cpp : : : 

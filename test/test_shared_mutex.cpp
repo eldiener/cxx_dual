@@ -6,20 +6,23 @@
 
 
 #include <iostream>
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/ref.hpp>
 #include <boost/cxx_dual/shared_mutex.hpp>
-#include <boost/cxx_dual/thread.hpp>
-#include <boost/detail/lightweight_test.hpp>
-
-#include CXXD_MUTEX_HEADER
-#include CXXD_SHARED_MUTEX_HEADER
-#include CXXD_REF_HEADER
-#include CXXD_THREAD_HEADER
 
 #if !CXXD_HAS_STD_SHARED_MUTEX
 #include <boost/thread/locks.hpp>
+#define CXXD_MUTEX_USE_BOOST
+#define CXXD_THREAD_USE_BOOST
 #endif
+
+#include <boost/cxx_dual/mutex.hpp>
+#include <boost/cxx_dual/ref.hpp>
+#include <boost/cxx_dual/thread.hpp>
+#include <boost/detail/lightweight_test.hpp>
+
+#include CXXD_SHARED_MUTEX_HEADER
+#include CXXD_MUTEX_HEADER
+#include CXXD_REF_HEADER
+#include CXXD_THREAD_HEADER
 
 class ThreadSafeCounter {
  public:

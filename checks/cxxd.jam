@@ -9,31 +9,46 @@ import sequence ;
 module cxxd
     {
     
-    reqs = ;
+    reqs_v1 = ;
     
-    rule requires.boost ( names + : tprops * : fprops * )
+    rule requires.boost ( name : tprops * : fprops * )
         {
-        return [ requires.append $(names) : $(tprops) : $(fprops) : "boost" ] ;
+        return [ requires.append $(name) : $(tprops) : $(fprops) : "0" ] ;
         }
     
-    rule requires.std ( names + : tprops * : fprops * )
+    rule requires.std ( name : tprops * : fprops * )
         {
-        return [ requires.append $(names) : $(tprops) : $(fprops) : "std" ] ;
+        return [ requires.append $(name) : $(tprops) : $(fprops) : "1" ] ;
         }   
 
-    rule requires.specify ( names + : tprops * : fprops * )
+    rule requires.specify ( name : tprops * : fprops * )
         {
-        return [ requires.append $(names) : $(tprops) : $(fprops) ] ;
+        return [ requires.append $(name) : $(tprops) : $(fprops) ] ;
         }
 
-    local rule requires.append ( names + : tprops * : fprops * : nappend ? )
+    rule requires.boost_v1 ( names + : tprops * : fprops * )
         {
-        reqs = ;
+        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) : "0" ] ;
+        }
+    
+    rule requires.std_v1 ( names + : tprops * : fprops * )
+        {
+        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) : "1" ] ;
+        }   
+
+    rule requires.specify_v1 ( names + : tprops * : fprops * )
+        {
+        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) ] ;
+        }
+
+    local rule requires.append_v1 ( names + : tprops * : fprops * : nappend ? )
+        {
+        reqs_v1 = ;
         
         for name in $(names)
             {
-            local tres = [ requires.transform $(name) : $(nappend) ] ;
-            reqs += [ sequence.join "<define>" $(tres) ] ;
+            local tres = [ requires.transform_v1 $(name) : $(nappend) ] ;
+            reqs_v1 += [ sequence.join "<define>" $(tres) ] ;
             }
        
         local config-binding = [ modules.binding $(__name__) ] ;
@@ -42,7 +57,44 @@ module cxxd
         return $(result) ;
         }
         
+    local rule requires.append ( name : tprops * : fprops * : nappend ? )
+        {
+        local tres = [ requires.transform $(name) : $(nappend) ] ;
+        local config-binding = [ modules.binding $(__name__) ] ;
+        
+        return [ check-target-builds $(config-binding:D)//$(tres) : $(tprops) : $(fprops) ] ;
+        }
+        
     local rule requires.transform ( name : nappend ? )
+        {
+        
+        local jname ;
+        local jappend ;
+        local jdual ;
+        local nparts = [ regex.split $(name) "," ] ;
+        
+        if ( [ sequence.length $(nparts) ] = 1 )
+            {
+            jname = $(name) ;
+            jappend = $(nappend) ;
+            }
+        else
+            {
+            jname = $(nparts[1]) ;
+            jappend = $(nparts[2]) ;
+            }
+        if ( $(jappend) = 0 )
+            {
+            jdual = _boost ;
+            }
+        else
+            {
+            jdual = _std ;
+            }
+        return cxxd_mod_$(jname)$(jdual) ;
+        }
+        
+    local rule requires.transform_v1 ( name : nappend ? )
         {
         
         local nparts = [ regex.split $(name) "," ] ;
@@ -60,36 +112,37 @@ module cxxd
             jname = $(nparts[1]) ;
             jappend = $(nparts[2]) ;
             }
+        ECHO "requires.transform" $(jname) ;
         switch $(jname)
             {
-            case "array" : result = [ sequence.join CXXD_TEST_ARRAY "," $(jappend) ] ;
-            case "atomic" : result = [ sequence.join CXXD_TEST_ATOMIC "," $(jappend) ] ;
-            case "bind" : result = [ sequence.join CXXD_TEST_BIND "," $(jappend) ] ;
-            case "chrono" : result = [ sequence.join CXXD_TEST_CHRONO "," $(jappend) ] ;
-            case "condition_variable" : result = [ sequence.join CXXD_TEST_CONDITION_VARIABLE "," $(jappend) ] ;
-            case "enable_shared_from_this" : result = [ sequence.join CXXD_TEST_ENABLE_SHARED_FROM_THIS "," $(jappend) ] ;
-            case "function" : result = [ sequence.join CXXD_TEST_FUNCTION "," $(jappend) ] ;
-            case "hash" : result = [ sequence.join CXXD_TEST_HASH "," $(jappend) ] ;
-            case "make_shared" : result = [ sequence.join CXXD_TEST_MAKE_SHARED "," $(jappend) ] ;
-            case "mem_fn" : result = [ sequence.join CXXD_TEST_MEM_FN "," $(jappend) ] ;
-            case "move" : result = [ sequence.join CXXD_TEST_MOVE "," $(jappend) ] ;
-            case "mutex" : result = [ sequence.join CXXD_TEST_MUTEX "," $(jappend) ] ;
-            case "random" : result = [ sequence.join CXXD_TEST_RANDOM "," $(jappend) ] ;
-            case "ratio" : result = [ sequence.join CXXD_TEST_RATIO "," $(jappend) ] ;
-            case "ref" : result = [ sequence.join CXXD_TEST_REF "," $(jappend) ] ;
-            case "regex" : result = [ sequence.join CXXD_TEST_REGEX "," $(jappend) ] ;
-            case "shared_mutex" : result = [ sequence.join CXXD_TEST_SHARED_MUTEX "," $(jappend) ] ;
-            case "shared_ptr" : result = [ sequence.join CXXD_TEST_SHARED_PTR "," $(jappend) ] ;
-            case "system_error" : result = [ sequence.join CXXD_TEST_SYSTEM_ERROR "," $(jappend) ] ;
-            case "thread" : result = [ sequence.join CXXD_TEST_THREAD "," $(jappend) ] ;
-            case "tuple" : result = [ sequence.join CXXD_TEST_TUPLE "," $(jappend) ] ;
-            case "type_index" : result = [ sequence.join CXXD_TEST_TYPE_INDEX "," $(jappend) ] ;
-            case "type_traits" : result = [ sequence.join CXXD_TEST_TYPE_TRAITS "," $(jappend) ] ;
-            case "unordered_map" : result = [ sequence.join CXXD_TEST_UNORDERED_MAP "," $(jappend) ] ;
-            case "unordered_multimap" : result = [ sequence.join CXXD_TEST_UNORDERED_MULTIMAP "," $(jappend) ] ;
-            case "unordered_multiset" : result = [ sequence.join CXXD_TEST_UNORDERED_MULTISET "," $(jappend) ] ;
-            case "unordered_set" : result = [ sequence.join CXXD_TEST_UNORDERED_SET "," $(jappend) ] ;
-            case "weak_ptr" : result = [ sequence.join CXXD_TEST_WEAK_PTR "," $(jappend) ] ;
+            case "array" : result = [ sequence.join CXXD_TEST_ARRAY "=" $(jappend) ] ;
+            case "atomic" : result = [ sequence.join CXXD_TEST_ATOMIC "=" $(jappend) ] ;
+            case "bind" : result = [ sequence.join CXXD_TEST_BIND "=" $(jappend) ] ;
+            case "chrono" : result = [ sequence.join CXXD_TEST_CHRONO "=" $(jappend) ] ;
+            case "condition_variable" : result = [ sequence.join CXXD_TEST_CONDITION_VARIABLE "=" $(jappend) ] ;
+            case "enable_shared_from_this" : result = [ sequence.join CXXD_TEST_ENABLE_SHARED_FROM_THIS "=" $(jappend) ] ;
+            case "function" : result = [ sequence.join CXXD_TEST_FUNCTION "=" $(jappend) ] ;
+            case "hash" : result = [ sequence.join CXXD_TEST_HASH "=" $(jappend) ] ;
+            case "make_shared" : result = [ sequence.join CXXD_TEST_MAKE_SHARED "=" $(jappend) ] ;
+            case "mem_fn" : result = [ sequence.join CXXD_TEST_MEM_FN "=" $(jappend) ] ;
+            case "move" : result = [ sequence.join CXXD_TEST_MOVE "=" $(jappend) ] ;
+            case "mutex" : result = [ sequence.join CXXD_TEST_MUTEX "=" $(jappend) ] ;
+            case "random" : result = [ sequence.join CXXD_TEST_RANDOM "=" $(jappend) ] ;
+            case "ratio" : result = [ sequence.join CXXD_TEST_RATIO "=" $(jappend) ] ;
+            case "ref" : result = [ sequence.join CXXD_TEST_REF "=" $(jappend) ] ;
+            case "regex" : result = [ sequence.join CXXD_TEST_REGEX "=" $(jappend) ] ;
+            case "shared_mutex" : result = [ sequence.join CXXD_TEST_SHARED_MUTEX "=" $(jappend) ] ;
+            case "shared_ptr" : result = [ sequence.join CXXD_TEST_SHARED_PTR "=" $(jappend) ] ;
+            case "system_error" : result = [ sequence.join CXXD_TEST_SYSTEM_ERROR "=" $(jappend) ] ;
+            case "thread" : result = [ sequence.join CXXD_TEST_THREAD "=" $(jappend) ] ;
+            case "tuple" : result = [ sequence.join CXXD_TEST_TUPLE "=" $(jappend) ] ;
+            case "type_index" : result = [ sequence.join CXXD_TEST_TYPE_INDEX "=" $(jappend) ] ;
+            case "type_traits" : result = [ sequence.join CXXD_TEST_TYPE_TRAITS "=" $(jappend) ] ;
+            case "unordered_map" : result = [ sequence.join CXXD_TEST_UNORDERED_MAP "=" $(jappend) ] ;
+            case "unordered_multimap" : result = [ sequence.join CXXD_TEST_UNORDERED_MULTIMAP "=" $(jappend) ] ;
+            case "unordered_multiset" : result = [ sequence.join CXXD_TEST_UNORDERED_MULTISET "=" $(jappend) ] ;
+            case "unordered_set" : result = [ sequence.join CXXD_TEST_UNORDERED_SET "=" $(jappend) ] ;
+            case "weak_ptr" : result = [ sequence.join CXXD_TEST_WEAK_PTR "=" $(jappend) ] ;
             }
         return $(result) ;
         }
