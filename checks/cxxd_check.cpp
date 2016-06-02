@@ -116,7 +116,7 @@
 #endif
 
 #if defined(CXXD_TEST_SHARED_MUTEX)
-#include <boost/cxx_dual/mutex.hpp>
+#include <boost/cxx_dual/shared_mutex.hpp>
 #if CXXD_HAS_STD_SHARED_MUTEX != CXXD_TEST_SHARED_MUTEX
 #error CXXD 'requires' compilation failure should be ignored.
 #endif

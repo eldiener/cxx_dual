@@ -13,4 +13,4 @@ project cxxd_build : requirements <warnings>on
                                   ;
                                                  
 exe cxxd_choice : cxxd_choice.cpp : <link>static <runtime-link>static ;
-# install cxxd_choice_install : cxxd_choice : <location>your_location ;
+install cxxd_choice_install : cxxd_choice : <location>c:/programming/bin ;
