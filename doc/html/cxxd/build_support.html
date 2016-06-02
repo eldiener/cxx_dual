@@ -87,21 +87,21 @@
           </li>
 </ul></div>
 <p>
-        Each rule takes, as a first parameter, a list of one or more names which
-        identify CXXD-mods. For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std',
-        these names are the the CXXD-mods identifying a particular CXXD-mod. As an
-        example 'regex' identifies the regex CXXD-mod. For the third rule above,
-        'cxxd.requires.specify', these names are also the CXXD-mods identifying a
-        particular CXXD_mod, but are followed by a comma ( ',' ) and then 0 to indicate
-        Boost or 1 to indicate the C++ standard. As examples 'regex,0' identifies
-        the regex CXXD-mod with Boost chosen while 'tuple,1' identifies the tuple
-        CXXD-mod with the C++ standard chosen.
+        Each rule takes, as a first parameter, a name which identifies a CXXD-mod.
+        For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std', this
+        name is just the CXXD-mod identifying a particular mod. As an example 'regex'
+        identifies the regex CXXD-mod. For the third rule above, 'cxxd.requires.specify',
+        this name is also the CXXD-mod identifying a particular mod, but is followed
+        by a comma ( ',' ) and then 0 to indicate Boost or 1 to indicate the C++
+        standard. As examples 'regex,0' identifies the regex CXXD-mod with Boost
+        chosen while 'tuple,1' identifies the tuple CXXD-mod with the C++ standard
+        chosen.
       </p>
 <p>
         Essentially the first parameter of 'cxxd.requires.boost' is a shorthand for
-        passing each CXXD-mod followed by a comma ( ',' ) and then 0 in 'cxxd.requires.specify'
+        passing a CXXD-mod followed by a comma ( ',' ) and then 0 in 'cxxd.requires.specify'
         while the first parameter of 'cxxd.requires.std' is a shorthand for passing
-        each CXXD-mod followed by a comma ( ',' ) and then 1 in 'cxxd.requires.specify'.
+        a CXXD-mod followed by a comma ( ',' ) and then 1 in 'cxxd.requires.specify'.
       </p>
 <p>
         Each rule takes, as an optional second parameter, 0 or more Boost Build requirement
@@ -115,34 +115,32 @@
         A Boost Build requirement or usage requirement is a Boost Build feature.
       </p>
 <p>
-        The way that the 'cxxd.requires.boost' rule works is that if each of the
-        CXXD-mods specified use its Boost library implementation, the Boost Build
-        requirements or usage requirements specified by the optional second parameter
-        is chosen; otherwise the Boost Build requirements or usage requirements specified
-        by the optional third parameter is chosen.
-      </p>
-<p>
-        The way that the 'cxxd.requires.std' rule works is that if each of the CXXD-mods
-        specified use its C++ standard library implementation, the Boost Build requirements
+        The way that the 'cxxd.requires.boost' rule works is that if the CXXD-mod
+        specified use its Boost library implementation, the Boost Build requirements
         or usage requirements specified by the optional second parameter is chosen;
         otherwise the Boost Build requirements or usage requirements specified by
         the optional third parameter is chosen.
       </p>
 <p>
-        The way that the 'cxxd.requires.specific' rule works is that if each of the
-        CXXD-mods specified use whichever implementation is chosen through the 0
-        or 1 addition, the Boost Build requirements or usage requirements specified
-        by the optional second parameter is chosen; otherwise the Boost Build requirements
-        or usage requirements specified by the optional third parameter is chosen.
-        The 'cxxd.requires.specific' rule gives maximum flexibility in matching each
-        CXXD-mod with the dual library implementation chosen.
+        The way that the 'cxxd.requires.std' rule works is that if the CXXD-mod specified
+        use its C++ standard library implementation, the Boost Build requirements
+        or usage requirements specified by the optional second parameter is chosen;
+        otherwise the Boost Build requirements or usage requirements specified by
+        the optional third parameter is chosen.
+      </p>
+<p>
+        The way that the 'cxxd.requires.specific' rule works is that if the CXXD-mod
+        specified uses whichever implementation is chosen through the 0 or 1 addition,
+        the Boost Build requirements or usage requirements specified by the optional
+        second parameter is chosen; otherwise the Boost Build requirements or usage
+        requirements specified by the optional third parameter is chosen.
       </p>
 <p>
         When we use any of these rules we invoke them as:
       </p>
-<pre class="programlisting"><span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">xxx</span><span class="special">...</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
-<span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">std</span> <span class="identifier">xxx</span><span class="special">...</span>   <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
-<span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">specific</span> <span class="identifier">xxx</span><span class="special">,</span><span class="number">0</span><span class="special">-</span><span class="keyword">or</span><span class="special">-</span><span class="number">1.</span><span class="special">..</span>   <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
+<pre class="programlisting"><span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">CXXD</span><span class="special">-</span><span class="identifier">mod</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
+<span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">std</span> <span class="identifier">CXXD</span><span class="special">-</span><span class="identifier">mod</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
+<span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">specific</span> <span class="identifier">CXXD</span><span class="special">-</span><span class="identifier">mod</span><span class="special">,</span><span class="number">0</span><span class="special">-</span><span class="keyword">or</span><span class="special">-</span><span class="number">1.</span><span class="special">..</span>   <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">:</span> <span class="identifier">optional_requirements_may_be_empty</span> <span class="special">;</span>
 </pre>
 <p>
         To use the results of these rules in one's own rules you surround these rule
@@ -177,23 +175,10 @@
 <span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">specific</span> <span class="identifier">regex</span><span class="special">,</span><span class="number">1</span> <span class="special">:</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">library</span><span class="special">&gt;/</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">regex</span><span class="comment">//boost_regex ] ;</span>
 </pre>
 <p>
-        We can have more than one CXXD-mod as our first parameter to any of our three
-        rules, although this is a less common scenario. Let's make up an arbitrary
-        case just to show how this works. Let's say that when compiling our source
-        file 'my_source.cpp' if CXXD is choosing both the Boost bind and the Boost
-        function implementations we want to define a macro called MY_MACRO to 1,
-        else we define MY_MACRO to 0. Here is what our Boost Build code for this
-        would be:
+        We could have more than one feature as our requirements, as in:
       </p>
 <pre class="programlisting"><span class="identifier">compile</span> <span class="identifier">my_source</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span>
-<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">bind</span> <span class="identifier">function</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">1</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">0</span> <span class="special">]</span> <span class="special">;</span>
-</pre>
-<p>
-        Also of course we could have more than one feature as our requirements, as
-        in:
-      </p>
-<pre class="programlisting"><span class="identifier">compile</span> <span class="identifier">my_source</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span>
-<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">bind</span> <span class="identifier">function</span> <span class="special">:</span>
+<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">bind</span> <span class="special">:</span>
   <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">1</span> <span class="special">&lt;</span><span class="identifier">include</span><span class="special">&gt;</span><span class="identifier">some_directory_path</span> <span class="special">:</span>
   <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">0</span> <span class="special">]</span> <span class="special">;</span>
 </pre>
@@ -203,24 +188,12 @@
         of a rule, as in:
       </p>
 <pre class="programlisting"><span class="identifier">compile</span> <span class="identifier">my_source</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span>
-<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">bind</span> <span class="identifier">function</span> <span class="special">:</span>
+<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">boost</span> <span class="identifier">function</span> <span class="special">:</span>
   <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">1</span> <span class="special">&lt;</span><span class="identifier">include</span><span class="special">&gt;</span><span class="identifier">some_directory_path</span> <span class="special">:</span>
   <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MY_MACRO</span><span class="special">=</span><span class="number">0</span> <span class="special">]</span>
 <span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">std</span> <span class="identifier">regex</span> <span class="special">:</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">library</span><span class="special">&gt;/</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">regex</span><span class="comment">//boost_regex ]</span>
 <span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">specific</span> <span class="identifier">tuple</span><span class="special">,</span><span class="number">1</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">cxxflags</span><span class="special">&gt;-</span><span class="identifier">someflag</span> <span class="special">]</span> <span class="special">;</span>
 </pre>
-<p>
-        With the 'cxxd.requires.specific' rule we can mix Boost and C++ standard
-        implementations to set our requirements, as in:
-      </p>
-<pre class="programlisting"><span class="identifier">compile</span> <span class="identifier">my_source</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span>
-<span class="special">[</span> <span class="identifier">cxxd</span><span class="special">.</span><span class="identifier">requires</span><span class="special">.</span><span class="identifier">specific</span> <span class="identifier">array</span><span class="special">,</span><span class="number">1</span> <span class="identifier">hash</span><span class="special">,</span><span class="number">0</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">include</span><span class="special">&gt;</span><span class="identifier">some_path</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">some_macro</span><span class="special">=</span><span class="identifier">some_value</span> <span class="special">]</span> <span class="special">;</span>
-</pre>
-<p>
-        Here we are saying that if the array CXXD-mod uses the C++ standard implementation
-        and the hash CXXD-mod uses the Boost implementation, add 'some_path' to the
-        include paths, else define a macro called 'some_macro' to 'some_value'.
-      </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
