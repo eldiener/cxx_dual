@@ -8,8 +8,8 @@
 
 import testing ;
 import ../../predef/check/predef
-    : check require
-    : predef-check predef-require ;
+    : check
+    : predef-check ;
 import ../checks/cxxd ;
 
 project cxxd_tests : requirements <warnings>on
