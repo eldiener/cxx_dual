@@ -3,98 +3,123 @@
 #  Boost Software License, Version 1.0. (See accompanying file 
 #  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+import project ;
 import regex ;
 import sequence ;
+import "class" : new ;
+
+project.extension cxxd checks ;
 
 module cxxd
     {
     
-    reqs_v1 = ;
+    target_prepend = cxxd_check_obj_ ;
     
-    rule requires.boost ( name : tprops * : fprops * )
+    rule requires.boost ( names + : tprops * : fprops * )
         {
-        return [ requires.append $(name) : $(tprops) : $(fprops) : "0" ] ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) : "0" ] ;
         }
     
-    rule requires.std ( name : tprops * : fprops * )
+    rule requires.std ( names + : tprops * : fprops * )
         {
-        return [ requires.append $(name) : $(tprops) : $(fprops) : "1" ] ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) : "1" ] ;
         }   
 
-    rule requires.specify ( name : tprops * : fprops * )
+    rule requires.specify ( names + : tprops * : fprops * )
         {
-        return [ requires.append $(name) : $(tprops) : $(fprops) ] ;
+        return [ requires.append $(names) : $(tprops) : $(fprops) ] ;
         }
 
-    rule requires.boost_v1 ( names + : tprops * : fprops * )
+    local rule requires.append ( names + : tprops * : fprops * : nappend ? )
         {
-        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) : "0" ] ;
-        }
-    
-    rule requires.std_v1 ( names + : tprops * : fprops * )
-        {
-        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) : "1" ] ;
-        }   
-
-    rule requires.specify_v1 ( names + : tprops * : fprops * )
-        {
-        return [ requires.append_v1 $(names) : $(tprops) : $(fprops) ] ;
-        }
-
-    local rule requires.append_v1 ( names + : tprops * : fprops * : nappend ? )
-        {
-        reqs_v1 = ;
+        
+        local project_target = [ project.target $(__name__) ] ;
+        
+        project.push-current $(project_target) ;
+        
+        local iname ;
+        local defs ;
+        local vnames ;
+        local result ;
         
         for name in $(names)
             {
-            local tres = [ requires.transform_v1 $(name) : $(nappend) ] ;
-            reqs_v1 += [ sequence.join "<define>" $(tres) ] ;
+            if ! ( $(name) in $(iname) )
+                {
+                iname += $(name) ;
+                
+                local res = [ requires.transform $(name) : $(nappend) ] ;
+                
+                if $(res)
+                    {
+                    defs += "<define>"$(res) ;
+                    vnames += $(name) ;
+                    }
+                }
+            }
+        if $(vnames)
+            {
+
+            local jvnames = [ sequence.join cxxd $(vnames) : "-" ] ;
+            local key = [ MD5 $(jvnames) ] ;
+            local build_target = /checks/cxxd//$(target_prepend)$(key) ;
+            
+            requires.message.($(build_target)) = $(jvnames) ;
+            requires.create_target $(key) : $(defs) ;
+            
+            local instance = [ new requirements-evaluator $(build_target) : $(tprops) : $(fprops) ] ;
+            result = <conditional>@$(instance).set_requirements ;
             }
        
-        local config-binding = [ modules.binding $(__name__) ] ;
-        local result = [ check-target-builds $(config-binding:D)//cxxd_mod : $(tprops) : $(fprops) ] ;
-        
+        project.pop-current ;
         return $(result) ;
         }
         
-    local rule requires.append ( name : tprops * : fprops * : nappend ? )
+    local rule requires.create_target ( pkey : pdefs + )
         {
-        local tres = [ requires.transform $(name) : $(nappend) ] ;
-        local config-binding = [ modules.binding $(__name__) ] ;
-        
-        return [ check-target-builds $(config-binding:D)//$(tres) : $(tprops) : $(fprops) ] ;
+        # Need to use absolute paths because we don't know the
+        # context of the invocation which affects where the paths
+        # originate from.
+        local cxxd_jam = [ modules.binding $(__name__) ] ;
+        local source_path = $(cxxd_jam:D)/cxxd_check.cpp ;
+        local include_path = $(cxxd_jam:D)/../../.. ;
+        obj $(target_prepend)$(pkey) : $(source_path) : <include>$(include_path) $(pdefs) ;
+        explicit $(target_prepend)$(pkey) ;
+        return $(target_prepend)$(pkey) ;
         }
         
+    class requirements-evaluator
+        {
+        
+        import configure ;
+        
+        rule __init__ ( bt : true-properties * : false-properties * )
+            {
+            self.bt = $(bt) ;
+            self.true-properties = $(true-properties) ;
+            self.false-properties = $(false-properties) ;
+            }
+            
+        rule set_requirements ( properties * )
+            {
+            
+            local res ;
+            local message = [ modules.peek cxxd : requires.message.($(self.bt)) ] ;
+            
+            if [ configure.builds $(self.bt) : $(properties) : $(message) ]
+                {
+                res = $(self.true-properties) ;
+                }
+            else
+                {
+                res = $(self.false-properties) ;
+                }
+            return $(res) ;
+            }
+            
+        }
+    
     local rule requires.transform ( name : nappend ? )
-        {
-        
-        local jname ;
-        local jappend ;
-        local jdual ;
-        local nparts = [ regex.split $(name) "," ] ;
-        
-        if ( [ sequence.length $(nparts) ] = 1 )
-            {
-            jname = $(name) ;
-            jappend = $(nappend) ;
-            }
-        else
-            {
-            jname = $(nparts[1]) ;
-            jappend = $(nparts[2]) ;
-            }
-        if ( $(jappend) = 0 )
-            {
-            jdual = _boost ;
-            }
-        else
-            {
-            jdual = _std ;
-            }
-        return cxxd_mod_$(jname)$(jdual) ;
-        }
-        
-    local rule requires.transform_v1 ( name : nappend ? )
         {
         
         local nparts = [ regex.split $(name) "," ] ;
@@ -112,7 +137,6 @@ module cxxd
             jname = $(nparts[1]) ;
             jappend = $(nparts[2]) ;
             }
-        ECHO "requires.transform" $(jname) ;
         switch $(jname)
             {
             case "array" : result = [ sequence.join CXXD_TEST_ARRAY "=" $(jappend) ] ;
