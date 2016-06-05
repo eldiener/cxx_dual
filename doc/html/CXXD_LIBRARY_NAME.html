@@ -1,0 +1,102 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Macro CXXD_LIBRARY_NAME</title>
+<link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="header/boost/cxx_dual/library_name_hpp.html" title="Header &lt;boost/cxx_dual/library_name.hpp&gt;">
+<link rel="prev" href="header/boost/cxx_dual/library_name_hpp.html" title="Header &lt;boost/cxx_dual/library_name.hpp&gt;">
+<link rel="next" href="header/boost/cxx_dual/make_shared_hpp.html" title="Header &lt;boost/cxx_dual/make_shared.hpp&gt;">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td>
+<td align="center"><a href="../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="header/boost/cxx_dual/library_name_hpp.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="header/boost/cxx_dual/library_name_hpp.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="header/boost/cxx_dual/make_shared_hpp.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="refentry">
+<a name="CXXD_LIBRARY_NAME"></a><div class="titlepage"></div>
+<div class="refnamediv">
+<h2><span class="refentrytitle">Macro CXXD_LIBRARY_NAME</span></h2>
+<p>CXXD_LIBRARY_NAME &#8212; Automatically names a non-header only library. </p>
+</div>
+<h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="header/boost/cxx_dual/library_name_hpp.html" title="Header &lt;boost/cxx_dual/library_name.hpp&gt;">boost/cxx_dual/library_name.hpp</a>&gt;
+
+</span>CXXD_LIBRARY_NAME(...)</pre></div>
+<div class="refsect1">
+<a name="id870092"></a><h2>Description</h2>
+<p>The function-like macro expands to the name of a non-header only library. It is useful for non-header only libraries in which different library variants are generated depending on the dual library choices for the CXXD-mods being used in the built portion of the library. The macro by default will expand to a unique library name depending on the dual library choices. The macro works based on the CXXD-mods included before the macro is invoked.</p>
+<p>The required first variadic parameter is the base library name. The generated library name will be the base library name and possibly other mnemonics appended to it. The base library name should be the library name as it would be called if no CXXD-mods were being used in the built portion of the library.</p>
+<p>Each optional variadic parameter is a Boost PP tuple with one to three elements. The Boost PP tuple designates:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>A CXXD-mod identifier. The CXXD-mod identifier is 'CXXD_' followed by the name of a CXXD-mod in uppercase. The CXXD-mod identifiers are specified in a separate list below.</p></li>
+<li class="listitem"><p>A mnemonic to be appended to the base library name if the CXXD-mod is using its C++ standard implementation.</p></li>
+<li class="listitem"><p>A mnemonic to be appended to the base library name if the CXXD-mod is using its Boost implementation.</p></li>
+</ul></div>
+<p>
+</p>
+<p>The first tuple element is required. The second tuple element may be empty or left out. The third tuple element may be empty or left out.</p>
+<p>A tuple element that is left out is considered 'empty'. An empty element is valid and means that nothing will be appended to the base name if the case is met.</p>
+<p>When a tuple is specified as an optional parameter it is important that the mnemonic to be appended be different whether the CXXD-mod is using its C++ standard implementation or its Boost implementation, else there is no guarantee that a unique library name will be generated depending on the CXXD-mods being included. However lack of a difference in the mnemonics, if it occurs, is not flagged as an error in the processing of the macro.</p>
+<p>If an optional parameter is not specified for a particular CXXD-mod which is included, a default value is appended as a mnemonic for the particular CXXD-mod if the CXXD-mod is using its C++ standard implementation; otherwise by default if the CXXD-mod is using its Boost implementation no value is appended by default.</p>
+<p>The CXXD-mod identifiers and their default values for the C++ standard implementation are:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem"><p>CXXD_ARRAY,_ar</p></li>
+<li class="listitem"><p>CXXD_ATOMIC,_at</p></li>
+<li class="listitem"><p>CXXD_BIND,_bd</p></li>
+<li class="listitem"><p>CXXD_CHRONO,_ch</p></li>
+<li class="listitem"><p>CXXD_CONDITION_VARIABLE,_cv</p></li>
+<li class="listitem"><p>CXXD_ENABLE_SHARED_FROM_THIS,_es</p></li>
+<li class="listitem"><p>CXXD_FUNCTION,_fn</p></li>
+<li class="listitem"><p>CXXD_HASH,_ha</p></li>
+<li class="listitem"><p>CXXD_MAKE_SHARED,_ms</p></li>
+<li class="listitem"><p>CXXD_MEM_FN,_mf</p></li>
+<li class="listitem"><p>CXXD_MOVE,_mv</p></li>
+<li class="listitem"><p>CXXD_MUTEX,_mx</p></li>
+<li class="listitem"><p>CXXD_RANDOM,_rd</p></li>
+<li class="listitem"><p>CXXD_RATIO,_ra</p></li>
+<li class="listitem"><p>CXXD_REF,_rf</p></li>
+<li class="listitem"><p>CXXD_REGEX,_rx</p></li>
+<li class="listitem"><p>CXXD_SHARED_MUTEX,_sm</p></li>
+<li class="listitem"><p>CXXD_SHARED_PTR,_sp</p></li>
+<li class="listitem"><p>CXXD_SYSTEM_ERROR,_se</p></li>
+<li class="listitem"><p>CXXD_THREAD,_th</p></li>
+<li class="listitem"><p>CXXD_TUPLE,_tu</p></li>
+<li class="listitem"><p>CXXD_TYPE_INDEX,_ti</p></li>
+<li class="listitem"><p>CXXD_TYPE_TRAITS,_tt</p></li>
+<li class="listitem"><p>CXXD_UNORDERED_MAP,_um</p></li>
+<li class="listitem"><p>CXXD_UNORDERED_MULTIMAP,_up</p></li>
+<li class="listitem"><p>CXXD_UNORDERED_MULTISET,_ut</p></li>
+<li class="listitem"><p>CXXD_UNORDERED_SET,_us</p></li>
+<li class="listitem"><p>CXXD_WEAK_PTR,_wp</p></li>
+<li class="listitem"><p>CXXD_MODS_ALL,_std</p></li>
+</ul></div>
+<p>
+</p>
+<p>The CXXD_MODS_ALL name refers to what happens if all the included CXXD-mods use either the C++ standard implementation or the Boost implementation. In this case, instead of each individual CXXD-mod having its mnemonic appended to the base name, a single mnemonic is appended to the base name. In the default case for CXXD_MODS_ALL the mnemonic '_std' is appended to the base name if all the included CXXD-mods use the C++ standard implementation and nothing is appended to the base name if all the included CXXD-mods use the Boost implementation.</p>
+<p>The use of the optional parameters is the way to override the default processing for any particular CXXD-mod, or for all CXXD-mods. </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="header/boost/cxx_dual/library_name_hpp.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="header/boost/cxx_dual/library_name_hpp.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="header/boost/cxx_dual/make_shared_hpp.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

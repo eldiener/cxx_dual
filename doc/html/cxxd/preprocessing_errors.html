@@ -1,0 +1,145 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Preprocessing errors</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="prev" href="sec_lib/sec_lvvv.html" title="Support for naming library variants and testing all valid possibilities">
+<link rel="next" href="build_support.html" title="Build support">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sec_lib/sec_lvvv.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="build_support.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.preprocessing_errors"></a><a class="link" href="preprocessing_errors.html" title="Preprocessing errors">Preprocessing errors</a>
+</h2></div></div></div>
+<p>
+      CXXD errors are preprocessor errors issue by the CXXD library using the preprocessor
+      '#error' directive. These errors occur when the inclusion of a CXXD-mod produces
+      inconsistencies which CXXD does not allow. These inconsistencies can be found,
+      in a TU, either the first time CXXD includes a particular CXXD header file
+      or subsequent times CXXD includes a particular CXXD header.
+    </p>
+<p>
+      The errors which can occur involve four different situations for which CXXD
+      issues the "#error' directive. These situations are, for any given CXXD-mod
+      called 'xxx':
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          If override macros for both Boost and the C++ standard library occur when
+          a particular CXXD header is included, an '#error' directive is emitted
+          of 'CXXD: Using C++ standard and using Boost are both defined for xxx'.
+        </li>
+<li class="listitem">
+          If the C++ standard library has been previously chosen and is subsequently
+          overridden by the Boost library, an '#error' directive is emitted of 'CXXD:
+          Previous use of C++ standard xxx erroneously overridden'.
+        </li>
+<li class="listitem">
+          If the Boost standard library has been previously chosen and is subsequently
+          overridden by the C++ standard library, an '#error' directive is emitted
+          of 'CXXD: Previous use of Boost xxx erroneously overridden'.
+        </li>
+<li class="listitem">
+          If override macros for the C++ standard library occur but the C++ standard
+          library is not available for the CXXD-mod xxx, an '#error' directive is
+          emitted of 'CXXD: C++ standard xxx is not available'.
+        </li>
+</ul></div>
+<p>
+      As previously stated in the documentation CXXD header files are processed each
+      time they are included to avoid inconsistencies.
+    </p>
+<p>
+      The first error listed above could happen either the first time a particular
+      CXXD header is included or a subsequent time a particular CXXD header is included,
+      since override macros could occur at any time in a TU. It is not possible to
+      eliminate this error message for the situation in which it would occur, since
+      conflicting CXXD override macros always means that CXXD cannot choose the correct
+      dual library for a particular CXXD-mod.
+    </p>
+<p>
+      The second and third errors listed above can only happen at a subsequent time
+      a particular CXXD-mod is included, since either message occurs when an override
+      macro changes the dual library choice from a previous inclusion of the CXXD
+      header. As explained previously when discussing overriding the default dual
+      library <a class="link" href="choosing_the_dual_library/header_file_inclusion.html#mechanism_noconsistency">consistency</a>, you can
+      eliminate the second and third errors for the situation in which it would occur
+      by defining CXXD_NO_CONSISTENCY, although it is generally not a recommended
+      thing to do so.
+    </p>
+<p>
+      The last error message can only occur the first time a particular CXXD-mod
+      is included, where an override macro for the C++ standard library fails because
+      the library is not available. Like the second and third errors listed above
+      it is possible to eliminate this last error message for the situation in which
+      it would occurs. You can do this by defining the object-like macro CXXD_NO_CONFIG
+      to nothing as in:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">CXXD_NO_CONFIG</span>
+</pre>
+<p>
+      before including the particular CXXD-mod. This object-like macro allows an
+      override macro for the C++ standard library to choose the particular CXXD-mod's
+      C++ standard library equivalent as the dual library even when Boost.Config
+      determines that the C++ standard library equivalent is not available when compiling
+      the TU.
+    </p>
+<p>
+      There are two reasons for allowing this object-macro to eliminate the particular
+      preprocessor error message:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          The end-user may still want CXXD to use the equivalent C++ standard library
+          for a particular CXX-mod even when Boost.Config says it is not available.
+          This could be because of some obscure configuration that Boost.Config does
+          not know about for a given OS/compiler combination. A compiler error or
+          linker error, as opposed to a preprocessor error, might still show up when
+          the end-user codes as if the C++ standard library for that CXXD-mod exists
+          when it does not do so.
+        </li>
+<li class="listitem">
+          The object-like macro allows tests for CXXD facilities to be run as if
+          the C++ standard library were available even when it is not. This includes
+          tests for the functionality of the CXXD_LIBRARY_NAME and CXXD_VALID_VARIANTS
+          macro. In other words if no further use of the particular CXXD-mod's C++
+          standard library equivalent subsequently exists in the TU there is no reason
+          to disallow it when including the particular CXXD header.
+        </li>
+</ul></div>
+<p>
+      Eliminating this last of CXXD's preprocessor #error messages, and allowing
+      a macro override to choose a particular CXXD-mod's C++ standard equivalent
+      dual library even when Boost.Config says it does not exist, should very rarely
+      ever be done.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sec_lib/sec_lvvv.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="build_support.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
