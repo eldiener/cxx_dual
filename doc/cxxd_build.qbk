@@ -49,20 +49,20 @@ both taking the same Boost Build parameters. These rules are:
 * cxxd.requires.std
 * cxxd.requires.specify
 
-Each rule takes, as a first parameter, a name which identifies
-a CXXD-mod. For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std',
-this name is just the CXXD-mod identifying a particular mod.
-As an example 'regex' identifies the regex CXXD-mod. For the third
-rule above, 'cxxd.requires.specify', this name is also the CXXD-mod
-identifying a particular mod, but is followed by a comma ( ',' ) and then 0
+Each rule takes, as a first parameter, a list of one or more names which identify
+CXXD-mods. For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std',
+these names are the the CXXD-mods identifying a particular
+CXXD-mod. As an example 'regex' identifies the regex CXXD-mod. For the third
+rule above, 'cxxd.requires.specify', these names are also the CXXD-mods
+identifying a particular CXXD_mod, but are followed by a comma ( ',' ) and then 0
 to indicate Boost or 1 to indicate the C++ standard. As examples 'regex,0'
 identifies the regex CXXD-mod with Boost chosen while 'tuple,1' identifies the
 tuple CXXD-mod with the C++ standard chosen.
 
 Essentially the first parameter of
-'cxxd.requires.boost' is a shorthand for passing a CXXD-mod followed by
+'cxxd.requires.boost' is a shorthand for passing each CXXD-mod followed by
 a comma ( ',' ) and then 0 in 'cxxd.requires.specify' while the first parameter of
-'cxxd.requires.std' is a shorthand for passing a CXXD-mod followed by
+'cxxd.requires.std' is a shorthand for passing each CXXD-mod followed by
 a comma ( ',' ) and then 1 in 'cxxd.requires.specify'.
 
 Each rule takes, as an optional second parameter, 0 or more Boost Build requirement or usage requirements.
@@ -71,30 +71,31 @@ Each rule takes, as an optional third parameter, 0 or more Boost Build requireme
 
 A Boost Build requirement or usage requirement is a Boost Build feature.
 
-The way that the 'cxxd.requires.boost' rule works is that if the CXXD-mod
+The way that the 'cxxd.requires.boost' rule works is that if each of the CXXD-mods
 specified use its Boost library implementation, the Boost Build requirements or usage requirements
 specified by the optional second parameter is chosen; otherwise the Boost Build requirements
 or usage requirements specified by the optional third parameter is chosen.
 
-The way that the 'cxxd.requires.std' rule works is that if the CXXD-mod
+The way that the 'cxxd.requires.std' rule works is that if each of the CXXD-mods
 specified use its C++ standard library implementation, the Boost Build requirements
 or usage requirements specified by the optional second parameter is chosen; otherwise the
 Boost Build requirements or usage requirements specified by the optional third parameter is chosen.
 
-The way that the 'cxxd.requires.specific' rule works is that if the CXXD-mod
-specified uses whichever implementation is chosen through the 0 or 1 addition,
+The way that the 'cxxd.requires.specific' rule works is that if each of the CXXD-mods
+specified use whichever implementation is chosen through the 0 or 1 addition,
 the Boost Build requirements or usage requirements specified by the optional second parameter
 is chosen; otherwise the Boost Build requirements or usage requirements specified by the
-optional third parameter is chosen.
+optional third parameter is chosen. The 'cxxd.requires.specific' rule gives maximum
+flexibility in matching each CXXD-mod with the dual library implementation chosen.
 
 When we use any of these rules we invoke them as:
 
-  cxxd.requires.boost CXXD-mod : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
-  cxxd.requires.std CXXD-mod : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
+  cxxd.requires.boost CXXD-mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
+  cxxd.requires.std CXXD-mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
   cxxd.requires.specific CXXD-mod,0-or-1...   : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
   
 To use the results of these rules in one's own rules you surround these rule
-invocations in Boost Build with brackets and spaces (' [ ' and ' ] ').
+invocations in Boost Build with brackets and spaces ( ' [ ' and ' ] ' ).
 
 As an example, taken directly from the CXXD tests for the CXXD regex implementation,
 we have:
@@ -120,10 +121,20 @@ or even as:
   run test_regex.cpp : : : 
   [ cxxd.requires.specific regex,1 : : <library>/boost/regex//boost_regex ] ;
   
+We can have more than one CXXD-mod as our first parameter to any of our three rules,
+although this is a less common scenario. Let's make up an arbitrary case just to show
+how this works. Let's say that when compiling our source file 'my_source.cpp' if CXXD
+is choosing both the Boost bind and the Boost function implementations we want to define
+a macro called MY_MACRO to 1, else we define MY_MACRO to 0. Here is what our Boost Build
+code for this would be:
+
+  compile my_source.cpp : 
+  [ cxxd.requires.boost bind function : <define>MY_MACRO=1 : <define>MY_MACRO=0 ] ;
+  
 We could have more than one feature as our requirements, as in:
 
   compile my_source.cpp : 
-  [ cxxd.requires.boost bind : 
+  [ cxxd.requires.boost bind function : 
     <define>MY_MACRO=1 <include>some_directory_path : 
     <define>MY_MACRO=0 ] ;
   
@@ -132,11 +143,21 @@ or cxxd.requires.specific in our requirements or usage requirements section of a
 as in:
   
   compile my_source.cpp : 
-  [ cxxd.requires.boost function : 
+  [ cxxd.requires.boost bind function : 
     <define>MY_MACRO=1 <include>some_directory_path : 
     <define>MY_MACRO=0 ] 
   [ cxxd.requires.std regex : : <library>/boost/regex//boost_regex ]
   [ cxxd.requires.specific tuple,1 : <cxxflags>-someflag ] ;
+  
+With the 'cxxd.requires.specific' rule we can mix Boost and C++ standard
+implementations to set our requirements, as in:
+    
+  compile my_source.cpp : 
+  [ cxxd.requires.specific array,1 hash,0 : <include>some_path : <define>some_macro=some_value ] ;
+  
+Here we are saying that if the array CXXD-mod uses the C++ standard implementation
+and the hash CXXD-mod uses the Boost implementation, add 'some_path' to the include
+paths, else define a macro called 'some_macro' to 'some_value'.  
   
 [endsect]
 
