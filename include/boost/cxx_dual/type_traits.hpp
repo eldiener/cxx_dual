@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_TYPE_TRAITS)
                     #undef CXXD_HAS_STD_TYPE_TRAITS
-                    #undef CXXD_TYPE_TRAITS_NS
                     #undef CXXD_TYPE_TRAITS_HEADER
                 #endif
                 #define CXXD_HAS_STD_TYPE_TRAITS 0
-                #define CXXD_TYPE_TRAITS_NS boost
-                #define CXXD_TYPE_TRAITS_HEADER <boost/type_traits.hpp>
+                #define CXXD_TYPE_TRAITS_HEADER <boost/cxx_dual/detail/type_traits.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TYPE_TRAITS)
                 #undef CXXD_HAS_STD_TYPE_TRAITS
-                #undef CXXD_TYPE_TRAITS_NS
                 #undef CXXD_TYPE_TRAITS_HEADER
             #endif
             #define CXXD_HAS_STD_TYPE_TRAITS 1
-            #define CXXD_TYPE_TRAITS_NS std
-            #define CXXD_TYPE_TRAITS_HEADER <type_traits>
+            #define CXXD_TYPE_TRAITS_HEADER <boost/cxx_dual/detail/type_traits.hpp>
         #endif
     #endif
 #endif

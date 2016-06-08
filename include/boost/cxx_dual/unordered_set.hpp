@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_SET)
                     #undef CXXD_HAS_STD_UNORDERED_SET
-                    #undef CXXD_UNORDERED_SET_NS
                     #undef CXXD_UNORDERED_SET_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_SET 0
-                #define CXXD_UNORDERED_SET_NS boost
-                #define CXXD_UNORDERED_SET_HEADER <boost/unordered_set.hpp>
+                #define CXXD_UNORDERED_SET_HEADER <boost/cxx_dual/detail/unordered_set.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_SET)
                 #undef CXXD_HAS_STD_UNORDERED_SET
-                #undef CXXD_UNORDERED_SET_NS
                 #undef CXXD_UNORDERED_SET_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_SET 1
-            #define CXXD_UNORDERED_SET_NS std
-            #define CXXD_UNORDERED_SET_HEADER <unordered_set>
+            #define CXXD_UNORDERED_SET_HEADER <boost/cxx_dual/detail/unordered_set.hpp>
         #endif
     #endif
 #endif

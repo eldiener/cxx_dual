@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_MOVE)
                     #undef CXXD_HAS_STD_MOVE
-                    #undef CXXD_MOVE_NS
                     #undef CXXD_MOVE_HEADER
                 #endif
                 #define CXXD_HAS_STD_MOVE 0
-                #define CXXD_MOVE_NS boost
-                #define CXXD_MOVE_HEADER <boost/move/move.hpp>
+                #define CXXD_MOVE_HEADER <boost/cxx_dual/detail/move.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MOVE)
                 #undef CXXD_HAS_STD_MOVE
-                #undef CXXD_MOVE_NS
                 #undef CXXD_MOVE_HEADER
             #endif
             #define CXXD_HAS_STD_MOVE 1
-            #define CXXD_MOVE_NS std
-            #define CXXD_MOVE_HEADER <utility>
+            #define CXXD_MOVE_HEADER <boost/cxx_dual/detail/move.hpp>
         #endif
     #endif
 #endif

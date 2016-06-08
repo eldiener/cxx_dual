@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_TYPE_INDEX)
                     #undef CXXD_HAS_STD_TYPE_INDEX
-                    #undef CXXD_TYPE_INDEX_NS
                     #undef CXXD_TYPE_INDEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_TYPE_INDEX 0
-                #define CXXD_TYPE_INDEX_NS boost::typeindex
-                #define CXXD_TYPE_INDEX_HEADER <boost/type_index.hpp>
+                #define CXXD_TYPE_INDEX_HEADER <boost/cxx_dual/detail/type_index.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TYPE_INDEX)
                 #undef CXXD_HAS_STD_TYPE_INDEX
-                #undef CXXD_TYPE_INDEX_NS
                 #undef CXXD_TYPE_INDEX_HEADER
             #endif
             #define CXXD_HAS_STD_TYPE_INDEX 1
-            #define CXXD_TYPE_INDEX_NS std
-            #define CXXD_TYPE_INDEX_HEADER <typeindex>
+            #define CXXD_TYPE_INDEX_HEADER <boost/cxx_dual/detail/type_index.hpp>
         #endif
     #endif
 #endif

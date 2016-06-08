@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_REGEX)
                     #undef CXXD_HAS_STD_REGEX
-                    #undef CXXD_REGEX_NS
                     #undef CXXD_REGEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_REGEX 0
-                #define CXXD_REGEX_NS boost
-                #define CXXD_REGEX_HEADER <boost/regex.hpp>
+                #define CXXD_REGEX_HEADER <boost/cxx_dual/detail/regex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_REGEX)
                 #undef CXXD_HAS_STD_REGEX
-                #undef CXXD_REGEX_NS
                 #undef CXXD_REGEX_HEADER
             #endif
             #define CXXD_HAS_STD_REGEX 1
-            #define CXXD_REGEX_NS std
-            #define CXXD_REGEX_HEADER <regex>
+            #define CXXD_REGEX_HEADER <boost/cxx_dual/detail/regex.hpp>
         #endif
     #endif
 #endif

@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_HASH)
                     #undef CXXD_HAS_STD_HASH
-                    #undef CXXD_HASH_NS
                     #undef CXXD_HASH_HEADER
                 #endif
                 #define CXXD_HAS_STD_HASH 0
-                #define CXXD_HASH_NS boost
-                #define CXXD_HASH_HEADER <boost/functional/hash.hpp>
+                #define CXXD_HASH_HEADER <boost/cxx_dual/detail/hash.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_HASH)
                 #undef CXXD_HAS_STD_HASH
-                #undef CXXD_HASH_NS
                 #undef CXXD_HASH_HEADER
             #endif
             #define CXXD_HAS_STD_HASH 1
-            #define CXXD_HASH_NS std
-            #define CXXD_HASH_HEADER <functional>
+            #define CXXD_HASH_HEADER <boost/cxx_dual/detail/hash.hpp>
         #endif
     #endif
 #endif

@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_SHARED_MUTEX)
                     #undef CXXD_HAS_STD_SHARED_MUTEX
-                    #undef CXXD_SHARED_MUTEX_NS
                     #undef CXXD_SHARED_MUTEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_SHARED_MUTEX 0
-                #define CXXD_SHARED_MUTEX_NS boost
-                #define CXXD_SHARED_MUTEX_HEADER <boost/thread/shared_mutex.hpp>
+                #define CXXD_SHARED_MUTEX_HEADER <boost/cxx_dual/detail/shared_mutex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SHARED_MUTEX)
                 #undef CXXD_HAS_STD_SHARED_MUTEX
-                #undef CXXD_SHARED_MUTEX_NS
                 #undef CXXD_SHARED_MUTEX_HEADER
             #endif
             #define CXXD_HAS_STD_SHARED_MUTEX 1
-            #define CXXD_SHARED_MUTEX_NS std
-            #define CXXD_SHARED_MUTEX_HEADER <shared_mutex>
+            #define CXXD_SHARED_MUTEX_HEADER <boost/cxx_dual/detail/shared_mutex.hpp>
         #endif
     #endif
 #endif

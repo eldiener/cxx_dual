@@ -80,26 +80,22 @@
             #else
                 #if defined(CXXD_HAS_STD_SHARED_PTR)
                     #undef CXXD_HAS_STD_SHARED_PTR
-                    #undef CXXD_SHARED_PTR_NS
                     #undef CXXD_SHARED_PTR_HEADER
                     #undef CXXD_SHARED_PTR_ONLY_HEADER
                 #endif
                 #define CXXD_HAS_STD_SHARED_PTR 0
-                #define CXXD_SHARED_PTR_NS boost
                 #define CXXD_SHARED_PTR_HEADER <boost/cxx_dual/detail/shared_ptr.hpp>
-                #define CXXD_SHARED_PTR_ONLY_HEADER <boost/shared_ptr.hpp>
+                #define CXXD_SHARED_PTR_ONLY_HEADER <boost/cxx_dual/detail/shared_ptr_only.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SHARED_PTR)
                 #undef CXXD_HAS_STD_SHARED_PTR
-                #undef CXXD_SHARED_PTR_NS
                 #undef CXXD_SHARED_PTR_HEADER
                 #undef CXXD_SHARED_PTR_ONLY_HEADER
             #endif
             #define CXXD_HAS_STD_SHARED_PTR 1
-            #define CXXD_SHARED_PTR_NS std
-            #define CXXD_SHARED_PTR_HEADER <memory>
-            #define CXXD_SHARED_PTR_ONLY_HEADER <memory>
+            #define CXXD_SHARED_PTR_HEADER <boost/cxx_dual/detail/shared_ptr.hpp>
+            #define CXXD_SHARED_PTR_ONLY_HEADER <boost/cxx_dual/detail/shared_ptr_only.hpp>
         #endif
     #endif
 #endif

@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_MUTEX)
                     #undef CXXD_HAS_STD_MUTEX
-                    #undef CXXD_MUTEX_NS
                     #undef CXXD_MUTEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_MUTEX 0
-                #define CXXD_MUTEX_NS boost
                 #define CXXD_MUTEX_HEADER <boost/cxx_dual/detail/mutex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MUTEX)
                 #undef CXXD_HAS_STD_MUTEX
-                #undef CXXD_MUTEX_NS
                 #undef CXXD_MUTEX_HEADER
             #endif
             #define CXXD_HAS_STD_MUTEX 1
-            #define CXXD_MUTEX_NS std
-            #define CXXD_MUTEX_HEADER <mutex>
+            #define CXXD_MUTEX_HEADER <boost/cxx_dual/detail/mutex.hpp>
         #endif
     #endif
 #endif

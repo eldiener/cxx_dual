@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_THREAD)
                     #undef CXXD_HAS_STD_THREAD
-                    #undef CXXD_THREAD_NS
                     #undef CXXD_THREAD_HEADER
                 #endif
                 #define CXXD_HAS_STD_THREAD 0
-                #define CXXD_THREAD_NS boost
-                #define CXXD_THREAD_HEADER <boost/thread/thread.hpp>
+                #define CXXD_THREAD_HEADER <boost/cxx_dual/detail/thread.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_THREAD)
                 #undef CXXD_HAS_STD_THREAD
-                #undef CXXD_THREAD_NS
                 #undef CXXD_THREAD_HEADER
             #endif
             #define CXXD_HAS_STD_THREAD 1
-            #define CXXD_THREAD_NS std
-            #define CXXD_THREAD_HEADER <thread>
+            #define CXXD_THREAD_HEADER <boost/cxx_dual/detail/thread.hpp>
         #endif
     #endif
 #endif

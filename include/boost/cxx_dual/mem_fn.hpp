@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_MEM_FN)
                     #undef CXXD_HAS_STD_MEM_FN
-                    #undef CXXD_MEM_FN_NS
                     #undef CXXD_MEM_FN_HEADER
                 #endif
                 #define CXXD_HAS_STD_MEM_FN 0
-                #define CXXD_MEM_FN_NS boost
-                #define CXXD_MEM_FN_HEADER <boost/mem_fn.hpp>
+                #define CXXD_MEM_FN_HEADER <boost/cxx_dual/detail/mem_fn.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MEM_FN)
                 #undef CXXD_HAS_STD_MEM_FN
-                #undef CXXD_MEM_FN_NS
                 #undef CXXD_MEM_FN_HEADER
             #endif
             #define CXXD_HAS_STD_MEM_FN 1
-            #define CXXD_MEM_FN_NS std
-            #define CXXD_MEM_FN_HEADER <functional>
+            #define CXXD_MEM_FN_HEADER <boost/cxx_dual/detail/mem_fn.hpp>
         #endif
     #endif
 #endif

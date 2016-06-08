@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_ARRAY)
                     #undef CXXD_HAS_STD_ARRAY
-                    #undef CXXD_ARRAY_NS
                     #undef CXXD_ARRAY_HEADER
                 #endif
                 #define CXXD_HAS_STD_ARRAY 0
-                #define CXXD_ARRAY_NS boost
-                #define CXXD_ARRAY_HEADER <boost/array.hpp>
+                #define CXXD_ARRAY_HEADER <boost/cxx_dual/detail/array.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_ARRAY)
                 #undef CXXD_HAS_STD_ARRAY
-                #undef CXXD_ARRAY_NS
                 #undef CXXD_ARRAY_HEADER
             #endif
             #define CXXD_HAS_STD_ARRAY 1
-            #define CXXD_ARRAY_NS std
-            #define CXXD_ARRAY_HEADER <array>
+            #define CXXD_ARRAY_HEADER <boost/cxx_dual/detail/array.hpp>
         #endif
     #endif
 #endif

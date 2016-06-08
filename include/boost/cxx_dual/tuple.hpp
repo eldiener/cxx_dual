@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_TUPLE)
                     #undef CXXD_HAS_STD_TUPLE
-                    #undef CXXD_TUPLE_NS
                     #undef CXXD_TUPLE_HEADER
                 #endif
                 #define CXXD_HAS_STD_TUPLE 0
-                #define CXXD_TUPLE_NS boost::tuples
-                #define CXXD_TUPLE_HEADER <boost/tuple/tuple.hpp>
+                #define CXXD_TUPLE_HEADER <boost/cxx_dual/detail/tuple.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TUPLE)
                 #undef CXXD_HAS_STD_TUPLE
-                #undef CXXD_TUPLE_NS
                 #undef CXXD_TUPLE_HEADER
             #endif
             #define CXXD_HAS_STD_TUPLE 1
-            #define CXXD_TUPLE_NS std
-            #define CXXD_TUPLE_HEADER <tuple>
+            #define CXXD_TUPLE_HEADER <boost/cxx_dual/detail/tuple.hpp>
         #endif
     #endif
 #endif

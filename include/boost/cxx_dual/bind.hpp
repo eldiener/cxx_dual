@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_BIND)
                     #undef CXXD_HAS_STD_BIND
-                    #undef CXXD_BIND_NS
                     #undef CXXD_BIND_HEADER
                 #endif
                 #define CXXD_HAS_STD_BIND 0
-                #define CXXD_BIND_NS boost
-                #define CXXD_BIND_HEADER <boost/bind/bind.hpp>
+                #define CXXD_BIND_HEADER <boost/cxx_dual/detail/bind.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_BIND)
                 #undef CXXD_HAS_STD_BIND
-                #undef CXXD_BIND_NS
                 #undef CXXD_BIND_HEADER
             #endif
             #define CXXD_HAS_STD_BIND 1
-            #define CXXD_BIND_NS std
-            #define CXXD_BIND_HEADER <functional>
+            #define CXXD_BIND_HEADER <boost/cxx_dual/detail/bind.hpp>
         #endif
     #endif
 #endif

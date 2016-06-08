@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MULTISET)
                     #undef CXXD_HAS_STD_UNORDERED_MULTISET
-                    #undef CXXD_UNORDERED_MULTISET_NS
                     #undef CXXD_UNORDERED_MULTISET_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_MULTISET 0
-                #define CXXD_UNORDERED_MULTISET_NS boost
-                #define CXXD_UNORDERED_MULTISET_HEADER <boost/unordered_set.hpp>
+                #define CXXD_UNORDERED_MULTISET_HEADER <boost/cxx_dual/detail/unordered_multiset.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_MULTISET)
                 #undef CXXD_HAS_STD_UNORDERED_MULTISET
-                #undef CXXD_UNORDERED_MULTISET_NS
                 #undef CXXD_UNORDERED_MULTISET_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_MULTISET 1
-            #define CXXD_UNORDERED_MULTISET_NS std
-            #define CXXD_UNORDERED_MULTISET_HEADER <unordered_set>
+            #define CXXD_UNORDERED_MULTISET_HEADER <boost/cxx_dual/detail/unordered_multiset.hpp>
         #endif
     #endif
 #endif

@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_SYSTEM_ERROR)
                     #undef CXXD_HAS_STD_SYSTEM_ERROR
-                    #undef CXXD_SYSTEM_ERROR_NS
                     #undef CXXD_SYSTEM_ERROR_HEADER
                 #endif
                 #define CXXD_HAS_STD_SYSTEM_ERROR 0
-                #define CXXD_SYSTEM_ERROR_NS boost::system
-                #define CXXD_SYSTEM_ERROR_HEADER <boost/system/system_error.hpp>
+                #define CXXD_SYSTEM_ERROR_HEADER <boost/cxx_dual/detail/system_error.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SYSTEM_ERROR)
                 #undef CXXD_HAS_STD_SYSTEM_ERROR
-                #undef CXXD_SYSTEM_ERROR_NS
                 #undef CXXD_SYSTEM_ERROR_HEADER
             #endif
             #define CXXD_HAS_STD_SYSTEM_ERROR 1
-            #define CXXD_SYSTEM_ERROR_NS std
-            #define CXXD_SYSTEM_ERROR_HEADER <system_error>
+            #define CXXD_SYSTEM_ERROR_HEADER <boost/cxx_dual/detail/system_error.hpp>
         #endif
     #endif
 #endif

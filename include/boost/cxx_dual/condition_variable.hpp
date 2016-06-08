@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_CONDITION_VARIABLE)
                     #undef CXXD_HAS_STD_CONDITION_VARIABLE
-                    #undef CXXD_CONDITION_VARIABLE_NS
                     #undef CXXD_CONDITION_VARIABLE_HEADER
                 #endif
                 #define CXXD_HAS_STD_CONDITION_VARIABLE 0
-                #define CXXD_CONDITION_VARIABLE_NS boost
-                #define CXXD_CONDITION_VARIABLE_HEADER <boost/thread/condition_variable.hpp>
+                #define CXXD_CONDITION_VARIABLE_HEADER <boost/cxx_dual/detail/condition_variable.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_CONDITION_VARIABLE)
                 #undef CXXD_HAS_STD_CONDITION_VARIABLE
-                #undef CXXD_CONDITION_VARIABLE_NS
                 #undef CXXD_CONDITION_VARIABLE_HEADER
             #endif
             #define CXXD_HAS_STD_CONDITION_VARIABLE 1
-            #define CXXD_CONDITION_VARIABLE_NS std
-            #define CXXD_CONDITION_VARIABLE_HEADER <condition_variable>
+            #define CXXD_CONDITION_VARIABLE_HEADER <boost/cxx_dual/detail/condition_variable.hpp>
         #endif
     #endif
 #endif

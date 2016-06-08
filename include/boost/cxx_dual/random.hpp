@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_RANDOM)
                     #undef CXXD_HAS_STD_RANDOM
-                    #undef CXXD_RANDOM_NS
                     #undef CXXD_RANDOM_HEADER
                 #endif
                 #define CXXD_HAS_STD_RANDOM 0
-                #define CXXD_RANDOM_NS boost::random
-                #define CXXD_RANDOM_HEADER <boost/random.hpp>
+                #define CXXD_RANDOM_HEADER <boost/cxx_dual/detail/random.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_RANDOM)
                 #undef CXXD_HAS_STD_RANDOM
-                #undef CXXD_RANDOM_NS
                 #undef CXXD_RANDOM_HEADER
             #endif
             #define CXXD_HAS_STD_RANDOM 1
-            #define CXXD_RANDOM_NS std
-            #define CXXD_RANDOM_HEADER <random>
+            #define CXXD_RANDOM_HEADER <boost/cxx_dual/detail/random.hpp>
         #endif
     #endif
 #endif

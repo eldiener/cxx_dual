@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_CHRONO)
                     #undef CXXD_HAS_STD_CHRONO
-                    #undef CXXD_CHRONO_NS
                     #undef CXXD_CHRONO_HEADER
                 #endif
                 #define CXXD_HAS_STD_CHRONO 0
-                #define CXXD_CHRONO_NS boost::chrono
-                #define CXXD_CHRONO_HEADER <boost/chrono.hpp>
+                #define CXXD_CHRONO_HEADER <boost/cxx_dual/detail/chrono.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_CHRONO)
                 #undef CXXD_HAS_STD_CHRONO
-                #undef CXXD_CHRONO_NS
                 #undef CXXD_CHRONO_HEADER
             #endif
             #define CXXD_HAS_STD_CHRONO 1
-            #define CXXD_CHRONO_NS std::chrono
-            #define CXXD_CHRONO_HEADER <chrono>
+            #define CXXD_CHRONO_HEADER <boost/cxx_dual/detail/chrono.hpp>
         #endif
     #endif
 #endif

@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_MAKE_SHARED)
                     #undef CXXD_HAS_STD_MAKE_SHARED
-                    #undef CXXD_MAKE_SHARED_NS
                     #undef CXXD_MAKE_SHARED_HEADER
                 #endif
                 #define CXXD_HAS_STD_MAKE_SHARED 0
-                #define CXXD_MAKE_SHARED_NS boost
-                #define CXXD_MAKE_SHARED_HEADER <boost/make_shared.hpp>
+                #define CXXD_MAKE_SHARED_HEADER <boost/cxx_dual/detail/make_shared.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MAKE_SHARED)
                 #undef CXXD_HAS_STD_MAKE_SHARED
-                #undef CXXD_MAKE_SHARED_NS
                 #undef CXXD_MAKE_SHARED_HEADER
             #endif
             #define CXXD_HAS_STD_MAKE_SHARED 1
-            #define CXXD_MAKE_SHARED_NS std
-            #define CXXD_MAKE_SHARED_HEADER <memory>
+            #define CXXD_MAKE_SHARED_HEADER <boost/cxx_dual/detail/make_shared.hpp>
         #endif
     #endif
 #endif

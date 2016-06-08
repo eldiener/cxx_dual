@@ -75,25 +75,21 @@
             #else
                 #if defined(CXXD_HAS_STD_ATOMIC)
                     #undef CXXD_HAS_STD_ATOMIC
-                    #undef CXXD_ATOMIC_NS
                     #undef CXXD_ATOMIC_HEADER
                     #undef CXXD_ATOMIC_MACRO
                 #endif
                 #define CXXD_HAS_STD_ATOMIC 0
-                #define CXXD_ATOMIC_NS boost
-                #define CXXD_ATOMIC_HEADER <boost/atomic/atomic.hpp>
+                #define CXXD_ATOMIC_HEADER <boost/cxx_dual/detail/atomic.hpp>
                 #define CXXD_ATOMIC_MACRO(macro) BOOST_ ## macro
             #endif
         #else
             #if defined(CXXD_HAS_STD_ATOMIC)
                 #undef CXXD_HAS_STD_ATOMIC
-                #undef CXXD_ATOMIC_NS
                 #undef CXXD_ATOMIC_HEADER
                 #undef CXXD_ATOMIC_MACRO
             #endif
             #define CXXD_HAS_STD_ATOMIC 1
-            #define CXXD_ATOMIC_NS std
-            #define CXXD_ATOMIC_HEADER <atomic>
+            #define CXXD_ATOMIC_HEADER <boost/cxx_dual/detail/atomic.hpp>
             #define CXXD_ATOMIC_MACRO(macro) macro
         #endif
     #endif

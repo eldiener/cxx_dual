@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_FUNCTION)
                     #undef CXXD_HAS_STD_FUNCTION
-                    #undef CXXD_FUNCTION_NS
                     #undef CXXD_FUNCTION_HEADER
                 #endif
                 #define CXXD_HAS_STD_FUNCTION 0
-                #define CXXD_FUNCTION_NS boost
-                #define CXXD_FUNCTION_HEADER <boost/function.hpp>
+                #define CXXD_FUNCTION_HEADER <boost/cxx_dual/detail/function.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_FUNCTION)
                 #undef CXXD_HAS_STD_FUNCTION
-                #undef CXXD_FUNCTION_NS
                 #undef CXXD_FUNCTION_HEADER
             #endif
             #define CXXD_HAS_STD_FUNCTION 1
-            #define CXXD_FUNCTION_NS std
-            #define CXXD_FUNCTION_HEADER <functional>
+            #define CXXD_FUNCTION_HEADER <boost/cxx_dual/detail/function.hpp>
         #endif
     #endif
 #endif

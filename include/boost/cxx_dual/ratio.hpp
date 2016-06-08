@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_RATIO)
                     #undef CXXD_HAS_STD_RATIO
-                    #undef CXXD_RATIO_NS
                     #undef CXXD_RATIO_HEADER
                 #endif
                 #define CXXD_HAS_STD_RATIO 0
-                #define CXXD_RATIO_NS boost
-                #define CXXD_RATIO_HEADER <boost/ratio.hpp>
+                #define CXXD_RATIO_HEADER <boost/cxx_dual/detail/ratio.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_RATIO)
                 #undef CXXD_HAS_STD_RATIO
-                #undef CXXD_RATIO_NS
                 #undef CXXD_RATIO_HEADER
             #endif
             #define CXXD_HAS_STD_RATIO 1
-            #define CXXD_RATIO_NS std
-            #define CXXD_RATIO_HEADER <ratio>
+            #define CXXD_RATIO_HEADER <boost/cxx_dual/detail/ratio.hpp>
         #endif
     #endif
 #endif

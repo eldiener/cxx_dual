@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_REF)
                     #undef CXXD_HAS_STD_REF
-                    #undef CXXD_REF_NS
                     #undef CXXD_REF_HEADER
                 #endif
                 #define CXXD_HAS_STD_REF 0
-                #define CXXD_REF_NS boost
-                #define CXXD_REF_HEADER <boost/core/ref.hpp>
+                #define CXXD_REF_HEADER <boost/cxx_dual/detail/ref.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_REF)
                 #undef CXXD_HAS_STD_REF
-                #undef CXXD_REF_NS
                 #undef CXXD_REF_HEADER
             #endif
             #define CXXD_HAS_STD_REF 1
-            #define CXXD_REF_NS std
-            #define CXXD_REF_HEADER <functional>
+            #define CXXD_REF_HEADER <boost/cxx_dual/detail/ref.hpp>
         #endif
     #endif
 #endif

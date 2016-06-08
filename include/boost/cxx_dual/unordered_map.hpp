@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MAP)
                     #undef CXXD_HAS_STD_UNORDERED_MAP
-                    #undef CXXD_UNORDERED_MAP_NS
                     #undef CXXD_UNORDERED_MAP_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_MAP 0
-                #define CXXD_UNORDERED_MAP_NS boost
-                #define CXXD_UNORDERED_MAP_HEADER <boost/unordered_map.hpp>
+                #define CXXD_UNORDERED_MAP_HEADER <boost/cxx_dual/detail/unordered_map.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_MAP)
                 #undef CXXD_HAS_STD_UNORDERED_MAP
-                #undef CXXD_UNORDERED_MAP_NS
                 #undef CXXD_UNORDERED_MAP_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_MAP 1
-            #define CXXD_UNORDERED_MAP_NS std
-            #define CXXD_UNORDERED_MAP_HEADER <unordered_map>
+            #define CXXD_UNORDERED_MAP_HEADER <boost/cxx_dual/detail/unordered_map.hpp>
         #endif
     #endif
 #endif

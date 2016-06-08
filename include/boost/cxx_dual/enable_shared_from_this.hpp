@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS)
                     #undef CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
-                    #undef CXXD_ENABLE_SHARED_FROM_THIS_NS
                     #undef CXXD_ENABLE_SHARED_FROM_THIS_HEADER
                 #endif
                 #define CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS 0
-                #define CXXD_ENABLE_SHARED_FROM_THIS_NS boost
-                #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <boost/enable_shared_from_this.hpp>
+                #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <boost/cxx_dual/detail/enable_shared_from_this.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS)
                 #undef CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
-                #undef CXXD_ENABLE_SHARED_FROM_THIS_NS
                 #undef CXXD_ENABLE_SHARED_FROM_THIS_HEADER
             #endif
             #define CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS 1
-            #define CXXD_ENABLE_SHARED_FROM_THIS_NS std
-            #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <memory>
+            #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <boost/cxx_dual/detail/enable_shared_from_this.hpp>
         #endif
     #endif
 #endif

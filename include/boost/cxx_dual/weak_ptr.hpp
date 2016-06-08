@@ -68,22 +68,18 @@
             #else
                 #if defined(CXXD_HAS_STD_WEAK_PTR)
                     #undef CXXD_HAS_STD_WEAK_PTR
-                    #undef CXXD_WEAK_PTR_NS
                     #undef CXXD_WEAK_PTR_HEADER
                 #endif
                 #define CXXD_HAS_STD_WEAK_PTR 0
-                #define CXXD_WEAK_PTR_NS boost
-                #define CXXD_WEAK_PTR_HEADER <boost/weak_ptr.hpp>
+                #define CXXD_WEAK_PTR_HEADER <boost/cxx_dual/detail/weak_ptr.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_WEAK_PTR)
                 #undef CXXD_HAS_STD_WEAK_PTR
-                #undef CXXD_WEAK_PTR_NS
                 #undef CXXD_WEAK_PTR_HEADER
             #endif
             #define CXXD_HAS_STD_WEAK_PTR 1
-            #define CXXD_WEAK_PTR_NS std
-            #define CXXD_WEAK_PTR_HEADER <memory>
+            #define CXXD_WEAK_PTR_HEADER <boost/cxx_dual/detail/weak_ptr.hpp>
         #endif
     #endif
 #endif
