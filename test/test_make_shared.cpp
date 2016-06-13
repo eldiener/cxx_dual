@@ -11,7 +11,7 @@
 #include CXXD_MAKE_SHARED_HEADER
 #include CXXD_SHARED_PTR_ONLY_HEADER
 
-void foo(const CXXD_SHARED_PTR_NS::shared_ptr<int>& i)
+void foo(const cxxd_shared_ptr_ns::shared_ptr<int>& i)
 {
     (*i)++;
 }
@@ -19,7 +19,7 @@ void foo(const CXXD_SHARED_PTR_NS::shared_ptr<int>& i)
 int main()
   {
   
-  CXXD_SHARED_PTR_NS::shared_ptr<int> sp = CXXD_MAKE_SHARED_NS::make_shared<int>(12);
+  cxxd_shared_ptr_ns::shared_ptr<int> sp = cxxd_make_shared_ns::make_shared<int>(12);
   foo(sp);
   BOOST_TEST_EQ(*sp,13);
   

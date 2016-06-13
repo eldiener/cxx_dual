@@ -27,7 +27,7 @@ int main()
     // which means no strings will be copied; instead, the contents
     // of str will be moved into the vector.  This is less
     // expensive, but also means str might now be empty.
-    v.push_back(CXXD_MOVE_NS::move(str));
+    v.push_back(cxxd_move_ns::move(str));
     std::cout << "After move, str is \"" << str << "\"\n";
  
     std::cout << "The contents of the vector are \"" << v[0]

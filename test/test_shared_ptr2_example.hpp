@@ -29,5 +29,5 @@ public:
   void do_something();
 private:
   class implementation;
-  CXXD_SHARED_PTR_NS::shared_ptr< implementation > _imp; // hide implementation details
+  cxxd_shared_ptr_ns::shared_ptr< implementation > _imp; // hide implementation details
 };

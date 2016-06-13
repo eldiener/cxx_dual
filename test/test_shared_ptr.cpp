@@ -42,7 +42,7 @@ struct Foo
   /* ... */
 };
 
-typedef CXXD_SHARED_PTR_NS::shared_ptr<Foo> FooPtr;
+typedef cxxd_shared_ptr_ns::shared_ptr<Foo> FooPtr;
 
 struct FooPtrOps
 {

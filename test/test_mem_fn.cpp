@@ -25,11 +25,11 @@ int main()
   Foo f;
   f.data = 7;
  
-  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::display_greeting)(f),'g');
+  BOOST_TEST_EQ(cxxd_mem_fn_ns::mem_fn(&Foo::display_greeting)(f),'g');
  
-  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::display_number)(f,42),75);
+  BOOST_TEST_EQ(cxxd_mem_fn_ns::mem_fn(&Foo::display_number)(f,42),75);
  
-  BOOST_TEST_EQ(CXXD_MEM_FN_NS::mem_fn(&Foo::data)(f),7);
+  BOOST_TEST_EQ(cxxd_mem_fn_ns::mem_fn(&Foo::data)(f),7);
   
   return boost::report_errors();
   }

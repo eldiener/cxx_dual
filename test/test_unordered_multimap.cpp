@@ -18,10 +18,10 @@ int main()
     {
     
     // Create an unordered_multimap of strings (that map to strings)
-    CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string> u;
+    cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string> u;
     
-    typedef CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string>::value_type vt;
-    typedef CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string>::iterator it;
+    typedef cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string>::value_type vt;
+    typedef cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string>::iterator it;
 
     u.insert(vt("RED","#FF0000"));
     u.insert(vt("RED","#FE0000"));

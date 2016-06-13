@@ -20,23 +20,23 @@
 #include CXXD_THREAD_HEADER
 
 std::map<std::string, std::string> g_pages;
-CXXD_MUTEX_NS::mutex g_pages_mutex;
+cxxd_mutex_ns::mutex g_pages_mutex;
  
 void save_page(const std::string &url)
 {
     // simulate a long page fetch
-    CXXD_THREAD_NS::this_thread::sleep_for(CXXD_CHRONO_NS::seconds(2));
+    cxxd_thread_ns::this_thread::sleep_for(cxxd_chrono_ns::seconds(2));
     std::string result = "fake content";
  
-    CXXD_THREAD_NS::lock_guard<CXXD_MUTEX_NS::mutex> guard(g_pages_mutex);
+    cxxd_thread_ns::lock_guard<cxxd_mutex_ns::mutex> guard(g_pages_mutex);
     g_pages[url] = result;
 }
 
 int main()
     {
   
-    CXXD_THREAD_NS::thread t1(save_page, "http://foo");
-    CXXD_THREAD_NS::thread t2(save_page, "http://bar");
+    cxxd_thread_ns::thread t1(save_page, "http://foo");
+    cxxd_thread_ns::thread t2(save_page, "http://bar");
     t1.join();
     t2.join();
  

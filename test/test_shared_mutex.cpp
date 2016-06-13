@@ -30,24 +30,24 @@ class ThreadSafeCounter {
  
   // Multiple threads/readers can read the counter's value at the same time.
   unsigned int get() const {
-    CXXD_SHARED_MUTEX_NS::shared_lock<CXXD_SHARED_MUTEX_NS::shared_timed_mutex> lock(mutex_);
+    cxxd_shared_mutex_ns::shared_lock<cxxd_shared_mutex_ns::shared_timed_mutex> lock(mutex_);
     return value_;
   }
  
   // Only one thread/writer can increment/write the counter's value.
   void increment() {
-    CXXD_MUTEX_NS::unique_lock<CXXD_SHARED_MUTEX_NS::shared_timed_mutex> lock(mutex_);
+    cxxd_mutex_ns::unique_lock<cxxd_shared_mutex_ns::shared_timed_mutex> lock(mutex_);
     value_++;
   }
  
   // Only one thread/writer can reset/write the counter's value.
   void reset() {
-    CXXD_MUTEX_NS::unique_lock<CXXD_SHARED_MUTEX_NS::shared_timed_mutex> lock(mutex_);
+    cxxd_mutex_ns::unique_lock<cxxd_shared_mutex_ns::shared_timed_mutex> lock(mutex_);
     value_ = 0;
   }
  
  private:
-  mutable CXXD_SHARED_MUTEX_NS::shared_timed_mutex mutex_;
+  mutable cxxd_shared_mutex_ns::shared_timed_mutex mutex_;
   unsigned int value_;
 };
 
@@ -56,7 +56,7 @@ void increment_and_print(ThreadSafeCounter & counter)
     for (int i = 0; i < 3; i++) 
         {
         counter.increment();
-        std::cout << CXXD_THREAD_NS::this_thread::get_id() << ' ' << counter.get() << '\n';
+        std::cout << cxxd_thread_ns::this_thread::get_id() << ' ' << counter.get() << '\n';
         // Note: Writing to std::cout actually needs to be synchronized as well
         // by another std::mutex. This has been omitted to keep the example small.
         }
@@ -67,8 +67,8 @@ int main()
   
   ThreadSafeCounter counter;
  
-  CXXD_THREAD_NS::thread thread1(increment_and_print,CXXD_REF_NS::ref(counter));
-  CXXD_THREAD_NS::thread thread2(increment_and_print,CXXD_REF_NS::ref(counter));
+  cxxd_thread_ns::thread thread1(increment_and_print,cxxd_ref_ns::ref(counter));
+  cxxd_thread_ns::thread thread2(increment_and_print,cxxd_ref_ns::ref(counter));
  
   thread1.join();
   thread2.join();

@@ -18,22 +18,22 @@ int main()
         "\"I know, I'll use regular expressions.\" "
         "Now they have two problems.";
  
-    CXXD_REGEX_NS::regex self_regex("REGULAR EXPRESSIONS",
-            CXXD_REGEX_NS::regex_constants::ECMAScript | CXXD_REGEX_NS::regex_constants::icase);
+    cxxd_regex_ns::regex self_regex("REGULAR EXPRESSIONS",
+            cxxd_regex_ns::regex_constants::ECMAScript | cxxd_regex_ns::regex_constants::icase);
             
-    BOOST_TEST((CXXD_REGEX_NS::regex_search(s, self_regex)));
+    BOOST_TEST((cxxd_regex_ns::regex_search(s, self_regex)));
  
-    CXXD_REGEX_NS::regex word_regex("(\\S+)");
-    CXXD_REGEX_NS::sregex_iterator words_begin = 
-        CXXD_REGEX_NS::sregex_iterator(s.begin(), s.end(), word_regex);
-    CXXD_REGEX_NS::sregex_iterator words_end = CXXD_REGEX_NS::sregex_iterator();
+    cxxd_regex_ns::regex word_regex("(\\S+)");
+    cxxd_regex_ns::sregex_iterator words_begin = 
+        cxxd_regex_ns::sregex_iterator(s.begin(), s.end(), word_regex);
+    cxxd_regex_ns::sregex_iterator words_end = cxxd_regex_ns::sregex_iterator();
     
     BOOST_TEST_EQ((std::distance(words_begin, words_end)),19);
  
     const int N = 6;
     int w6lng(0);
-    for (CXXD_REGEX_NS::sregex_iterator i = words_begin; i != words_end; ++i) {
-        CXXD_REGEX_NS::smatch match = *i;
+    for (cxxd_regex_ns::sregex_iterator i = words_begin; i != words_end; ++i) {
+        cxxd_regex_ns::smatch match = *i;
         std::string match_str = match.str();
         if (match_str.size() > N) {
             ++w6lng;
@@ -42,8 +42,8 @@ int main()
     
     BOOST_TEST_EQ(w6lng,6);
  
-    CXXD_REGEX_NS::regex long_word_regex("(\\w{7,})");
-    std::string new_s = CXXD_REGEX_NS::regex_replace(s, long_word_regex, "[$&]");
+    cxxd_regex_ns::regex long_word_regex("(\\w{7,})");
+    std::string new_s = cxxd_regex_ns::regex_replace(s, long_word_regex, "[$&]");
     std::string exp_s = "Some people, when [confronted] with a [problem], think "
         "\"I know, I'll use [regular] [expressions].\" "
         "Now they have two [problems].";

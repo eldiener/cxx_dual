@@ -9,7 +9,7 @@
 
 #include CXXD_ATOMIC_HEADER
 
-CXXD_ATOMIC_NS::atomic<int>  ai;
+cxxd_atomic_ns::atomic<int>  ai;
  
 int  tst_val= 4;
 int  new_val= 5;

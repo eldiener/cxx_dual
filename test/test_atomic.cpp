@@ -17,21 +17,21 @@ class spinlock
     {
     private:
         typedef enum {Locked, Unlocked} LockState;
-        CXXD_ATOMIC_NS::atomic<LockState> state_;
+        cxxd_atomic_ns::atomic<LockState> state_;
     
     public:
         spinlock() : state_(Unlocked) {}
     
         void lock()
             {
-            while (state_.exchange(Locked, CXXD_ATOMIC_NS::memory_order_acquire) == Locked)
+            while (state_.exchange(Locked, cxxd_atomic_ns::memory_order_acquire) == Locked)
                 {
                 /* busy-wait */
                 }
             }
         void unlock()
             {
-            state_.store(Unlocked, CXXD_ATOMIC_NS::memory_order_release);
+            state_.store(Unlocked, cxxd_atomic_ns::memory_order_release);
             }
     };
         

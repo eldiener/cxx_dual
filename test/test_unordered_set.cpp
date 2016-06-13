@@ -14,7 +14,7 @@
 int main()
     {
   
-    CXXD_UNORDERED_SET_NS::unordered_set<int> numbers;
+    cxxd_unordered_set_ns::unordered_set<int> numbers;
     
     BOOST_TEST(numbers.empty());
  
@@ -23,7 +23,7 @@ int main()
     
     CXXD_TEST_NOT(numbers.empty());
     
-    typedef CXXD_UNORDERED_SET_NS::unordered_set<int>::iterator it;
+    typedef cxxd_unordered_set_ns::unordered_set<int>::iterator it;
     
     it search = numbers.find(13317);
     

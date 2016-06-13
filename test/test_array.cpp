@@ -23,17 +23,17 @@ int main()
   
 #if defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
   
-    CXXD_ARRAY_NS::array<int, 3> a1 = {3, 2, 1};
+    cxxd_array_ns::array<int, 3> a1 = {3, 2, 1};
   
 #else
   
     // construction uses aggregate initialization
-    CXXD_ARRAY_NS::array<int, 3> a1{ {3, 2, 1} };
+    cxxd_array_ns::array<int, 3> a1{ {3, 2, 1} };
   
 #endif
   
-    CXXD_ARRAY_NS::array<int, 3> a2 = {1, 2, 3};
-    CXXD_ARRAY_NS::array<std::string, 2> a3 = { std::string("a"), "b" };
+    cxxd_array_ns::array<int, 3> a2 = {1, 2, 3};
+    cxxd_array_ns::array<std::string, 2> a3 = { std::string("a"), "b" };
     std::vector<int> vec;
 
     // container operations are supported

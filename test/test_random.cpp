@@ -28,12 +28,12 @@ int main()
   {
   
   // Seed with a real random value, if available
-  CXXD_RANDOM_NS::random_device r;
+  cxxd_random_ns::random_device r;
  
   // Choose a random mean between 1 and 6
   
-  CXXD_RANDOM_NS::default_random_engine e1(r());
-  CXXD_RANDOM_NS::uniform_int_distribution<int> uniform_dist(1, 6);
+  cxxd_random_ns::default_random_engine e1(r());
+  cxxd_random_ns::uniform_int_distribution<int> uniform_dist(1, 6);
   int mean = uniform_dist(e1);
   std::cout << "Randomly-chosen mean: " << mean << '\n';
  
@@ -41,17 +41,17 @@ int main()
   
 #if !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
   
-  CXXD_RANDOM_NS::seed_seq seed2{r(), r(), r(), r(), r(), r(), r(), r()};
+  cxxd_random_ns::seed_seq seed2{r(), r(), r(), r(), r(), r(), r(), r()};
   
 #else
 
   unsigned int sarr[8] = {r(), r(), r(), r(), r(), r(), r(), r()};
-  CXXD_RANDOM_NS::seed_seq seed2(sarr);
+  cxxd_random_ns::seed_seq seed2(sarr);
   
 #endif
   
-  CXXD_RANDOM_NS::mt19937 e2(seed2);
-  CXXD_RANDOM_NS::normal_distribution<> normal_dist(mean, 2);
+  cxxd_random_ns::mt19937 e2(seed2);
+  cxxd_random_ns::normal_distribution<> normal_dist(mean, 2);
  
   std::map<int, int> hist;
   for (int n = 0; n < 10000; ++n) {

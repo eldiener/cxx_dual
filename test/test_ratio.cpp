@@ -12,32 +12,32 @@
 int main()
   {
   
-  BOOST_TEST((CXXD_RATIO_NS::ratio_equal<CXXD_RATIO_NS::ratio<2,3>, CXXD_RATIO_NS::ratio<4,6> >::value));
-  BOOST_TEST((CXXD_RATIO_NS::ratio_not_equal<CXXD_RATIO_NS::ratio<2,3>, CXXD_RATIO_NS::ratio<1,3> >::value));
-  BOOST_TEST((CXXD_RATIO_NS::ratio_less<CXXD_RATIO_NS::ratio<23,37>, CXXD_RATIO_NS::ratio<57,90> >::value));
-  BOOST_TEST((CXXD_RATIO_NS::ratio_greater<CXXD_RATIO_NS::ratio<23,37>, CXXD_RATIO_NS::deci>::value));
-  BOOST_TEST((CXXD_RATIO_NS::ratio_less_equal<CXXD_RATIO_NS::ratio<19,30>, CXXD_RATIO_NS::ratio<57,90> >::value));
-  BOOST_TEST((CXXD_RATIO_NS::ratio_greater_equal<CXXD_RATIO_NS::deca, CXXD_RATIO_NS::deci>::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_equal<cxxd_ratio_ns::ratio<2,3>, cxxd_ratio_ns::ratio<4,6> >::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_not_equal<cxxd_ratio_ns::ratio<2,3>, cxxd_ratio_ns::ratio<1,3> >::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_less<cxxd_ratio_ns::ratio<23,37>, cxxd_ratio_ns::ratio<57,90> >::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_greater<cxxd_ratio_ns::ratio<23,37>, cxxd_ratio_ns::deci>::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_less_equal<cxxd_ratio_ns::ratio<19,30>, cxxd_ratio_ns::ratio<57,90> >::value));
+  BOOST_TEST((cxxd_ratio_ns::ratio_greater_equal<cxxd_ratio_ns::deca, cxxd_ratio_ns::deci>::value));
   
-  typedef CXXD_RATIO_NS::ratio<2, 3> two_third;
-  typedef CXXD_RATIO_NS::ratio<1, 6> one_sixth;
+  typedef cxxd_ratio_ns::ratio<2, 3> two_third;
+  typedef cxxd_ratio_ns::ratio<1, 6> one_sixth;
  
-  typedef CXXD_RATIO_NS::ratio_add<two_third, one_sixth> sum;
+  typedef cxxd_ratio_ns::ratio_add<two_third, one_sixth> sum;
   
   BOOST_TEST_EQ(sum::num,5);
   BOOST_TEST_EQ(sum::den,6);
   
-  typedef CXXD_RATIO_NS::ratio_subtract<two_third, one_sixth> diff;
+  typedef cxxd_ratio_ns::ratio_subtract<two_third, one_sixth> diff;
   
   BOOST_TEST_EQ(diff::num,1);
   BOOST_TEST_EQ(diff::den,2);
   
-  typedef CXXD_RATIO_NS::ratio_multiply<two_third, one_sixth> rm;
+  typedef cxxd_ratio_ns::ratio_multiply<two_third, one_sixth> rm;
   
   BOOST_TEST_EQ(rm::num,1);
   BOOST_TEST_EQ(rm::den,9);
   
-  typedef CXXD_RATIO_NS::ratio_divide<two_third, one_sixth> rd;
+  typedef cxxd_ratio_ns::ratio_divide<two_third, one_sixth> rd;
   
   BOOST_TEST_EQ(rd::num,4);
   BOOST_TEST_EQ(rd::den,1);

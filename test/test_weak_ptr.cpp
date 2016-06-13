@@ -13,11 +13,11 @@
 #include CXXD_SHARED_PTR_ONLY_HEADER
 #include CXXD_WEAK_PTR_HEADER
 
-CXXD_WEAK_PTR_NS::weak_ptr<int> gw;
+cxxd_weak_ptr_ns::weak_ptr<int> gw;
  
 bool f()
 {
-    if (CXXD_SHARED_PTR_NS::shared_ptr<int> spt = gw.lock())
+    if (cxxd_shared_ptr_ns::shared_ptr<int> spt = gw.lock())
         { // Has to be copied into a shared_ptr before usage
         return true;
         }
@@ -31,7 +31,7 @@ int main()
   {
   
     {
-    CXXD_SHARED_PTR_NS::shared_ptr<int> sp(new int(42));
+    cxxd_shared_ptr_ns::shared_ptr<int> sp(new int(42));
 	gw = sp;
 	BOOST_TEST(f());
     }

@@ -18,7 +18,7 @@ int main()
     {
   
     // Create an unordered_map of three strings (that map to strings)
-    CXXD_UNORDERED_MAP_NS::unordered_map<std::string, std::string> u;
+    cxxd_unordered_map_ns::unordered_map<std::string, std::string> u;
  
     u["RED"] = "#FF0000";
     u["GREEN"] = "#00FF00";
@@ -45,7 +45,7 @@ int main()
     
 #else
 
-    typedef CXXD_UNORDERED_MAP_NS::unordered_map<std::string, std::string>::value_type vt;
+    typedef cxxd_unordered_map_ns::unordered_map<std::string, std::string>::value_type vt;
 
     BOOST_FOREACH(const vt& n,u)
         {

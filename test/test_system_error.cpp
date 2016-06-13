@@ -17,9 +17,9 @@ int main()
   
   try 
     {
-        CXXD_THREAD_NS::thread().detach(); // attempt to detach a non-thread
+        cxxd_thread_ns::thread().detach(); // attempt to detach a non-thread
     } 
-  catch(const CXXD_SYSTEM_ERROR_NS::system_error& e) 
+  catch(const cxxd_system_error_ns::system_error& e) 
     {
         std::cout << "Caught system_error with code " << e.code() 
                   << " meaning " << e.what() << '\n';

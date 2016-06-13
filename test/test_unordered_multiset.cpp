@@ -14,7 +14,7 @@
 int main()
     {
   
-    CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int> numbers;
+    cxxd_unordered_multiset_ns::unordered_multiset<int> numbers;
     
     BOOST_TEST(numbers.empty());
  
@@ -28,13 +28,13 @@ int main()
     
     CXXD_TEST_NOT(numbers.empty());
     
-    typedef CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int>::iterator it;
+    typedef cxxd_unordered_multiset_ns::unordered_multiset<int>::iterator it;
     
     it search = numbers.find(13317);
     
     BOOST_TEST(search != numbers.end());
     
-    CXXD_UNORDERED_MULTISET_NS::unordered_multiset<int>::size_type cnt(numbers.count(688));
+    cxxd_unordered_multiset_ns::unordered_multiset<int>::size_type cnt(numbers.count(688));
     
     BOOST_TEST_EQ(cnt,static_cast<unsigned>(3));
     

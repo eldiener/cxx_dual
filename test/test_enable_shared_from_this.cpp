@@ -11,11 +11,11 @@
 #include CXXD_ENABLE_SHARED_FROM_THIS_HEADER
 #include CXXD_SHARED_PTR_ONLY_HEADER
 
-class Y: public CXXD_ENABLE_SHARED_FROM_THIS_NS::enable_shared_from_this<Y>
+class Y: public cxxd_enable_shared_from_this_ns::enable_shared_from_this<Y>
 {
 public:
 
-    CXXD_SHARED_PTR_NS::shared_ptr<Y> f()
+    cxxd_shared_ptr_ns::shared_ptr<Y> f()
     {
         return shared_from_this();
     }
@@ -24,8 +24,8 @@ public:
 int main()
   {
   
-  CXXD_SHARED_PTR_NS::shared_ptr<Y> p(new Y);
-  CXXD_SHARED_PTR_NS::shared_ptr<Y> q = p->f();
+  cxxd_shared_ptr_ns::shared_ptr<Y> p(new Y);
+  cxxd_shared_ptr_ns::shared_ptr<Y> q = p->f();
   BOOST_TEST_EQ(p,q);
   BOOST_TEST(!(p < q || q < p));
   

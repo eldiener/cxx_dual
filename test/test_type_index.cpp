@@ -24,27 +24,27 @@ struct C : A {};
 int main()
     {
   
-    std::map<CXXD_TYPE_INDEX_NS::type_index, std::string> type_names;
+    std::map<cxxd_type_index_ns::type_index, std::string> type_names;
  
-    type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(int))] = "int";
-    type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(double))] = "double";
-    type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(A))] = "A";
-    type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(B))] = "B";
-    type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(C))] = "C";
+    type_names[cxxd_type_index_ns::type_index(typeid(int))] = "int";
+    type_names[cxxd_type_index_ns::type_index(typeid(double))] = "double";
+    type_names[cxxd_type_index_ns::type_index(typeid(A))] = "A";
+    type_names[cxxd_type_index_ns::type_index(typeid(B))] = "B";
+    type_names[cxxd_type_index_ns::type_index(typeid(C))] = "C";
  
     int i;
     double d;
     A a;
  
     // note that we're storing pointer to type A
-    CXXD_SHARED_PTR_NS::shared_ptr<A> b(new B);
-    CXXD_SHARED_PTR_NS::shared_ptr<A> c(new C);
+    cxxd_shared_ptr_ns::shared_ptr<A> b(new B);
+    cxxd_shared_ptr_ns::shared_ptr<A> c(new C);
     
-    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(i))],"int");
-    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(d))],"double");
-    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(a))],"A");
-    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*b))],"B");
-    BOOST_TEST_EQ(type_names[CXXD_TYPE_INDEX_NS::type_index(typeid(*c))],"C");
+    BOOST_TEST_EQ(type_names[cxxd_type_index_ns::type_index(typeid(i))],"int");
+    BOOST_TEST_EQ(type_names[cxxd_type_index_ns::type_index(typeid(d))],"double");
+    BOOST_TEST_EQ(type_names[cxxd_type_index_ns::type_index(typeid(a))],"A");
+    BOOST_TEST_EQ(type_names[cxxd_type_index_ns::type_index(typeid(*b))],"B");
+    BOOST_TEST_EQ(type_names[cxxd_type_index_ns::type_index(typeid(*c))],"C");
  
     return boost::report_errors();
     }   
