@@ -15,7 +15,7 @@
 // #define BOOST_SYSTEM_NO_DEPRECATED
 #endif                                                                         
 
-#include CXXD_CHRONO_HEADER
+#include <boost/cxx_dual/impl/chrono.hpp>
 
 int main()
   {

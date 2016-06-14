@@ -9,7 +9,7 @@
 #include <boost/cxx_dual/regex.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_REGEX_HEADER
+#include <boost/cxx_dual/impl/regex.hpp>
 
 int main()
     {

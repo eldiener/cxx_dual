@@ -27,7 +27,7 @@
 #include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SHARED_PTR_ONLY_HEADER
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
 
 //  The application will produce a series of
 //  objects of type Foo which later must be

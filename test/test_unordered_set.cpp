@@ -9,7 +9,7 @@
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include CXXD_UNORDERED_SET_HEADER
+#include <boost/cxx_dual/impl/unordered_set.hpp>
 
 int main()
     {

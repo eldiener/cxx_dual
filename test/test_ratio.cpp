@@ -7,7 +7,7 @@
 #include <boost/cxx_dual/ratio.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_RATIO_HEADER
+#include <boost/cxx_dual/impl/ratio.hpp>
 
 int main()
   {

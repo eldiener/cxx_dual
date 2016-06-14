@@ -5,7 +5,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <boost/cxx_dual/atomic.hpp>
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
 #if !CXXD_HAS_STD_ATOMIC && defined(BOOST_ATOMIC_NO_ATOMIC_FLAG_INIT)
 

@@ -11,9 +11,9 @@
 #include <boost/cxx_dual/mutex.hpp>
 #include <boost/cxx_dual/condition_variable.hpp>
  
-#include CXXD_CONDITION_VARIABLE_HEADER
-#include CXXD_THREAD_HEADER
-#include CXXD_MUTEX_HEADER
+#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/impl/mutex.hpp>
+#include <boost/cxx_dual/impl/condition_variable.hpp>
 
 cxxd_mutex_ns::mutex m;
 cxxd_condition_variable_ns::condition_variable cv;

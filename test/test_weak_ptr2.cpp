@@ -9,7 +9,7 @@
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include CXXD_SHARED_PTR_HEADER
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
 
 cxxd_shared_ptr_ns::weak_ptr<int> gw;
  

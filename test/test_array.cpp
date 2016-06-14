@@ -16,7 +16,7 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_ARRAY_HEADER
+#include <boost/cxx_dual/impl/array.hpp>
 
 int main()
     {

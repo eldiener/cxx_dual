@@ -15,8 +15,8 @@
 
 #include <boost/cxx_dual/ratio.hpp>
 
-#include CXXD_CHRONO_HEADER
-#include CXXD_RATIO_HEADER
+#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/impl/ratio.hpp>
 
 int main()
   {

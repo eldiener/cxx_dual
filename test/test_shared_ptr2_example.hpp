@@ -10,7 +10,7 @@
 
 #include <boost/cxx_dual/shared_ptr.hpp>
 
-#include CXXD_SHARED_PTR_ONLY_HEADER
+#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
 
 //  This example demonstrates the handle/body idiom (also called pimpl and
 //  several other names).  It separates the interface (in this header file)

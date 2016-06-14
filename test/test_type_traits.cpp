@@ -12,7 +12,7 @@
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include CXXD_TYPE_TRAITS_HEADER
+#include <boost/cxx_dual/impl/type_traits.hpp>
 
 class A {};
 

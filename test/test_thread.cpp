@@ -10,9 +10,9 @@
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_CHRONO_HEADER
-#include CXXD_REF_HEADER
-#include CXXD_THREAD_HEADER
+#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
 
 void f1(int n)
 {

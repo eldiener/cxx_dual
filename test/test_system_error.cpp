@@ -9,8 +9,8 @@
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SYSTEM_ERROR_HEADER
-#include CXXD_THREAD_HEADER
+#include <boost/cxx_dual/impl/system_error.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
 
 int main()
   {

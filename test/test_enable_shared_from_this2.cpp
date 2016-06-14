@@ -7,7 +7,7 @@
 #include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SHARED_PTR_HEADER
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
 
 class Y: public cxxd_shared_ptr_ns::enable_shared_from_this<Y>
 {

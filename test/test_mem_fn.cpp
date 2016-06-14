@@ -7,7 +7,7 @@
 #include <boost/cxx_dual/mem_fn.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_MEM_FN_HEADER
+#include <boost/cxx_dual/impl/mem_fn.hpp>
  
 struct Foo {
     char display_greeting() {

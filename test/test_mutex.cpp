@@ -15,9 +15,9 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_CHRONO_HEADER
-#include CXXD_MUTEX_HEADER
-#include CXXD_THREAD_HEADER
+#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/impl/mutex.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
 
 std::map<std::string, std::string> g_pages;
 cxxd_mutex_ns::mutex g_pages_mutex;

@@ -7,7 +7,7 @@
 #include <boost/cxx_dual/atomic.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
 cxxd_atomic_ns::atomic<int>  ai;
  

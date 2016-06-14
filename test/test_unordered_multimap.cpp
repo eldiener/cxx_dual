@@ -12,7 +12,7 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_UNORDERED_MULTIMAP_HEADER
+#include <boost/cxx_dual/impl/unordered_multimap.hpp>
 
 int main()
     {

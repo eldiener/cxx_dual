@@ -19,10 +19,10 @@
 #include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SHARED_MUTEX_HEADER
-#include CXXD_MUTEX_HEADER
-#include CXXD_REF_HEADER
-#include CXXD_THREAD_HEADER
+#include <boost/cxx_dual/impl/shared_mutex.hpp>
+#include <boost/cxx_dual/impl/mutex.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
 
 class ThreadSafeCounter {
  public:

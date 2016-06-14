@@ -9,8 +9,8 @@
 #include <boost/cxx_dual/bind.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_FUNCTION_HEADER
-#include CXXD_BIND_HEADER
+#include <boost/cxx_dual/impl/function.hpp>
+#include <boost/cxx_dual/impl/bind.hpp>
 
 struct Foo {
     Foo(int num) : num_(num) {}

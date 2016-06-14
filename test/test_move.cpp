@@ -10,7 +10,7 @@
 #include <boost/cxx_dual/move.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_MOVE_HEADER
+#include <boost/cxx_dual/impl/move.hpp>
 
 int main()
     {

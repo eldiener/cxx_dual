@@ -9,9 +9,9 @@
 #include <boost/cxx_dual/ref.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_BIND_HEADER
-#include CXXD_FUNCTION_HEADER
-#include CXXD_REF_HEADER
+#include <boost/cxx_dual/impl/bind.hpp>
+#include <boost/cxx_dual/impl/function.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
 
 void f(int& n1, int& n2, const int& n3)
 {

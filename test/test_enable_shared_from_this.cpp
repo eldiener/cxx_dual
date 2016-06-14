@@ -8,8 +8,8 @@
 #include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_ENABLE_SHARED_FROM_THIS_HEADER
-#include CXXD_SHARED_PTR_ONLY_HEADER
+#include <boost/cxx_dual/impl/enable_shared_from_this.hpp>
+#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
 
 class Y: public cxxd_enable_shared_from_this_ns::enable_shared_from_this<Y>
 {

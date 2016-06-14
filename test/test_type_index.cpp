@@ -11,8 +11,8 @@
 #include <boost/cxx_dual/type_index.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SHARED_PTR_ONLY_HEADER
-#include CXXD_TYPE_INDEX_HEADER
+#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
+#include <boost/cxx_dual/impl/type_index.hpp>
  
 struct A {
     virtual ~A() {}
