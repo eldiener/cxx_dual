@@ -11,13 +11,6 @@
     Chooses either the Boost hash implementation or the C++ standard hash implementation.
 */
 
-/** @def CXXD_HASH_HEADER
-    @brief The hash header file name.
-    
-    The object-like macro expands to the include header file designation for the hash header file.
-    The macro is used with the syntax: \#include CXXD_HASH_HEADER
-*/
-
 /** @def CXXD_HASH_NS
     @brief The hash namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_HASH)
                     #undef CXXD_HAS_STD_HASH
-                    #undef CXXD_HASH_HEADER
                 #endif
                 #define CXXD_HAS_STD_HASH 0
-                #define CXXD_HASH_HEADER <boost/cxx_dual/detail/hash.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_HASH)
                 #undef CXXD_HAS_STD_HASH
-                #undef CXXD_HASH_HEADER
             #endif
             #define CXXD_HAS_STD_HASH 1
-            #define CXXD_HASH_HEADER <boost/cxx_dual/detail/hash.hpp>
         #endif
     #endif
 #endif

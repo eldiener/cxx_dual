@@ -11,25 +11,6 @@
     Chooses either the Boost shared_ptr implementation or the C++ standard shared_ptr implementation.
 */
 
-/** @def CXXD_SHARED_PTR_HEADER
-    @brief The shared_ptr header file name.
-    
-    The object-like macro expands to the include header file designation for the shared_ptr header file.
-    The macro is used with the syntax: \#include CXXD_SHARED_PTR_HEADER
-    
-    The included header file includes the shared_ptr implementation as well as
-    the weak_ptr, make_shared, and enable_shared_from_this implementations.
-*/
-
-/** @def CXXD_SHARED_PTR_ONLY_HEADER
-    @brief The shared_ptr header file name.
-    
-    The object-like macro expands to the include header file designation for the shared_ptr header file.
-    The macro is used with the syntax: \#include CXXD_SHARED_PTR_HEADER
-    
-    The included header file includes only the shared_ptr implementation.
-*/
-
 /** @def CXXD_SHARED_PTR_NS
     @brief The shared_ptr namespace.
     
@@ -80,22 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_SHARED_PTR)
                     #undef CXXD_HAS_STD_SHARED_PTR
-                    #undef CXXD_SHARED_PTR_HEADER
-                    #undef CXXD_SHARED_PTR_ONLY_HEADER
                 #endif
                 #define CXXD_HAS_STD_SHARED_PTR 0
-                #define CXXD_SHARED_PTR_HEADER <boost/cxx_dual/detail/shared_ptr.hpp>
-                #define CXXD_SHARED_PTR_ONLY_HEADER <boost/cxx_dual/detail/shared_ptr_only.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SHARED_PTR)
                 #undef CXXD_HAS_STD_SHARED_PTR
-                #undef CXXD_SHARED_PTR_HEADER
-                #undef CXXD_SHARED_PTR_ONLY_HEADER
             #endif
             #define CXXD_HAS_STD_SHARED_PTR 1
-            #define CXXD_SHARED_PTR_HEADER <boost/cxx_dual/detail/shared_ptr.hpp>
-            #define CXXD_SHARED_PTR_ONLY_HEADER <boost/cxx_dual/detail/shared_ptr_only.hpp>
         #endif
     #endif
 #endif

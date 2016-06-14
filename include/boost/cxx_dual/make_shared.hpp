@@ -11,13 +11,6 @@
     Chooses either the Boost make_shared implementation or the C++ standard make_shared implementation.
 */
 
-/** @def CXXD_MAKE_SHARED_HEADER
-    @brief The make_shared header file name.
-    
-    The object-like macro expands to the include header file designation for the make_shared header file.
-    The macro is used with the syntax: \#include CXXD_MAKE_SHARED_HEADER
-*/
-
 /** @def CXXD_MAKE_SHARED_NS
     @brief The make_shared namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_MAKE_SHARED)
                     #undef CXXD_HAS_STD_MAKE_SHARED
-                    #undef CXXD_MAKE_SHARED_HEADER
                 #endif
                 #define CXXD_HAS_STD_MAKE_SHARED 0
-                #define CXXD_MAKE_SHARED_HEADER <boost/cxx_dual/detail/make_shared.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MAKE_SHARED)
                 #undef CXXD_HAS_STD_MAKE_SHARED
-                #undef CXXD_MAKE_SHARED_HEADER
             #endif
             #define CXXD_HAS_STD_MAKE_SHARED 1
-            #define CXXD_MAKE_SHARED_HEADER <boost/cxx_dual/detail/make_shared.hpp>
         #endif
     #endif
 #endif

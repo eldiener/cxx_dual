@@ -11,13 +11,6 @@
     Chooses either the Boost unordered_multimap implementation or the C++ standard unordered_multimap implementation.
 */
 
-/** @def CXXD_UNORDERED_MULTIMAP_HEADER
-    @brief The unordered_multimap header file name.
-    
-    The object-like macro expands to the include header file designation for the unordered_multimap header file.
-    The macro is used with the syntax: \#include CXXD_UNORDERED_MULTIMAP_HEADER
-*/
-
 /** @def CXXD_UNORDERED_MULTIMAP_NS
     @brief The unordered_multimap namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MULTIMAP)
                     #undef CXXD_HAS_STD_UNORDERED_MULTIMAP
-                    #undef CXXD_UNORDERED_MULTIMAP_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_MULTIMAP 0
-                #define CXXD_UNORDERED_MULTIMAP_HEADER <boost/cxx_dual/detail/unordered_multimap.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_MULTIMAP)
                 #undef CXXD_HAS_STD_UNORDERED_MULTIMAP
-                #undef CXXD_UNORDERED_MULTIMAP_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_MULTIMAP 1
-            #define CXXD_UNORDERED_MULTIMAP_HEADER <boost/cxx_dual/detail/unordered_multimap.hpp>
         #endif
     #endif
 #endif

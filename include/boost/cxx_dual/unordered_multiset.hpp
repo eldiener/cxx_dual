@@ -11,13 +11,6 @@
     Chooses either the Boost unordered_multiset implementation or the C++ standard unordered_multiset implementation.
 */
 
-/** @def CXXD_UNORDERED_MULTISET_HEADER
-    @brief The unordered_multiset header file name.
-    
-    The object-like macro expands to the include header file designation for the unordered_multiset header file.
-    The macro is used with the syntax: \#include CXXD_UNORDERED_MULTISET_HEADER
-*/
-
 /** @def CXXD_UNORDERED_MULTISET_NS
     @brief The unordered_multiset namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MULTISET)
                     #undef CXXD_HAS_STD_UNORDERED_MULTISET
-                    #undef CXXD_UNORDERED_MULTISET_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_MULTISET 0
-                #define CXXD_UNORDERED_MULTISET_HEADER <boost/cxx_dual/detail/unordered_multiset.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_MULTISET)
                 #undef CXXD_HAS_STD_UNORDERED_MULTISET
-                #undef CXXD_UNORDERED_MULTISET_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_MULTISET 1
-            #define CXXD_UNORDERED_MULTISET_HEADER <boost/cxx_dual/detail/unordered_multiset.hpp>
         #endif
     #endif
 #endif

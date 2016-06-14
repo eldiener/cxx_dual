@@ -3,8 +3,9 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#if !defined(CXXD_DETAIL_MOVE_HPP)
-#define CXXD_DETAIL_MOVE_HPP
+#if !defined(CXXD_HAS_STD_MOVE)
+#include <boost/cxx_dual/move.hpp>
+#endif
 
 #if CXXD_HAS_STD_MOVE
 
@@ -19,5 +20,3 @@ namespace cxxd_move_ns = std ;
 namespace cxxd_move_ns = boost ;
 
 #endif
-
-#endif // !defined(CXXD_DETAIL_MOVE_HPP)

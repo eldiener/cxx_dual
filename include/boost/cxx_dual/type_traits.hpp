@@ -11,13 +11,6 @@
     Chooses either the Boost type_traits implementation or the C++ standard type_traits implementation.
 */
 
-/** @def CXXD_TYPE_TRAITS_HEADER
-    @brief The type_traits header file name.
-    
-    The object-like macro expands to the include header file designation for the type_traits header file.
-    The macro is used with the syntax: \#include CXXD_TYPE_TRAITS_HEADER
-*/
-
 /** @def CXXD_TYPE_TRAITS_NS
     @brief The type_traits namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_TYPE_TRAITS)
                     #undef CXXD_HAS_STD_TYPE_TRAITS
-                    #undef CXXD_TYPE_TRAITS_HEADER
                 #endif
                 #define CXXD_HAS_STD_TYPE_TRAITS 0
-                #define CXXD_TYPE_TRAITS_HEADER <boost/cxx_dual/detail/type_traits.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TYPE_TRAITS)
                 #undef CXXD_HAS_STD_TYPE_TRAITS
-                #undef CXXD_TYPE_TRAITS_HEADER
             #endif
             #define CXXD_HAS_STD_TYPE_TRAITS 1
-            #define CXXD_TYPE_TRAITS_HEADER <boost/cxx_dual/detail/type_traits.hpp>
         #endif
     #endif
 #endif

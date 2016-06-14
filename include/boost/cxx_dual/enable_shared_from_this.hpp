@@ -11,13 +11,6 @@
     Chooses either the Boost enable_shared_from_this_implementation or the C++ standard enable_shared_from_this implementation.
 */
 
-/** @def CXXD_ENABLE_SHARED_FROM_THIS_HEADER
-    @brief The enable_shared_from_this header file name.
-    
-    The object-like macro expands to the include header file designation for the enable_shared_from_this header file.
-    The macro is used with the syntax: \#include CXXD_ENABLE_SHARED_FROM_THIS_HEADER
-*/
-
 /** @def CXXD_ENABLE_SHARED_FROM_THIS_NS
     @brief The enable_shared_from_this namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS)
                     #undef CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
-                    #undef CXXD_ENABLE_SHARED_FROM_THIS_HEADER
                 #endif
                 #define CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS 0
-                #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <boost/cxx_dual/detail/enable_shared_from_this.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS)
                 #undef CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
-                #undef CXXD_ENABLE_SHARED_FROM_THIS_HEADER
             #endif
             #define CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS 1
-            #define CXXD_ENABLE_SHARED_FROM_THIS_HEADER <boost/cxx_dual/detail/enable_shared_from_this.hpp>
         #endif
     #endif
 #endif

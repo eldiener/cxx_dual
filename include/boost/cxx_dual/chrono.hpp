@@ -11,13 +11,6 @@
     Chooses either the Boost chrono implementation or the C++ standard chrono implementation.
 */
 
-/** @def CXXD_CHRONO_HEADER
-    @brief The chrono header file name.
-    
-    The object-like macro expands to the include header file designation for the chrono header file.
-    The macro is used with the syntax: \#include CXXD_CHRONO_HEADER
-*/
-
 /** @def CXXD_CHRONO_NS
     @brief The chrono namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_CHRONO)
                     #undef CXXD_HAS_STD_CHRONO
-                    #undef CXXD_CHRONO_HEADER
                 #endif
                 #define CXXD_HAS_STD_CHRONO 0
-                #define CXXD_CHRONO_HEADER <boost/cxx_dual/detail/chrono.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_CHRONO)
                 #undef CXXD_HAS_STD_CHRONO
-                #undef CXXD_CHRONO_HEADER
             #endif
             #define CXXD_HAS_STD_CHRONO 1
-            #define CXXD_CHRONO_HEADER <boost/cxx_dual/detail/chrono.hpp>
         #endif
     #endif
 #endif

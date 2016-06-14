@@ -11,13 +11,6 @@
     Chooses either the Boost tuple implementation or the C++ standard tuple implementation.
 */
 
-/** @def CXXD_TUPLE_HEADER
-    @brief The tuple header file name.
-    
-    The object-like macro expands to the include header file designation for the tuple header file.
-    The macro is used with the syntax: \#include CXXD_TUPLE_HEADER
-*/
-
 /** @def CXXD_TUPLE_NS
     @brief The tuple namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_TUPLE)
                     #undef CXXD_HAS_STD_TUPLE
-                    #undef CXXD_TUPLE_HEADER
                 #endif
                 #define CXXD_HAS_STD_TUPLE 0
-                #define CXXD_TUPLE_HEADER <boost/cxx_dual/detail/tuple.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TUPLE)
                 #undef CXXD_HAS_STD_TUPLE
-                #undef CXXD_TUPLE_HEADER
             #endif
             #define CXXD_HAS_STD_TUPLE 1
-            #define CXXD_TUPLE_HEADER <boost/cxx_dual/detail/tuple.hpp>
         #endif
     #endif
 #endif

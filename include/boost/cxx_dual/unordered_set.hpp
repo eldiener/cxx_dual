@@ -11,13 +11,6 @@
     Chooses either the Boost unordered_set implementation or the C++ standard unordered_set implementation.
 */
 
-/** @def CXXD_UNORDERED_SET_HEADER
-    @brief The unordered_set header file name.
-    
-    The object-like macro expands to the include header file designation for the unordered_set header file.
-    The macro is used with the syntax: \#include CXXD_UNORDERED_SET_HEADER
-*/
-
 /** @def CXXD_UNORDERED_SET_NS
     @brief The unordered_set namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_SET)
                     #undef CXXD_HAS_STD_UNORDERED_SET
-                    #undef CXXD_UNORDERED_SET_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_SET 0
-                #define CXXD_UNORDERED_SET_HEADER <boost/cxx_dual/detail/unordered_set.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_SET)
                 #undef CXXD_HAS_STD_UNORDERED_SET
-                #undef CXXD_UNORDERED_SET_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_SET 1
-            #define CXXD_UNORDERED_SET_HEADER <boost/cxx_dual/detail/unordered_set.hpp>
         #endif
     #endif
 #endif

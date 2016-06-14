@@ -11,13 +11,6 @@
     Chooses either the Boost mem_fn implementation or the C++ standard mem_fn implementation.
 */
 
-/** @def CXXD_MEM_FN_HEADER
-    @brief The mem_fn header file name.
-    
-    The object-like macro expands to the include header file designation for the mem_fn header file.
-    The macro is used with the syntax: \#include CXXD_MEM_FN_HEADER
-*/
-
 /** @def CXXD_MEM_FN_NS
     @brief The mem_fn namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_MEM_FN)
                     #undef CXXD_HAS_STD_MEM_FN
-                    #undef CXXD_MEM_FN_HEADER
                 #endif
                 #define CXXD_HAS_STD_MEM_FN 0
-                #define CXXD_MEM_FN_HEADER <boost/cxx_dual/detail/mem_fn.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MEM_FN)
                 #undef CXXD_HAS_STD_MEM_FN
-                #undef CXXD_MEM_FN_HEADER
             #endif
             #define CXXD_HAS_STD_MEM_FN 1
-            #define CXXD_MEM_FN_HEADER <boost/cxx_dual/detail/mem_fn.hpp>
         #endif
     #endif
 #endif

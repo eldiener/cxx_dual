@@ -11,13 +11,6 @@
     Chooses either the Boost unordered_map implementation or the C++ standard unordered_map implementation.
 */
 
-/** @def CXXD_UNORDERED_MAP_HEADER
-    @brief The unordered_map header file name.
-    
-    The object-like macro expands to the include header file designation for the unordered_map header file.
-    The macro is used with the syntax: \#include CXXD_UNORDERED_MAP_HEADER
-*/
-
 /** @def CXXD_UNORDERED_MAP_NS
     @brief The unordered_map namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_UNORDERED_MAP)
                     #undef CXXD_HAS_STD_UNORDERED_MAP
-                    #undef CXXD_UNORDERED_MAP_HEADER
                 #endif
                 #define CXXD_HAS_STD_UNORDERED_MAP 0
-                #define CXXD_UNORDERED_MAP_HEADER <boost/cxx_dual/detail/unordered_map.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_UNORDERED_MAP)
                 #undef CXXD_HAS_STD_UNORDERED_MAP
-                #undef CXXD_UNORDERED_MAP_HEADER
             #endif
             #define CXXD_HAS_STD_UNORDERED_MAP 1
-            #define CXXD_UNORDERED_MAP_HEADER <boost/cxx_dual/detail/unordered_map.hpp>
         #endif
     #endif
 #endif

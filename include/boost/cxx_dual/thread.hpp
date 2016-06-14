@@ -11,13 +11,6 @@
     Chooses either the Boost thread implementation or the C++ standard thread implementation.
 */
 
-/** @def CXXD_THREAD_HEADER
-    @brief The thread header file name.
-    
-    The object-like macro expands to the include header file designation for the thread header file.
-    The macro is used with the syntax: \#include CXXD_THREAD_HEADER
-*/
-
 /** @def CXXD_THREAD_NS
     @brief The thread namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_THREAD)
                     #undef CXXD_HAS_STD_THREAD
-                    #undef CXXD_THREAD_HEADER
                 #endif
                 #define CXXD_HAS_STD_THREAD 0
-                #define CXXD_THREAD_HEADER <boost/cxx_dual/detail/thread.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_THREAD)
                 #undef CXXD_HAS_STD_THREAD
-                #undef CXXD_THREAD_HEADER
             #endif
             #define CXXD_HAS_STD_THREAD 1
-            #define CXXD_THREAD_HEADER <boost/cxx_dual/detail/thread.hpp>
         #endif
     #endif
 #endif

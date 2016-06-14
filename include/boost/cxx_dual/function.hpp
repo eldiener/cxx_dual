@@ -11,13 +11,6 @@
     Chooses either the Boost function implementation or the C++ standard function implementation.
 */
 
-/** @def CXXD_FUNCTION_HEADER
-    @brief The function header file name.
-    
-    The object-like macro expands to the include header file designation for the function header file.
-    The macro is used with the syntax: \#include CXXD_FUNCTION_HEADER
-*/
-
 /** @def CXXD_FUNCTION_NS
     @brief The function namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_FUNCTION)
                     #undef CXXD_HAS_STD_FUNCTION
-                    #undef CXXD_FUNCTION_HEADER
                 #endif
                 #define CXXD_HAS_STD_FUNCTION 0
-                #define CXXD_FUNCTION_HEADER <boost/cxx_dual/detail/function.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_FUNCTION)
                 #undef CXXD_HAS_STD_FUNCTION
-                #undef CXXD_FUNCTION_HEADER
             #endif
             #define CXXD_HAS_STD_FUNCTION 1
-            #define CXXD_FUNCTION_HEADER <boost/cxx_dual/detail/function.hpp>
         #endif
     #endif
 #endif

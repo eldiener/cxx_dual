@@ -11,13 +11,6 @@
     Chooses either the Boost type_index implementation or the C++ standard type_index implementation.
 */
 
-/** @def CXXD_TYPE_INDEX_HEADER
-    @brief The type_index header file name.
-    
-    The object-like macro expands to the include header file designation for the type_index header file.
-    The macro is used with the syntax: \#include CXXD_TYPE_INDEX_HEADER
-*/
-
 /** @def CXXD_TYPE_INDEX_NS
     @brief The type_index namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_TYPE_INDEX)
                     #undef CXXD_HAS_STD_TYPE_INDEX
-                    #undef CXXD_TYPE_INDEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_TYPE_INDEX 0
-                #define CXXD_TYPE_INDEX_HEADER <boost/cxx_dual/detail/type_index.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_TYPE_INDEX)
                 #undef CXXD_HAS_STD_TYPE_INDEX
-                #undef CXXD_TYPE_INDEX_HEADER
             #endif
             #define CXXD_HAS_STD_TYPE_INDEX 1
-            #define CXXD_TYPE_INDEX_HEADER <boost/cxx_dual/detail/type_index.hpp>
         #endif
     #endif
 #endif

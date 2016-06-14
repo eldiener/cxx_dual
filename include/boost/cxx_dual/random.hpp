@@ -11,13 +11,6 @@
     Chooses either the Boost random implementation or the C++ standard random implementation.
 */
 
-/** @def CXXD_RANDOM_HEADER
-    @brief The random header file name.
-    
-    The object-like macro expands to the include header file designation for the random header file.
-    The macro is used with the syntax: \#include CXXD_RANDOM_HEADER
-*/
-
 /** @def CXXD_RANDOM_NS
     @brief The random namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_RANDOM)
                     #undef CXXD_HAS_STD_RANDOM
-                    #undef CXXD_RANDOM_HEADER
                 #endif
                 #define CXXD_HAS_STD_RANDOM 0
-                #define CXXD_RANDOM_HEADER <boost/cxx_dual/detail/random.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_RANDOM)
                 #undef CXXD_HAS_STD_RANDOM
-                #undef CXXD_RANDOM_HEADER
             #endif
             #define CXXD_HAS_STD_RANDOM 1
-            #define CXXD_RANDOM_HEADER <boost/cxx_dual/detail/random.hpp>
         #endif
     #endif
 #endif

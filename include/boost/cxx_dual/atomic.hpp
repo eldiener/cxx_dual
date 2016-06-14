@@ -11,13 +11,6 @@
     Chooses either the Boost atomic implementation or the C++ standard atomic implementation.
 */
 
-/** @def CXXD_ATOMIC_HEADER
-    @brief The atomic header file name.
-    
-    The object-like macro expands to the include header file designation for the atomic header file.
-    The macro is used with the syntax: \#include CXXD_ATOMIC_HEADER
-*/
-
 /** @def CXXD_ATOMIC_MACRO(macro)
     @brief Generates an object-like macro name from the 'macro' name passed to it.
     
@@ -75,22 +68,14 @@
             #else
                 #if defined(CXXD_HAS_STD_ATOMIC)
                     #undef CXXD_HAS_STD_ATOMIC
-                    #undef CXXD_ATOMIC_HEADER
-                    #undef CXXD_ATOMIC_MACRO
                 #endif
                 #define CXXD_HAS_STD_ATOMIC 0
-                #define CXXD_ATOMIC_HEADER <boost/cxx_dual/detail/atomic.hpp>
-                #define CXXD_ATOMIC_MACRO(macro) BOOST_ ## macro
             #endif
         #else
             #if defined(CXXD_HAS_STD_ATOMIC)
                 #undef CXXD_HAS_STD_ATOMIC
-                #undef CXXD_ATOMIC_HEADER
-                #undef CXXD_ATOMIC_MACRO
             #endif
             #define CXXD_HAS_STD_ATOMIC 1
-            #define CXXD_ATOMIC_HEADER <boost/cxx_dual/detail/atomic.hpp>
-            #define CXXD_ATOMIC_MACRO(macro) macro
         #endif
     #endif
 #endif

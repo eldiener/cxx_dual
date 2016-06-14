@@ -11,13 +11,6 @@
     Chooses either the Boost bind implementation or the C++ standard bind implementation.
 */
 
-/** @def CXXD_BIND_HEADER
-    @brief The bind header file name.
-    
-    The object-like macro expands to the include header file designation for the bind header file.
-    The macro is used with the syntax: \#include CXXD_BIND_HEADER
-*/
-
 /** @def CXXD_BIND_NS
     @brief The bind namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_BIND)
                     #undef CXXD_HAS_STD_BIND
-                    #undef CXXD_BIND_HEADER
                 #endif
                 #define CXXD_HAS_STD_BIND 0
-                #define CXXD_BIND_HEADER <boost/cxx_dual/detail/bind.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_BIND)
                 #undef CXXD_HAS_STD_BIND
-                #undef CXXD_BIND_HEADER
             #endif
             #define CXXD_HAS_STD_BIND 1
-            #define CXXD_BIND_HEADER <boost/cxx_dual/detail/bind.hpp>
         #endif
     #endif
 #endif

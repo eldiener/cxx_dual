@@ -11,13 +11,6 @@
     Chooses either the Boost shared_mutex implementation or the C++ standard shared_mutex implementation.
 */
 
-/** @def CXXD_SHARED_MUTEX_HEADER
-    @brief The shared_mutex header file name.
-    
-    The object-like macro expands to the include header file designation for the shared_mutex header file.
-    The macro is used with the syntax: \#include CXXD_SHARED_MUTEX_HEADER
-*/
-
 /** @def CXXD_SHARED_MUTEX_NS
     @brief The shared_mutex namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_SHARED_MUTEX)
                     #undef CXXD_HAS_STD_SHARED_MUTEX
-                    #undef CXXD_SHARED_MUTEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_SHARED_MUTEX 0
-                #define CXXD_SHARED_MUTEX_HEADER <boost/cxx_dual/detail/shared_mutex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SHARED_MUTEX)
                 #undef CXXD_HAS_STD_SHARED_MUTEX
-                #undef CXXD_SHARED_MUTEX_HEADER
             #endif
             #define CXXD_HAS_STD_SHARED_MUTEX 1
-            #define CXXD_SHARED_MUTEX_HEADER <boost/cxx_dual/detail/shared_mutex.hpp>
         #endif
     #endif
 #endif

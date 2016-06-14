@@ -11,13 +11,6 @@
     Chooses either the Boost condition_variable implementation or the C++ standard condition_variable implementation.
 */
 
-/** @def CXXD_CONDITION_VARIABLE_HEADER
-    @brief The condition_variable header file name.
-    
-    The object-like macro expands to the include header file designation for the condition_variable header file.
-    The macro is used with the syntax: \#include CXXD_CONDITION_VARIABLE_HEADER
-*/
-
 /** @def CXXD_CONDITION_VARIABLE_NS
     @brief The condition_variable namespace.
     
@@ -68,18 +61,14 @@
             #else
                 #if defined(CXXD_HAS_STD_CONDITION_VARIABLE)
                     #undef CXXD_HAS_STD_CONDITION_VARIABLE
-                    #undef CXXD_CONDITION_VARIABLE_HEADER
                 #endif
                 #define CXXD_HAS_STD_CONDITION_VARIABLE 0
-                #define CXXD_CONDITION_VARIABLE_HEADER <boost/cxx_dual/detail/condition_variable.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_CONDITION_VARIABLE)
                 #undef CXXD_HAS_STD_CONDITION_VARIABLE
-                #undef CXXD_CONDITION_VARIABLE_HEADER
             #endif
             #define CXXD_HAS_STD_CONDITION_VARIABLE 1
-            #define CXXD_CONDITION_VARIABLE_HEADER <boost/cxx_dual/detail/condition_variable.hpp>
         #endif
     #endif
 #endif
