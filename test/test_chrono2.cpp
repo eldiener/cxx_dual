@@ -12,7 +12,7 @@
 #if !CXXD_HAS_STD_CHRONO
 #define BOOST_CHRONO_HEADER_ONLY
 #define BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_HANDLING
-// #define BOOST_SYSTEM_NO_DEPRECATED
+#define BOOST_SYSTEM_NO_DEPRECATED // Remove when chrono 'master' branch is updated from 'develop'
 #endif                                                                         
 
 #include CXXD_CHRONO_HEADER
