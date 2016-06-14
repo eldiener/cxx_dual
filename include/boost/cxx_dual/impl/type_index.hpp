@@ -3,6 +3,9 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#if !defined(CXXD_IMPL_TYPE_INDEX_HPP)
+#define CXXD_IMPL_TYPE_INDEX_HPP
+
 #if !defined(CXXD_HAS_STD_TYPE_INDEX)
 #include <boost/cxx_dual/type_index.hpp>
 #endif
@@ -20,3 +23,5 @@ namespace cxxd_type_index_ns = std ;
 namespace cxxd_type_index_ns = boost::typeindex ;
 
 #endif
+
+#endif // !defined(CXXD_IMPL_TYPE_INDEX_HPP)

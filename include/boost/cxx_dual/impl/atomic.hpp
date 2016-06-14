@@ -3,6 +3,9 @@
 //  Boost Software License, Version 1.0. (See accompanying file 
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#if !defined(CXXD_IMPL_ATOMIC_HPP)
+#define CXXD_IMPL_ATOMIC_HPP
+
 #if !defined(CXXD_HAS_STD_ATOMIC)
 #include <boost/cxx_dual/atomic.hpp>
 #endif
@@ -22,3 +25,5 @@ namespace cxxd_atomic_ns = std ;
 namespace cxxd_atomic_ns = boost ;
 
 #endif
+
+#endif // !defined(CXXD_IMPL_ATOMIC_HPP)
