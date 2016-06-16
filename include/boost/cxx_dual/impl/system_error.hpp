@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/system_error.hpp>
 #endif
 
-#if CXXD_HAS_STD_SYSTEM_ERROR
-
-#define CXXD_SYSTEM_ERROR_NS std
-#include <system_error>
-namespace cxxd_system_error_ns = std ;
-
-#else
-
-#define CXXD_SYSTEM_ERROR_NS boost::system
-#include <boost/system/system_error.hpp>
-namespace cxxd_system_error_ns = boost::system ;
-
-#endif
+#include CXXD_SYSTEM_ERROR_HEADER
+namespace cxxd_system_error_ns = CXXD_SYSTEM_ERROR_NS ;
 
 #endif // !defined(CXXD_IMPL_SYSTEM_ERROR_HPP)

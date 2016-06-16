@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/mem_fn.hpp>
 #endif
 
-#if CXXD_HAS_STD_MEM_FN
-
-#define CXXD_MEM_FN_NS std
-#include <functional>
-namespace cxxd_mem_fn_ns = std ;
-
-#else
-
-#define CXXD_MEM_FN_NS boost
-#include <boost/mem_fn.hpp>
-namespace cxxd_mem_fn_ns = boost ;
-
-#endif
+#include CXXD_MEM_FN_HEADER
+namespace cxxd_mem_fn_ns = CXXD_MEM_FN_NS ;
 
 #endif // !defined(CXXD_IMPL_MEM_FN_HPP)

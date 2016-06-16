@@ -73,7 +73,7 @@
                 #endif
                 #define CXXD_HAS_STD_MUTEX 0
                 #define CXXD_MUTEX_NS boost
-                #define CXXD_MUTEX_HEADER <boost/thread/mutex.hpp>
+                #define CXXD_MUTEX_HEADER <boost/cxx_dual/detail/mutex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MUTEX)

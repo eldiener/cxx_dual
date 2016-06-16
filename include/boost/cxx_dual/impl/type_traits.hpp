@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/type_traits.hpp>
 #endif
 
-#if CXXD_HAS_STD_TYPE_TRAITS
-
-#define CXXD_TYPE_TRAITS_NS std
-#include <type_traits>
-namespace cxxd_type_traits_ns = std ;
-
-#else
-
-#define CXXD_TYPE_TRAITS_NS boost
-#include <boost/type_traits.hpp>
-namespace cxxd_type_traits_ns = boost ;
-
-#endif
+#include CXXD_TYPE_TRAITS_HEADER
+namespace cxxd_type_traits_ns = CXXD_TYPE_TRAITS_NS ;
 
 #endif // !defined(CXXD_IMPL_TYPE_TRAITS_HPP)

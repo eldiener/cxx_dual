@@ -72,7 +72,7 @@
                     #undef CXXD_TUPLE_HEADER
                 #endif
                 #define CXXD_HAS_STD_TUPLE 0
-                #define CXXD_TUPLE_NS boost
+                #define CXXD_TUPLE_NS boost::tuples
                 #define CXXD_TUPLE_HEADER <boost/tuple/tuple.hpp>
             #endif
         #else

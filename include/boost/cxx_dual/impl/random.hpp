@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/random.hpp>
 #endif
 
-#if CXXD_HAS_STD_RANDOM
-
-#define CXXD_RANDOM_NS std
-#include <random>
-namespace cxxd_random_ns = std ;
-
-#else
-
-#define CXXD_RANDOM_NS boost::random
-#include <boost/random.hpp>
-namespace cxxd_random_ns = boost::random ;
-
-#endif
+#include CXXD_RANDOM_HEADER
+namespace cxxd_random_ns = CXXD_RANDOM_NS ;
 
 #endif // !defined(CXXD_IMPL_RANDOM_HPP)

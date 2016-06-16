@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/make_shared.hpp>
 #endif
 
-#if CXXD_HAS_STD_MAKE_SHARED
-
-#define CXXD_MAKE_SHARED_NS std
-#include <memory>
-namespace cxxd_make_shared_ns = std ;
-
-#else
-
-#define CXXD_MAKE_SHARED_NS boost
-#include <boost/make_shared.hpp>
-namespace cxxd_make_shared_ns = boost ;
-
-#endif
+#include CXXD_MAKE_SHARED_HEADER
+namespace cxxd_make_shared_ns = CXXD_MAKE_SHARED_NS ;
 
 #endif // !defined(CXXD_IMPL_MAKE_SHARED_HPP)

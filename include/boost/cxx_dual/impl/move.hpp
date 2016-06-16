@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/move.hpp>
 #endif
 
-#if CXXD_HAS_STD_MOVE
-
-#define CXXD_MOVE_NS std
-#include <utility>
-namespace cxxd_move_ns = std ;
-
-#else
-
-#define CXXD_MOVE_NS boost
-#include <boost/move/move.hpp>
-namespace cxxd_move_ns = boost ;
-
-#endif
+#include CXXD_MOVE_HEADER
+namespace cxxd_move_ns = CXXD_MOVE_NS ;
 
 #endif // !defined(CXXD_IMPL_MOVE_HPP)

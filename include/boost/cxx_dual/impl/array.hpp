@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/array.hpp>
 #endif
 
-#if CXXD_HAS_STD_ARRAY
-
-#define CXXD_ARRAY_NS std
-#include <array>
-namespace cxxd_array_ns = std ;
-
-#else
-
-#define CXXD_ARRAY_NS boost
-#include <boost/array.hpp>
-namespace cxxd_array_ns = boost ;
-
-#endif
+#include CXXD_ARRAY_HEADER
+namespace cxxd_array_ns = CXXD_ARRAY_NS ;
 
 #endif // !defined(CXXD_IMPL_ARRAY_HPP)

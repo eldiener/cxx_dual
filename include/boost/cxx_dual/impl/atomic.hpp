@@ -10,20 +10,7 @@
 #include <boost/cxx_dual/atomic.hpp>
 #endif
 
-#if CXXD_HAS_STD_ATOMIC
-
-#define CXXD_ATOMIC_NS std
-#define CXXD_ATOMIC_MACRO(macro) macro
-#include <atomic>
-namespace cxxd_atomic_ns = std ;
-
-#else
-
-#define CXXD_ATOMIC_NS boost
-#define CXXD_ATOMIC_MACRO(macro) BOOST_ ## macro
-#include <boost/atomic/atomic.hpp>
-namespace cxxd_atomic_ns = boost ;
-
-#endif
+#include CXXD_ATOMIC_HEADER
+namespace cxxd_atomic_ns = CXXD_ATOMIC_NS ;
 
 #endif // !defined(CXXD_IMPL_ATOMIC_HPP)

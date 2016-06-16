@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/thread.hpp>
 #endif
 
-#if CXXD_HAS_STD_THREAD
-
-#define CXXD_THREAD_NS std
-#include <thread>
-namespace cxxd_thread_ns = std ;
-
-#else
-
-#define CXXD_THREAD_NS boost
-#include <boost/thread/thread.hpp>
-namespace cxxd_thread_ns = boost ;
-
-#endif
+#include CXXD_THREAD_HEADER
+namespace cxxd_thread_ns = CXXD_THREAD_NS ;
 
 #endif // !defined(CXXD_IMPL_THREAD_HPP)

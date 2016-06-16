@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/regex.hpp>
 #endif
 
-#if CXXD_HAS_STD_REGEX
-
-#define CXXD_REGEX_NS std
-#include <regex>
-namespace cxxd_regex_ns = std ;
-
-#else
-
-#define CXXD_REGEX_NS boost
-#include <boost/regex.hpp>
-namespace cxxd_regex_ns = boost ;
-
-#endif
+#include CXXD_REGEX_HEADER
+namespace cxxd_regex_ns = CXXD_REGEX_NS ;
 
 #endif // !defined(CXXD_IMPL_REGEX_HPP)

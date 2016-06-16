@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/enable_shared_from_this.hpp>
 #endif
 
-#if CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
-
-#define CXXD_ENABLE_SHARED_FROM_THIS_NS std
-#include <memory>
-namespace cxxd_enable_shared_from_this_ns = std ;
-
-#else
-
-#define CXXD_ENABLE_SHARED_FROM_THIS_NS boost
-#include <boost/enable_shared_from_this.hpp>
-namespace cxxd_enable_shared_from_this_ns = boost ;
-
-#endif
+#include CXXD_ENABLE_SHARED_FROM_THIS_HEADER
+namespace cxxd_enable_shared_from_this_ns = CXXD_ENABLE_SHARED_FROM_THIS_NS ;
 
 #endif // !defined(CXXD_IMPL_ENABLE_SHARED_FROM_THIS_HPP)

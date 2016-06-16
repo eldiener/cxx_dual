@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/unordered_multiset.hpp>
 #endif
 
-#if CXXD_HAS_STD_UNORDERED_MULTISET
-
-#define CXXD_UNORDERED_MULTISET_NS std
-#include <unordered_set>
-namespace cxxd_unordered_multiset_ns = std ;
-
-#else
-
-#define CXXD_UNORDERED_MULTISET_NS boost
-#include <boost/unordered_set.hpp>
-namespace cxxd_unordered_multiset_ns = boost ;
-
-#endif
+#include CXXD_UNORDERED_MULTISET_HEADER
+namespace cxxd_unordered_multiset_ns = CXXD_UNORDERED_MULTISET_NS ;
 
 #endif // !defined(CXXD_IMPL_UNORDERED_MULTISET_HPP)

@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/type_index.hpp>
 #endif
 
-#if CXXD_HAS_STD_TYPE_INDEX
-
-#define CXXD_TYPE_INDEX_NS std
-#include <typeindex>
-namespace cxxd_type_index_ns = std ;
-
-#else
-
-#define CXXD_TYPE_INDEX_NS boost::typeindex
-#include <boost/type_index.hpp>
-namespace cxxd_type_index_ns = boost::typeindex ;
-
-#endif
+#include CXXD_TYPE_INDEX_HEADER
+namespace cxxd_type_index_ns = CXXD_TYPE_INDEX_NS ;
 
 #endif // !defined(CXXD_IMPL_TYPE_INDEX_HPP)

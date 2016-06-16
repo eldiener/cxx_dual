@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/shared_mutex.hpp>
 #endif
 
-#if CXXD_HAS_STD_SHARED_MUTEX
-
-#define CXXD_SHARED_MUTEX_NS std
-#include <shared_mutex>
-namespace cxxd_shared_mutex_ns = std ;
-
-#else
-
-#define CXXD_SHARED_MUTEX_NS boost
-#include <boost/thread/shared_mutex.hpp>
-namespace cxxd_shared_mutex_ns = boost ;
-
-#endif
+#include CXXD_SHARED_MUTEX_HEADER
+namespace cxxd_shared_mutex_ns = CXXD_SHARED_MUTEX_NS ;
 
 #endif // !defined(CXXD_IMPL_SHARED_MUTEX_HPP)

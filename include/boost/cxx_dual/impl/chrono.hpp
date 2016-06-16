@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/chrono.hpp>
 #endif
 
-#if CXXD_HAS_STD_CHRONO
-
-#define CXXD_CHRONO_NS std::chrono
-#include <chrono>
-namespace cxxd_chrono_ns = std::chrono ;
-
-#else
-
-#define CXXD_CHRONO_NS boost::chrono
-#include <boost/chrono.hpp>
-namespace cxxd_chrono_ns = boost::chrono ;
-
-#endif
+#include CXXD_CHRONO_HEADER
+namespace cxxd_chrono_ns = CXXD_CHRONO_NS ;
 
 #endif // !defined(CXXD_IMPL_CHRONO_HPP)

@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/ratio.hpp>
 #endif
 
-#if CXXD_HAS_STD_RATIO
-
-#define CXXD_RATIO_NS std
-#include <ratio>
-namespace cxxd_ratio_ns = std ;
-
-#else
-
-#define CXXD_RATIO_NS boost
-#include <boost/ratio.hpp>
-namespace cxxd_ratio_ns = boost ;
-
-#endif
+#include CXXD_RATIO_HEADER
+namespace cxxd_ratio_ns = CXXD_RATIO_NS ;
 
 #endif // !defined(CXXD_IMPL_RATIO_HPP)

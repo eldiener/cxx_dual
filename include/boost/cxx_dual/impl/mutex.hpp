@@ -10,19 +10,7 @@
 #include <boost/cxx_dual/mutex.hpp>
 #endif
 
-#if CXXD_HAS_STD_MUTEX
-
-#define CXXD_MUTEX_NS std
-#include <mutex>
-namespace cxxd_mutex_ns = std ;
-
-#else
-
-#define CXXD_MUTEX_NS boost
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/locks.hpp>
-namespace cxxd_mutex_ns = boost ;
-
-#endif
+#include CXXD_MUTEX_HEADER
+namespace cxxd_mutex_ns = CXXD_MUTEX_NS ;
 
 #endif // !defined(CXXD_IMPL_MUTEX_HPP)

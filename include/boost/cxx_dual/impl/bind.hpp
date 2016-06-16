@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/bind.hpp>
 #endif
 
-#if CXXD_HAS_STD_BIND
-
-#define CXXD_BIND_NS std
-#include <functional>
-namespace cxxd_bind_ns = std ;
-
-#else
-
-#define CXXD_BIND_NS boost
-#include <boost/bind/bind.hpp>
-namespace cxxd_bind_ns = boost ;
-
-#endif
+#include CXXD_BIND_HEADER
+namespace cxxd_bind_ns = CXXD_BIND_NS ;
 
 #endif // !defined(CXXD_IMPL_BIND_HPP)

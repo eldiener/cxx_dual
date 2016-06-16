@@ -10,21 +10,9 @@
 #include <boost/cxx_dual/shared_ptr.hpp>
 #endif
 
-#if CXXD_HAS_STD_SHARED_PTR
-
-#define CXXD_SHARED_PTR_NS std
-#include <memory>
-namespace cxxd_shared_ptr_ns = std ;
-
-#else
-
-#define CXXD_SHARED_PTR_NS boost
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
-#include <boost/make_shared.hpp>
-namespace cxxd_shared_ptr_ns = boost ;
-
+#include CXXD_SHARED_PTR_HEADER
+#if !defined(CXXD_IMPL_SHARED_PTR_ONLY_HPP)
+namespace cxxd_shared_ptr_ns = CXXD_SHARED_PTR_NS ;
 #endif
 
 #endif // !defined(CXXD_IMPL_SHARED_PTR_HPP)

@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/unordered_multimap.hpp>
 #endif
 
-#if CXXD_HAS_STD_UNORDERED_MULTIMAP
-
-#define CXXD_UNORDERED_MULTIMAP_NS std
-#include <unordered_map>
-namespace cxxd_unordered_multimap_ns = std ;
-
-#else
-
-#define CXXD_UNORDERED_MULTIMAP_NS boost
-#include <boost/unordered_map.hpp>
-namespace cxxd_unordered_multimap_ns = boost ;
-
-#endif
+#include CXXD_UNORDERED_MULTIMAP_HEADER
+namespace cxxd_unordered_multimap_ns = CXXD_UNORDERED_MULTIMAP_NS ;
 
 #endif // !defined(CXXD_IMPL_UNORDERED_MULTIMAP_HPP)

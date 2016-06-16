@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/hash.hpp>
 #endif
 
-#if CXXD_HAS_STD_HASH
-
-#define CXXD_HASH_NS std
-#include <functional>
-namespace cxxd_hash_ns = std ;
-
-#else
-
-#define CXXD_HASH_NS boost
-#include <boost/functional/hash.hpp>
-namespace cxxd_hash_ns = boost ;
-
-#endif
+#include CXXD_HASH_HEADER
+namespace cxxd_hash_ns = CXXD_HASH_NS ;
 
 #endif // !defined(CXXD_IMPL_HASH_HPP)

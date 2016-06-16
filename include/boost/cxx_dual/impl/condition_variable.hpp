@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/condition_variable.hpp>
 #endif
 
-#if CXXD_HAS_STD_CONDITION_VARIABLE
-
-#define CXXD_CONDITION_VARIABLE_NS std
-#include <condition_variable>
-namespace cxxd_condition_variable_ns = std ;
-
-#else
-
-#define CXXD_CONDITION_VARIABLE_NS boost
-#include <boost/thread/condition_variable.hpp>
-namespace cxxd_condition_variable_ns = boost ;
-
-#endif
+#include CXXD_CONDITION_VARIABLE_HEADER
+namespace cxxd_condition_variable_ns = CXXD_CONDITION_VARIABLE_NS ;
 
 #endif // !defined(CXXD_IMPL_CONDITION_VARIABLE_HPP)

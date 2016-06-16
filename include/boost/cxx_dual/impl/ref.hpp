@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/ref.hpp>
 #endif
 
-#if CXXD_HAS_STD_REF
-
-#define CXXD_REF_NS std
-#include <functional>
-namespace cxxd_ref_ns = std ;
-
-#else
-
-#define CXXD_REF_NS boost
-#include <boost/core/ref.hpp>
-namespace cxxd_ref_ns = boost ;
-
-#endif
+#include CXXD_REF_HEADER
+namespace cxxd_ref_ns = CXXD_REF_NS ;
 
 #endif // !defined(CXXD_IMPL_REF_HPP)

@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/function.hpp>
 #endif
 
-#if CXXD_HAS_STD_FUNCTION
-
-#define CXXD_FUNCTION_NS std
-#include <functional>
-namespace cxxd_function_ns = std ;
-
-#else
-
-#define CXXD_FUNCTION_NS boost
-#include <boost/function.hpp>
-namespace cxxd_function_ns = boost ;
-
-#endif
+#include CXXD_FUNCTION_HEADER
+namespace cxxd_function_ns = CXXD_FUNCTION_NS ;
 
 #endif // !defined(CXXD_IMPL_FUNCTION_HPP)

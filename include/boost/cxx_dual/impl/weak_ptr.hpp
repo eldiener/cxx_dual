@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/weak_ptr.hpp>
 #endif
 
-#if CXXD_HAS_STD_WEAK_PTR
-
-#define CXXD_WEAK_PTR_NS std
-#include <memory>
-namespace cxxd_weak_ptr_ns = std ;
-
-#else
-
-#define CXXD_WEAK_PTR_NS boost
-#include <boost/weak_ptr.hpp>
-namespace cxxd_weak_ptr_ns = boost ;
-
-#endif
+#include CXXD_WEAK_PTR_HEADER
+namespace cxxd_weak_ptr_ns = CXXD_WEAK_PTR_NS ;
 
 #endif // !defined(CXXD_IMPL_WEAK_PTR_HPP)

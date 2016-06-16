@@ -10,18 +10,7 @@
 #include <boost/cxx_dual/tuple.hpp>
 #endif
 
-#if CXXD_HAS_STD_TUPLE
-
-#define CXXD_TUPLE_NS std
-#include <tuple>
-namespace cxxd_tuple_ns = std ;
-
-#else
-
-#define CXXD_TUPLE_NS boost::tuples
-#include <boost/tuple/tuple.hpp>
-namespace cxxd_tuple_ns = boost::tuples ;
-
-#endif
+#include CXXD_TUPLE_HEADER
+namespace cxxd_tuple_ns = CXXD_TUPLE_NS ;
 
 #endif // !defined(CXXD_IMPL_TUPLE_HPP)
