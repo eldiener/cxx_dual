@@ -11,6 +11,13 @@
     Chooses either the Boost weak_ptr implementation or the C++ standard weak_ptr implementation.
 */
 
+/** @def CXXD_WEAK_PTR_HEADER
+    @brief The weak_ptr header file name.
+    
+    The object-like macro expands to the include header file designation for the weak_ptr header file.
+    The macro is used with the syntax: \#include CXXD_WEAK_PTR_HEADER
+*/
+
 /** @def CXXD_WEAK_PTR_NS
     @brief The weak_ptr namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_WEAK_PTR)
                     #undef CXXD_HAS_STD_WEAK_PTR
+                    #undef CXXD_WEAK_PTR_NS
+                    #undef CXXD_WEAK_PTR_HEADER
                 #endif
                 #define CXXD_HAS_STD_WEAK_PTR 0
+                #define CXXD_WEAK_PTR_NS boost
+                #define CXXD_WEAK_PTR_HEADER <boost/weak_ptr.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_WEAK_PTR)
                 #undef CXXD_HAS_STD_WEAK_PTR
+                #undef CXXD_WEAK_PTR_NS
+                #undef CXXD_WEAK_PTR_HEADER
             #endif
             #define CXXD_HAS_STD_WEAK_PTR 1
+            #define CXXD_WEAK_PTR_NS std
+            #define CXXD_WEAK_PTR_HEADER <memory>
         #endif
     #endif
 #endif

@@ -11,6 +11,13 @@
     Chooses either the Boost ref implementation or the C++ standard ref implementation.
 */
 
+/** @def CXXD_REF_HEADER
+    @brief The ref header file name.
+    
+    The object-like macro expands to the include header file designation for the ref header file.
+    The macro is used with the syntax: \#include CXXD_REF_HEADER
+*/
+
 /** @def CXXD_REF_NS
     @brief The ref namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_REF)
                     #undef CXXD_HAS_STD_REF
+                    #undef CXXD_REF_NS
+                    #undef CXXD_REF_HEADER
                 #endif
                 #define CXXD_HAS_STD_REF 0
+                #define CXXD_REF_NS boost
+                #define CXXD_REF_HEADER <boost/core/ref.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_REF)
                 #undef CXXD_HAS_STD_REF
+                #undef CXXD_REF_NS
+                #undef CXXD_REF_HEADER
             #endif
             #define CXXD_HAS_STD_REF 1
+            #define CXXD_REF_NS std
+            #define CXXD_REF_HEADER <functional>
         #endif
     #endif
 #endif

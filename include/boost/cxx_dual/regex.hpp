@@ -11,6 +11,13 @@
     Chooses either the Boost regex implementation or the C++ standard regex implementation.
 */
 
+/** @def CXXD_REGEX_HEADER
+    @brief The regex header file name.
+    
+    The object-like macro expands to the include header file designation for the regex header file.
+    The macro is used with the syntax: \#include CXXD_REGEX_HEADER
+*/
+
 /** @def CXXD_REGEX_NS
     @brief The regex namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_REGEX)
                     #undef CXXD_HAS_STD_REGEX
+                    #undef CXXD_REGEX_NS
+                    #undef CXXD_REGEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_REGEX 0
+                #define CXXD_REGEX_NS boost
+                #define CXXD_REGEX_HEADER <boost/regex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_REGEX)
                 #undef CXXD_HAS_STD_REGEX
+                #undef CXXD_REGEX_NS
+                #undef CXXD_REGEX_HEADER
             #endif
             #define CXXD_HAS_STD_REGEX 1
+            #define CXXD_REGEX_NS std
+            #define CXXD_REGEX_HEADER <regex>
         #endif
     #endif
 #endif

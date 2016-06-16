@@ -11,6 +11,13 @@
     Chooses either the Boost mutex implementation or the C++ standard mutex implementation.
 */
 
+/** @def CXXD_MUTEX_HEADER
+    @brief The mutex header file name.
+    
+    The object-like macro expands to the include header file designation for the mutex header file.
+    The macro is used with the syntax: \#include CXXD_MUTEX_HEADER
+*/
+
 /** @def CXXD_MUTEX_NS
     @brief The mutex namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_MUTEX)
                     #undef CXXD_HAS_STD_MUTEX
+                    #undef CXXD_MUTEX_NS
+                    #undef CXXD_MUTEX_HEADER
                 #endif
                 #define CXXD_HAS_STD_MUTEX 0
+                #define CXXD_MUTEX_NS boost
+                #define CXXD_MUTEX_HEADER <boost/thread/mutex.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_MUTEX)
                 #undef CXXD_HAS_STD_MUTEX
+                #undef CXXD_MUTEX_NS
+                #undef CXXD_MUTEX_HEADER
             #endif
             #define CXXD_HAS_STD_MUTEX 1
+            #define CXXD_MUTEX_NS std
+            #define CXXD_MUTEX_HEADER <mutex>
         #endif
     #endif
 #endif

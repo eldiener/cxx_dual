@@ -11,6 +11,13 @@
     Chooses either the Boost system error implementation or the C++ standard system error implementation.
 */
 
+/** @def CXXD_SYSTEM_ERROR_HEADER
+    @brief The system error header file name.
+    
+    The object-like macro expands to the include header file designation for the system error header file.
+    The macro is used with the syntax: \#include CXXD_SYSTEM_ERROR_HEADER
+*/
+
 /** @def CXXD_SYSTEM_ERROR_NS
     @brief The system error namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_SYSTEM_ERROR)
                     #undef CXXD_HAS_STD_SYSTEM_ERROR
+                    #undef CXXD_SYSTEM_ERROR_NS
+                    #undef CXXD_SYSTEM_ERROR_HEADER
                 #endif
                 #define CXXD_HAS_STD_SYSTEM_ERROR 0
+                #define CXXD_SYSTEM_ERROR_NS boost::system
+                #define CXXD_SYSTEM_ERROR_HEADER <boost/system/system_error.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_SYSTEM_ERROR)
                 #undef CXXD_HAS_STD_SYSTEM_ERROR
+                #undef CXXD_SYSTEM_ERROR_NS
+                #undef CXXD_SYSTEM_ERROR_HEADER
             #endif
             #define CXXD_HAS_STD_SYSTEM_ERROR 1
+            #define CXXD_SYSTEM_ERROR_NS std
+            #define CXXD_SYSTEM_ERROR_HEADER <system_error>
         #endif
     #endif
 #endif

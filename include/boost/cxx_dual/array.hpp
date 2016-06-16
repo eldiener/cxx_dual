@@ -11,6 +11,13 @@
     Chooses either the Boost array implementation or the C++ standard array implementation.
 */
 
+/** @def CXXD_ARRAY_HEADER
+    @brief The array header file name.
+    
+    The object-like macro expands to the include header file designation for the array header file.
+    The macro is used with the syntax: \#include CXXD_ARRAY_HEADER
+*/
+
 /** @def CXXD_ARRAY_NS
     @brief The array namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_ARRAY)
                     #undef CXXD_HAS_STD_ARRAY
+                    #undef CXXD_ARRAY_NS
+                    #undef CXXD_ARRAY_HEADER
                 #endif
                 #define CXXD_HAS_STD_ARRAY 0
+                #define CXXD_ARRAY_NS boost
+                #define CXXD_ARRAY_HEADER <boost/array.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_ARRAY)
                 #undef CXXD_HAS_STD_ARRAY
+                #undef CXXD_ARRAY_NS
+                #undef CXXD_ARRAY_HEADER
             #endif
             #define CXXD_HAS_STD_ARRAY 1
+            #define CXXD_ARRAY_NS std
+            #define CXXD_ARRAY_HEADER <array>
         #endif
     #endif
 #endif

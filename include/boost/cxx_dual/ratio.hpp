@@ -11,6 +11,13 @@
     Chooses either the Boost ratio implementation or the C++ standard ratio implementation.
 */
 
+/** @def CXXD_RATIO_HEADER
+    @brief The ratio header file name.
+    
+    The object-like macro expands to the include header file designation for the ratio header file.
+    The macro is used with the syntax: \#include CXXD_RATIO_HEADER
+*/
+
 /** @def CXXD_RATIO_NS
     @brief The ratio namespace.
     
@@ -61,14 +68,22 @@
             #else
                 #if defined(CXXD_HAS_STD_RATIO)
                     #undef CXXD_HAS_STD_RATIO
+                    #undef CXXD_RATIO_NS
+                    #undef CXXD_RATIO_HEADER
                 #endif
                 #define CXXD_HAS_STD_RATIO 0
+                #define CXXD_RATIO_NS boost
+                #define CXXD_RATIO_HEADER <boost/ratio.hpp>
             #endif
         #else
             #if defined(CXXD_HAS_STD_RATIO)
                 #undef CXXD_HAS_STD_RATIO
+                #undef CXXD_RATIO_NS
+                #undef CXXD_RATIO_HEADER
             #endif
             #define CXXD_HAS_STD_RATIO 1
+            #define CXXD_RATIO_NS std
+            #define CXXD_RATIO_HEADER <ratio>
         #endif
     #endif
 #endif
