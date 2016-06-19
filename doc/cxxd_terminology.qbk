@@ -16,6 +16,8 @@ in the documentation, rather than a full explanation:
 * CXXD-mod = CXXD dual library
 * CXXD-mod header = header file for a CXXD-mod
 * CXXD-mod macro header = header file macro for a CXXD-mod
+* CXXD-mod implementation header = implementation header file for a CXXD-mod
+* header file = normal C++ header file
 * mod-ID = preprocessing identifier for a CXXD-mod
 * module = executable or shared/static library
 * TU = translation unit

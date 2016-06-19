@@ -17,10 +17,16 @@ in both cases. An 'implementation' is called a 'dual library'
 in this documentation, or 'CXXD-mod' for short.
 
 The library does this by defining object-like macros
-for including the appropriate header file and namespace
+for including the appropriate header file(s) and namespace
 for using either the Boost library version or the C++ standard
-library version of a particular dual library. CXXD
-currently supports twenty eight different dual libraries,
+library version of a particular dual library. Alternatively,
+for those who prefer not to use macros, the library provides
+an implementation header file for including the appropriate
+header file(s) and for setting a namespace alias
+for using either the Boost library version or the C++ standard
+library version of a particular dual library.
+
+CXXD currently supports twenty eight different dual libraries,
 where the Boost version and the C++ standard version is
 nearly interchangeable in some respects. CXXD also provides a macro-based solution for
 distinguishing between the Boost version and the C++ standard
@@ -149,7 +155,8 @@ when it does not work as desired.
 
 The solution involves the use of macros, all starting with this library's
 common mnemonic of CXXD_, which allow a programmer to use the functionality
-of equivalent BBB and SSS libraries with a single set of code.
+of equivalent BBB and SSS libraries with a single set of code. Alternatively
+implementation header files and a namespace aliases can be used instead of macros.
 
 [heading How it works]
 
@@ -190,8 +197,17 @@ by specifying 'CXXD_XXX_MACRO(MMM)' as the macro name.
 or the C++ standard version of the particular CXXD-mod by using the CXXD_HAS_STD_XXX macro with a 
 preprocessor #if statement.
 
-A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to use any of the
-macros defined by that CXXD-mod header, is said to 'use a CXXD-mod'. Please note the distinction between
+As an alternative for items 1) and 2) above the user who prefers not to use macros can:
+
+# Include the correct CXXD-mod implementation header file using '#include <boost/cxx_dual/impl/XXX.hpp'.
+# Access any functionality in the CXXD-mod namespace using 'cxxd_xxx_ns::some_functionality etc...'
+or, if there are no name clashes with another namespace, through 'using namespace cxxd_xxx_ns; some_functionality etc...'.
+The mnemonic 'cxxd_xxx_ns' is a namespace alias for CXXD-mod XXX for either the Boost or rhe C++ standard
+library namespace of the dual library chosen.
+
+A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to either use any of the
+macros defined by that CXXD-mod header or to include the CXXD-mod implemetation header file,
+is said to 'use a CXXD-mod'. Please note the distinction between
 including a CXXD-mod and using a CXXD-mod. Including a CXXD-mod just defines a set of macros and
 is not dependent on any other Boost library or outside implementation. Using a CXXD-mod establishes
 dependency on either a Boost library or its equivalent C++ standard library.
@@ -217,9 +233,31 @@ in general may look like:
         CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
         }
         
+or:     
+        
+    #include <boost/cxx_dual/XXX.hpp>      // Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header
+    #include <boost/cxx_dual/impl/XXX.hpp> // Includes the appropriate CXXD-mod macro header file
+
+    void SomeFunction()
+        {
+        cxxd_xxx_ns::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the CXXD-mod namespace
+        // Use the a_xxx_object in your code...
+        #if CXXD_HAS_STD_XXX
+        // Some code specific to the C++ standard implementation of XXX
+        #else
+        // Otherwise some code specific to the Boost implementation of XXX
+        #endif
+        CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
+        }
+        
 By far the major use of these CXXD macros, which including a particular CXXD-mod header defines,
 will be in the use of the CXXD-mod macro header CXXD_XXX_HEADER, to include the correct 
 header file for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX.
+
+Alternatively the major use of CXXD functionality will be in the use of the cxxd_xxx_ns for
+accessing the correct dual library namespace, once the correct XXX implementation header file
+has been included.
+
 On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not
 even exist for the given XXX CXXD-mod.
 
