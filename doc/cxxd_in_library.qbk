@@ -83,6 +83,11 @@ Our CXXD example would look like:
 Documentation for MyClass::MyFunction would specify that
 it takes a single parameter which is a reference to a
 CXXD_REGEX_NS::regex object, where 'CXXD_REGEX_NS' represents
+the namespace being used. 
+
+Alternatively documentation for MyClass::MyFunction would specify that
+it takes a single parameter which is a reference to a
+cxxd_regex_ns::regex object, where 'cxxd_regex_ns' represents
 the namespace being used.
 
 A user of MyLibrary's MyClass functionality might look like:
@@ -94,7 +99,7 @@ A user of MyLibrary's MyClass functionality might look like:
     // more code etc.
     
 As in all these similar situations, once the user understands
-that 'CXXD_REGEX_NS' represents the name of a namespace, functionality
+that 'CXXD_REGEX_NS' ( or 'cxxd_regex_ns' ) represents the name of a namespace, functionality
 using MyLibrary's MyClass functionality could also be coded as:
 
     #include <MyHeader.hpp>
@@ -105,7 +110,7 @@ using MyLibrary's MyClass functionality could also be coded as:
     // more code etc.
     
 The important thing here is that the user of MyFunction understands
-that 'CXXD_REGEX_NS' should always be used to designate the namespace
+that 'CXXD_REGEX_NS' ( or 'cxxd_regex_ns' ) should always be used to designate the namespace
 without assuming that either Boost or the C++ standard equivalent
 of the regex library is being used. Obviously the same goes for any
 other CXXD-mod, where the CXXD namespace for any particular

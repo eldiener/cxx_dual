@@ -205,8 +205,8 @@ or, if there are no name clashes with another namespace, through 'using namespac
 The mnemonic 'cxxd_xxx_ns' is a namespace alias for CXXD-mod XXX for either the Boost or rhe C++ standard
 library namespace of the dual library chosen.
 
-A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to either use any of the
-macros defined by that CXXD-mod header or to include the CXXD-mod implemetation header file,
+A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to
+include the correct CXXD-mod macro header or the CXXD-mod implementation header
 is said to 'use a CXXD-mod'. Please note the distinction between
 including a CXXD-mod and using a CXXD-mod. Including a CXXD-mod just defines a set of macros and
 is not dependent on any other Boost library or outside implementation. Using a CXXD-mod establishes
@@ -260,5 +260,42 @@ has been included.
 
 On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not
 even exist for the given XXX CXXD-mod.
+
+[important
+In subsequent code examples in the documentation the use of
+macros for including the header file(s) and denoting the
+namespace are always what is shown. But in those code examples you could always 
+alternatively use the implementation header file for including the header file(s)
+and use the namespace alias for denoting the namespace as well.
+
+Therefore when you see a documentation example which has:
+
+  #include CXXD_XXX_HEADER              // for CXXD-mod xxx
+  
+you can just as well have:
+
+  #include <boost/cxx_dual/impl/xxx.hpp // for CXXD-mod xxx
+  
+and when you see an example which has:
+
+  CXXD_XXX_NS::some_construct ... // for CXXD-mod xxx
+  
+  // or
+  
+  using namespace CXXD_XXX_NS;
+  some_construct ...              // for CXXD-mod xxxx
+  
+you coukd just as well have:
+
+  cxxd_xxx_ns::some_construct ... // for CXXD-mod xxx
+  
+  // or
+  
+  using namespace cxxd_xxx_ns;
+  some_construct ...              // for CXXD-mod xxx
+  
+as long as it is paired with with the implementation header
+file include for CXXD-mod xxx.
+]
 
 [endsect]

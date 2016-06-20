@@ -507,10 +507,19 @@ CXXD-mod header will either cause overriding macro conflicts, which will always
 produce preprocessing errors from within CXXD, or not change the dual library chosen
 in any further way.
 
+Using the CXXD_NO_CONSISTENCY macro will not work if a CXXD-mod implementation header
+file is used to include the header fles and create a namespace alias for a particular CXXD-mod.
+This is because allowing the choice of a particular CXXD-mod's dual library to change
+in a TU means that the namespace alias for that CXXD-mod will change in that TU, and C++
+does not allow that as part of the rules of the language. This is a weakness of the more
+C++-like namespaces alias compared to the namespace macro. Where the namespace macro
+is legally undefined and redefined when a particular dual library choice changes in
+a TU, there is no way in C++ to "undefine" and "redefine" a namespace alias.
+
 It is highly recommended that CXXD_NO_CONSISTENCY not be used unless the programmer knows
 exactly what the code is doing in a particular TU including all intermediate header
 file code. When dual library consistency is turned off using CXXD_NO_CONSISTENCY 
-the chance that CXXD macros for a particular CXXD-mod will access the Boost
+the chance that CXXD for a particular CXXD-mod will access the Boost
 library in some part of a TU and the C++ standard library in another part of a TU,
 and the problems this may cause, are generally not worth the problems that could occur in code
 confusion. Nonetheless if the programmer feels he knows what he is doing in using this
