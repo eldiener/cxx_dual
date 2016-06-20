@@ -189,6 +189,7 @@ The subsequent usage of these CXXD_ macros in code for any given CXXD-mod,
 once the appropriate CXXD-mod header has been included, is very simple:
 
 # Include the correct CXXD-mod macro header file using '#include CXXD_XXX_HEADER'.
+This brings in whatever header fles are needed by the implementation.
 # Access any functionality in the CXXD-mod namespace using 'CXXD_XXX_NS::some_functionality etc...'
 or, if there are no name clashes with another namespace, through 'using namespace CXXD_XXX_NS; some_functionality etc...'.
 # Use any macro MMM, which is part of the CXXD-mod implementation, 
@@ -200,16 +201,20 @@ preprocessor #if statement.
 As an alternative for items 1) and 2) above the user who prefers not to use macros can:
 
 # Include the correct CXXD-mod implementation header file using '#include <boost/cxx_dual/impl/XXX.hpp'.
+This brings in whatever header fles are needed by the implementation and creates a namespace alias
+to the correct implementation namespace. Including this file also first includes the appropriate CXXD-mod
+header if it has not already been included, so including the CXXD-mod implementation header
+means that it is not necessary to include the particular CXXD-mod header first.
 # Access any functionality in the CXXD-mod namespace using 'cxxd_xxx_ns::some_functionality etc...'
 or, if there are no name clashes with another namespace, through 'using namespace cxxd_xxx_ns; some_functionality etc...'.
 The mnemonic 'cxxd_xxx_ns' is a namespace alias for CXXD-mod XXX for either the Boost or rhe C++ standard
 library namespace of the dual library chosen.
 
 A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, proceeds to
-include the correct CXXD-mod macro header or the CXXD-mod implementation header
+include the correct CXXD-mod macro header, or who merely includes the CXXD-mod implementation header,
 is said to 'use a CXXD-mod'. Please note the distinction between
 including a CXXD-mod and using a CXXD-mod. Including a CXXD-mod just defines a set of macros and
-is not dependent on any other Boost library or outside implementation. Using a CXXD-mod establishes
+is not dependent on any other CXXD-mod Boost library or outside implementation. Using a CXXD-mod establishes
 dependency on either a Boost library or its equivalent C++ standard library.
 
 [heading Generalized example]
@@ -218,84 +223,61 @@ Somewhere in your code you want to use the XXX CXXD-mod, without worrying whethe
 you are using the Boost version or the C++ standard library version of XXX. Your code
 in general may look like:
 
-    #include <boost/cxx_dual/XXX.hpp> // Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header
-    #include CXXD_XXX_HEADER          // Includes the appropriate CXXD-mod macro header file
+[table
+[[Using macros][Using aliases]]
+[
+ [``
+    // Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header
+    #include <boost/cxx_dual/XXX.hpp> 
+    // Includes the appropriate CXXD-mod macro header file
+    #include CXXD_XXX_HEADER          
 
     void SomeFunction()
         {
-        CXXD_XXX_NS::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the CXXD-mod namespace
+        // Creates an object of some XXX type using the CXXD-mod namespace
+        CXXD_XXX_NS::some_XXX_class a_xxx_object; 
         // Use the a_xxx_object in your code...
         #if CXXD_HAS_STD_XXX
         // Some code specific to the C++ standard implementation of XXX
         #else
         // Otherwise some code specific to the Boost implementation of XXX
         #endif
-        CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
+        // Use XXX macro 'macro' in some context
+        CXXD_XXX_MACRO(macro) 
         }
-        
-or:     
-        
-    #include <boost/cxx_dual/XXX.hpp>      // Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header
-    #include <boost/cxx_dual/impl/XXX.hpp> // Includes the appropriate CXXD-mod macro header file
+  ``]
+ [``
+    // Includes the appropriate CXXD-mod implementation header file.
+    // This also includes the appropriate CXXD-mod header file if it
+    // has not previously been included.
+    #include <boost/cxx_dual/impl/XXX.hpp> 
 
     void SomeFunction()
         {
-        cxxd_xxx_ns::some_XXX_class a_xxx_object; // Creates an object of some XXX type using the CXXD-mod namespace
+        // Creates an object of some XXX type using the CXXD-mod namespace
+        cxxd_xxx_ns::some_XXX_class a_xxx_object; 
         // Use the a_xxx_object in your code...
         #if CXXD_HAS_STD_XXX
         // Some code specific to the C++ standard implementation of XXX
         #else
         // Otherwise some code specific to the Boost implementation of XXX
         #endif
-        CXXD_XXX_MACRO(macro) // Use XXX macro 'macro' in some context
+        // Use XXX macro 'macro' in some context
+        CXXD_XXX_MACRO(macro) 
         }
-        
+  ``]
+]
+]
+
 By far the major use of these CXXD macros, which including a particular CXXD-mod header defines,
 will be in the use of the CXXD-mod macro header CXXD_XXX_HEADER, to include the correct 
-header file for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX.
+header file(s) for XXX, and in the CXXD-mod namespace CXXD_XXX_NS, to use the functionality of XXX.
 
-Alternatively the major use of CXXD functionality will be in the use of the cxxd_xxx_ns for
-accessing the correct dual library namespace, once the correct XXX implementation header file
-has been included.
+Alternatively the major use of CXXD functionality will be in the use of the cxxd_xxx_ns
+namespace alias for accessing the correct dual library namespace, once the correct XXX
+implementation header file has been included.
 
 On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not
 even exist for the given XXX CXXD-mod.
-
-[important
-In subsequent code examples in the documentation the use of
-macros for including the header file(s) and denoting the
-namespace are always what is shown. But in those code examples you could always 
-alternatively use the implementation header file for including the header file(s)
-and use the namespace alias for denoting the namespace as well.
-
-Therefore when you see a documentation example which has:
-
-  #include CXXD_XXX_HEADER              // for CXXD-mod xxx
-  
-you can just as well have:
-
-  #include <boost/cxx_dual/impl/xxx.hpp // for CXXD-mod xxx
-  
-and when you see an example which has:
-
-  CXXD_XXX_NS::some_construct ... // for CXXD-mod xxx
-  
-  // or
-  
-  using namespace CXXD_XXX_NS;
-  some_construct ...              // for CXXD-mod xxxx
-  
-you coukd just as well have:
-
-  cxxd_xxx_ns::some_construct ... // for CXXD-mod xxx
-  
-  // or
-  
-  using namespace cxxd_xxx_ns;
-  some_construct ...              // for CXXD-mod xxx
-  
-as long as it is paired with with the implementation header
-file include for CXXD-mod xxx.
-]
 
 [endsect]

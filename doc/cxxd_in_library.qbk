@@ -70,6 +70,10 @@ equivalent in another library we can then see how this works for
 creating an interface using CXXD in an example 'MyLibrary'. 
 Our CXXD example would look like:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file MyHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -79,7 +83,21 @@ Our CXXD example would look like:
         void MyFunction(CXXD_REGEX_NS::regex &);
         ... // other functionality
         };
-        
+  ``]
+ [``
+    // Header file MyHeader.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    class MyClass
+        {
+        public:
+        void MyFunction(cxxd_regex_ns::regex &);
+        ... // other functionality
+        };
+  ``]
+]
+]
+
 Documentation for MyClass::MyFunction would specify that
 it takes a single parameter which is a reference to a
 CXXD_REGEX_NS::regex object, where 'CXXD_REGEX_NS' represents
@@ -92,22 +110,51 @@ the namespace being used.
 
 A user of MyLibrary's MyClass functionality might look like:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     #include <MyHeader.hpp>
     MyClass an_object;
     CXXD_REGEX_NS::regex a_regular_expression(...some regular expression etc.);
     an_object.MyFunction(a_regular_expression);
     // more code etc.
+  ``]
+ [``
+    #include <MyHeader.hpp>
+    MyClass an_object;
+    cxxd_regex_ns::regex a_regular_expression(...some regular expression etc.);
+    an_object.MyFunction(a_regular_expression);
+    // more code etc.
+  ``]
+]
+]
     
 As in all these similar situations, once the user understands
 that 'CXXD_REGEX_NS' ( or 'cxxd_regex_ns' ) represents the name of a namespace, functionality
 using MyLibrary's MyClass functionality could also be coded as:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     #include <MyHeader.hpp>
     using namespace CXXD_REGEX_NS;
     MyClass an_object;
     regex a_regular_expression(...some regular expression etc.);
     an_object.MyFunction(a_regular_expression);
     // more code etc.
+  ``]
+ [``
+    #include <MyHeader.hpp>
+    using namespace cxxd_regex_ns;
+    MyClass an_object;
+    regex a_regular_expression(...some regular expression etc.);
+    an_object.MyFunction(a_regular_expression);
+    // more code etc.
+  ``]
+]
+]
     
 The important thing here is that the user of MyFunction understands
 that 'CXXD_REGEX_NS' ( or 'cxxd_regex_ns' ) should always be used to designate the namespace
@@ -135,6 +182,10 @@ Boost or C++ standard dual library for that CXXD-mod otherwise.
         
 Given in OtherLibrary:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file OtherHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -144,6 +195,20 @@ Given in OtherLibrary:
         void OtherFunction(CXXD_REGEX_NS::regex &);
         ... // other functionality
         };
+  ``]
+ [``
+    // Header file OtherHeader.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    class OtherClass
+        {
+        public:
+        void OtherFunction(cxxd_regex_ns::regex &);
+        ... // other functionality
+        };
+  ``]
+]
+]
         
 let us suppose that MyLibrary consistently uses the Boost
 regex library in other places. Now MyLibrary wants to use
@@ -174,7 +239,7 @@ state that the regex CXXD-mod has been overridden to use boost::regex, and
 therefore MyHeader.hpp should be included before any other header file which
 might include the CXXD regex header. The reason for this was explained when
 discussing dual library consistency, where including a CXXD header more than
-once would lead to a preprocessing error if the CXXD header is subsequently
+once could lead to a preprocessing error if the CXXD header is subsequently
 overridden opposite to its initial default choice.
 
 What is also important in a library is that the overriding macro be defined

@@ -44,7 +44,7 @@ to his code as a shared library or as a static library.
 [heading The solution in general]
 
 As a simple generalized example without immediately going into all the details,
-which I will do shortly, let's suppose that my shared or static library, whose
+which I will do shortly, let's suppose that a shared or static library, whose
 current base name is called MyLib, is changed to use the CXXD regex interface in a
 built portion of the library. The process would be that when MyLib is built it will
 consist of two variants; one variant when MyLib is built when using the Boost regex library
@@ -68,6 +68,10 @@ compiled and linked in order to create MyLib's shared or static library.
 
 When we used a header-only library our example was:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file MyHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -76,9 +80,26 @@ When we used a header-only library our example was:
         public:
         void MyFunction(CXXD_REGEX_NS::regex &) { /* Some functionality */ }
         };
+  ``]
+ [``
+    // Header file MyHeader.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    class MyClass
+        {
+        public:
+        void MyFunction(cxxd_regex_ns::regex &) { /* Some functionality */ }
+        };
+  ``]
+]
+]
         
 For our non-header only library as the header file for our example, we specify instead:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file MyHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -87,18 +108,46 @@ For our non-header only library as the header file for our example, we specify i
         public:
         void MyFunction(CXXD_REGEX_NS::regex &);
         };
+  ``]
+ [``
+    // Header file MyHeader.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    class MyClass
+        {
+        public:
+        void MyFunction(cxxd_regex_ns::regex &);
+        };
+  ``]
+]
+]
         
 This is very little different from what we presented before with a header-only library.
 Our difference is that for our non-header only library we are going to compile the 
 implementation of MyClass into a shared or static library.
 So we now have both our header file and a separate source code file MyHeader.cpp:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Source file MyHeader.cpp
     #include "MyHeader.hpp"
     void MyClass::MyFunction(CXXD_REGEX_NS::regex & rx)
         {
         /* Some Functionality using 'rx' */
         }
+  ``]
+ [``
+    // Source file MyHeader.cpp
+    #include "MyHeader.hpp"
+    void MyClass::MyFunction(cxxd_regex_ns::regex & rx)
+        {
+        /* Some Functionality using 'rx' */
+        }
+  ``]
+]
+]
         
 At this point we have two problems to solve:
 
@@ -203,7 +252,7 @@ We will also add a header file to our MyLib library and call it MyLibLink.hpp:
     // Header file MyLibLink.hpp
     #include <boost/config.hpp>
     #if !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_MY_LIBRARY_NO_LIB) && !defined(MYLIB_BEING_BUILT)
-    #include "MyLibName.hpp"
+    #include "MyLibName.hpp"                                                                                                                                              
     #define BOOST_LIB_NAME MYLIB_LIBRARY_NAME
     #if defined MYLIB_DYN_LINK
         #define BOOST_DYN_LINK
@@ -214,6 +263,10 @@ We will also add a header file to our MyLib library and call it MyLibLink.hpp:
 We alter the header file which the end-user sees, MyHeader.hpp,
 to include our auto-linking code in MyLibLink.hpp:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file MyHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -223,6 +276,20 @@ to include our auto-linking code in MyLibLink.hpp:
         public:
         void MyFunction(CXXD_REGEX_NS::regex &);
         };
+  ``]
+ [``
+    // Header file MyHeader.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    #include "MyLibLink.hpp"
+    class MyClass
+        {
+        public:
+        void MyFunction(cxxd_regex_ns::regex &);
+        };
+  ``]
+]
+]
         
 We want to change our code which builds the MyLib variants to define the MYLIB_BEING_BUILT
 macro:
@@ -328,6 +395,10 @@ our still fairly simple example we will continue to imagine a single source/head
 
 Our updated Myheader.hpp will now look like:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file MyHeader.hpp
     #include <boost/cxx_dual/array.hpp>
     #include <boost/cxx_dual/function.hpp>
@@ -346,9 +417,36 @@ Our updated Myheader.hpp will now look like:
         void AnotherFunction(CXXD_FUNCTION_NS::function<long (double)> &);
         void YetAnotherFunction(CXXD_TUPLE_NS::tuple<float,short> &);
         };
+  ``]
+ [``
+    // Header file MyHeader.hpp
+    #include <boost/cxx_dual/array.hpp>
+    #include <boost/cxx_dual/function.hpp>
+    #include <boost/cxx_dual/regex.hpp>
+    #include <boost/cxx_dual/tuple.hpp>
+    #include <boost/cxx_dual/impl/array.hpp>
+    #include <boost/cxx_dual/impl/function.hpp>
+    #include <boost/cxx_dual/impl/regex.hpp>
+    #include <boost/cxx_dual/impl/tuple.hpp>
+    #include "MyLibLink.hpp"
+    class MyClass
+        {
+        public:
+        void MyFunction(cxxd_regex_ns::regex &);
+        void AFunction(cxxd_array_ns::array<int,5> &);
+        void AnotherFunction(cxxd_function_ns::function<long (double)> &);
+        void YetAnotherFunction(cxxd_tuple_ns::tuple<float,short> &);
+        };
+  ``]
+]
+]
         
 Our updated MyHeader.cpp will now look like:
-        
+
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Source file MyHeader.cpp
     #include "MyHeader.hpp"
     void MyClass::MyFunction(CXXD_REGEX_NS::regex & rx)
@@ -367,6 +465,29 @@ Our updated MyHeader.cpp will now look like:
         {
         /* Some Functionality using 'tup' */
         }
+  ``]
+ [``
+    // Source file MyHeader.cpp
+    #include "MyHeader.hpp"
+    void MyClass::MyFunction(cxxd_regex_ns::regex & rx)
+        {
+        /* Some Functionality using 'rx' */
+        }
+    void MyClass::AFunction(cxxd_array_ns::array<int,5> & arr)
+        {
+        /* Some Functionality using 'arr' */
+        }
+    void MyClass::AnotherFunction(cxxd_function_ns::function<long (double)> & fun)
+        {
+        /* Some Functionality using 'fun' */
+        }
+    void MyClass::YetAnotherFunction(cxxd_tuple_ns::tuple<float,short> &tup)
+        {
+        /* Some Functionality using 'tup' */
+        }
+  ``]
+]
+]
         
 If we look back at our MyLibName.hpp we can both extend the name of the
 library to encompass more variants as well as limit the variants we wish to allow. Allowing all
