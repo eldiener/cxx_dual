@@ -8,8 +8,7 @@
 #include <iomanip>
 #include <string>
 
-#include <boost/cxx_dual/hash.hpp>
-#include <boost/cxx_dual/unordered_set.hpp>
+#include <boost/config.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>

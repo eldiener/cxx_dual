@@ -203,7 +203,7 @@ As an alternative for items 1) and 2) above the user who prefers not to use macr
 # Include the correct CXXD-mod implementation header file using '#include <boost/cxx_dual/impl/XXX.hpp'.
 This brings in whatever header fles are needed by the implementation and creates a namespace alias
 to the correct implementation namespace. Including this file also first includes the appropriate CXXD-mod
-header if it has not already been included, so including the CXXD-mod implementation header
+header '<boost/cxx_dual/XXX.hpp>', so including the CXXD-mod implementation header
 means that it is not necessary to include the particular CXXD-mod header first.
 # Access any functionality in the CXXD-mod namespace using 'cxxd_xxx_ns::some_functionality etc...'
 or, if there are no name clashes with another namespace, through 'using namespace cxxd_xxx_ns; some_functionality etc...'.
@@ -248,8 +248,7 @@ in general may look like:
   ``]
  [``
     // Includes the appropriate CXXD-mod implementation header file.
-    // This also includes the appropriate CXXD-mod header file if it
-    // has not previously been included.
+    // This also includes the appropriate CXXD-mod header file first.
     #include <boost/cxx_dual/impl/XXX.hpp> 
 
     void SomeFunction()

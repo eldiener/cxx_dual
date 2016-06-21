@@ -5,7 +5,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <string>
-#include <boost/cxx_dual/type_traits.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/static_assert.hpp>

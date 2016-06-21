@@ -5,8 +5,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <iostream>
-#include <boost/cxx_dual/system_error.hpp>
-#include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/system_error.hpp>

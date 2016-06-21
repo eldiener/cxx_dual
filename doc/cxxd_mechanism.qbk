@@ -215,7 +215,6 @@ In other words, instead of:
   ``]
  [``
     #define CXXD_USE_BOOST
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     cxxd_regex_ns::regex my_regex; // etc.
     ... code
@@ -243,7 +242,6 @@ and instead of:
   ``]
  [``
     #define CXXD_USE_STD
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     cxxd_regex_ns::regex my_regex; // etc.
     ... code
@@ -291,7 +289,6 @@ as a public interface:
   ``]
  [``
     // Header file ThirdPartyHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     class ThirdPartyClass
         {
@@ -390,7 +387,6 @@ own use of the dual library in a header file might look like:
     #if CCCNNN && OOO
     #define CXXD_XXX_USE_BOOST
     #endif
-    #include <boost/cxxd/XXX.hpp>
     #include <boost/cxxd/impl/XXX.hpp>
     class OwnOverrideClass
         {
@@ -567,26 +563,6 @@ order of inclusion of header files should not affect the way that code compiles.
 But in CXXD it does affect the compilation since, by default, CXXD does not allow
 the dual library choice for a particular CXXD-mod to change within a TU.
 
-[heading Consistency and overriding problems]
-
-If a 3rd party library in one of its public header files overrides a specific dual
-library in order to use the Boost implementation of that library, and a different
-3rd party library in one of its public header files overrides the same specific
-dual library in order to use the C++ standard implementation, an end-user cannot
-include both 3rd party library header file in his own TU without producing a
-CXXD preprocessing error. The only way to use the functionality of those 3rd party
-header files is to use each of them in a different TU.
-
-If override macros are used in code and the code is using a particular CXXD-mod implementation
-header and namespace alias it is important to separately include the particular CXXD-mod header
-before including the particular CXXD-mod implementation header, even though the CXXD-mod
-implementation header internally includes the equivalent CXXD-mod header. This is because
-the CXXD-mod implementation header is only processed a single time in a TU, and when it is
-processed it will only include its equivalent CXXD-mod header file if it has not been previously
-included. In order to catch preprocessing errors when an override attempts to change the dual
-library chosen it is necessary to include the specific CXXD-mod header file, which is 
-processed each time it is specifically included.
-
 [heading Turning off consistency]
 
 [#mechanism_noconsistency] The end user can override the dual library consistency for all CXXD-mods by defining
@@ -610,14 +586,13 @@ produce preprocessing errors from within CXXD, or not change the dual library ch
 in any further way.
 
 Using the CXXD_NO_CONSISTENCY macro will not work for header file includes and namespace
-aliases if a CXXD-mod implementation header file is used to include the header fles
-and create a namespace alias for a particular CXXD-mod, and the dual library choice
+aliases if a CXXD-mod implementation header file is used for a particular CXXD-mod, and the dual library choice
 for a CXXD-mod changes in a TU. This is because allowing the
 choice of a particular CXXD-mod's dual library to change in a TU means that the namespace
 alias for that CXXD-mod will change in that TU, and C++
 does not allow that as part of the rules of the language. This is a weakness of the more
 C++-like namespaces alias compared to the namespace macro. Where the namespace macro
-is legally undefined and redefined when a particular dual library choice changes in
+can be legally undefined and redefined when a particular dual library choice changes in
 a TU, there is no way in C++ to "undefine" and "redefine" a namespace alias. Because
 a namespace alias cannot be redefined to some other namespace in C++, specific CXXD-mod
 implementation header files are processed only once in a TU by using header file guards.
@@ -626,7 +601,8 @@ a C++ compile error, the namespace alias in the implementation header file, as w
 as the header files included, will always reflect the first time the
 implementation header file was included. Therefore if a particular TU defines the
 CXXD_NO_CONSISTENCY macro, it should always itself use CXXD-mod macros to include
-the appropriate header files and specify the appropriate namespace.
+the appropriate header files and specify the appropriate namespace, and not a CXXD-mod
+implementation header file.
 
 It is highly recommended that CXXD_NO_CONSISTENCY not be used unless the programmer knows
 exactly what the code is doing in a particular TU including all intermediate header

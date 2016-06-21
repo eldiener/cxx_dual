@@ -262,7 +262,18 @@ namespace aliases are part of the C++ language. This solution
 reduces the use of CXXD macros in source files and may be seen
 as clearer syntax in C++ code.
 
-Even when using the namespace alias for a CXXD-mod the namespace
+Furthermore the solution of including the CXXD-mod implementation
+header, since it always includes the CXXD-mod header first,
+may be seen as an effective substitute for including the
+CXXD-mod header while providing header includes and a namespace
+alias all at the same time. Even when including the CXXD-mod
+implementation header the macros in the CXXD-mod header can still
+be used. It should be understood that when the CXXD-mod
+implementation header is included an immediate dependency is
+created on the dual library implementation chosen. This is
+not true when just including the CXXD-mod header.
+
+When using the namespace alias for a CXXD-mod the namespace
 macro is still available for use. This is important because there are a few
 situations where using the namespace alias to designate the correct
 namespace does not work whereas using the namespace macro does work.
@@ -355,7 +366,7 @@ merely defines macros which the programmer may choose to use or not.
 Therefore the CXXD library itself does not depend on any of the CXXD-mods it supports.
 
 It is only when using a particular CXXD-mod macro header, along with a particular CXXD-mod namespace,
-or when using a particular CXXD-mod implementation header that a dependency is established.
+or when including a particular CXXD-mod implementation header that a dependency is established.
 
 Because there is no dependency on the CXXD-mod itself when a particular CXXD-mod header is included,
 CXXD allows inclusion of all CXDD-mod headers with a single include:

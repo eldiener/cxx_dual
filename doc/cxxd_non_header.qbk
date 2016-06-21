@@ -83,7 +83,6 @@ When we used a header-only library our example was:
   ``]
  [``
     // Header file MyHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     class MyClass
         {
@@ -111,7 +110,6 @@ For our non-header only library as the header file for our example, we specify i
   ``]
  [``
     // Header file MyHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     class MyClass
         {
@@ -279,7 +277,6 @@ to include our auto-linking code in MyLibLink.hpp:
   ``]
  [``
     // Header file MyHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     #include "MyLibLink.hpp"
     class MyClass
@@ -420,10 +417,6 @@ Our updated Myheader.hpp will now look like:
   ``]
  [``
     // Header file MyHeader.hpp
-    #include <boost/cxx_dual/array.hpp>
-    #include <boost/cxx_dual/function.hpp>
-    #include <boost/cxx_dual/regex.hpp>
-    #include <boost/cxx_dual/tuple.hpp>
     #include <boost/cxx_dual/impl/array.hpp>
     #include <boost/cxx_dual/impl/function.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>

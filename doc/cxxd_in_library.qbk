@@ -86,7 +86,6 @@ Our CXXD example would look like:
   ``]
  [``
     // Header file MyHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     class MyClass
         {
@@ -198,7 +197,6 @@ Given in OtherLibrary:
   ``]
  [``
     // Header file OtherHeader.hpp
-    #include <boost/cxx_dual/regex.hpp>
     #include <boost/cxx_dual/impl/regex.hpp>
     class OtherClass
         {

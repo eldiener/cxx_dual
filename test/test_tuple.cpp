@@ -7,7 +7,6 @@
 #include <string>
 #include <stdexcept>
 
-#include <boost/cxx_dual/tuple.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/tuple.hpp>

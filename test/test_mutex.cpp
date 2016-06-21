@@ -7,9 +7,7 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include <boost/cxx_dual/chrono.hpp>
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/thread.hpp>
+#include <boost/config.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>

@@ -5,9 +5,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <iostream>
-#include <boost/cxx_dual/chrono.hpp>
-#include <boost/cxx_dual/ref.hpp>
-#include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/chrono.hpp>

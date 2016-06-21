@@ -5,8 +5,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <boost/config.hpp>
-#include <boost/cxx_dual/function.hpp>
-#include <boost/cxx_dual/bind.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/function.hpp>

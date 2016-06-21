@@ -14,9 +14,6 @@
 #define CXXD_THREAD_USE_BOOST
 #endif
 
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/ref.hpp>
-#include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/shared_mutex.hpp>

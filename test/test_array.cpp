@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 #include <boost/config.hpp>
-#include <boost/cxx_dual/array.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)

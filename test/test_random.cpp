@@ -9,8 +9,7 @@
 #include <string>
 #include <map>
 #include <cmath>
-
-#include <boost/cxx_dual/random.hpp>
+#include <boost/config.hpp>
 #include <boost/math/special_functions/round.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)

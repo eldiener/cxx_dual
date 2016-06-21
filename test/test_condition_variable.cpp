@@ -7,9 +7,6 @@
 #include <iostream>
 #include <string>
 #include <boost/config.hpp>
-#include <boost/cxx_dual/thread.hpp>
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/condition_variable.hpp>
  
 #include <boost/cxx_dual/impl/thread.hpp>
 #include <boost/cxx_dual/impl/mutex.hpp>

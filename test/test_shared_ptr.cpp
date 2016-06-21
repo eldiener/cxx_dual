@@ -24,7 +24,6 @@
 #include <set>
 #include <iostream>
 #include <algorithm>
-#include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/shared_ptr.hpp>

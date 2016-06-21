@@ -5,7 +5,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <string>
-#include <boost/cxx_dual/unordered_multimap.hpp>
+#include <boost/config.hpp>
+
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)

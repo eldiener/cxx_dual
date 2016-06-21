@@ -13,8 +13,6 @@
 #define BOOST_SYSTEM_NO_DEPRECATED // Remove when chrono 'master' branch is updated from 'develop'
 #endif
 
-#include <boost/cxx_dual/ratio.hpp>
-
 #include <boost/cxx_dual/impl/chrono.hpp>
 #include <boost/cxx_dual/impl/ratio.hpp>
 

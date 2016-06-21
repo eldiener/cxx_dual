@@ -6,7 +6,6 @@
 
 #include <iterator>
 #include <string>
-#include <boost/cxx_dual/regex.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #include <boost/cxx_dual/impl/regex.hpp>
