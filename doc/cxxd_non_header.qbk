@@ -1079,7 +1079,7 @@ In both cases we produce shorter versions of our MyLibName.hpp code.
 
 [heading Using CXXD_VALID_VARIANTS for a header-only library]
     
-Even though their is little practical benefit of limiting possibilities of CXXD-mod dual library
+Even though there is little practical benefit of limiting possibilities of CXXD-mod dual library
 choices when the situation is a header only library as opposed to the non-header only library
 we have been discussing, the CXXD_VALID_VARIANTS macro 
 could be used in that situation also. As an example let us suppose we have a header-only

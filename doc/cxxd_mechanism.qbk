@@ -412,7 +412,12 @@ the implementation for a particular compiling environment.
 CXXD-mod header content is processed each time a particular CXXD-mod header is included 
 in a translation unit. This is different from most headers in C++, which use 
 inclusion guards or compiler dependent pragmas so that the header file content
-only gets processed the first time.
+only gets processed the first time. 
+
+[note
+CXXD-mod implementation headers, after always including the appropriate
+CXXD-mod header, are subsequently only processed once in a TU.
+]
 
 The reason for processing CXXD-mod header content each time a CXXD-mod header is included
 is because overriding macros could be defined ( or undefined ) at any time within a translation unit.

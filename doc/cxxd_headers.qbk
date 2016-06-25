@@ -53,9 +53,8 @@ would include, for instance:
   #include <boost/cxx_dual/impl/regex.hpp>
   
 None of the individual CXXD-mod implementation headers are included
-by any of the general header files above. An implementation header is processed
-only once in a particular TU. The implementation header when processed
-automatically includes its CXXD-mod header if the CXXD-mod header has
-not been included before.
+by any of the general header files above. An implementation header
+always includes its appropriate CXXD-mod header but is then subsequently
+only processed once in a particular TU.
   
 [endsect]
