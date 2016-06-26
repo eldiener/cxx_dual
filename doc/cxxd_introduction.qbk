@@ -28,7 +28,7 @@ library version of a particular dual library.
 
 CXXD currently supports twenty eight different dual libraries,
 where the Boost version and the C++ standard version is
-nearly interchangeable in most respects. CXXD also provides a macro-based solution for
+nearly interchangeable. CXXD also provides a macro-based solution for
 distinguishing between the Boost version and the C++ standard
 version of a dual library so that specific code for a
 particular dual library choice may be written in those cases
@@ -170,12 +170,12 @@ implementation header files and a namespace aliases can be used instead of macro
 
 There are two different modes of using CXXD. These are called the 'macro'
 mode and the 'alias' mode. The 'alias' mode internally uses the 'macro'
-mode but provides an alternative public syntax for those who prefer to use
+mode but provides an alternative syntax for those who prefer to use
 macros as little as possible in their written code.
 
 In both modes, for any given library called 'XXX', which has a Boost version BBB and an 
 equivalent C++ standard library SSS, the user of the CXXD library includes 
-a header file called '<boost/cxx_dual/XXX.hpp>'. In macro mode this specifically
+a header file called '<boost/cxx_dual/XXX.hpp>'. In macro mode this is specifically
 done while in alias mode this is done internally.
 
 In this documentation the library 'XXX" is called, for short,
@@ -208,7 +208,7 @@ In macro mode, for any given library called 'XXX', which has a Boost version BBB
 equivalent C++ standard library SSS, the user of the CXXD library starts 
 by specifically including the CXXD-mod header file '<boost/cxx_dual/XXX.hpp>'.
 
-The subsequent usage of these CXXD_ macros in code for any given CXXD-mod,
+The subsequent usage im macro mode of these CXXD_ macros in code for any given CXXD-mod,
 once the appropriate CXXD-mod header has been included, is very simple:
 
 # Include the correct CXXD-mod macro header file using '#include CXXD_XXX_HEADER'.
@@ -224,11 +224,11 @@ by including a header file called '<boost/cxx_dual/impl/XXX.hpp>'. This header
 file is called the CXXD-mod implementation header.
 
 The implementation header file for 'XXX' internally includes the CXXD-mod header for 'XXX".
-After including the CXXD-mod header the implementation file auotmatically includes
+After including the CXXD-mod header the implementation file automatically includes
 whatever header files are needed by the implementation and creates a namespace alias
 to the correct implementation namespace.
 
-The subsequent usage of these CXXD_ namespace alias in code for any given CXXD-mod,
+The subsequent usage in alias mode of this CXXD_ namespace alias in code for any given CXXD-mod,
 once the appropriate CXXD-mod implementation header has been included, is very simple:
 
 # Access any functionality in the CXXD-mod namespace using 'cxxd_xxx_ns::some_functionality etc...'
@@ -237,7 +237,7 @@ The mnemonic 'cxxd_xxx_ns' is a namespace alias for CXXD-mod XXX for either the 
 library namespace of the dual library chosen.
 
 In alias mode the end-user can first specifically include the CXXD-mod header for 'XXX'
-before including the CXXD-mod implementation header for 'XXX' but it is
+before including the CXXD-mod implementation header for 'XXX', but it is
 not necessary. In alias mode the end-user can still use the namespace macro of macro mode
 instead of the namespace alias whenever he so chooses, since they both refer to the same
 correct namespace.
@@ -254,8 +254,18 @@ or the C++ standard version of the particular CXXD-mod by using the CXXD_HAS_STD
 preprocessor #if statement.
 
 This further usage of CXXD in alias mode does involve the use of macros
-in end-user's code but it will occurs much less, if not at all, compared
-to using the namespace alias setup for the end-user.
+in end-user's code but it will occur much less, if not at all, compared
+to using the namespace alias which has been setup for the end-user.
+
+Both the macro mode and the alias mode can be used interchangeably for
+a particular CXXD-mod in the same TU. The header file(s) included in macro
+mode by including the CXXD-mod macro header is the exact same header file(s)
+include when the CXXD-mod implementation header is included. The namespace
+alias in alias mode refers to the exact same namespace as the namespace
+macro in macro mode. The end-user can always include the CXXD-implementation
+header for a particular CXXD-mod, and use the namespace alias, even if
+previously only the CXXD-mod header had been included for that particular
+CXXD-mod and the namespace macro had been used.
 
 [heading Including and using a CXXD-mod]
 
@@ -333,6 +343,6 @@ namespace alias for accessing the correct dual library namespace, once the corre
 implementation header file has been included.
 
 On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro) may not
-even exist for the given XXX CXXD-mod.
+even exist for a given XXX CXXD-mod.
 
 [endsect]
