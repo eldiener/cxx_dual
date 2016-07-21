@@ -1,0 +1,318 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Header file inclusion</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../choosing_the_dual_library.html" title="Choosing the dual library">
+<link rel="prev" href="overriding_the_default_algorithm.html" title="Overriding the default algorithm">
+<link rel="next" href="../sec_lib.html" title="Using in a library">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="overriding_the_default_algorithm.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../choosing_the_dual_library.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../sec_lib.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="cxxd.choosing_the_dual_library.header_file_inclusion"></a><a class="link" href="header_file_inclusion.html" title="Header file inclusion">Header
+      file inclusion</a>
+</h3></div></div></div>
+<p>
+        CXXD-mod header content is processed each time a particular CXXD-mod header
+        is included in a translation unit. This is different from most headers in
+        C++, which use inclusion guards or compiler dependent pragmas so that the
+        header file content only gets processed the first time.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          CXXD-mod implementation headers, after always including the appropriate
+          CXXD-mod header, are subsequently only processed once in a TU.
+        </p></td></tr>
+</table></div>
+<p>
+        The reason for processing CXXD-mod header content each time a CXXD-mod header
+        is included is because overriding macros could be defined ( or undefined
+        ) at any time within a translation unit. CXXD always makes sure that overriding
+        macros do not conflict with each other, as discussed previously, and that
+        the choice of either Boost or its equivalent standard library remains consistent
+        for any particular CXXD-mod within a TU.
+      </p>
+<p>
+        In actual usage the programmer himself will usually not include the same
+        CXXD header more than once in a TU.
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">code</span>
+</pre>
+<p>
+        The above is possible but will rarely happen.
+      </p>
+<p>
+        What far more likely happens is that the programmer includes a non-CXXD header,
+        often from another library, and that header will include a particular CXXD-mod
+        header.
+      </p>
+<pre class="programlisting"><span class="comment">// Header another_library.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="special">...</span> <span class="identifier">header</span> <span class="identifier">code</span>
+</pre>
+<p>
+        A TU with:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">code</span>
+</pre>
+<p>
+        It is this latter case which will often cause a CXXD-mod header to be included
+        more than once in a TU.
+      </p>
+<h5>
+<a name="cxxd.choosing_the_dual_library.header_file_inclusion.h0"></a>
+        <span class="phrase"><a name="cxxd.choosing_the_dual_library.header_file_inclusion.default_algorithm_redux"></a></span><a class="link" href="header_file_inclusion.html#cxxd.choosing_the_dual_library.header_file_inclusion.default_algorithm_redux">Default
+        algorithm redux</a>
+      </h5>
+<p>
+        Recall that the default algorithm is used to choose between the Boost library
+        or its C++ standard equivalent for a CXXD-mod when no overriding macros are
+        relevant for that CXXD-mod. Because CXXD-mod header content is processed
+        each time the header is included the default algorithm is slightly different
+        the second and subsequent times a particular CXXD-mod header is included.
+        In that particular case the default algorithm simply accepts which of the
+        dual libraries of the CXXD-mod has been previously chosen. This saves preprocessing
+        time and also makes sure that the choice for a given CXXD-mod is consistent
+        throughout the TU.
+      </p>
+<p>
+        Let's look at how this works in practice with the default algorithm.
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">code</span>
+</pre>
+<p>
+        This is our normal case where the default algorithm will choose the C++ standard
+        regex library if it is available, otherwise the Boost regex library.
+      </p>
+<pre class="programlisting"><span class="comment">// Header another_library.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="special">...</span> <span class="identifier">header</span> <span class="identifier">code</span>
+
+<span class="comment">// Header my_header.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">code</span>
+</pre>
+<p>
+        In this situation when the regex CXXD-mod is included a second time in my_header.hpp,
+        by including another_library.hpp, it simply accepts the choice made the first
+        time it was directly included.
+      </p>
+<pre class="programlisting"><span class="comment">// Header another_library.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="special">...</span> <span class="identifier">header</span> <span class="identifier">code</span>
+
+<span class="comment">// Header my_header.hpp</span>
+<span class="preprocessor">#define</span> <span class="identifier">CXXD_REGEX_USE_BOOST</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#undef</span> <span class="identifier">CXXD_REGEX_USE_BOOST</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">code</span>
+</pre>
+<p>
+        In this case the first time that the regex CXXD-mod is included in my_header.hpp
+        the default algorithm is not in effect since we have overridden the choice
+        by specifying that the Boost regex library will be used. Although in practical
+        experience it would be very unusual to undefine the overridden macro, we
+        do it here to illustrate the fact that the second time that the regex CXXD-mod
+        is included in my_header.hpp the default algorithm is in effect but it simply
+        accepts the choice made the first time, which is to use the Boost regex library.
+        This is done even if the C++ standard regex library is available.
+      </p>
+<h5>
+<a name="cxxd.choosing_the_dual_library.header_file_inclusion.h1"></a>
+        <span class="phrase"><a name="cxxd.choosing_the_dual_library.header_file_inclusion.dual_library_consistency"></a></span><a class="link" href="header_file_inclusion.html#cxxd.choosing_the_dual_library.header_file_inclusion.dual_library_consistency">Dual
+        library consistency</a>
+      </h5>
+<p>
+        By default whenever a CXXD-mod header for a particular CXXD-mod is included
+        a second or subsequent time in a TU the choice of the dual library cannot
+        change from the original inclusion of that CXXD-mod header. This consistency
+        is enforced because it would normally cause problems in user's code if, for
+        a given CXXD-mod, one part of the TU were using the C++ standard library
+        and another part of the TU were using the Boost library equivalent. This
+        consistency, of the same syntax meaning the same thing within a TU, is something
+        which the CXXD library enforces. CXXD enforces this consistency by creating
+        a preprocessing error if the dual library choice would change when a particular
+        CXXD header is included more than once in a TU.
+      </p>
+<p>
+        However this consistency means that the order of header file inclusion potentially
+        changes the way that CXXD works for a given end-user's module. This is the
+        major downside of CXXD so we will take a look at it. To illustrate this we
+        will use as an example a header file which has an overriding macro:
+      </p>
+<pre class="programlisting"><span class="comment">// Header a_library.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="special">...</span> <span class="identifier">header</span> <span class="identifier">code</span> <span class="keyword">using</span> <span class="identifier">the</span> <span class="identifier">regex</span> <span class="identifier">implementation</span>
+
+<span class="comment">// Header another_library_with_override.hpp</span>
+<span class="preprocessor">#define</span> <span class="identifier">CXXD_REGEX_USE_BOOST</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">a_library</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span> <span class="identifier">other</span> <span class="special">#</span><span class="identifier">includes</span>
+<span class="special">...</span> <span class="identifier">header</span> <span class="identifier">code</span>
+</pre>
+<p>
+        In the another_library_with_override.hpp header file we override the default
+        processing for the regex CXXD-mod so that the Boost regex library is always
+        used. Let's also assume for our example that the C++ standard regex library
+        is available when compiling our own TU. Now if we include the another_library_with_override.hpp
+        header first in that TU followed by the CXXD regex header, as in:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library_with_override</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span><span class="identifier">other</span> <span class="identifier">header</span> <span class="identifier">files</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        everything works fine. This is because we have the overridden macro in effect
+        each time to determine that the Boost regex library will be used.
+      </p>
+<p>
+        But if we reverse the order of includes:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span><span class="identifier">other</span> <span class="identifier">header</span> <span class="identifier">files</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library_with_override</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        we are essentially changing the dual library choice in our TU, between the
+        first time the regex CXXD-mod header is included and the second time it is
+        included. The first time the regex CXXD-mod header is included no overriding
+        macro is in effect so that the default algorithm chooses the C++ standard
+        library because it is available. The second time the regex CXXD-mod header
+        is included an overriding macro changes the regex CXXD-mod to use the Boost
+        regex library. Thus consistency between which dual library is chosen is broken
+        and CXXD creates a preprocessing error.
+      </p>
+<p>
+        This is one of the weaknesses of a macro based system such as CXXD. Normally
+        the order of inclusion of header files should not affect the way that code
+        compiles. But in CXXD it does affect the compilation since, by default, CXXD
+        does not allow the dual library choice for a particular CXXD-mod to change
+        within a TU.
+      </p>
+<h5>
+<a name="cxxd.choosing_the_dual_library.header_file_inclusion.h2"></a>
+        <span class="phrase"><a name="cxxd.choosing_the_dual_library.header_file_inclusion.turning_off_consistency"></a></span><a class="link" href="header_file_inclusion.html#cxxd.choosing_the_dual_library.header_file_inclusion.turning_off_consistency">Turning
+        off consistency</a>
+      </h5>
+<p>
+        <a name="mechanism_noconsistency"></a>The end user can override the dual
+        library consistency for all CXXD-mods by defining a macro, called CXXD_NO_CONSISTENCY.
+        If used CXXD_NO_CONSISTENCY must always be defined to nothing, as in:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">CXXD_NO_CONSISTENCY</span>
+</pre>
+<p>
+        Overriding dual library consistency for a TU is a serious matter and should
+        not be done lightly. CXXD does not recommend doing this but in the spirit
+        of flexibility allows it. Overriding consistency allows the dual library
+        for a CXXD-mod to change when that CXXD-mod's CXXD header file is included
+        more than once. In actuality, unless the end-user goes about undefining already
+        defined overriding macros, the only case where overriding the dual library
+        consistency by defining CXXD_NO_CONSISTENCY will normally cause the dual
+        library for a CXXD-mod to change within a TU is in the second example given
+        above, ie. when the default algorithm chooses a dual library the first time
+        a CXXD-mod header is included and then an overriding macro changes the dual
+        library with the opposite choice the second time the CXXD-mod header is included.
+        In all other cases merely adding further override macros before further inclusion
+        of the same CXXD-mod header will either cause overriding macro conflicts,
+        which will always produce preprocessing errors from within CXXD, or not change
+        the dual library chosen in any further way.
+      </p>
+<p>
+        Using the CXXD_NO_CONSISTENCY macro will not work for header file includes
+        and namespace aliases if a CXXD-mod implementation header file is used for
+        a particular CXXD-mod, and the dual library choice for a CXXD-mod changes
+        in a TU. This is because allowing the choice of a particular CXXD-mod's dual
+        library to change in a TU means that the namespace alias for that CXXD-mod
+        will change in that TU, and C++ does not allow that as part of the rules
+        of the language. This is a weakness of the more C++-like namespaces alias
+        compared to the namespace macro. Where the namespace macro can be legally
+        undefined and redefined when a particular dual library choice changes in
+        a TU, there is no way in C++ to "undefine" and "redefine"
+        a namespace alias. Because a namespace alias cannot be redefined to some
+        other namespace in C++, specific CXXD-mod implementation header files are
+        processed only once in a TU by using header file guards. So while including
+        a CXXD-mod implementation header file more than once will not produce a C++
+        compile error, the namespace alias in the implementation header file, as
+        well as the header files included, will always reflect the first time the
+        implementation header file was included. Therefore if a particular TU defines
+        the CXXD_NO_CONSISTENCY macro, it should always itself use CXXD-mod macros
+        to include the appropriate header files and specify the appropriate namespace,
+        and not a CXXD-mod implementation header file.
+      </p>
+<p>
+        It is highly recommended that CXXD_NO_CONSISTENCY not be used unless the
+        programmer knows exactly what the code is doing in a particular TU including
+        all intermediate header file code. When dual library consistency is turned
+        off using CXXD_NO_CONSISTENCY the chance that CXXD for a particular CXXD-mod
+        will access the Boost library in some part of a TU and the C++ standard library
+        in another part of a TU, and the problems this may cause, are generally not
+        worth the problems that could occur in code confusion. Nonetheless if the
+        programmer feels he knows what he is doing in using this macro he can do
+        so.
+      </p>
+<p>
+        An alternative to using the dangerous CXXD_NO_CONSISTENCY macro is to define
+        the appropriate overriding macro at the very beginning of a TU, either in
+        the TU itself or by some compiler command line parameter which allows a macro
+        definition to be made. This maintains TU consistency but should really only
+        be done if using CXXD produces a preprocessor error based on consistency
+        for a TU being broken. As an extension to our example, if the code in our
+        TU was:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">CXXD_REGEX_USE_BOOST</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="special">...</span><span class="identifier">other</span> <span class="identifier">header</span> <span class="identifier">files</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">another_library_with_override</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+        we could avoid the dangerous CXXD_NO_CONSISTENCY macro while providing the
+        override which another_library_with_override.hpp provides without incurring
+        any preprocessing error.
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="overriding_the_default_algorithm.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../choosing_the_dual_library.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../sec_lib.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

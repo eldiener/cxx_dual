@@ -1,0 +1,98 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Header files</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="prev" href="build_support/general_build_support.html" title="General build support">
+<link rel="next" href="tests.html" title="Tests">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="build_support/general_build_support.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tests.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.header_files"></a><a class="link" href="header_files.html" title="Header files">Header files</a>
+</h2></div></div></div>
+<p>
+      As previously explained each CXXD-mod has its own header file and a general
+      mod header 'cxx_mods.hpp' is also available for including all of the individual
+      CXXD-mods. For a given CXXD-mod header the end-user would include, for instance:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      and for the general mod header file the end-user would include:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">cxx_mods</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      There are also header files for supporting macros in 'library_name.hpp' and
+      'valid_variants.hpp'. These can be included separately as:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">library_name</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">valid_variants</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      A separate header file also exists for the various mod_IDs used by the supporting
+      macros:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">mod_ids</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      There is also a header file which includes all the above headers in the library.
+      This header file is 'cxx_dual.hpp'. This header file includes the individual
+      CXXD-mod headers as well as the macro code for the two supporting header files
+      and the mod-ID header file. Including this header file is simply:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      All of the code in these header files is preprocessor code and the macros which
+      allow the library to work. The macros are dependent on the Boost Preprocessor
+      library, the Boost.Config library, and for the supporting macros and their
+      header files the Boost VMD library. All of these other Boost libraries are
+      header only libraries.
+    </p>
+<p>
+      There are implementation headers for each CXXD-mod in the 'impl' include sub-directory.
+      These header files create dependencies on the particular CXXD-mod since they
+      include the appropriate headers needed and create a namespace alias to the
+      appropriate namespace, depending on which dual library has been chosen. For
+      a given CXXD-mod implementation header the end-user would include, for instance:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+</pre>
+<p>
+      None of the individual CXXD-mod implementation headers are included by any
+      of the general header files above. An implementation header always includes
+      its appropriate CXXD-mod header but is then subsequently only processed once
+      in a particular TU.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="build_support/general_build_support.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tests.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

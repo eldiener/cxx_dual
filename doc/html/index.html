@@ -1,0 +1,592 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Chapter&#160;1.&#160;The Cxx Dual Library</title>
+<link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="next" href="cxxd/terminology.html" title="Terminology">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td>
+<td align="center"><a href="../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="cxxd/terminology.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="cxxd"></a>Chapter&#160;1.&#160;The Cxx Dual Library</h2></div>
+<div><div class="author"><h3 class="author">
+<span class="firstname">Edward</span> <span class="surname">Diener</span>
+</h3></div></div>
+<div><p class="copyright">Copyright &#169; 2015, 2016 Tropic Software East Inc</p></div>
+<div><div class="legalnotice">
+<a name="cxxd.legal"></a><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></div>
+</div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="section"><a href="index.html#cxxd.introduction">Introduction</a></span></dt>
+<dt><span class="section"><a href="cxxd/terminology.html">Terminology</a></span></dt>
+<dt><span class="section"><a href="cxxd/smods.html">Modules</a></span></dt>
+<dt><span class="section"><a href="cxxd/choosing_the_dual_library.html">Choosing the dual library</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/choosing_the_dual_library.html#cxxd.choosing_the_dual_library.the_default_algorithm">The
+      default algorithm</a></span></dt>
+<dt><span class="section"><a href="cxxd/choosing_the_dual_library/overriding_the_default_algorithm.html">Overriding
+      the default algorithm</a></span></dt>
+<dt><span class="section"><a href="cxxd/choosing_the_dual_library/header_file_inclusion.html">Header
+      file inclusion</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/sec_lib.html">Using in a library</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/sec_lib.html#cxxd.sec_lib.use_in_a_non_header_only_library">Use in
+      a non-header only library</a></span></dt>
+<dt><span class="section"><a href="cxxd/sec_lib/sec_lvvv.html">Support for naming library variants
+      and testing all valid possibilities</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/preprocessing_errors.html">Preprocessing errors</a></span></dt>
+<dt><span class="section"><a href="cxxd/build_support.html">Build support</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/build_support.html#cxxd.build_support.boost_build">Boost Build</a></span></dt>
+<dt><span class="section"><a href="cxxd/build_support/general_build_support.html">General build
+      support</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/header_files.html">Header files</a></span></dt>
+<dt><span class="section"><a href="cxxd/tests.html">Tests</a></span></dt>
+<dt><span class="section"><a href="reference.html">Reference</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="reference.html#header.boost.cxx_dual.array_hpp">Header &lt;boost/cxx_dual/array.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/atomic_hpp.html">Header &lt;boost/cxx_dual/atomic.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/bind_hpp.html">Header &lt;boost/cxx_dual/bind.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/chrono_hpp.html">Header &lt;boost/cxx_dual/chrono.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/condition_variable_hpp.html">Header &lt;boost/cxx_dual/condition_variable.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/cxx_mods_hpp.html">Header &lt;boost/cxx_dual/cxx_mods.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/enable_shared_from_this_hpp.html">Header &lt;boost/cxx_dual/enable_shared_from_this.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/function_hpp.html">Header &lt;boost/cxx_dual/function.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/hash_hpp.html">Header &lt;boost/cxx_dual/hash.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/library_name_hpp.html">Header &lt;boost/cxx_dual/library_name.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/make_shared_hpp.html">Header &lt;boost/cxx_dual/make_shared.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/mem_fn_hpp.html">Header &lt;boost/cxx_dual/mem_fn.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/move_hpp.html">Header &lt;boost/cxx_dual/move.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/mutex_hpp.html">Header &lt;boost/cxx_dual/mutex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/random_hpp.html">Header &lt;boost/cxx_dual/random.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/ratio_hpp.html">Header &lt;boost/cxx_dual/ratio.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/ref_hpp.html">Header &lt;boost/cxx_dual/ref.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/regex_hpp.html">Header &lt;boost/cxx_dual/regex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/shared_mutex_hpp.html">Header &lt;boost/cxx_dual/shared_mutex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/shared_ptr_hpp.html">Header &lt;boost/cxx_dual/shared_ptr.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/system_error_hpp.html">Header &lt;boost/cxx_dual/system_error.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/thread_hpp.html">Header &lt;boost/cxx_dual/thread.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/tuple_hpp.html">Header &lt;boost/cxx_dual/tuple.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/type_index_hpp.html">Header &lt;boost/cxx_dual/type_index.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/type_traits_hpp.html">Header &lt;boost/cxx_dual/type_traits.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/unordered_map_hpp.html">Header &lt;boost/cxx_dual/unordered_map.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/unordered_multimap_hpp.html">Header &lt;boost/cxx_dual/unordered_multimap.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/unordered_multiset_hpp.html">Header &lt;boost/cxx_dual/unordered_multiset.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/unordered_set_hpp.html">Header &lt;boost/cxx_dual/unordered_set.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/valid_variants_hpp.html">Header &lt;boost/cxx_dual/valid_variants.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/weak_ptr_hpp.html">Header &lt;boost/cxx_dual/weak_ptr.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/dual_library_knowledge_and_conce.html">Dual library knowledge
+    and concerns</a></span></dt>
+<dt><span class="section"><a href="index/s12.html">Index</a></span></dt>
+</dl>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.introduction"></a><a class="link" href="index.html#cxxd.introduction" title="Introduction">Introduction</a>
+</h2></div></div></div>
+<p>
+      The Cxx dual library, or CXXD for short, is a macro library which chooses between
+      using a Boost library or its C++ standard equivalent library for a number of
+      different C++ implementations, while using the same code to program either
+      choice. An 'implementation' is a Boost library which has a C++ standard library
+      equivalent whose public interfaces are nearly the same in both cases. An 'implementation'
+      is called a 'dual library' in this documentation, or 'CXXD-mod' for short.
+    </p>
+<p>
+      The library does this by defining object-like macros for including the appropriate
+      header file(s) and namespace for using either the Boost library version or
+      the C++ standard library version of a particular dual library. Alternatively,
+      for those who prefer not to use macros, the library provides an implementation
+      header file for including the appropriate header file(s) and for setting a
+      namespace alias for using either the Boost library version or the C++ standard
+      library version of a particular dual library.
+    </p>
+<p>
+      CXXD currently supports twenty eight different dual libraries, where the Boost
+      version and the C++ standard version is nearly interchangeable. CXXD also provides
+      a macro-based solution for distinguishing between the Boost version and the
+      C++ standard version of a dual library so that specific code for a particular
+      dual library choice may be written in those cases where the public interfaces
+      diverge.
+    </p>
+<p>
+      The default algorithm for choosing between the Boost library or the C++ standard
+      library for any of the different dual libraries is that if the C++ standard
+      library is available, it is chosen else the Boost library is chosen. The default
+      algorithm can be overridden by the end-user. CXXD uses the Boost.Config library
+      for determining whether ot not the C++ standard library is available for a
+      dual library. The choice is made at compile time.
+    </p>
+<h4>
+<a name="cxxd.introduction.h0"></a>
+      <span class="phrase"><a name="cxxd.introduction.who_the_library_is_for"></a></span><a class="link" href="index.html#cxxd.introduction.who_the_library_is_for">Who
+      the library is for</a>
+    </h4>
+<p>
+      The CXXD library is for:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          Programmers writing code not using C++11 on up syntax who still want to
+          target some C++11 on up libraries if the code is compiled in C++11 on up
+          mode.
+        </li>
+<li class="listitem">
+          Programmers writing code using C++11 on up syntax who still want the option
+          of targeting some Boost libraries if the equivalent C++11 library does
+          not exist for a given implementation.
+        </li>
+</ol></div>
+<h4>
+<a name="cxxd.introduction.h1"></a>
+      <span class="phrase"><a name="cxxd.introduction.the_problem"></a></span><a class="link" href="index.html#cxxd.introduction.the_problem">The
+      problem</a>
+    </h4>
+<p>
+      Particular functionality of a number of Boost libraries is duplicated to a
+      great degree by C++ standard libraries, most of which were originally created
+      from the equivalent Boost libraries. In designing software the choice of a
+      particular library to use is often predicated on what is available when the
+      end-user compiles the sources for a module.
+    </p>
+<p>
+      Given a Boost library, call it BBB, which has an equivalent C++ standard library,
+      call it SSS, how does the designer of software choose whether to use BBB or
+      SSS in his code ?
+    </p>
+<p>
+      The normal choice may be presented as:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          Use BBB since it is always available for a given Boost distribution. This
+          is by far the most popular and widely used decision for Boost library developers
+          as well as end-users of Boost.
+        </li>
+<li class="listitem">
+          Use SSS and fail to compile if the C++ standard library is not available
+          given the compiler options and the C++ compiler implementation. This is
+          the most popular choice if the designer of the software insists on a certain
+          level of C++ standard support, such as that the software is compiled so
+          that the C++11 standard or higher is supported.
+        </li>
+<li class="listitem">
+          Support both BBB and SSS in the interface, with the proviso that if Boost
+          is not being used BBB in the interface is not used and if the implementation
+          and compiler options are not adequate then SSS in the interface is not
+          used. Being "used" or not is done through preprocessing defines
+          and preprocessing #if statements. This is the most time consuming solution
+          and will result in much duplication of functionality to support both BBB
+          and SSS.
+        </li>
+</ol></div>
+<p>
+      As mentioned above the first choice is easily the most popular since Boost
+      library developers, and those involved using any one of the approximately current
+      130+ Boost libraries, assume that a Boost distribution is always available
+      for the programmer to use. If you see this choice as always the single most
+      viable one you need not continue reading about this library and can move on
+      to what you have always used.
+    </p>
+<p>
+      What are the possible downsides to the first choice ?
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Some programmers, programming groups, businesses and large corporation
+          employing programmers, do not like the idea of having to rely on the Boost
+          distribution as a whole while feeling it is fine to rely on certain individual
+          Boost libraries.
+        </li>
+<li class="listitem">
+          Many programmers would like to use the C++ standard libraries when available
+          with their compiler implementation rather than have a dependency in their
+          code on the equivalent Boost library.
+        </li>
+<li class="listitem">
+          Programmers may be already using C++ standard library SSS in their code
+          and do not want to have to therefore use the Boost library equivalent BBB
+          for a particular library interface.
+        </li>
+</ul></div>
+<p>
+      The second choice, always using the C++ standard equivalent library, will occur
+      less often because of its most obvious downside, which is that if the C++ standard
+      library is not available for a particular compiler implementation and C++ standard
+      compiler level the code will fail to compile. If however you write a library
+      for a particular level of the C++ standard, such as C++11, and assume a strong
+      implementation of that standard is needed by certain compilers which can compile
+      your code, this is often your most viable choice and you need not continue
+      reading about this library.
+    </p>
+<p>
+      The third choice, supporting both the Boost version of a library and the equivalent
+      C++ standard version of that library, is obviously programmable but entails
+      a much greater amount of work. Each usage of BBB and SSS will entail writing
+      code that supports both libraries and this will require a great deal of extra
+      code. Furthermore your code will be filled with uses of preprocessor #if statements
+      to delineate which usage of BBB or SSS would be available at any given time.
+      However if you are happy to do all the extra work to support functionality
+      in both BBB and SSS in your code you need not continue reading about this library.
+    </p>
+<h4>
+<a name="cxxd.introduction.h2"></a>
+      <span class="phrase"><a name="cxxd.introduction.the_solution"></a></span><a class="link" href="index.html#cxxd.introduction.the_solution">The
+      solution</a>
+    </h4>
+<p>
+      Any of the three choices presented above can be used and represent a solution
+      to the problem presented. This particular library represents a fourth choice,
+      which is more flexible than any of the three choices listed above, but also
+      has some downsides just like each of the three choices previously discussed.
+    </p>
+<p>
+      The solution presented by the CXXD library is a means of supporting either
+      BBB or SSS with a single set of code, without having to worry which is being
+      used at compile time. This is the most important factor when using CXXD. The
+      single set of code will support both the Boost and C++ standard equivalents
+      of a particular dual library, with the particular choice of which implementation
+      for a dual library being made at compile time.
+    </p>
+<p>
+      The solution is predicated on the fact that for BBB and SSS the exact same
+      functionality is present for a very large amount of the implementation of both
+      libraries, with the only difference being the namespace being used and the
+      header file(s) needing to be included. The solution also offers the means to
+      distinguish between BBB and SSS for the very small amount of functionality
+      which may be different between the Boost and C++ standard version of a library.
+    </p>
+<p>
+      The solution is not problem free but will work painlessly most of the time,
+      and when it does not work will inform the end-user why during compilation with
+      preprocessing errors. This documentation will also discuss issues with this
+      solution when it does not work as desired.
+    </p>
+<p>
+      The solution involves the use of macros, all starting with this library's common
+      mnemonic of CXXD_, which allow a programmer to use the functionality of equivalent
+      BBB and SSS libraries with a single set of code. Alternatively implementation
+      header files and a namespace aliases can be used instead of macros.
+    </p>
+<h4>
+<a name="cxxd.introduction.h3"></a>
+      <span class="phrase"><a name="cxxd.introduction.how_it_works"></a></span><a class="link" href="index.html#cxxd.introduction.how_it_works">How
+      it works</a>
+    </h4>
+<p>
+      There are two different modes of using CXXD. These are called the 'macro' mode
+      and the 'alias' mode. The 'alias' mode internally uses the 'macro' mode but
+      provides an alternative syntax for those who prefer to use macros as little
+      as possible in their written code.
+    </p>
+<p>
+      In both modes, for any given library called 'XXX', which has a Boost version
+      BBB and an equivalent C++ standard library SSS, the user of the CXXD library
+      includes a header file called '&lt;boost/cxx_dual/XXX.hpp&gt;'. In macro mode
+      this is specifically done while in alias mode this is done internally.
+    </p>
+<p>
+      In this documentation the library 'XXX" is called, for short, a 'CXXD-mod',
+      its choices between either a Boost library version or an equivalent C++ standard
+      library version is called a 'dual library', and the header to be included in
+      order to use the CXXD-mod is called the 'CXXD-mod header'. The action of including
+      a CXXD-header in the programmer's code is called 'including a CXXD-mod'.
+    </p>
+<p>
+      Once the CXXD-mod's CXXD header is included, it will have three mandatory macro
+      definitions and one optional macro definition, depending on the particular
+      CXXD-mod. These definitions, for a particular 'XXX' CXXD-mod, are:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          CXXD_XXX_HEADER, the name of XXX's header file as used by the preprocessor
+          '#include' statement. This is called the "CXXD-mod macro header"
+          to distinguish it from the 'CXXD-mod header', the latter referring to to
+          the initial CXXD-mod header file which must be included to generate the
+          correct macros. Occasionally this CXXD-mod macro header is an internal
+          CXXD header which includes more than one dual library header file.
+        </li>
+<li class="listitem">
+          CXXD_XXX_NS, the name of XXX CXXD-mod's namespace. This is called the "CXXD-mod
+          namespace".
+        </li>
+<li class="listitem">
+          CXXD_HAS_STD_XXX, 1 if XXX CXXD-mod's C++ standard library version is being
+          used or 0 if XXX CXXD-mod's Boost library version is being used.
+        </li>
+<li class="listitem">
+          Optionally CXXD_XXX_MACRO(macro), transforms any XXX CXXD-mod 'macro' to
+          its actual name.
+        </li>
+</ul></div>
+<p>
+      The CXXD-mod header has all the logic in it for choosing the dual library but
+      has no dependency itself on either dual library.
+    </p>
+<h4>
+<a name="cxxd.introduction.h4"></a>
+      <span class="phrase"><a name="cxxd.introduction.using_macro_mode"></a></span><a class="link" href="index.html#cxxd.introduction.using_macro_mode">Using
+      macro mode</a>
+    </h4>
+<p>
+      In macro mode, for any given library called 'XXX', which has a Boost version
+      BBB and an equivalent C++ standard library SSS, the user of the CXXD library
+      starts by specifically including the CXXD-mod header file '&lt;boost/cxx_dual/XXX.hpp&gt;'.
+    </p>
+<p>
+      The subsequent usage im macro mode of these CXXD_ macros in code for any given
+      CXXD-mod, once the appropriate CXXD-mod header has been included, is very simple:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          Include the correct CXXD-mod macro header file using '#include CXXD_XXX_HEADER'.
+          This brings in whatever header fles are needed by the implementation.
+        </li>
+<li class="listitem">
+          Access any functionality in the CXXD-mod namespace using 'CXXD_XXX_NS::some_functionality
+          etc...' or, if there are no name clashes with another namespace, through
+          'using namespace CXXD_XXX_NS; some_functionality etc...'.
+        </li>
+</ol></div>
+<h4>
+<a name="cxxd.introduction.h5"></a>
+      <span class="phrase"><a name="cxxd.introduction.using_alias_mode"></a></span><a class="link" href="index.html#cxxd.introduction.using_alias_mode">Using
+      alias mode</a>
+    </h4>
+<p>
+      In alias mode, for any given library called 'XXX', which has a Boost version
+      BBB and an equivalent C++ standard library SSS, the user of the CXXD library
+      starts by including a header file called '&lt;boost/cxx_dual/impl/XXX.hpp&gt;'.
+      This header file is called the CXXD-mod implementation header.
+    </p>
+<p>
+      The implementation header file for 'XXX' internally includes the CXXD-mod header
+      for 'XXX". After including the CXXD-mod header the implementation file
+      automatically includes whatever header files are needed by the implementation
+      and creates a namespace alias to the correct implementation namespace.
+    </p>
+<p>
+      The subsequent usage in alias mode of this CXXD_ namespace alias in code for
+      any given CXXD-mod, once the appropriate CXXD-mod implementation header has
+      been included, is very simple:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+          Access any functionality in the CXXD-mod namespace using 'cxxd_xxx_ns::some_functionality
+          etc...' or, if there are no name clashes with another namespace, through
+          'using namespace cxxd_xxx_ns; some_functionality etc...'. The mnemonic
+          'cxxd_xxx_ns' is a namespace alias for CXXD-mod XXX for either the Boost
+          or rhe C++ standard library namespace of the dual library chosen.
+        </li></ol></div>
+<p>
+      In alias mode the end-user can first specifically include the CXXD-mod header
+      for 'XXX' before including the CXXD-mod implementation header for 'XXX', but
+      it is not necessary. In alias mode the end-user can still use the namespace
+      macro of macro mode instead of the namespace alias whenever he so chooses,
+      since they both refer to the same correct namespace.
+    </p>
+<h4>
+<a name="cxxd.introduction.h6"></a>
+      <span class="phrase"><a name="cxxd.introduction.using_either_mode"></a></span><a class="link" href="index.html#cxxd.introduction.using_either_mode">Using
+      either mode</a>
+    </h4>
+<p>
+      Further usage of the CXXD_ macros in code for any given CXXD-mod, once the
+      appropriate CXXD-mod header has been included, is:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          Use any macro MMM, which is part of the CXXD-mod implementation, by specifying
+          'CXXD_XXX_MACRO(MMM)' as the macro name.
+        </li>
+<li class="listitem">
+          Optionally it is possible to write specific code for the Boost version
+          of the CXXD-mod or the C++ standard version of the particular CXXD-mod
+          by using the CXXD_HAS_STD_XXX macro with a preprocessor #if statement.
+        </li>
+</ol></div>
+<p>
+      This further usage of CXXD in alias mode does involve the use of macros in
+      end-user's code but it will occur much less, if not at all, compared to using
+      the namespace alias which has been setup for the end-user.
+    </p>
+<p>
+      Both the macro mode and the alias mode can be used interchangeably for a particular
+      CXXD-mod in the same TU. The header file(s) included in macro mode by including
+      the CXXD-mod macro header is the exact same header file(s) include when the
+      CXXD-mod implementation header is included. The namespace alias in alias mode
+      refers to the exact same namespace as the namespace macro in macro mode. The
+      end-user can always include the CXXD-implementation header for a particular
+      CXXD-mod, and use the namespace alias, even if previously only the CXXD-mod
+      header had been included for that particular CXXD-mod and the namespace macro
+      had been used.
+    </p>
+<h4>
+<a name="cxxd.introduction.h7"></a>
+      <span class="phrase"><a name="cxxd.introduction.including_and_using_a_cxxd_mod"></a></span><a class="link" href="index.html#cxxd.introduction.including_and_using_a_cxxd_mod">Including
+      and using a CXXD-mod</a>
+    </h4>
+<p>
+      A programmer who, after including a CXXD-mod header for 'XXX' CXXD-mod, whether
+      specifically in macro mode or internally in alias mode, proceeds to either
+      include the CXXD-mod macro header in macro mode, or who merely includes the
+      CXXD-mod implementation header in alias mode, is said to 'use a CXXD-mod'.
+      Please note the distinction between including a CXXD-mod and using a CXXD-mod.
+      Including a CXXD-mod just defines a set of macros and is not dependent on any
+      other CXXD-mod Boost library or outside implementation. Using a CXXD-mod establishes
+      dependency on either a Boost library or its equivalent C++ standard library.
+    </p>
+<p>
+      In alias mode including the CXXD-mod implementation header immediately establishes
+      a dependency on its dual library and uses a CXXD-mod. In macro mode the dependency
+      on its dual library only occurs when including the CXXD-mod macro header.
+    </p>
+<h4>
+<a name="cxxd.introduction.h8"></a>
+      <span class="phrase"><a name="cxxd.introduction.generalized_example"></a></span><a class="link" href="index.html#cxxd.introduction.generalized_example">Generalized
+      example</a>
+    </h4>
+<p>
+      Somewhere in your code you want to use the XXX CXXD-mod, without worrying whether
+      you are using the Boost version or the C++ standard library version of XXX.
+      Your code in general may look like:
+    </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Using macros
+              </p>
+            </th>
+<th>
+              <p>
+                Using aliases
+              </p>
+            </th>
+</tr></thead>
+<tbody><tr>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Creates the macros for CXXD-mod XXX by including the appropriate CXXD-mod header</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">XXX</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="comment">// Includes the appropriate CXXD-mod macro header file</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_XXX_HEADER</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Creates an object of some XXX type using the CXXD-mod namespace</span>
+    <span class="identifier">CXXD_XXX_NS</span><span class="special">::</span><span class="identifier">some_XXX_class</span> <span class="identifier">a_xxx_object</span><span class="special">;</span>
+    <span class="comment">// Use the a_xxx_object in your code...</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_XXX</span>
+    <span class="comment">// Some code specific to the C++ standard implementation of XXX</span>
+    <span class="preprocessor">#else</span>
+    <span class="comment">// Otherwise some code specific to the Boost implementation of XXX</span>
+    <span class="preprocessor">#endif</span>
+    <span class="comment">// Use XXX macro 'macro' in some context</span>
+    <span class="identifier">CXXD_XXX_MACRO</span><span class="special">(</span><span class="identifier">macro</span><span class="special">)</span>
+    <span class="special">}</span>
+</pre>
+            </td>
+<td>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="comment">// Includes the appropriate CXXD-mod implementation header file.</span>
+<span class="comment">// This also includes the appropriate CXXD-mod header file first.</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">XXX</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Creates an object of some XXX type using the CXXD-mod namespace</span>
+    <span class="identifier">cxxd_xxx_ns</span><span class="special">::</span><span class="identifier">some_XXX_class</span> <span class="identifier">a_xxx_object</span><span class="special">;</span>
+    <span class="comment">// Use the a_xxx_object in your code...</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_XXX</span>
+    <span class="comment">// Some code specific to the C++ standard implementation of XXX</span>
+    <span class="preprocessor">#else</span>
+    <span class="comment">// Otherwise some code specific to the Boost implementation of XXX</span>
+    <span class="preprocessor">#endif</span>
+    <span class="comment">// Use XXX macro 'macro' in some context</span>
+    <span class="identifier">CXXD_XXX_MACRO</span><span class="special">(</span><span class="identifier">macro</span><span class="special">)</span>
+    <span class="special">}</span>
+</pre>
+            </td>
+</tr></tbody>
+</table></div>
+<p>
+      By far the major use of these CXXD macros, which including a particular CXXD-mod
+      header defines, will be in the use of the CXXD-mod macro header CXXD_XXX_HEADER,
+      to include the correct header file(s) for XXX, and in the CXXD-mod namespace
+      CXXD_XXX_NS, to use the functionality of XXX.
+    </p>
+<p>
+      Alternatively the major use of CXXD functionality will be in the use of the
+      cxxd_xxx_ns namespace alias for accessing the correct dual library namespace,
+      once the correct XXX implementation header file has been included.
+    </p>
+<p>
+      On the other hand CXXD_HAS_STD_XXX may rarely if ever be used and CXXD_XXX_MACRO(macro)
+      may not even exist for a given XXX CXXD-mod.
+    </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: July 21, 2016 at 11:45:08 GMT</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="cxxd/terminology.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+</body>
+</html>
