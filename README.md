@@ -31,4 +31,4 @@ The tests can be run by executing `b2` in the test subdirectory. To test the CXX
 
 ## Feedback
 
-Feedback as comments, suggestions, or bug reports is welcome in the Boost Library Incubator at http://rrsd.com/blincubator.com, on the Boost developer mailing list, or as Github issues.
+Feedback as comments, suggestions, or bug reports is welcome in the Boost Library Incubator at http://blincubator.com, on the Boost developer mailing list, or as Github issues.
