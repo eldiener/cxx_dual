@@ -8,9 +8,7 @@
 //  Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/cxx_dual/shared_ptr.hpp>
-
-#include CXXD_SHARED_PTR_ONLY_HEADER
+#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
 
 //  This example demonstrates the handle/body idiom (also called pimpl and
 //  several other names).  It separates the interface (in this header file)
@@ -29,5 +27,5 @@ public:
   void do_something();
 private:
   class implementation;
-  CXXD_SHARED_PTR_NS::shared_ptr< implementation > _imp; // hide implementation details
+  cxxd_shared_ptr_ns::shared_ptr< implementation > _imp; // hide implementation details
 };

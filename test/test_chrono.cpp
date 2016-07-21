@@ -13,25 +13,23 @@
 #define BOOST_SYSTEM_NO_DEPRECATED // Remove when chrono 'master' branch is updated from 'develop'
 #endif
 
-#include <boost/cxx_dual/ratio.hpp>
-
-#include CXXD_CHRONO_HEADER
-#include CXXD_RATIO_HEADER
+#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/impl/ratio.hpp>
 
 int main()
   {
-  typedef CXXD_CHRONO_NS::duration<int, CXXD_RATIO_NS::ratio<1, 100000000> > shakes;
-  typedef CXXD_CHRONO_NS::duration<int, CXXD_RATIO_NS::centi> jiffies;
-  typedef CXXD_CHRONO_NS::duration<float, CXXD_RATIO_NS::ratio<12096,10000> > microfortnights;
-  typedef CXXD_CHRONO_NS::duration<float, CXXD_RATIO_NS::ratio<3155,1000> > nanocenturies;
+  typedef cxxd_chrono_ns::duration<int, cxxd_ratio_ns::ratio<1, 100000000> > shakes;
+  typedef cxxd_chrono_ns::duration<int, cxxd_ratio_ns::centi> jiffies;
+  typedef cxxd_chrono_ns::duration<float, cxxd_ratio_ns::ratio<12096,10000> > microfortnights;
+  typedef cxxd_chrono_ns::duration<float, cxxd_ratio_ns::ratio<3155,1000> > nanocenturies;
   
-  CXXD_CHRONO_NS::seconds sec(1);
+  cxxd_chrono_ns::seconds sec(1);
  
   std::cout << "1 second is:\n";
  
-  std::cout << CXXD_CHRONO_NS::duration_cast<shakes>(sec).count()
+  std::cout << cxxd_chrono_ns::duration_cast<shakes>(sec).count()
               << " shakes\n";
-  std::cout << CXXD_CHRONO_NS::duration_cast<jiffies>(sec).count()
+  std::cout << cxxd_chrono_ns::duration_cast<jiffies>(sec).count()
               << " jiffies\n";
   std::cout << microfortnights(sec).count() << " microfortnights\n";
   std::cout << nanocenturies(sec).count() << " nanocenturies\n";

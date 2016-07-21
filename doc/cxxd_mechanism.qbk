@@ -45,7 +45,7 @@ and CXXD_REGEX_HEADER is defined as '<boost/regex.hpp>'.
 
 Although CXXD chooses automatically whether the Boost library or the C++ standard library is to be used
 for any given CXXD-mod the programmer may decide to override this choice. The method of overriding the choice
-is to define a particular macro before including a particular CXXD header.
+is to define a particular macro before including a particular CXXD-mod header.
 
 The programmer may override the automatic choice of CXXD by specifying that the Boost library be used
 or by specifying that the C++ standard library be used. If the programmer specifies that the C++ standard
@@ -203,12 +203,25 @@ library directly.
 
 In other words, instead of:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     #define CXXD_USE_BOOST
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HDR
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
-    
+  ``]
+ [``
+    #define CXXD_USE_BOOST
+    #include <boost/cxx_dual/impl/regex.hpp>
+    cxxd_regex_ns::regex my_regex; // etc.
+    ... code
+  ``]
+]
+]
+
 you can simply code:
 
     #include <boost/regex.hpp>
@@ -217,12 +230,25 @@ you can simply code:
     
 and instead of:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     #define CXXD_USE_STD
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HDR
     CXXD_REGEX_NS::regex my_regex; // etc.
     ... code
-    
+  ``]
+ [``
+    #define CXXD_USE_STD
+    #include <boost/cxx_dual/impl/regex.hpp>
+    cxxd_regex_ns::regex my_regex; // etc.
+    ... code
+  ``]
+]
+]
+
 you can simply code:
 
     #include <regex>
@@ -247,6 +273,10 @@ own usage on the dual library interface of the third-party library by
 using an overriding macro. As an example a third-party library might have
 as a public interface:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file ThirdPartyHeader.hpp
     #include <boost/cxx_dual/regex.hpp>
     #include CXXD_REGEX_HEADER
@@ -256,7 +286,20 @@ as a public interface:
         void SomeFunction(CXXD_REGEX_NS::regex &);
         ... // other functionality
         };
-        
+  ``]
+ [``
+    // Header file ThirdPartyHeader.hpp
+    #include <boost/cxx_dual/impl/regex.hpp>
+    class ThirdPartyClass
+        {
+        public:
+        void SomeFunction(cxxd_regex_ns::regex &);
+        ... // other functionality
+        };
+  ``]
+]
+]
+
 We will assume this is a header-only library for the time being
 ( a discussion of using CXXD with a non-header-only library will
 follow later in the documentation ). In one's own code you may desire
@@ -280,11 +323,24 @@ should be with the C++ standard regex library only, so your code might then look
     
 Instead if you did accept the dual nature of the ThirdPartyHeader.hpp header, your code
 might then like:
-    
+
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     #include <ThirdPartyHeader.hpp>
     CXXD_REGEX_NS::regex my_regex("SomeRegularExpression etc.");
     ThirdPartyClass tpclass;
     tpclass.SomeFunction(my_regex);
+  ``]
+ [``
+    #include <ThirdPartyHeader.hpp>
+    cxxd_regex_ns::regex my_regex("SomeRegularExpression etc.");
+    ThirdPartyClass tpclass;
+    tpclass.SomeFunction(my_regex);
+  ``]
+]
+]
     
 In other words using the overriding macros of CXXD serves the purpose
 of using some already established interface involving CXXD without
@@ -309,6 +365,10 @@ preprocessor defines, as we can do in Boost through either Boost.Config
 or even more easily through Boost.Predef. Our pseudocode for overriding our 
 own use of the dual library in a header file might look like:
 
+[table
+[[Using macros][Using aliases]]
+[
+ [``
     // Header file OwnOverrideHeader.hpp
     #if CCCNNN && OOO
     #define CXXD_XXX_USE_BOOST
@@ -321,6 +381,22 @@ own use of the dual library in a header file might look like:
         void SomeOwnOverrideFunction(CXXD_XXX_NS::xxx_object &);
         ... // other functionality
         };
+  ``]
+ [``
+    // Header file OwnOverrideHeader.hpp
+    #if CCCNNN && OOO
+    #define CXXD_XXX_USE_BOOST
+    #endif
+    #include <boost/cxxd/impl/XXX.hpp>
+    class OwnOverrideClass
+        {
+        public:
+        void SomeOwnOverrideFunction(cxxd_xxx_ns::xxx_object &);
+        ... // other functionality
+        };
+  ``]
+]
+]
         
 So essentially where the purpose of the override macros is to
 change another interface's dual library choice for a 
@@ -336,7 +412,12 @@ the implementation for a particular compiling environment.
 CXXD-mod header content is processed each time a particular CXXD-mod header is included 
 in a translation unit. This is different from most headers in C++, which use 
 inclusion guards or compiler dependent pragmas so that the header file content
-only gets processed the first time.
+only gets processed the first time. 
+
+[note
+CXXD-mod implementation headers, after always including the appropriate
+CXXD-mod header, are subsequently only processed once in a TU.
+]
 
 The reason for processing CXXD-mod header content each time a CXXD-mod header is included
 is because overriding macros could be defined ( or undefined ) at any time within a translation unit.
@@ -487,6 +568,8 @@ order of inclusion of header files should not affect the way that code compiles.
 But in CXXD it does affect the compilation since, by default, CXXD does not allow
 the dual library choice for a particular CXXD-mod to change within a TU.
 
+[heading Turning off consistency]
+
 [#mechanism_noconsistency] The end user can override the dual library consistency for all CXXD-mods by defining
 a macro, called CXXD_NO_CONSISTENCY. If used CXXD_NO_CONSISTENCY must always be defined to nothing, as in:
 
@@ -507,10 +590,29 @@ CXXD-mod header will either cause overriding macro conflicts, which will always
 produce preprocessing errors from within CXXD, or not change the dual library chosen
 in any further way.
 
+Using the CXXD_NO_CONSISTENCY macro will not work for header file includes and namespace
+aliases if a CXXD-mod implementation header file is used for a particular CXXD-mod, and the dual library choice
+for a CXXD-mod changes in a TU. This is because allowing the
+choice of a particular CXXD-mod's dual library to change in a TU means that the namespace
+alias for that CXXD-mod will change in that TU, and C++
+does not allow that as part of the rules of the language. This is a weakness of the more
+C++-like namespaces alias compared to the namespace macro. Where the namespace macro
+can be legally undefined and redefined when a particular dual library choice changes in
+a TU, there is no way in C++ to "undefine" and "redefine" a namespace alias. Because
+a namespace alias cannot be redefined to some other namespace in C++, specific CXXD-mod
+implementation header files are processed only once in a TU by using header file guards.
+So while including a CXXD-mod implementation header file more than once will not produce
+a C++ compile error, the namespace alias in the implementation header file, as well
+as the header files included, will always reflect the first time the
+implementation header file was included. Therefore if a particular TU defines the
+CXXD_NO_CONSISTENCY macro, it should always itself use CXXD-mod macros to include
+the appropriate header files and specify the appropriate namespace, and not a CXXD-mod
+implementation header file.
+
 It is highly recommended that CXXD_NO_CONSISTENCY not be used unless the programmer knows
 exactly what the code is doing in a particular TU including all intermediate header
 file code. When dual library consistency is turned off using CXXD_NO_CONSISTENCY 
-the chance that CXXD macros for a particular CXXD-mod will access the Boost
+the chance that CXXD for a particular CXXD-mod will access the Boost
 library in some part of a TU and the C++ standard library in another part of a TU,
 and the problems this may cause, are generally not worth the problems that could occur in code
 confusion. Nonetheless if the programmer feels he knows what he is doing in using this

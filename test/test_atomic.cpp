@@ -4,8 +4,7 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/atomic.hpp>
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
 /*
 
@@ -17,21 +16,21 @@ class spinlock
     {
     private:
         typedef enum {Locked, Unlocked} LockState;
-        CXXD_ATOMIC_NS::atomic<LockState> state_;
+        cxxd_atomic_ns::atomic<LockState> state_;
     
     public:
         spinlock() : state_(Unlocked) {}
     
         void lock()
             {
-            while (state_.exchange(Locked, CXXD_ATOMIC_NS::memory_order_acquire) == Locked)
+            while (state_.exchange(Locked, cxxd_atomic_ns::memory_order_acquire) == Locked)
                 {
                 /* busy-wait */
                 }
             }
         void unlock()
             {
-            state_.store(Unlocked, CXXD_ATOMIC_NS::memory_order_release);
+            state_.store(Unlocked, cxxd_atomic_ns::memory_order_release);
             }
     };
         

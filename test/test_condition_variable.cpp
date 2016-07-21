@@ -7,16 +7,13 @@
 #include <iostream>
 #include <string>
 #include <boost/config.hpp>
-#include <boost/cxx_dual/thread.hpp>
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/condition_variable.hpp>
  
-#include CXXD_CONDITION_VARIABLE_HEADER
-#include CXXD_THREAD_HEADER
-#include CXXD_MUTEX_HEADER
+#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/impl/mutex.hpp>
+#include <boost/cxx_dual/impl/condition_variable.hpp>
 
-CXXD_MUTEX_NS::mutex m;
-CXXD_CONDITION_VARIABLE_NS::condition_variable cv;
+cxxd_mutex_ns::mutex m;
+cxxd_condition_variable_ns::condition_variable cv;
 std::string data;
 bool ready = false;
 bool processed = false;
@@ -31,7 +28,7 @@ bool ReturnProcessed() {return processed;};
 void worker_thread()
 {
     // Wait until main() sends data
-    CXXD_THREAD_NS::unique_lock<CXXD_MUTEX_NS::mutex> lk(m);
+    cxxd_thread_ns::unique_lock<cxxd_mutex_ns::mutex> lk(m);
     
     #if defined(BOOST_NO_CXX11_LAMBDAS)
     
@@ -60,12 +57,12 @@ void worker_thread()
 int main()
   {
   
-    CXXD_THREAD_NS::thread worker(worker_thread);
+    cxxd_thread_ns::thread worker(worker_thread);
  
     data = "Example data";
     // send data to the worker thread
     {
-        CXXD_THREAD_NS::lock_guard<CXXD_MUTEX_NS::mutex> lk(m);
+        cxxd_thread_ns::lock_guard<cxxd_mutex_ns::mutex> lk(m);
         ready = true;
         std::cout << "main() signals data ready for processing\n";
     }
@@ -73,7 +70,7 @@ int main()
  
     // wait for the worker
     {
-        CXXD_THREAD_NS::unique_lock<CXXD_MUTEX_NS::mutex> lk(m);
+        cxxd_thread_ns::unique_lock<cxxd_mutex_ns::mutex> lk(m);
         
         #if defined(BOOST_NO_CXX11_LAMBDAS)
         

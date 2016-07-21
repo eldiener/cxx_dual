@@ -4,12 +4,11 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/shared_ptr.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SHARED_PTR_HEADER
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
 
-void foo(const CXXD_SHARED_PTR_NS::shared_ptr<int>& i)
+void foo(const cxxd_shared_ptr_ns::shared_ptr<int>& i)
 {
     (*i)++;
 }
@@ -17,7 +16,7 @@ void foo(const CXXD_SHARED_PTR_NS::shared_ptr<int>& i)
 int main()
   {
   
-  CXXD_SHARED_PTR_NS::shared_ptr<int> sp = CXXD_SHARED_PTR_NS::make_shared<int>(22);
+  cxxd_shared_ptr_ns::shared_ptr<int> sp = cxxd_shared_ptr_ns::make_shared<int>(22);
   foo(sp);
   BOOST_TEST_EQ(*sp,23);
   

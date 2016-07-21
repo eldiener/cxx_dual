@@ -4,16 +4,15 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/atomic.hpp>
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
 #if !CXXD_HAS_STD_ATOMIC && defined(BOOST_ATOMIC_NO_ATOMIC_FLAG_INIT)
 
-CXXD_ATOMIC_NS::atomic_flag static_flag;
+cxxd_atomic_ns::atomic_flag static_flag;
 
 #else
 
-CXXD_ATOMIC_NS::atomic_flag static_flag = CXXD_ATOMIC_MACRO(ATOMIC_FLAG_INIT); // static initialization,
+cxxd_atomic_ns::atomic_flag static_flag = CXXD_ATOMIC_MACRO(ATOMIC_FLAG_INIT); // static initialization,
 // guaranteed to be available during dynamic initialization of static objects.
 
 #endif
@@ -23,11 +22,11 @@ int main()
     
 #if !CXXD_HAS_STD_ATOMIC && defined(BOOST_ATOMIC_NO_ATOMIC_FLAG_INIT)
 
-    CXXD_ATOMIC_NS::atomic_flag automatic_flag;
+    cxxd_atomic_ns::atomic_flag automatic_flag;
     
 #else
 
-    CXXD_ATOMIC_NS::atomic_flag automatic_flag = CXXD_ATOMIC_MACRO(ATOMIC_FLAG_INIT); // guaranteed to work
+    cxxd_atomic_ns::atomic_flag automatic_flag = CXXD_ATOMIC_MACRO(ATOMIC_FLAG_INIT); // guaranteed to work
     
 #endif
  

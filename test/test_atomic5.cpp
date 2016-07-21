@@ -4,12 +4,11 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/atomic.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
-CXXD_ATOMIC_NS::atomic<int>  ai;
+cxxd_atomic_ns::atomic<int>  ai;
  
 int  tst_val= 4;
 int  new_val= 5;

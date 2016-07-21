@@ -5,21 +5,19 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <iostream>
-#include <boost/cxx_dual/system_error.hpp>
-#include <boost/cxx_dual/thread.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_SYSTEM_ERROR_HEADER
-#include CXXD_THREAD_HEADER
+#include <boost/cxx_dual/impl/system_error.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
 
 int main()
   {
   
   try 
     {
-        CXXD_THREAD_NS::thread().detach(); // attempt to detach a non-thread
+        cxxd_thread_ns::thread().detach(); // attempt to detach a non-thread
     } 
-  catch(const CXXD_SYSTEM_ERROR_NS::system_error& e) 
+  catch(const cxxd_system_error_ns::system_error& e) 
     {
         std::cout << "Caught system_error with code " << e.code() 
                   << " meaning " << e.what() << '\n';

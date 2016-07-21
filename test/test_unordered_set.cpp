@@ -4,17 +4,16 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/unordered_set.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include CXXD_UNORDERED_SET_HEADER
+#include <boost/cxx_dual/impl/unordered_set.hpp>
 
 int main()
     {
   
-    CXXD_UNORDERED_SET_NS::unordered_set<int> numbers;
+    cxxd_unordered_set_ns::unordered_set<int> numbers;
     
     BOOST_TEST(numbers.empty());
  
@@ -23,7 +22,7 @@ int main()
     
     CXXD_TEST_NOT(numbers.empty());
     
-    typedef CXXD_UNORDERED_SET_NS::unordered_set<int>::iterator it;
+    typedef cxxd_unordered_set_ns::unordered_set<int>::iterator it;
     
     it search = numbers.find(13317);
     

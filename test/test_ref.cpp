@@ -4,14 +4,11 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/bind.hpp>
-#include <boost/cxx_dual/function.hpp>
-#include <boost/cxx_dual/ref.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include CXXD_BIND_HEADER
-#include CXXD_FUNCTION_HEADER
-#include CXXD_REF_HEADER
+#include <boost/cxx_dual/impl/bind.hpp>
+#include <boost/cxx_dual/impl/function.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
 
 void f(int& n1, int& n2, const int& n3)
 {
@@ -27,7 +24,7 @@ int main()
   {
   
   int n1 = 1, n2 = 2, n3 = 3;
-  CXXD_FUNCTION_NS::function<void()> bound_f = CXXD_BIND_NS::bind(f, n1, CXXD_REF_NS::ref(n2), CXXD_REF_NS::cref(n3));
+  cxxd_function_ns::function<void()> bound_f = cxxd_bind_ns::bind(f, n1, cxxd_ref_ns::ref(n2), cxxd_ref_ns::cref(n3));
   
   n1 = 10;
   n2 = 11;

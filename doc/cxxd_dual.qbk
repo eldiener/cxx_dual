@@ -1,0 +1,59 @@
+[/ 
+  (C) Copyright Edward Diener 2015-2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Dual library knowledge and concerns]
+
+Using a dual library, as CXXD does, means that a programmer
+should have knowledge of any differences which may exist
+between the Boost implementation of a dual library and the
+C++ standard implementation of that same dual library.
+
+There are a number of areas for the programmer to consider when using
+a particular dual library:
+
+# Does the particular syntax being used function in the same way for each dual library implentation ?
+# Can one-off code be written for situations in which the implementation of a dual library differs ?
+# Does a compiler implementation of the C++ standard library implementation of a dual library
+correspond to what the C++ standard requires ?
+# If the compiler being used changes will dual library code still work as expected ?
+
+All of the above are valid concerns. I have had expressed to me that using CXXD is not
+a valid choice to use because it masks the issues I bring up above. I can understand that
+point of view. Furthermore I have had it expressed to me that CXXD should somehow
+document any differences between the implementation of the Boost library and
+the C++ standard library for each of the dual libraries supported. Again this is
+a valid point of view.
+
+The design of CXXD is that the advantages of being able to offer to the programmer
+the choice of using either the Boost implementation or the C++ standard implementation
+of a dual library, while using both with the same code, offsets the issues above
+and the concerns of others in using CXXD in the designer's mind. But I am aware of
+the issues and concerns stated above and want to mention them here in the documentation
+to CXXD. 
+
+The issues and concerns in my own mind are very much the same whenever
+a particular implementation of any library is chosen, whether that library
+is a Boost library, a C++ standard library, or a 3rd party library. That
+each CXXD-mod really involves two different implementations, or libraries
+if you will, is something I have made plain in the documentation, and I want
+to reiterate it here. Knowledge of those libraries, for any particular CXXD-mod,
+is still of first importance in programming using CXXD. Essentially CXXD is
+a framework for supporting dual libraries, but it is not an excuse for
+not understanding the functionality of a particular dual library in the first
+place.
+
+Although I have done so in other areas of the documentation I would like
+to again emphasize the importance of documenting when a dual library is being
+used by the end-user. This is especially true when CXXD is being used in
+a library, whether that library is a header-only library or non-header only library
+where some part of the library is being built into a shared or static library.
+Without documenting that a particular dual library is being used a programmer
+cannot know, depending on the compiler implementation and the compiler's
+command line parameters, that either the Boost implementation or the C++
+standard implementation of the dual library is being used in the code.
+
+[endsect]

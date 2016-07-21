@@ -29,17 +29,32 @@ by the supporting macros:
 
   #include <boost/cxx_dual/mod_ids.hpp>
   
-There is also a header file which includes all the headers in the library.
+There is also a header file which includes all the above headers in the library.
 This header file is 'cxx_dual.hpp'. This header file includes the individual
 CXXD-mod headers as well as the macro code for the two supporting header files
 and the mod-ID header file. Including this header file is simply:
 
   #include <boost/cxx_dual/cxx_dual.hpp>
   
-All of the code in the header files is preprocessor code and the macros
+All of the code in these header files is preprocessor code and the macros
 which allow the library to work. The macros are dependent on the Boost
 Preprocessor library, the Boost.Config library, and for the supporting
 macros and their header files the Boost VMD library. All of these
 other Boost libraries are header only libraries.
+
+There are implementation headers for each CXXD-mod in the 'impl' include
+sub-directory. These header files
+create dependencies on the particular CXXD-mod since they include
+the appropriate headers needed and create a namespace alias to
+the appropriate namespace, depending on which dual library has been
+chosen. For a given CXXD-mod implementation header the end-user
+would include, for instance:
+
+  #include <boost/cxx_dual/impl/regex.hpp>
+  
+None of the individual CXXD-mod implementation headers are included
+by any of the general header files above. An implementation header
+always includes its appropriate CXXD-mod header but is then subsequently
+only processed once in a particular TU.
   
 [endsect]

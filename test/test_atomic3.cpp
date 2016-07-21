@@ -4,8 +4,7 @@
 //  Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt).
 
-#include <boost/cxx_dual/atomic.hpp>
-#include CXXD_ATOMIC_HEADER
+#include <boost/cxx_dual/impl/atomic.hpp>
 
 /*
 
@@ -24,10 +23,10 @@ public:
   {
     node * n = new node;
     n->data = data;
-    node * stale_head = head_.load(CXXD_ATOMIC_NS::memory_order_relaxed);
+    node * stale_head = head_.load(cxxd_atomic_ns::memory_order_relaxed);
     do {
       n->next = stale_head;
-    } while (!head_.compare_exchange_weak(stale_head, n, CXXD_ATOMIC_NS::memory_order_release));
+    } while (!head_.compare_exchange_weak(stale_head, n, cxxd_atomic_ns::memory_order_release));
   }
 
   node * pop_all(void)
@@ -47,10 +46,10 @@ public:
   // alternative interface if ordering is of no importance
   node * pop_all_reverse(void)
   {
-    return head_.exchange(0, CXXD_ATOMIC_NS::memory_order_consume);
+    return head_.exchange(0, cxxd_atomic_ns::memory_order_consume);
   }
 private:
-  CXXD_ATOMIC_NS::atomic<node *> head_;
+  cxxd_atomic_ns::atomic<node *> head_;
 };
 
 int main()

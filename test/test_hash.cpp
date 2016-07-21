@@ -8,15 +8,14 @@
 #include <iomanip>
 #include <string>
 
-#include <boost/cxx_dual/hash.hpp>
-#include <boost/cxx_dual/unordered_set.hpp>
+#include <boost/config.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_HASH_HEADER
-#include CXXD_UNORDERED_SET_HEADER
+#include <boost/cxx_dual/impl/hash.hpp>
+#include <boost/cxx_dual/impl/unordered_set.hpp>
  
 struct S {
     std::string first_name;
@@ -32,8 +31,8 @@ template<> struct MyHash<S>
 {
     std::size_t operator()(S const& s) const 
     {
-        std::size_t h1 = CXXD_HASH_NS::hash<std::string>()(s.first_name);
-        std::size_t h2 = CXXD_HASH_NS::hash<std::string>()(s.last_name);
+        std::size_t h1 = cxxd_hash_ns::hash<std::string>()(s.first_name);
+        std::size_t h2 = cxxd_hash_ns::hash<std::string>()(s.last_name);
         
     #if CXXD_HAS_STD_HASH
 
@@ -42,8 +41,8 @@ template<> struct MyHash<S>
     #else
 
         std::size_t seed = 0;
-        CXXD_HASH_NS::hash_combine(seed,h1);
-        CXXD_HASH_NS::hash_combine(seed,h2);
+        cxxd_hash_ns::hash_combine(seed,h1);
+        cxxd_hash_ns::hash_combine(seed,h2);
         return seed;
 
     #endif
@@ -51,7 +50,7 @@ template<> struct MyHash<S>
     }
 };
  
-// custom specialization of CXXD_HASH_NS::hash can be injected in namespace CXXD_HASH_NS
+// custom specialization of cxxd_hash_ns::hash can be injected in namespace cxxd_hash_ns
 namespace CXXD_HASH_NS
 {
     template<> struct hash<S>
@@ -60,8 +59,8 @@ namespace CXXD_HASH_NS
         typedef std::size_t result_type;
         result_type operator()(argument_type const& s) const
         {
-            result_type const h1 ( CXXD_HASH_NS::hash<std::string>()(s.first_name) );
-            result_type const h2 ( CXXD_HASH_NS::hash<std::string>()(s.last_name) );
+            result_type const h1 ( cxxd_hash_ns::hash<std::string>()(s.first_name) );
+            result_type const h2 ( cxxd_hash_ns::hash<std::string>()(s.last_name) );
             
         #if CXXD_HAS_STD_HASH
 
@@ -70,8 +69,8 @@ namespace CXXD_HASH_NS
         #else
 
             std::size_t seed = 0;
-            CXXD_HASH_NS::hash_combine(seed,h1);
-            CXXD_HASH_NS::hash_combine(seed,h2);
+            cxxd_hash_ns::hash_combine(seed,h1);
+            cxxd_hash_ns::hash_combine(seed,h2);
             return seed;
 
         #endif
@@ -84,7 +83,7 @@ int main()
   {
   
   std::string str = "Meet the new boss...";
-  std::size_t str_hash = CXXD_HASH_NS::hash<std::string>()(str);
+  std::size_t str_hash = cxxd_hash_ns::hash<std::string>()(str);
   std::cout << "hash(" << str << ") = " << str_hash << '\n';
  
   S obj = { "Hubert", "Farnsworth"};
@@ -92,19 +91,19 @@ int main()
   std::cout << "hash(" << obj.first_name << ',' 
             << obj.last_name << ") = "
             << MyHash<S>()(obj) << " (using MyHash)\n                           or "
-            << CXXD_HASH_NS::hash<S>()(obj) << " (using " << BOOST_STRINGIZE(CXXD_HASH_NS) << "::hash) " << '\n';
+            << cxxd_hash_ns::hash<S>()(obj) << " (using " << BOOST_STRINGIZE(CXXD_HASH_NS) << "::hash) " << '\n';
  
   // custom hash makes it possible to use custom types in unordered containers
   
 #if !defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX) 
   
-  CXXD_UNORDERED_SET_NS::unordered_set<S> names = {obj, {"Bender", "Rodriguez"}, {"Leela", "Turanga"} };
+  cxxd_unordered_set_ns::unordered_set<S> names = {obj, {"Bender", "Rodriguez"}, {"Leela", "Turanga"} };
   
 #else
 
   S obj1 = { "Bender", "Rodriguez"};
   S obj2 = { "Leela", "Turanga"};
-  CXXD_UNORDERED_SET_NS::unordered_set<S> names;
+  cxxd_unordered_set_ns::unordered_set<S> names;
   
   names.insert(obj);
   names.insert(obj1);

@@ -5,20 +5,21 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <string>
-#include <boost/cxx_dual/unordered_map.hpp>
+#include <boost/config.hpp>
+
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_UNORDERED_MAP_HEADER
+#include <boost/cxx_dual/impl/unordered_map.hpp>
 
 int main()
     {
   
     // Create an unordered_map of three strings (that map to strings)
-    CXXD_UNORDERED_MAP_NS::unordered_map<std::string, std::string> u;
+    cxxd_unordered_map_ns::unordered_map<std::string, std::string> u;
  
     u["RED"] = "#FF0000";
     u["GREEN"] = "#00FF00";
@@ -45,7 +46,7 @@ int main()
     
 #else
 
-    typedef CXXD_UNORDERED_MAP_NS::unordered_map<std::string, std::string>::value_type vt;
+    typedef cxxd_unordered_map_ns::unordered_map<std::string, std::string>::value_type vt;
 
     BOOST_FOREACH(const vt& n,u)
         {

@@ -5,23 +5,24 @@
 //  http://www.boost.org/LICENSE_1_0.txt).
 
 #include <string>
-#include <boost/cxx_dual/unordered_multimap.hpp>
+#include <boost/config.hpp>
+
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_UNORDERED_MULTIMAP_HEADER
+#include <boost/cxx_dual/impl/unordered_multimap.hpp>
 
 int main()
     {
     
     // Create an unordered_multimap of strings (that map to strings)
-    CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string> u;
+    cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string> u;
     
-    typedef CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string>::value_type vt;
-    typedef CXXD_UNORDERED_MULTIMAP_NS::unordered_multimap<std::string, std::string>::iterator it;
+    typedef cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string>::value_type vt;
+    typedef cxxd_unordered_multimap_ns::unordered_multimap<std::string, std::string>::iterator it;
 
     u.insert(vt("RED","#FF0000"));
     u.insert(vt("RED","#FE0000"));

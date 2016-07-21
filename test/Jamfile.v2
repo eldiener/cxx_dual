@@ -25,6 +25,7 @@ alias tall
     : 
        [ run test_all.cpp ]
        [ run test_all_mods.cpp ]
+       [ compile-fail test_namespace_alias.cpp ]
     ;
 
 alias ln

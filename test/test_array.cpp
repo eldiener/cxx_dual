@@ -9,31 +9,30 @@
 #include <string>
 #include <vector>
 #include <boost/config.hpp>
-#include <boost/cxx_dual/array.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
 #if defined(BOOST_NO_CXX11_AUTO_DECLARATIONS) || defined(BOOST_NO_CXX11_RANGE_BASED_FOR)
 #include <boost/foreach.hpp>
 #endif
 
-#include CXXD_ARRAY_HEADER
+#include <boost/cxx_dual/impl/array.hpp>
 
 int main()
     {
   
 #if defined(BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX)
   
-    CXXD_ARRAY_NS::array<int, 3> a1 = {3, 2, 1};
+    cxxd_array_ns::array<int, 3> a1 = {3, 2, 1};
   
 #else
   
     // construction uses aggregate initialization
-    CXXD_ARRAY_NS::array<int, 3> a1{ {3, 2, 1} };
+    cxxd_array_ns::array<int, 3> a1{ {3, 2, 1} };
   
 #endif
   
-    CXXD_ARRAY_NS::array<int, 3> a2 = {1, 2, 3};
-    CXXD_ARRAY_NS::array<std::string, 2> a3 = { std::string("a"), "b" };
+    cxxd_array_ns::array<int, 3> a2 = {1, 2, 3};
+    cxxd_array_ns::array<std::string, 2> a3 = { std::string("a"), "b" };
     std::vector<int> vec;
 
     // container operations are supported
