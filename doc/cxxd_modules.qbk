@@ -59,7 +59,7 @@ the <boost/cxx_dual/> directory;
 * CXXD_SHARED_PTR_ONLY_HEADER - only the shared_ptr header file
 ]
 [CXXD_SHARED_PTR_NS][cxxd_shared_ptr_ns][CXXD_HAS_STD_SHARED_PTR]]
-[[system_error][shared_ptr.hpp][impl/system_error.hpp][CXXD_SYSTEM_ERROR_HEADER][CXXD_SYSTEM_ERROR_NS][cxxd_system_error_ns][CXXD_HAS_STD_SYSTEM_ERROR]]
+[[system_error][system_error.hpp][impl/system_error.hpp][CXXD_SYSTEM_ERROR_HEADER][CXXD_SYSTEM_ERROR_NS][cxxd_system_error_ns][CXXD_HAS_STD_SYSTEM_ERROR]]
 [[thread][thread.hpp][impl/thread.hpp][CXXD_THREAD_HEADER][CXXD_THREAD_NS][cxxd_thread_ns][CXXD_HAS_STD_THREAD]]
 [[tuple][tuple.hpp][impl/tuple.hpp][CXXD_TUPLE_HEADER][CXXD_TUPLE_NS][cxxd_tuple_ns][CXXD_HAS_STD_TUPLE]]
 [[type_index][type_index.hpp][impl/type_index.hpp][CXXD_TYPE_INDEX_HEADER][CXXD_TYPE_INDEX_NS][cxxd_type_index_ns][CXXD_HAS_STD_TYPE_INDEX]]
@@ -169,21 +169,7 @@ The CXXD_HAS_STD_... macro for any given CXXD-mod is a more understandable form 
 Boost.Config already has for determining whether the compiler supports certain C++ libraries.
 Most of these macros are taken from whether or not a given BOOST_NO_CXX11_HDR_ is defined.
 
-You may decide, for a particular code path which will occur very rarely, you need the 
-C++ standard version of a particular library, rather than the Boost version, or else you 
-do not want your code to compile even though you are using a particular CXXD-mod. 
-As an example let's say that you want to create a compile error if the compiler
-does not support the C++ standard type_traits library, even though the Boost type_traits
-library could also normally be used.
-
-  #include <boost/cxx_dual/type_traits.hpp>
-  // Some_code
-  #if !CXXD_HAS_STD_TYPE_TRAITS
-  #error C++ standard type_traits library needed and not present.
-  #endif
-  // Further code
-  
-Another use for the CXXD_HAS_STD_... macro is to include particular header files
+One use for the CXXD_HAS_STD_... macro is to include particular header files
 rather than a main header file, for some given library functionality. This is
 more prevalent with Boost than with the C++ standard library, since the latter almost
 always has a single header file which includes library functionality for
