@@ -7,17 +7,18 @@
 
 [section Header files]
 
-As previously explained each CXXD-mod has its own header file
-and a general mod header 'cxx_mods.hpp' is also available for including all of the
-individual CXXD-mods. For a given CXXD-mod header the end-user would include,
-for instance:
+Each mod has its own mod header file.
+For a given mod header the end-user would include, for instance:
 
   #include <boost/cxx_dual/regex.hpp>
   
-and for the general mod header file the end-user would include:
+Each mod header includes its own low-level mod implementation
+header file, with the same name as the mod header but in the
+'impl' sub-directory. For a given mod implementation header the
+end-user would include, for instance:
 
-  #include <boost/cxx_dual/cxx_mods.hpp>
-
+  #include <boost/cxx_dual/impl/regex.hpp>
+  
 There are also header files for supporting macros in 'library_name.hpp'
 and 'valid_variants.hpp'. These can be included separately as:
 
@@ -29,32 +30,24 @@ by the supporting macros:
 
   #include <boost/cxx_dual/mod_ids.hpp>
   
-There is also a header file which includes all the above headers in the library.
-This header file is 'cxx_dual.hpp'. This header file includes the individual
-CXXD-mod headers as well as the macro code for the two supporting header files
-and the mod-ID header file. Including this header file is simply:
-
-  #include <boost/cxx_dual/cxx_dual.hpp>
+There exists no general header file to include all of the header
+files in the CXXD library or even all the mods in the CXXD library.
+The reason for this is that each mod header file creates a dependency
+on the dual library chosen for that mod and creating dependencies
+for all 28 of the individual mods in CXXD, through the inclusion
+of a general header file, is not something that practically would
+ever be done.
   
-All of the code in these header files is preprocessor code and the macros
+The code in these header files is largely preprocessor code and macros
 which allow the library to work. The macros are dependent on the Boost
 Preprocessor library, the Boost.Config library, and for the supporting
 macros and their header files the Boost VMD library. All of these
 other Boost libraries are header only libraries.
 
-There are implementation headers for each CXXD-mod in the 'impl' include
-sub-directory. These header files
-create dependencies on the particular CXXD-mod since they include
-the appropriate headers needed and create a namespace alias to
-the appropriate namespace, depending on which dual library has been
-chosen. For a given CXXD-mod implementation header the end-user
-would include, for instance:
+Any header file can be included multiple times in a TU. The only
+header files which are actually processed each time they are
+included in a TU are the low-level implementation header files.
+This is done to ensure the consistency of the dual library chosen
+in a TU for a particular mod.
 
-  #include <boost/cxx_dual/impl/regex.hpp>
-  
-None of the individual CXXD-mod implementation headers are included
-by any of the general header files above. An implementation header
-always includes its appropriate CXXD-mod header but is then subsequently
-only processed once in a particular TU.
-  
 [endsect]

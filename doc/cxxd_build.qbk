@@ -43,7 +43,7 @@ the Boost build support module the the end-user adds to his own jamfile:
   import path_to_cxxd_library/checks/cxxd ;
   
 Within the 'cxxd' jam file are three different rules the end-user can use,
-both taking the same Boost Build parameters. These rules are:
+all taking the same Boost Build parameters. These rules are:
 
 * cxxd.requires.boost
 * cxxd.requires.std
@@ -101,15 +101,15 @@ As an example, taken directly from the CXXD tests for the CXXD regex implementat
 we have:
 
   run test_regex.cpp : : : 
-  [ cxxd.requires.boost regex : <library>/boost/regex//boost_regex ] ;
+    [ cxxd.requires.boost regex : <library>/boost/regex//boost_regex ] ;
   
 This says that when we build the test regex example if the Boost regex implementation
 is being chosen we want to link in the Boost regex library. As you can see it isn't
-necessary to specify all optional requirements when invoking the rule. The exact same
+necessary to specify both optional requirements when invoking the rule. The exact same
 effect could be coded as:
   
   run test_regex.cpp : : : 
-  [ cxxd.requires.std regex : : <library>/boost/regex//boost_regex ] ;
+    [ cxxd.requires.std regex : : <library>/boost/regex//boost_regex ] ;
   
 or as:
   
@@ -129,12 +129,12 @@ a macro called MY_MACRO to 1, else we define MY_MACRO to 0. Here is what our Boo
 code for this would be:
 
   compile my_source.cpp : 
-  [ cxxd.requires.boost bind function : <define>MY_MACRO=1 : <define>MY_MACRO=0 ] ;
+    [ cxxd.requires.boost bind function : <define>MY_MACRO=1 : <define>MY_MACRO=0 ] ;
   
 We could have more than one feature as our requirements, as in:
 
   compile my_source.cpp : 
-  [ cxxd.requires.boost bind function : 
+    [ cxxd.requires.boost bind function : 
     <define>MY_MACRO=1 <include>some_directory_path : 
     <define>MY_MACRO=0 ] ;
   
@@ -143,17 +143,17 @@ or cxxd.requires.specific in our requirements or usage requirements section of a
 as in:
   
   compile my_source.cpp : 
-  [ cxxd.requires.boost bind function : 
+    [ cxxd.requires.boost bind function : 
     <define>MY_MACRO=1 <include>some_directory_path : 
     <define>MY_MACRO=0 ] 
-  [ cxxd.requires.std regex : : <library>/boost/regex//boost_regex ]
-  [ cxxd.requires.specific tuple,1 : <cxxflags>-someflag ] ;
+    [ cxxd.requires.std regex : : <library>/boost/regex//boost_regex ]
+    [ cxxd.requires.specific tuple,1 : <cxxflags>-someflag ] ;
   
 With the 'cxxd.requires.specific' rule we can mix Boost and C++ standard
 implementations to set our requirements, as in:
     
   compile my_source.cpp : 
-  [ cxxd.requires.specific array,1 hash,0 : <include>some_path : <define>some_macro=some_value ] ;
+    [ cxxd.requires.specific array,1 hash,0 : <include>some_path : <define>some_macro=some_value ] ;
   
 Here we are saying that if the array CXXD-mod uses the C++ standard implementation
 and the hash CXXD-mod uses the Boost implementation, add 'some_path' to the include
@@ -288,7 +288,7 @@ or
   
 If the VMD sequence matches at compile time what the compiler
 provides in the way of the default dual library choice for
-the CXXD-mods in the sequence the compilation succeeds, otherwise
+the mods in the sequence the compilation succeeds, otherwise
 the compilation fails.
 
 This on-the-fly invocation of a CXXD test to match dual library

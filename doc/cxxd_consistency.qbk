@@ -1,0 +1,270 @@
+[/ 
+  (C) Copyright Edward Diener 2015-2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Consistency]
+
+A mod header consists of two parts:
+
+* A low-level implementation header which contains all the logic 
+for choosing the dual library and setting macros to reflect that
+choice.
+* Code which includes the C++ headers and creates the namespace
+alias for the library chosen. This code uses two of the macros
+created in the first part to do so.
+
+The low-level implementation header part of the mod header is processed
+each time a particular mod header is included in a TU. This is different
+from most headers in C++, which use inclusion guards or compiler dependent
+pragmas so that the header file content only gets processed the first time.
+The second part of the mod header does have inclusion guards so that it
+is processed only once in a TU no matter how many times the mod header
+is included. This is because setting a particular namespace alias more
+than once in a TU is illegal in C++.
+
+The reason for processing low-level implememtation header content each time a mod
+header is included is because CXXD overriding macros could be defined ( or undefined )
+at any time within a TU. CXXD always makes sure that overriding macros do not
+conflict with each other, as discussed previously, and further that the choice of either
+Boost or its equivalent C++ standard library remains consistent for any particular
+mod within a TU. The low-level implementation header for a mod has preprocessing
+logic to maintain this consistency, and when the consistency is broken it has
+preprocessing logic that issues an error through a preprocessing \#error directive.
+
+This consistency which CXXD enforces for a mod in a TU is done for two reasons:
+
+# It would be confusing and error prone for a programmer if one part of the code
+in a TU is programming using the Boost dual library of a mod while another part of the
+code in a TU is programming using the C++ standard dual library of that same mod.
+# The namespace alias of a mod cannot be redefined in a TU since it is illegal C++
+to do so. Therefore when including a mod header, if CXXD allowed the dual library choice
+to change within a TU the namespace alias could not be reset to reflect that change.
+The fact that the namespace alias might not be set to the correct namespace of
+the dual library chosen would lead to errors and further confusion in the code.
+
+[heading Multiple inclusion]
+
+In actual usage the programmer himself will usually not include the same mod header
+more than once in a TU. 
+
+    #include <boost/cxx_dual/regex.hpp>
+    ... other #includes
+    #include <boost/cxx_dual/regex.hpp>
+    ... code
+    
+The above is possible but will rarely happen.
+    
+What is far more likely to happen is that the programmer includes a non-CXXD
+header, often from another library, and that header will include a particular
+mod header.
+
+    // Header another_library.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    ... other #includes
+    ... header code
+    
+A TU with:
+
+    #include <boost/cxx_dual/regex.hpp>
+    #include <another_library.hpp>
+    ... code
+    
+It is this latter case which will often cause a mod header to be included
+more than once in a TU.
+
+[heading Default algorithm redux]
+
+Recall that the default algorithm is used to choose between the Boost library or its
+C++ standard equivalent for a mod when no overriding macros are defined
+for that mod. Because mod header content is processed each time the header is included 
+the default algorithm is slightly different the second and subsequent times a particular
+mod header is included and processed. In that particular case the default algorithm simply
+accepts which of the dual libraries of the mod has been previously chosen. This saves
+preprocessing time and also makes sure that the choice for a given mod is consistent
+throughout the TU.
+
+Let's look at how this works in practice with the default algorithm.
+
+    #include <boost/cxx_dual/regex.hpp>
+    ... code
+  
+This is our normal case where the default algorithm will choose the
+C++ standard regex library if it is available, otherwise the Boost
+regex library.
+    
+    // Header another_library.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    ... other #includes
+    ... header code
+
+    // Header my_header.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    #include <another_library.hpp>
+    ... code
+    
+In this situation when the regex mod is included
+a second time in my_header.hpp, by including another_library.hpp, it simply accepts 
+the choice made the first time it was directly included.
+
+    // Header another_library.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    ... other #includes
+    ... header code
+    
+    // Header my_header.hpp
+    #define CXXD_REGEX_USE_BOOST
+    #include <boost/cxx_dual/regex.hpp>
+    #undef CXXD_REGEX_USE_BOOST
+    #include <another_library.hpp>
+    ... code
+    
+In this case the first time that the regex mod is included in
+my_header.hpp the default algorithm is not in effect since we have
+overridden the choice by specifying that the Boost regex library will be used.
+Although in practical experience it would be very unusual to undefine
+an overridden macro, we do it here to illustrate the fact that the second
+time that the regex mod is included in my_header.hpp the default algorithm is in
+effect but it simply accepts the choice made the first time, which is to use the
+Boost regex library. This is done even if the C++ standard regex library is
+available.
+
+[heading Header file order]
+
+The consistency which CXXD enforces within a TU means that the order of header file inclusion
+potentially changes the way that CXXD works for a given end-user's module. This is the major
+negative of CXXD so we will take a look at it. To illustrate
+this we will use as an example a header file which has an overriding macro:
+
+    // Header a_library.hpp
+    #include <boost/cxx_dual/regex.hpp>
+    ... header code using the regex implementation
+
+    // Header another_library_with_override.hpp
+    #define CXXD_REGEX_USE_BOOST
+    #include <a_library.hpp>
+    ... header code
+    
+In the another_library_with_override.hpp header file we override the default 
+processing for the regex mod so that the Boost regex dual library is chosen.
+Let's also assume for our example that the C++ standard regex library is available
+when compiling our own TU. Now if we include the another_library_with_override.hpp
+header first in our own TU, followed by the CXXD regex header, as in:
+
+    #include <another_library_with_override.hpp>
+    #include <boost/cxx_dual/regex.hpp>
+    ...some code
+    
+everything works fine. This is because we have the overridden macro
+in effect each time to determine that the Boost regex library will
+be chosen.
+
+But if we reverse the order of includes:
+
+    #include <boost/cxx_dual/regex.hpp>
+    #include <another_library_with_override.hpp>
+    ...some code
+    
+we are essentially changing the dual library choice in our TU, between the first
+time the regex mod header is included and the second time it is included.
+The first time the regex mod header is included no overriding macro is in effect so that
+the default algorithm chooses the C++ standard library because it is available.
+The second time the regex mod header is included an overriding macro changes the regex
+mod to use the Boost regex library. Thus consistency between which dual library is chosen
+is broken and CXXD creates a preprocessing error.
+
+This is one of the weaknesses of a macro based system such as CXXD. Normally the
+order of inclusion of header files should not affect the way that code compiles.
+But in CXXD it does affect the compilation since CXXD does not ever allow
+the dual library choice for a particular mod to change within a TU.
+
+There is a fairly easy solution for the programmer when the above situation
+does occur, which does not involve having to worry about changing the order of
+header file inclusion in a TU. When the preprocessing error occurs because CXXD
+consistency is broken the error which the end-user sees in our example will be
+'CXXD: Previous use of C++ standard regex erroneously overridden.' This tells
+you the name of the mod ( regex ) involved in the error and the dual
+library ( C++ standard ) which was erroneously overriden in the code.
+The easy solution in this case is to add an override macro for the opposite
+dual library for the particular mod at the very beginning of a TU, either
+in the TU itself or by some compiler command line parameter which allows
+a macro definition to be made. This maintains TU consistency, but need
+only be done if using CXXD produces a preprocessor error based on
+consistency for a TU being broken. As a fix for our example our TU code now is:
+
+    #define CXXD_REGEX_USE_BOOST
+    #include <boost/cxx_dual/regex.hpp>
+    #include <another_library_with_override.hpp>
+    ...some code
+    
+and this works because it provides the override, which
+another_library_with_override.hpp internally provided, at the beginning
+of our TU and therefore consistency of the override is maintained
+throughout the TU.
+
+[heading Consistency conflict]
+
+There is a consistency problem which
+cannot be fixed in a TU in the above manner. This problem is when
+you include header files from different libraries and they
+use override macros to override a particular mod in opposite ways.
+If we go back to our previous example we see that our
+another_library_with_override.hpp header file overrides the regex
+mod to use the Boost library. Let us imagine that we have yet another
+library, whose header file overrides of a_library.hpp's regex
+implementation to use the C++ standard library.
+    
+    // Header yet_another_library_with_override.hpp
+    #define CXXD_REGEX_USE_STD
+    #include <a_library.hpp>
+    ... header code
+    
+You might ask why this would ever be done since by default
+the C++ standard library is chosen for a mod if it is available.
+The reason, in this example, would be that 'yet_another_library_with_override'
+works only with C++11 code and wants to ensure that the C++
+standard regex library is available, else an error should occur.
+For whatever reason the designer of 'yet_another_library_with_override' is not
+willing to fall back to using the Boost regex library if the
+C++ standard library is not available during compilation. The
+designer of 'yet_another_library_with_override' may appear to be unreasonable
+in his design decision but we have all dealt with third party
+libraries which impose restrictions with which we may not agree.
+
+Mow let us suppose that within our own TU we want to use functionality
+from both the 'another_library_with_override' library and the
+'yet_another_library_with_override' libraries. So our TU may look like:
+    
+    #include <another_library_with_override.hpp>
+    #include <yet_another_library_with_override.hpp>
+    ...some code
+    
+When we do this we will encounter a CXXD error because
+our libraries wants to override the regex mod in opposite
+ways in the same TU. The actual error message will be
+'CXXD: Using C++ standard and using Boost are both defined for regex'.
+No amount of adding overrides for the regex mod at the very beginning
+of a TU will fix this problem. Nor will changing the order of the header
+files we include in the TU fix this problem. The only way to
+work with both the 'another_library_with_override' and the 
+'yet_another_library_with_override' header files is to include them
+in separate TUs.
+
+[heading Consistency design]
+
+CXXD's ensuring of dual library consistency in a TU is a compromise
+between flexibility and practicality. The idea is to allow working
+with dual libraries without causing confusion in the code in a TU
+which uses a particular dual library chosen in a mod. It also
+emphasizes the importance of supporting the basic mode of using CXXD,
+which is to include a mod header and then use the mod's namespace alias
+to work with the dual library chosen. The compromise involves a limit
+in flexibility in that it is not possible to work with opposite
+overrides of the same mod in a TU when using CXXD. But since this
+limitation ensures consistency, avoids, confusion, and supports the
+basic functionality the compromise between flexibility and practicality
+is made.
+    
+[endsect]

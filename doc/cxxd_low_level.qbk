@@ -1,0 +1,192 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Low-level inclusion]
+
+When you include a mod header in a TU you are
+actually including a separate implementation
+header file and then using the macros in that
+implementation header file to do two things:
+
+# Include the C++ header file(s) for the dual library which has been chosen.
+# Set the namespace alias to the namespace of the dual library which has been chosen.
+
+All of the logic of choosing the dual library and of creating
+macros reflecting that choice is done in the implementation
+header file. The implementation header file for each mod
+is in the CXXD 'boost/cxx_dual/impl' subdirectory and has the same name
+as its corresponding mod header in the 'boost/cxx_dual' directory.
+
+All of the macros, except one, which could be used by the programmer
+when including a mod header have been explained as aids to using
+the basic functionality of CXXD. The one macro which was not explained,
+because it does not directly impact the basic functionality, is
+a macro which is used to include the C++ header file(s) needed by
+the dual library which has been chosen. The form of this macro is
+CXXD_'XXX'_HEADER for any given mod XXX:
+
+[table:cxxdheader C++ header(s) macros
+[[Mod name][C++ header(s) macro]]
+[[array][CXXD_ARRAY_HEADER]]
+[[atomic][CXXD_ATOMIC_HEADER]]
+[[bind][CXXD_BIND_HEADER]]
+[[chrono][CXXD_CHRONO_HEADER]]
+[[condition_variable][CXXD_CONDITION_VARIABLE_HEADER]]
+[[enable_shared_from_this][CXXD_ENABLE_SHARED_FROM_THIS_HEADER]]
+[[function][CXXD_FUNCTION_HEADER]]
+[[hash][CXXD_HASH_HEADER]]
+[[make_shared][CXXD_MAKE_SHARED_HEADER]]
+[[mem_fn][CXXD_MEM_FN_HEADER]]
+[[move][CXXD_MOVE_HEADER]]
+[[mutex][CXXD_MUTEX_HEADER]]
+[[random][CXXD_RANDOM_HEADER]]
+[[ratio][CXXD_RATIO_HEADER]]
+[[ref][CXXD_REF_HEADER]]
+[[regex][CXXD_REGEX_HEADER]]
+[[shared_mutex][CXXD_SHARED_MUTEX_HEADER]]
+[[shared_ptr][CXXD_SHARED_PTR_HEADER]]
+[[system_error][CXXD_SYSTEM_ERROR_HEADER]]
+[[thread][CXXD_THREAD_HEADER]]
+[[tuple][CXXD_TUPLE_HEADER]]
+[[type_index][CXXD_TYPE_INDEX_HEADER]]
+[[type_traits][CXXD_TYPE_TRAITS_HEADER]]
+[[unordered_map][CXXD_UNORDERED_MAP_HEADER]]
+[[unordered_multimap][CXXD_UNORDERED_MULTIMAP_HEADER]]
+[[unordered_multiset][CXXD_UNORDERED_MULTISET_HEADER]]
+[[unordered_set][CXXD_UNORDERED_SET_HEADER]]
+[[weak_ptr][CXXD_WEAK_PTR_HEADER]]
+]
+
+For all mods this C++ header macro expands to the include path
+of a header file using the angle bracket form ( '<' and '>' ).
+For a few mods this C++ header macro actually expands to a header
+file in the CXXD implementation detail directory, which itself
+includes more than one library header file. For the rest this
+C++ header macro expands to a single C++ header for either the
+Boost or C++ standard library dual library, which itself
+includes all constructs needed by the dual library chosen.
+
+Because of the C++ header macro, and because the previously discussed
+namespace macro can be used anytime the namespace alias can be used,
+it is possible to forgo the inclusion of the mod header and use the
+low-level inclusion of the same-named implementation header file for
+any given mod. As an example, when using the regex mod the code showing
+basic functionality of CXXD was:
+
+ #include <boost/cxx_dual/regex.hpp>
+  
+ void SomeFunction()
+     {
+     cxxd_regex_ns::regex re("A regular expression etc.");
+     bool result(cxxd_regex_ns::regex_match("Some string...",re));
+     // etc.
+     }
+
+Alternatively using the low-level implementation header the code
+could be:
+     
+ #include <boost/cxx_dual/impl/regex.hpp>
+ #include CXXD_REGEX_HEADER
+  
+ void SomeFunction()
+     {
+     CXXD_REGEX_NS::regex re("A regular expression etc.");
+     bool result(CXXD_REGEX_NS::regex_match("Some string...",re));
+     // etc.
+     }
+     
+or even:     
+     
+ #include <boost/cxx_dual/impl/regex.hpp>
+ #include CXXD_REGEX_HEADER
+ namespace cxxd_regex_ns = CXXD_REGEX_NS;
+  
+ void SomeFunction()
+     {
+     cxxd_regex_ns::regex re("A regular expression etc.");
+     bool result(cxxd_regex_ns::regex_match("Some string...",re));
+     // etc.
+     }
+     
+Obviously using the low-level implementation header is more verbose.
+So why would we ever want to use it as opposed to the normal mod header ?
+
+One idiom that could occur, especially when for a mod the Boost library
+is chosen instead of the C++ standard library, is that the programmer wishes
+to include only the relevant C++ header file(s) rather than all the C++
+header files for a dual library.
+
+A good example of this would be in the Boost type_traits library. The
+generalized Boost type_traits header is <boost/type_traits.hpp>. This header
+includes all the individual type traits headers, just as the C++ standard
+library the <type_traits> header includes all type traits. On the Boost side,
+however, it is possible to include header files for only the individual type
+traits being used in a TU instead of all type traits, therefore speeding up
+compilation. When using the type_traits mod header the general C++ type_traits
+header is always included automatically. To have finer control over individual
+type traits header inclusion a programmer could use the low-level implementation
+header for type_traits and then manually include only the individual header
+file he is actually using when Boost is chosen as the dual library. The code
+might look like this:
+
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ 
+ #if CXXD_HAS_STD_TYPE_TRAITS
+ #include CXXD_TYPE_TRAITS_HEADER
+ #else
+ #include <boost/type_traits/add_const.hpp>
+ #endif
+ 
+ void SomeFunction()
+     {
+     // Code using CXXD_TYPE_TRAITS_NS::add_const
+     }
+     
+Another reason for using the low-level implementation header
+might be if the programmer wants to provide his own namespace
+alias for the dual library chosen rather than using the
+namespace alias automatically created when the mod header is
+used. Alternatively the programmer may simple want to use
+the namespace macro, rather than the more C++-like namespace alias,
+and not want to litter his code with an automatically created
+namespace alias which he will not use.
+
+Any time you include a mod header you can alternatively
+include the mod implementation header file as long as you have
+no immediate need for include the C++ header files for the
+dual library chosen or for using the namespace alias for the
+dual library chosen. Specific uses for including the
+implementation mod header rather than the normal mod header
+will occur later in the documentation.
+
+While the use of the mod header is recommended for the basic
+functionality of programmers using CXXD, the direct inclusion
+of the low-level implementation instead of the mod header
+serves the purpose of programmers who like maximum flexibility
+at the price of greater syntactical verbosity.
+
+[heading Dependencies]
+
+When you include the mod header you are establishing a dependency
+on whichever dual library is chosen by that mod. The dependency
+is immediate since the C++ header(s) for the library chosen
+are automatically included and a namespace alias to the namespace
+of the library is created. This is as it should be, since including
+the mod header is done because you intend to program using the
+dual library chosen.
+
+When you include a mod's low-level implementation header you are
+not establishing an immediate dependency on the dual library chosen.
+This is because a low-level implementation header only creates
+macros for further use. Of course as soon as you use the C++
+header(s) macro to include the C++ headers for the mod you are
+establishing a dependency on the dual library chosen; or if you
+manually include some specific C++ header for the dual library
+chosen you are establishing a dependency. But merely including
+the low-level header does not do so.
+
+[endsect]

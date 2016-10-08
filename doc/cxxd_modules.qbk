@@ -5,298 +5,94 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section:smods Modules]
+[section:smods Mods]
 
-A dual library which CXXD supports with its system of macros is called a 
-"CXXD-mod" in this documentation, to distinguish the name from 
-the general term of "library". A CXXD-mod is a Boost library 
-whose functionality largely exists as a C++ standard library,
-where the differences between the Boost library and its C++ standard
-equivalent are usually very minimal. An example of such a library would
-be the Boost regex library, whose equivalent is the C++ standard regex
-library, both offering the use of regular expressions in C++ with very
-largely the exact same syntax.
-
-I want to make it clear that the choice of using, for example, Boost regex
-or C++ standard regex, has little to do with the technical quality of the library.
-Both versions are of an extremely high quality and this is true for every Boost library 
-which has an equivalent C++ standard library version.
-
-The CXXD-mods supported by CXXD are simply those Boost libraries which have 
+The mods supported by CXXD are simply those Boost libraries which have 
 a C++ standard equivalent where the syntactical use of either is very largely
 the same except for the namespace involved.
 
-The following table lists the CXXD-mods supported by CXXD, in alphabetical order, 
+The following table lists the mods supported by CXXD, in alphabetical order, 
 and the appropriate information for each one. All header files are based off of
 the <boost/cxx_dual/> directory;
 
 [table:cxxdmods CXXD-Mods
-[[CXXD-Mod][Header file][Implementation header file][Include macro][Namespace macro][Namespace alias][Choice macro]]
-[[array][array.hpp][impl/array.hpp][CXXD_ARRAY_HEADER][CXXD_ARRAY_NS][cxxd_array_ns][CXXD_HAS_STD_ARRAY]]
-[[atomic][atomic.hpp][impl/atomic.hpp][CXXD_ATOMIC_HEADER][CXXD_ATOMIC_NS][cxxd_atomic_ns][CXXD_HAS_STD_ATOMIC]]
-[[bind][bind.hpp][impl/bind.hpp][CXXD_BIND_HEADER][CXXD_BIND_NS][cxxd_bind_ns][CXXD_HAS_STD_BIND]]
-[[chrono][chrono.hpp][impl/chrono.hpp][CXXD_CHRONO_HEADER][CXXD_CHRONO_NS][cxxd_chrono_ns][CXXD_HAS_STD_CHRONO]]
-[[condition_variable][condition_variable.hpp][impl/condition_variable.hpp][CXXD_CONDITION_VARIABLE_HEADER][CXXD_CONDITION_VARIABLE_NS][cxxd_condition_variable_ns][CXXD_HAS_STD_CONDITION_VARIABLE]]
-[[enable_shared_from_this][enable_shared_from_this.hpp][impl/enable_shared_from_this.hpp][CXXD_ENABLE_SHARED_FROM_THIS_HEADER][CXXD_ENABLE_SHARED_FROM_THIS_NS][cxxd_enable_shared_from_this_ns][CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS]]
-[[function][function.hpp][impl/function.hpp][CXXD_FUNCTION_HEADER][CXXD_FUNCTION_NS][cxxd_function_ns][CXXD_HAS_STD_FUNCTION]]
-[[hash][hash.hpp][impl/hash.hpp][CXXD_HASH_HEADER][CXXD_HASH_NS][cxxd_hash_ns][CXXD_HAS_STD_HASH]]
-[[make_shared][make_shared.hpp][impl/make_shared.hpp][CXXD_MAKE_SHARED_HEADER][CXXD_MAKE_SHARED_NS][cxxd_make_shared_ns][CXXD_HAS_STD_MAKE_SHARED]]
-[[mem_fn][mem_fn.hpp][impl/mem_fn.hpp][CXXD_MEM_FN_HEADER][CXXD_MEM_FN_NS][cxxd_mem_fn_ns][CXXD_HAS_STD_MEM_FN]]
-[[move][move.hpp][impl/move.hpp][CXXD_MOVE_HEADER][CXXD_MOVE_NS][cxxd_move_ns][CXXD_HAS_STD_MOVE]]
-[[mutex][mutex.hpp][impl/mutex.hpp][CXXD_MUTEX_HEADER][CXXD_MUTEX_NS][cxxd_mutex_ns][CXXD_HAS_STD_MUTEX]]
-[[random][random.hpp][impl/random.hpp][CXXD_RANDOM_HEADER][CXXD_RANDOM_NS][cxxd_random_ns][CXXD_HAS_STD_RANDOM]]
-[[ratio][ratio.hpp][impl/ratio.hpp][CXXD_RATIO_HEADER][CXXD_RATIO_NS][cxxd_ratio_ns][CXXD_HAS_STD_RATIO]]
-[[ref][ref.hpp][impl/ref.hpp][CXXD_REF_HEADER][CXXD_REF_NS][cxxd_ref_ns][CXXD_HAS_STD_REF]]
-[[regex][regex.hpp][impl/regex.hpp][CXXD_REGEX_HEADER][CXXD_REGEX_NS][cxxd_regex_ns][CXXD_HAS_STD_REGEX]]
-[[shared_mutex][shared_mutex.hpp][impl/shared_mutex.hpp][CXXD_SHARED_MUTEX_HEADER][CXXD_SHARED_MUTEX_NS][cxxd_shared_mutex_ns][CXXD_HAS_STD_SHARED_MUTEX]]
-[[shared_ptr][shared_ptr.hpp]
-[
-* impl/shared_ptr.hpp
-* impl/shared_ptr_only.hpp
-]
-[
-* CXXD_SHARED_PTR_HEADER - all shared_ptr related header files
-* CXXD_SHARED_PTR_ONLY_HEADER - only the shared_ptr header file
-]
-[CXXD_SHARED_PTR_NS][cxxd_shared_ptr_ns][CXXD_HAS_STD_SHARED_PTR]]
-[[system_error][system_error.hpp][impl/system_error.hpp][CXXD_SYSTEM_ERROR_HEADER][CXXD_SYSTEM_ERROR_NS][cxxd_system_error_ns][CXXD_HAS_STD_SYSTEM_ERROR]]
-[[thread][thread.hpp][impl/thread.hpp][CXXD_THREAD_HEADER][CXXD_THREAD_NS][cxxd_thread_ns][CXXD_HAS_STD_THREAD]]
-[[tuple][tuple.hpp][impl/tuple.hpp][CXXD_TUPLE_HEADER][CXXD_TUPLE_NS][cxxd_tuple_ns][CXXD_HAS_STD_TUPLE]]
-[[type_index][type_index.hpp][impl/type_index.hpp][CXXD_TYPE_INDEX_HEADER][CXXD_TYPE_INDEX_NS][cxxd_type_index_ns][CXXD_HAS_STD_TYPE_INDEX]]
-[[type_traits][type_traits.hpp][impl/type_traits.hpp][CXXD_TYPE_TRAITS_HEADER][CXXD_TYPE_TRAITS_NS][cxxd_type_traits_ns][CXXD_HAS_STD_TYPE_TRAITS]]
-[[unordered_map][unordered_map.hpp][impl/unordered_map.hpp][CXXD_UNORDERED_MAP_HEADER][CXXD_UNORDERED_MAP_NS][cxxd_unordered_map_ns][CXXD_HAS_STD_UNORDERED_MAP]]
-[[unordered_multimap][unordered_multimap.hpp][impl/unordered_multimap.hpp][CXXD_UNORDERED_MULTIMAP_HEADER][CXXD_UNORDERED_MULTIMAP_NS][cxxd_unordered_multimap_ns][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
-[[unordered_multiset][unordered_multiset.hpp][impl/unordered_multiset.hpp][CXXD_UNORDERED_MULTISET_HEADER][CXXD_UNORDERED_MULTISET_NS][cxxd_unordered_multiset_ns][CXXD_HAS_STD_UNORDERED_MULTISET]]
-[[unordered_set][unordered_set.hpp][impl/unordered_set.hpp][CXXD_UNORDERED_SET_HEADER][CXXD_UNORDERED_SET_NS][cxxd_unordered_set_ns][CXXD_HAS_STD_UNORDERED_SET]]
-[[weak_ptr][weak_ptr.hpp][impl/weak_ptr.hpp][CXXD_WEAK_PTR_HEADER][CXXD_WEAK_PTR_NS][cxxd_weak_ptr_ns][CXXD_HAS_STD_WEAK_PTR]]
+[[Mod name][Header file][Namespace alias]]
+[[array][array.hpp][cxxd_array_ns]]
+[[atomic][atomic.hpp][cxxd_atomic_ns]]
+[[bind][bind.hpp][cxxd_bind_ns]]
+[[chrono][chrono.hpp][cxxd_chrono_ns]]
+[[condition_variable][condition_variable.hpp][cxxd_condition_variable_ns]]
+[[enable_shared_from_this][enable_shared_from_this.hpp][cxxd_enable_shared_from_this_ns]]
+[[function][function.hpp][cxxd_function_ns]]
+[[hash][hash.hpp][cxxd_hash_ns]]
+[[make_shared][make_shared.hpp][cxxd_make_shared_ns]]
+[[mem_fn][mem_fn.hpp][cxxd_mem_fn_ns]]
+[[move][move.hpp][cxxd_move_ns]]
+[[mutex][mutex.hpp][cxxd_mutex_ns]]
+[[random][random.hpp][cxxd_random_ns]]
+[[ratio][ratio.hpp][cxxd_ratio_ns]]
+[[ref][ref.hpp][cxxd_ref_ns]]
+[[regex][regex.hpp][cxxd_regex_ns]]
+[[shared_mutex][shared_mutex.hpp][cxxd_shared_mutex_ns]]
+[[shared_ptr][shared_ptr.hpp][cxxd_shared_ptr_ns]]
+[[system_error][system_error.hpp][cxxd_system_error_ns]]
+[[thread][thread.hpp][cxxd_thread_ns]]
+[[tuple][tuple.hpp][cxxd_tuple_ns]]
+[[type_index][type_index.hpp][cxxd_type_index_ns]]
+[[type_traits][type_traits.hpp][cxxd_type_traits_ns]]
+[[unordered_map][unordered_map.hpp][cxxd_unordered_map_ns]]
+[[unordered_multimap][unordered_multimap.hpp][cxxd_unordered_multimap_ns]]
+[[unordered_multiset][unordered_multiset.hpp][cxxd_unordered_multiset_ns]]
+[[unordered_set][unordered_set.hpp][cxxd_unordered_set_ns]]
+[[weak_ptr][weak_ptr.hpp][cxxd_weak_ptr_ns]]
 ]
 
-The naming scheme for each CXXD-mod follows common conventions:
+The naming scheme for each mod follows a simple common conventions:
 
-* Each header file is the CXXD-mod name preceded by 'boost/cxx_dual/'
+* Each header file is the mod name preceded by 'boost/cxx_dual/'
 and followed by the '.hpp' extension.
-* Each implementation header file is the CXXD-mod name preceded by 'boost/cxx_dual/impl/'
-and followed by the '.hpp' extension.
-* Each include macro is named starting with the mnemonic CXXD_,
-followed by the CXXD-mod name in uppercase,
-followed by the mnemonic \_HEADER.
-* Each namespace macro is named starting with the mnemonic CXXD_,
-followed by the CXXD-mod name in uppercase,
-followed by the mnemonic \_NS.
 * Each namespace alias is named starting with the mnemonic cxxd_,
-followed by the CXXD-mod name,
-followed by the mnemonic \_ns.
-* Each choice macro is named starting with the mnemonic CXXD_HAS_STD_,
-followed by the CXXD-mod name in uppercase.
+followed by the mod name, followed by the mnemonic \_ns.
 
-Not listed above in the table is a column for the macro of the form CXXD_XXX_MACRO, which is only 
-defined for a CXXD-mod XXX which has equivalent macro names between the C++ standard library 
-version and the Boost library version. This macro is used in the form of 
-CXXD_XXX_MACRO(MACRO_NAME) to produce the correct macro name for the equivalent macro no 
-matter which implementation is being used. Currently, among the CXXD-mods listed above, the only 
-one which uses this form is the 'atomic' CXXD-mod. It's name therefore is CXXD_ATOMIC_MACRO 
-and it can be used in the form of CXXD_ATOMIC_MACRO(SOME_ATOMIC_MACRO) to produce the correct 
-equivalent macro name for the 'atomic' CXXD-mod.
+Each of the mod headers above are separated from every other mod
+header in the functionality it provides for using either the Boost
+dual library or the C++ standard library for that mod in user code.
+Any number of individual mods can be used in a TU.
 
-For the 'shared_ptr' dual library the normal CXXD-mod macro header, CXXD_SHARED_PTR_HEADER,
-when included brings in header files for shared_ptr, weak_ptr, make_shared, and
-enable_shared_from_this for either the Boost library or the C++ standard library. The
-CXXD-mod macro header, CXXD_SHARED_PTR_ONLY_HEADER, when included brings in only the 
-header file for shared_ptr for either the Boost library or the C++ standard library;
-the end-user can then use the separate functionality for weak_ptr, make_shared,
-and enable_shared_from_this in their respective CXXD-mods. In both cases the namespace
-macro 'CXXD_SHARED_PTR_NS' is set to the correct namespace for shared_ptr
-for either the Boost library or the C++ standard library. This namespace macro can also be
-used for weak_ptr, make_shared, and enable_shared_from_this namespaces when the
-CXXD_SHARED_PTR_HEADER is included.
+For the 'shared_ptr' mod a separate mod header called 
+<boost/cxx_dual/shared_ptr_all.hpp> also exists which
+includes the C++ header files for shared_ptr, weak_ptr, 
+make_shared, and enable_shared_from_this for either the
+Boost dual library or the C++ standard dual library chosen.
+The cxxd_shared_ptr_ns namespace can be used to program 
+with any any of these individual C++ headers successfully.
+This mod header exists for convenience since using
+the shared_ptr functionality often involves the other libraries
+whose C++ header files are included by the 
+<boost/cxx_dual/shared_ptr_all.hpp> mod header, whether they
+are the Boost dual libraries or the C++ standard dual libraries.
 
-Alternatively for the 'shared_ptr' dual library the normal implementation header file, <boost/cxx_dual/impl/shared_ptr.hpp>,
-when included brings in the header files for shared_ptr, weak_ptr, make_shared, and
-enable_shared_from_this for either the Boost library or the C++ standard library. The
-implementation header, <boost/cxx_dual/impl/shared_ptr_only.hpp>, when included brings in only the 
-header file for shared_ptr for either the Boost library or the C++ standard library;
-the end-user can then use the separate CXXD functionality for weak_ptr, make_shared,
-and enable_shared_from_this in their respective CXXD-mods. In both cases the namespace
-alias 'cxxd_shared_ptr_ns' is set to the correct namespace for shared_ptr
-for either the Boost library or the C++ standard library. This namespace alias can also be
-used for weak_ptr, make_shared, and enable_shared_from_this namespaces when the
-<boost/cxx_dual/impl/shared_ptr.hpp> is included.
-
-[heading Using the CXXD-mods ]
-
-The form of using the CXXD-mod information in a translation unit will now be given, 
-choosing the regex library as an example.
-
-[table
-[[Using macros][Using aliases]]
-[
- [``
-    #include <boost/cxx_dual/regex.hpp>
-    #include CXXD_REGEX_HDR
-      
-    void SomeFunction()
-        {
-        CXXD_REGEX_NS::regex re("A regular expression etc.");
-        bool result(CXXD_REGEX_NS::regex_match("Some string...",re));
-        // etc.
-        }
-  ``]
- [``
-    #include <boost/cxx_dual/impl/regex.hpp>
-  
-    void SomeFunction()
-        {
-        cxxd_regex_ns::regex re("A regular expression etc.");
-        bool result(cxxd_regex_ns::regex_match("Some string...",re));
-        // etc.
-        }
-  ``]
-]
-]
-
-In the example the code will work whether we are using the C++ standard regex library
-or the Boost regex library.
-
-[heading Using the CXXD_HAS_STD_... macro ]
-
-The 'CXXD_HAS_STD_...' macro for any given CXXD-mod tests whether or not the C++ standard
-version of the library is being used, returning '1' if it is used or '0' if it is not used. 
-Conversely the form '!CXXD_HAS_STD_...' for any given CXXD-mod tests whether or not the Boost 
-version of the library is being used, returning '1' if the Boost version of the library
-is being used or '0' if it is not being used.
-
-The CXXD_HAS_STD_... macro for any given CXXD-mod is a more understandable form of macro than
-Boost.Config already has for determining whether the compiler supports certain C++ libraries.
-Most of these macros are taken from whether or not a given BOOST_NO_CXX11_HDR_ is defined.
-
-One use for the CXXD_HAS_STD_... macro is to include particular header files
-rather than a main header file, for some given library functionality. This is
-more prevalent with Boost than with the C++ standard library, since the latter almost
-always has a single header file which includes library functionality for
-all parts of a library. 
-
-    #include <boost/cxx_dual/type_traits.hpp>
-    #if CXXD_HAS_STD_TYPE_TRAITS
-    #include CXXD_TYPE_TRAITS_HDR
-    #else
-    #include <boost/type_traits/add_const.hpp>
-    #endif
-    // Further code using CXXD_TYPE_TRAITS_NS::add_const
-
-You can also use the CXXD_HAS_STD_... macro to provide specific functionality
-depending on whether or not a particular CXXD-mod is using the C++ standard
-or Boost version. Of course you hope to minimize these situations but occasionally
-they happen:
-  
-[table
-[[Using macros][Using aliases]]
-[
- [``
-    #include <boost/cxx_dual/thread.hpp>
-    #include CXXD_THREAD_HDR
-    // Code...
-    
-    #if CXXD_HAS_STD_THREAD
-    
-    // Functionality available if the C++ standard version of the thread library is being used
-    
-    #else
-    
-    // Functionality available if the Boost version of the thread library is being used
-    
-    #endif
-  ``]
- [``
-    #include <boost/cxx_dual/impl/thread.hpp>
-    // Code...
-    
-    #if CXXD_HAS_STD_THREAD
-    
-    // Functionality available if the C++ standard version of the thread library is being used
-    
-    #else
-    
-    // Functionality available if the Boost version of the thread library is being used
-    
-    #endif
-  ``]
-]
-]
-
-  
-[heading Macro or alias]
-
-The main functionality in using any CXXD-mod, after including
-a CXXD-mod header, is to include the correct header file(s) and
-use the appropriate namespace for the dual library chosen.
-
-The macro-based solution for accomplishing this is to use the
-include macro and the namespace macro for any given CXXD-mod,
-both defined in the CXXD-mod header file. This works perfectly
-well in all cases and is the simplest solution when using CXXD.
-
-However many programmers do not like to see macros in their
-source code, or even in their header files where macros
-are more common. Therefore CXXD offers a solution to including
-the correct header file(s) and using the appropriate namespace
-for the dual library chosen which does not involve using macros
-at the end-user level. This solution involves including a CXXD
-implementation header file and subsequently using a C++ namespace
-alias defined in that implementation header file. Using a namespace
-alias instead of a namespace macro may be seen as more C++-like since
-namespace aliases are part of the C++ language. This solution
-reduces the use of CXXD macros in source files and may be seen
-as clearer syntax in C++ code.
-
-Furthermore the solution of including the CXXD-mod implementation
-header, since it always includes the CXXD-mod header first,
-may be seen as an effective substitute for including the
-CXXD-mod header while providing header includes and a namespace
-alias all at the same time. Even when including the CXXD-mod
-implementation header the macros in the CXXD-mod header can still
-be used. It should be understood that when the CXXD-mod
-implementation header is included an immediate dependency is
-created on the dual library implementation chosen. This is
-not true when just including the CXXD-mod header.
-
-When using the namespace alias for a CXXD-mod the namespace
-macro is still available for use. This is important because there are a few
-situations where using the namespace alias to designate the correct
-namespace does not work whereas using the namespace macro does work.
-
-One of these situations is when the name of the dual library
-namespace is needed in a string as data or for output in a message.
-In this case the programmer can use a macro such as BOOST_STRINGIZE
-to convert the namespace macro to string representation, or can
-simply use the preprocessor stringize operator ( '#' ).
-
-Another of these situations is when you need to reopen the
-namespace of the dual library chosen for template specialization. You can do
-this, for some XXX CXXD-mod using code like:
-
-  namespace CXXD_XXX_NS
-    {
-    ... some template specialization code for a class template construct in 'XXX'
-    }
-    
-where using the namespace alias to do so is not valid C++.
-
-Both uses given above, of using the namespace macro where the
-namespace alias will not work, can be seen in the 'test_hash.cpp'
-test in the 'test' subdirectory of CXXD.
+If instead you use the normal <boost/cxx_dual/shared_ptr.hpp>
+mod header only the C++ header files for shared_ptr is
+included and the cxxd_shared_ptr_ns namespace alias should be
+used to program that mod. You can then separately include the
+mod headers for weak_ptr, make_shared, and enable_shared_from_this
+to use their respective functionality with the appropriate
+namespace alias for each one.
 
 [heading:hids CXXD-mod identifiers]
 
-Each CXXD-mod also has an identifier, called a "mod-ID", by which that
-CXXD-mod is identified. The mod-ID is a VMD identifier. This means that
-it is registered and pre-detected so that CXXD can identify it in macro code.
+Each mod also has an identifier, called a "mod-ID", by which that
+mod is identified. The mod-ID is a VMD identifier. This means that
+it is registered and pre-detected so that CXXD can identify it in
+macro code.
 
-The mod-IDs are not part of the individual CXXD-mod header files
-and do not take part in the individual CXXD-mod processing.
+The mod-IDs are not part of the individual mod headers
+and do not take part in the individual mod processing.
 Instead the mod-IDs are used in optional CXXD helper macros,
 which will be described later in the documentation, to allow the user of
-the particular macro to identify a particular CXXD-mod. Each mod-ID is simply
-the name of the CXXD-mod in upper case with 'CXXD_' prepended:
+the particular macro to identify a particular mod. Each mod-ID is simply
+the name of the mod in upper case with 'CXXD_' prepended:
 
 [table:modids Identifiers
 [[CXXD-mod][mod-ID]]
@@ -334,39 +130,11 @@ The mod-IDs have their own header file:
 
   #include <boost/cxx_dual/mod_ids.hpp>
   
-We will see a use for these CXXD-mod identifiers when I
+We will see a use for these mod identifiers when I
 discuss optional helper macros which CXXD offers
 for the end-user later in the documentation. An end-user,
 who wishes to design his own macros to be used with CXXD,
 can use the mod-IDs as a means of specifying a particular 
-CXXD-mod by including the header file above in his own code.
-
-[heading Mod header file dependency ]
-
-When the programmer includes the appropriate CXXD-mod header file for a particular 
-dual library from within the cxx_dual directory there is no dependency
-being established on the CXXD-mod itself, whether the CXXD-mod represents a Boost
-library or a C++ standard library. Any one of the CXXD-mod header files 
-merely defines macros which the programmer may choose to use or not.
-
-Therefore the CXXD library itself does not depend on any of the CXXD-mods it supports.
-
-It is only when using a particular CXXD-mod macro header, along with a particular CXXD-mod namespace,
-or when including a particular CXXD-mod implementation header that a dependency is established.
-
-Because there is no dependency on the CXXD-mod itself when a particular CXXD-mod header is included,
-CXXD allows inclusion of all CXDD-mod headers with a single include:
-
-  #include <boost/cxx_dual/cxx_mods.hpp>
-  
-This is called the "general mod header".
-
-The general mod header includes macros, starting with CXXD_, for each CXXD-mod. As long 
-as the prefix CXXD_ does not conflict with macros from any other software 
-library in the translation unit there should be no problems even including this
-general mod header. Furthermore, since including any individual CXXD-mod header
-imposes no dependency on either the Boost version or the C++ standard version of the
-dual library itself, including the general mod header above introduces no dependencies
-on any of the CXXD-mods in that header file.
+mod by including the header file above in his own code.
 
 [endsect]

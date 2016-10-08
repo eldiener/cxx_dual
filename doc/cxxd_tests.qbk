@@ -17,14 +17,14 @@ of being in that subdirectory and invoking 'b2' as appropriate:
   
 The tests for the individual variadic macros aiding library support,
 CXXD_LIBRARY_NAME and CXXD_VALID_VARIANTS, require variadic macro
-support but do not necessarily require C++11 on up mode in most
+support but do not necessarily require C++11 mode in most
 compilers, since the major compilers support variadic macros without
 necessarily supporting C++11. These include clang, gcc, and VC++. However
 because these compilers may issue numerous warnings about variadic macro
 usage without being in C++11 mode, while still working correctly as far as the
 two variadic macros are concerned, warnings are turned off in the tests so as not to flood
 the end-user with spurious warnings. These tests are not dependent on any
-CXXD-mod and are therefore always run when the tests are run. 
+mod and are therefore always run when the tests are run.
 
 These tests are divided
 into two separate Boost Build aliases, 'ln' for the library name tests
@@ -39,17 +39,17 @@ or
   b2 vv any_other_b2_parameters...
   
 The tests for the individual CXXD-mods do depend on other Boost libraries
-when the Boost dual library is chosen for the individual CXXD-mod. Therefore
+when the Boost dual library is chosen for the individual mod. Therefore
 these tests are marked 'explicit' in terms of Boost Build, which means that
 they are not run normally when running the CXXD tests. All of these tests for the 
-individual CXXD-mods are under a Boost Build alias called 'mods'. Therefore in 
+individual mods are under a Boost Build alias called 'mods'. Therefore in 
 order to just run these tests the command line should be:
 
   b2 mods any_other_b2_parameters...
   
 The valid variant test call test_vv.cpp under the alias 'tvv'
 has already been discussed. This test, like the tests for the individual
-CXXD-mods is also marked 'explicit', which means that it will not
+mods is also marked 'explicit', which means that it will not
 be ordinarily run unless it is explicitly invoked by:
   
   b2 tvv any_other_b2_parameters...

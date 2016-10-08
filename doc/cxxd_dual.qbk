@@ -26,7 +26,8 @@ a valid choice to use because it masks the issues I bring up above. I can unders
 point of view. Furthermore I have had it expressed to me that CXXD should somehow
 document any differences between the implementation of the Boost library and
 the C++ standard library for each of the dual libraries supported. Again this is
-a valid point of view.
+a valid point of view, but I do not think the CXXD library is the place for such
+documentation.
 
 The design of CXXD is that the advantages of being able to offer to the programmer
 the choice of using either the Boost implementation or the C++ standard implementation
@@ -35,12 +36,12 @@ and the concerns of others in using CXXD in the designer's mind. But I am aware 
 the issues and concerns stated above and want to mention them here in the documentation
 to CXXD. 
 
-The issues and concerns in my own mind are very much the same whenever
+The issues and concerns are very much the same whenever
 a particular implementation of any library is chosen, whether that library
 is a Boost library, a C++ standard library, or a 3rd party library. That
-each CXXD-mod really involves two different implementations, or libraries
+each mod really involves two different implementations, or libraries
 if you will, is something I have made plain in the documentation, and I want
-to reiterate it here. Knowledge of those libraries, for any particular CXXD-mod,
+to reiterate it here. Knowledge of those libraries, for any particular mod,
 is still of first importance in programming using CXXD. Essentially CXXD is
 a framework for supporting dual libraries, but it is not an excuse for
 not understanding the functionality of a particular dual library in the first
@@ -49,7 +50,7 @@ place.
 Although I have done so in other areas of the documentation I would like
 to again emphasize the importance of documenting when a dual library is being
 used by the end-user. This is especially true when CXXD is being used in
-a library, whether that library is a header-only library or non-header only library
+a third party library, whether that library is a header-only library or non-header only library
 where some part of the library is being built into a shared or static library.
 Without documenting that a particular dual library is being used a programmer
 cannot know, depending on the compiler implementation and the compiler's

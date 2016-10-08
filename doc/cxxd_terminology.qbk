@@ -7,22 +7,23 @@
 
 [section Terminology]
 
-The CXXD library uses various terms which will subsequently be
-explained in full. This section of the documentation is just a
+The CXXD library uses various terms, some of which will subsequently be
+explained in fuller terms. This section of the documentation is just a
 reference for the terminology, which will be encountered later 
-in the documentation, rather than a full explanation:
+in the documentation, rather than a full explanation. Some of
+the terminology has already been mentioned but will be denoted
+again here.
 
-* Dual library = Chooses a particular Boost or C++ standard implementation
-* CXXD-mod = CXXD dual library
-* CXXD-mod header = header file for a CXXD-mod
-* CXXD-mod macro header = header file macro for a CXXD-mod
-* CXXD-mod implementation header = implementation header file for a CXXD-mod
-* macro mode = using the CXXD-mod macro header and CXXD-mod namespace macro
-* alias mode = using the CXXD-mod namespace alias
+* C++11 = C++ in C++11 mode on up. This includes C++14 and C++17.
+* mod = An implementation of either a Boost library or its C++ standard library equivalent.
+* dual library = A particular Boost or C++ standard library chosen for each mod.
+* mod header = header file for using a mod
+* implementation header = a low level header file automatically included by the mod header
 * header file = normal C++ header file
-* mod-ID = preprocessing identifier for a CXXD-mod
+* mod-ID = preprocessing identifier for a mod
 * module = executable or shared/static library
 * TU = translation unit
 * variant = a non-header only library generated with a different name but the same CXXD code.
+* xxx or XXX = any mod as illustrated in an example situation.
 
 [endsect]

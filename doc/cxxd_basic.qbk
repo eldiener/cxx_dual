@@ -1,0 +1,271 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section:basic Basic Functionality]
+
+The basic functionality of the CXXD library is to include
+a mod header and use the namespace alias to program with that mod:
+
+ #include <boost/cxx_dual/regex.hpp>
+  
+ void SomeFunction()
+     {
+     cxxd_regex_ns::regex re("A regular expression etc.");
+     bool result(cxxd_regex_ns::regex_match("Some string...",re));
+     // etc.
+     }
+     
+In our example we include the regex mod header and then use
+the regex namespace alias to program with regex functionality.
+Whether the C++ standard regex library or the Boost regex library
+is chosen by CXXD the syntax is still valid.
+
+Because the namespace alias is a stand-in for the actual namespace
+of the regex library we can also program the above with a 'using
+directive':
+        
+ #include <boost/cxx_dual/regex.hpp>
+ 
+ using namespace cxxd_regex_ns;
+  
+ void SomeFunction()
+     {
+     regex re("A regular expression etc.");
+     bool result(regex_match("Some string...",re));
+     // etc.
+     }
+     
+We can program any of the 28 different mods in the CXXD library
+in the same way. We include the mod header and we use the mod's
+namespace alias to program with that mod. This is the essence
+of the basic functionality of the CXXD library, and it is very easy
+to use.
+
+[heading Determining the library choice]
+
+Occasionally there are situations where the programmer would like
+to be able to program based on which one of the dual libraries has
+been chosen for a particular mod. This would most often occur
+when there are differences in functionality between the C++ standard
+implementation or the Boost implementation of a particular mod, and
+one of those differences must be taken into account in the programmer's
+code.
+
+For any given mod 'XXX' the CXXD library creates a macro called
+CXXD_HAS_STD_'XXX' whenever the mod header for 'XXX' is included in a
+translation unit ( TU ). This macro is set to 1 if the C++ standard
+library is chosen for mod 'XXX' and is set to 0 if the Boost
+library is chosen for mod 'XXX' instead:
+
+[table:cxxdchoice CXXD choice macros
+[[Mod name][Choice Macro]]
+[[array][CXXD_HAS_STD_ARRAY]]
+[[atomic][CXXD_HAS_STD_ATOMIC]]
+[[bind][CXXD_HAS_STD_BIND]]
+[[chrono][CXXD_HAS_STD_CHRONO]]
+[[condition_variable][CXXD_HAS_STD_CONDITION_VARIABLE]]
+[[enable_shared_from_this][CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS]]
+[[function][CXXD_HAS_STD_FUNCTION]]
+[[hash][CXXD_HAS_STD_HASH]]
+[[make_shared][CXXD_HAS_STD_MAKE_SHARED]]
+[[mem_fn][CXXD_HAS_STD_MEM_FN]]
+[[move][CXXD_HAS_STD_MOVE]]
+[[mutex][CXXD_HAS_STD_MUTEX]]
+[[random][CXXD_HAS_STD_RANDOM]]
+[[ratio][CXXD_HAS_STD_RATIO]]
+[[ref][CXXD_HAS_STD_REF]]
+[[regex][CXXD_HAS_STD_REGEX]]
+[[shared_mutex][CXXD_HAS_STD_SHARED_MUTEX]]
+[[shared_ptr][CXXD_HAS_STD_SHARED_PTR]]
+[[system_error][CXXD_HAS_STD_SYSTEM_ERROR]]
+[[thread][CXXD_HAS_STD_THREAD]]
+[[tuple][CXXD_HAS_STD_TUPLE]]
+[[type_index][CXXD_HAS_STD_TYPE_INDEX]]
+[[type_traits][CXXD_HAS_STD_TYPE_TRAITS]]
+[[unordered_map][CXXD_HAS_STD_UNORDERED_MAP]]
+[[unordered_multimap][CXXD_HAS_STD_UNORDERED_MULTIMAP]]
+[[unordered_multiset][CXXD_HAS_STD_UNORDERED_MULTISET]]
+[[unordered_set][CXXD_HAS_STD_UNORDERED_SET]]
+[[weak_ptr][CXXD_HAS_STD_WEAK_PTR]]
+]
+
+The normal use for the CXXD_HAS_STD_'XXX' macro to provide specific functionality
+depending on whether or not a particular CXXD-mod is using the C++ standard
+or Boost version. Of course you hope to minimize these situations but occasionally
+they happen:
+  
+ #include <boost/cxx_dual/thread.hpp>
+ 
+ void SomeFunction()
+    {
+    
+    // Code...
+        
+    #if CXXD_HAS_STD_THREAD
+        
+    // Functionality available if the C++ standard version of the thread library is being used
+       
+    #else
+        
+    // Functionality available if the Boost version of the thread library is being used
+        
+    #endif
+    
+    }
+  
+[heading When a namespace alias isn't enough]
+
+Even though the namespace alias for any given mod is extremely
+useful when programming using CXXD, there are a few instances
+where the actual namespace of a dual library is needed in programming
+where a namespace alias won't do. One of these instances is if the
+programmer needs the actual namespace name as a string.
+Another of these instances is when the programmer needs to
+re-open the actual namespace for any reason, such as adding
+a customization point or specializing a class template for
+the mod in question.
+
+When a mod header is included in a TU the actual namespace name is
+available as a macro, whose form is the exact same as the namespace
+alias but in all uppercase letters:
+
+[table:cxxdnmac CXXD Namespace Macros
+[[Mod name][Namespace macro]]
+[[array][CXXD_ARRAY_NS]]
+[[atomic][CXXD_ATOMIC_NS]]
+[[bind][CXXD_BIND_NS]]
+[[chrono][CXXD_CHRONO_NS]]
+[[condition_variable][CXXD_CONDITION_VARIABLE_NS]]
+[[enable_shared_from_this][CXXD_ENABLE_SHARED_FROM_THIS_NS]]
+[[function][CXXD_FUNCTION_NS]]
+[[hash][CXXD_HASH_NS]]
+[[make_shared][CXXD_MAKE_SHARED_NS]]
+[[mem_fn][CXXD_MEM_FN_NS]]
+[[move][CXXD_MOVE_NS]]
+[[mutex][CXXD_MUTEX_NS]]
+[[random][CXXD_RANDOM_NS]]
+[[ratio][CXXD_RATIO_NS]]
+[[ref][CXXD_REF_NS]]
+[[regex][CXXD_REGEX_NS]]
+[[shared_mutex][CXXD_SHARED_MUTEX_NS]]
+[[shared_ptr][CXXD_SHARED_PTR_NS]]
+[[system_error][CXXD_SYSTEM_ERROR_NS]]
+[[thread][CXXD_THREAD_NS]]
+[[tuple][CXXD_TUPLE_NS]]
+[[type_index][CXXD_TYPE_INDEX_NS]]
+[[type_traits][CXXD_TYPE_TRAITS_NS]]
+[[unordered_map][CXXD_UNORDERED_MAP_NS]]
+[[unordered_multimap][CXXD_UNORDERED_MULTIMAP_NS]]
+[[unordered_multiset][CXXD_UNORDERED_MULTISET_NS]]
+[[unordered_set][CXXD_UNORDERED_SET_NS]]
+[[weak_ptr][CXXD_WEAK_PTR_NS]]
+]
+
+The namespace macro is an object-like macro that expands to
+the namespace name for the dual library which is chosen.
+As an example if you include <boost/cxx_dual/regex.hpp>
+the macro CXXD_REGEX_NS expands to 'boost' if the Boost regex
+library is chosen, otherwise 'std' if the C++ standard regex
+library is chosen.
+
+Whenever the name of the dual library namespace is needed in a
+string the programmer can use a macro such as BOOST_STRINGIZE
+to convert the namespace macro to string representation, or can
+alternatively use the preprocessor stringize operator ( '#' )
+directly in a macro expansion:
+
+ #include <boost/cxx_dual/regex.hpp>
+ #include <boost/config.hpp>
+ #include <iostream>
+ 
+ void SomeFunction()
+    {
+    std::cout << "The name of the regex library's namespace is '"
+              << BOOST_STRINGIZE(CXXD_REGEX_NS) << "'.";
+    }
+
+Another situation where a programmer will need to use the namespace macro
+is when you need to reopen the namespace of the dual library chosen for
+template specialization. You can do this, for some XXX CXXD-mod using code like:
+
+ #include <boost/cxx_dual/hash.hpp>
+ #include <string>
+ 
+ struct S 
+    {
+    std::string first_name;
+    std::string last_name;
+    };
+    
+ bool operator==(const S& lhs, const S& rhs) 
+    {
+    return lhs.first_name == rhs.first_name && lhs.last_name == rhs.last_name;
+    }
+ 
+ namespace CXXD_HASH_NS
+    {
+    template<> struct hash<S>
+        {
+        typedef S argument_type;
+        typedef std::size_t result_type;
+        result_type operator()(argument_type const& s) const
+            {
+            result_type const h1 ( cxxd_hash_ns::hash<std::string>()(s.first_name) );
+            result_type const h2 ( cxxd_hash_ns::hash<std::string>()(s.last_name) );
+            return h1 ^ (h2 << 1);
+            }
+        };
+    }
+    
+where using the namespace alias to reopen the namespace is not valid C++.
+
+In actuality the namespace macro can be used every place
+the namespace alias is used. But since it is understandable
+that using the namespace alias is more C++-like than a
+namespace macro, and that programmers really dislike using
+macros extensively in their code, using the namespace alias
+is the recommended way to program with the basic functionality
+of CXXD in all the situations where the namespace alias can be
+used validly.
+
+[heading Handling macros in a dual library]
+
+Although a namespace can isolate nearly every construct
+in a dual library, use of macros that are part of a dual library
+falls outside the functionality of any namespace since macros in C++
+are global and not bound to any namespace. The CXXD library
+therefore provides a CXXD macro with the name CXXD_'XXX'_MACRO
+for mod 'XXX' when the mod header file for XXX is included in a TU,
+but only when that mod has common macros in both of its
+dual libraries. This CXXD macro is a function-like macro whose only
+purpose is to translate the base form of a dual library macro
+to the form which one or the other dual library actually
+uses. The form of this macro is CXXD_'XXX'_MACRO(MACRO_NAME).
+
+Currently among the CXXD mods the only one which uses
+this CXXD macro is the atomic mod. It's name therefore is CXXD_ATOMIC_MACRO
+and it can be used in the form of CXXD_ATOMIC_MACRO(SOME_ATOMIC_MACRO) to
+produce the correct equivalent macro name for the atomic mod, whether the
+atomic C++ standard library or the atomic Boost library is chosen. In
+the atomic mod the base forms of an atomic macro are the ones used by the
+C++ standard atomic library.
+
+As an example, to initialize an atomic_flag variable you could use:
+
+ #include <boost/cxx_dual/atomic.hpp>
+ 
+ int main()
+    {
+    
+    cxxd_atomic_ns::atomic_flag automatic_flag = CXXD_ATOMIC_MACRO(ATOMIC_FLAG_INIT);
+    
+    // Code
+ 
+    return 0;
+    }
+
+[endsect]

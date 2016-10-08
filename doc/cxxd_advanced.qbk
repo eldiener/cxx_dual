@@ -1,0 +1,35 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section:basic Advanced Functionality]
+
+The basic functionality of the CXXD library has been explained
+and should serve most programmers when using the library without
+having to know anything further about CXXD. The basic functionality
+involves including a single header file for a given mod and then
+using the namespace alias to program the functionality
+which the mod provides, with the same syntax being used no matter
+which library has been chosen. This functionality, along with occasional
+use of macros which CXXD provides for each mod, is the mainstream way
+of programming CXXD.
+
+This method of programming does not necessarily change when the programmer
+uses the advanced functionality of CXXD, which will now be explained. Instead
+the advanced functionality offers further methods to help the programmer
+when using a dual library. The advanced functionality entails:
+
+* Low-level inclusion
+* Overriding the default choosing algorithm
+* Mod consistency
+* Usage in a third party library
+
+[include cxxd_low_level.qbk]
+[include cxxd_mechanism.qbk]
+[include cxxd_consistency.qbk]
+[include cxxd_in_library.qbk]
+
+[endsect]
