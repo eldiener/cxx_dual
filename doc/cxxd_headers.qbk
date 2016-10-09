@@ -30,17 +30,53 @@ by the supporting macros:
 
   #include <boost/cxx_dual/mod_ids.hpp>
   
-There exists no general header file to include all of the header
-files in the CXXD library or even all the mods in the CXXD library.
-The reason for this is that each mod header file creates a dependency
-on the dual library chosen for that mod and creating dependencies
-for all 28 of the individual mods in CXXD, through the inclusion
-of a general header file, is not something that practically would
-ever be done.
+[heading General headers]
+
+There are also three general headers in CXXD, which exist for
+convenience, but which are not recommended for normal use. The
+reason these headers are not recommended for normal use is that
+the design of CXXD involves the ability to use individual mod
+headers without any dependency on other mod headers. Nonetheless
+these general headers exist for those programmers who might
+find them useful.
+
+The first general header includes all the mod headers which
+exist in the library:
+
+  #include <boost/cxx_dual/cxx_mods.hpp>
+
+Including all the mod headers will place dependencies on
+either the Boost or C++ standard dual libraries for every
+mod which CXXD supports. Including a mod header also includes
+that mod's low-level implementation header, so including all
+the mod headers also includes all the low-level
+implementation headers.
+
+The second general header includes just all the low-level
+mod implementation headers:
   
+  #include <boost/cxx_dual/impl/cxx_mods.hpp>
+  
+Since including a mod's low level implementation header does
+not create any dependencies on the mod's dual libraries, 
+including all the mod's low-level implementation headers 
+does not create dependencies on any dual libraries.
+
+The third general header includes all the headers in the CXXD library:
+
+  #include <boost/cxx_dual/cxx_dual.hpp>
+  
+This header includes all the mod headers as well the two headers
+for the supporting macros and the single header for the mod-IDs.
+Needless to say including all the mod headers will place dependencies
+on either the Boost or C++ standard dual libraries for every mod
+which CXXD supports.
+  
+[heading Header information]
+
 The code in these header files is largely preprocessor code and macros
 which allow the library to work. The macros are dependent on the Boost
-Preprocessor library, the Boost.Config library, and for the supporting
+Preprocessor library, the Boost Config library, and for the supporting
 macros and their header files the Boost VMD library. All of these
 other Boost libraries are header only libraries.
 
