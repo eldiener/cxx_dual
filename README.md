@@ -1,8 +1,8 @@
 # Cxx_dual library
 
-The Cxx dual library, or CXXD for short, is a C++ macro header-only library which chooses between using a Boost library or its C++ standard equivalent library for a number of different C++ implementations, while using the same code to program either choice. An 'implementation' is a Boost library which has a C++ standard library equivalent whose public interfaces are nearly the same in both cases. An 'implementation' is called a 'dual library' in this documentation, or 'CXXD-mod' for short.
+The Cxx Dual library, or CXXD for short, is a C++ macro header-only library which chooses between using a Boost library or its C++ standard equivalent library for a number of different C++ implementations, while allowing the end-user to use the same code to program either choice. An implementation is a Boost library which has a C++ standard library equivalent whose public interfaces are nearly the same in both cases. An 'implementation' is called a 'mod' for short and each of the possible Boost or C++ standard implementations for that mod are called a 'dual library'.
 
-The library does this by defining object-like macros for including the appropriate header file(s) and namespace for using either the Boost library version or the C++ standard library version of a particular dual library. Alternatively, for those who prefer not to use macros, the library provides an implementation header file for including the appropriate header file(s) and for setting a namespace alias for using either the Boost library version or the C++ standard library version of a particular dual library. CXXD currently supports twenty eight different dual libraries, where the Boost version and the C++ standard version is nearly interchangeable. CXXD also provides a macro-based solution for distinguishing between the Boost version and the C++ standard version of a dual library so that specific code for a particular dual library choice may be written in those cases where the public interfaces diverge.
+The Cxx Dual library does this by automatically choosing either the Boost library or the C++ standard library for a particular mod, including the correct header file(s) needed for the dual library chosen, and creating a namespace alias for the namespace of the dual library chosen. CXXD also provides a macro-based solution for distinguishing between the Boost version and the C++ standard version of a dual library so that specific code for a particular dual library choice may be written in those cases where the public interfaces diverge.
 
 ## Who the library is for
 
@@ -27,7 +27,7 @@ The URL http://eldiener.github.io/cxx_dual gives the online documentation. The P
 
 ## Tests
 
-The tests can be run by executing `b2` in the test subdirectory. To test the CXXD mods you can execute `b2 mods`.
+The tests can be run by executing `b2` in the test subdirectory. To test the CXXD mods you can execute `b2 mods` .
 
 ## Feedback
 
