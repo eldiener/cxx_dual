@@ -16,7 +16,7 @@
 
 #else
 
-#include <boost/cxx_dual/cxx_mods.hpp>
+#include <boost/cxx_dual/impl/cxx_mods.hpp>
 #include <boost/cxx_dual/valid_variants.hpp>
 
 #if ! CXXD_VALID_VARIANTS(CXXD_VV)

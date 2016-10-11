@@ -1,0 +1,67 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section History ]
+
+Version 3 - 10/11/16
+
+CXXD is updated so that what was previously called alias mode
+is now the basic programming mode of the library. Headers for
+the basic mode are in the main cxx_dual include directory
+and low-level headers for what was previously called macro
+mode are in the impl sub-directory of the include directory.
+All documentation of functionality is done using the basic
+mode making use of namespace aliases.
+
+The macro for turning off consistency, previously called
+CXXD_NO_CONSISTENCY, has been removed and CXXD now enforces
+consistency of the dual library chosen for a particular mod
+throughout a TU.
+
+The documemtation has been rewritten in many places to present
+a simpler explanation of the basic mode of using the library,
+and a separation between basic mode and more advanced topics.
+A rationale for the design of the library and the changes
+made to support a method of programming which de-emphasizes
+the use of macros has also been added to the documentation,
+as well as this history.
+
+The use of a shared_ptr mod, whose basic mod header included
+all related shared_ptr C++ header files, while its 
+shared_ptr_only mod header included only the shared_ptr
+C++ header file(s), has changed. In the latest implementation
+for the shared_ptr mod, the basic mod header includes only
+the C++ header file(s) for shared_ptr, while a shared_ptr_all
+mod header includes all related shared_ptr C++ header files.
+This follows the design where any mod's header file only
+includes the C++ header(s) needed by that mod. The shared_ptr_all
+mod header is a 1-off instance of a difference from this design
+in order to ease the functionality of shared_ptr use, which often
+involves other shared_ptr related mod functionality.
+
+Version 2 - 07/22/16
+
+CXXD is updated to provide an alias mode as an alternative
+to the macro-based mode of version 1. The macro mode is still
+the main programming mode used by the immediate headers in the
+cxx_dual include directory. The alias mode uses headers in the
+cxx_dual impl sub-directory of the include directory and
+automatically includes its macro-mode header.
+
+Support for Boost Build in the library has been enhanced to
+make it easy to add requirements to a build based on whether
+a library uses the Boost or C++ standard implementation of a
+mod.
+  
+Version 1 - 06/02/16
+
+CXXD is created as a macro-based library where the
+programming mode is through the use of macros, both
+for including the correct headers file(s) and using
+the correct namespace.
+  
+[endsect]

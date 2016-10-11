@@ -13,6 +13,7 @@ project.extension cxxd checks ;
 module cxxd
     {
     
+    target_id = 0 ;
     target_prepend = cxxd_check_obj_ ;
     
     rule requires.boost ( names + : tprops * : fprops * )
@@ -61,7 +62,8 @@ module cxxd
             {
 
             local jvnames = [ sequence.join cxxd $(vnames) : "-" ] ;
-            local key = [ MD5 $(jvnames) ] ;
+            local tkey = [ sequence.join $(jvnames) [ requires.get-next-id ]  : "_" ] ;
+            local key = [ MD5 $(tkey) ] ;
             local build_target = /checks/cxxd//$(target_prepend)$(key) ;
             
             requires.message.($(build_target)) = $(jvnames) ;
@@ -170,4 +172,11 @@ module cxxd
             }
         return $(result) ;
         }
+        
+    local rule requires.get-next-id ( )
+        {
+        target_id = [ CALC $(target_id) + 1 ] ;
+        return $(target_id) ;
+        }
+
    }

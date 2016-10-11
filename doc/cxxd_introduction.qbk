@@ -10,12 +10,12 @@
 The Cxx Dual library, or CXXD for short, is a macro library
 which chooses between using a Boost library or its 
 C++ standard equivalent library for a number of different C++ 
-implementations, while using the same code to program either choice.
-An implementation is a Boost library which has a C++ standard
-library equivalent whose public interfaces are nearly the same
-in both cases. An 'implementation' is called a 'mod' for short
-and each of the possible Boost or C++ standard implementations
-for that mod are called a 'dual library'.
+implementations, while allowing the end-user to use the same
+code to program either choice. An implementation is a Boost
+library which has a C++ standard library equivalent whose public
+interfaces are nearly the same in both cases. An 'implementation'
+is called a 'mod' for short and each of the possible Boost or C++
+standard implementations for that mod are called a 'dual library'.
 
 The library does this by:
 
@@ -32,6 +32,16 @@ representing that mod is included by the end-user in
 his code. Any single mod is completely separated from
 all other mods, so that the use of each mod is self-contained
 and does not involve the use of anything else in the CXXD
+library.
+
+The CXXD library also provides:
+
+* A macro-based solution for distinguishing between the Boost version and
+the C++ standard version of a dual library so that specific code for a
+particular dual library choice may be written in those cases where the
+public interfaces diverge.
+* A macro-based solution for overriding the default algorithm by which CXXD
+chooses between the Boost version and the C++ standard version of a dual
 library.
 
 [heading Basic example using CXXD]
@@ -53,7 +63,7 @@ his code could be:
      // etc.
      }
         
-If the end-user had chosen to use the C++ atandard library
+If the end-user had chosen to use the C++ standard library
 his code could be:
 
  #include <regex>
@@ -161,7 +171,7 @@ for a particular library interface.
 The second choice, always using the C++ standard equivalent library,
 will occur less often because of its most obvious
 negative; if the C++ standard library is not available
-for a particular compiler implementation and C++ standard compiler level
+for a particular compiler implementation and C++ standard compiler level,
 the code will fail to compile. If however you write a library for a
 particular level of the C++ standard, such as C++11, and assume a
 strong implementation of that standard is needed by certain compilers

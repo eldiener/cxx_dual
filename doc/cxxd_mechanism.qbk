@@ -13,9 +13,9 @@ standard library is available during compilation it is chosen and if it is not
 available during compilation its equivalent Boost library is chosen.
 
 The determination of availability for any given mod is done by examining
-Boost.Config macros. Boost.Config has quite a number of macros which will specify
+Boost Config macros. Boost Config has quite a number of macros which will specify
 which C++ standard library is available during compilation. The logic of determining
-which library is available is determined within Boost.Config, and CXXD just uses the
+which library is available is determined within Boost Config, and CXXD just uses the
 results of that logic to configure the macros for a particular mod.
 
 The logic of setting the macros for any particular mod occurs when the mod implementation
@@ -30,9 +30,9 @@ As an example, using the regex mod:
     #include <boost/cxx_dual/regex.hpp>
     ... code
     
-If Boost.Config determines that the C++ standard regex library is available 
+If Boost Config determines that the C++ standard regex library is available 
 CXXD_HAS_STD_REGEX is defined as '1', CXXD_REGEX_NS is defined as 'std', and 
-CXXD_REGEX_HEADER is defined as '<regex>'. If Boost.Config determines that
+CXXD_REGEX_HEADER is defined as '<regex>'. If Boost Config determines that
 the C++ standard regex library is not available CXXD_HAS_STD_REGEX is defined
 as '0', CXXD_REGEX_NS is defined as 'boost', and CXXD_REGEX_HEADER is defined
 as '<boost/regex.hpp>'. 
@@ -60,26 +60,26 @@ a preprocessing error.
 
 [heading Specific overriding]
 
-For any given mod 'XXX' defining a macro called CXXD_'XXX'_USE_BOOST 
-specifies that the Boost library will be used. If used CXXD_'XXX'_USE_BOOST must always 
+For any given mod 'XXX' defining a macro called CXXD_'XXX'\_USE_BOOST 
+specifies that the Boost library will be used. If used CXXD_'XXX'\_USE_BOOST must always 
 be defined to expand to nothing, as in:
 
     #define CXXD_'XXX'_USE_BOOST
     
 where XXX is the uppercase name of the mod.
 
-For any given mod 'XXX' defining a macro called CXXD_'XXX'_USE_STD
-specifies that the C++ standard library will be used. If used CXXD_'XXX'_USE_STD must always
+For any given mod 'XXX' defining a macro called CXXD_'XXX'\_USE_STD
+specifies that the C++ standard library will be used. If used CXXD_'XXX'\_USE_STD must always
 be defined to nothing, as in:
 
     #define CXXD_'XXX'_USE_STD
     
-where XXX is the uppercase name of the CXXD-mod.
+where XXX is the uppercase name of the mod.
 
-The specific override macros for each CXXD-mod are:
+The specific override macros for each mod are:
 
 [table:spovmac Specific override macros
-[[CXXD-mod][Boost override macro][C++ standard override macro]]
+[[Mod][Boost override macro][C++ standard override macro]]
 [[array][CXXD_ARRAY_USE_BOOST][CXXD_ARRAY_USE_STD]]
 [[atomic][CXXD_ATOMIC_USE_BOOST][CXXD_ATOMIC_USE_STD]]
 [[bind][CXXD_BIND_USE_BOOST][CXXD_BIND_USE_STD]]
@@ -110,7 +110,7 @@ The specific override macros for each CXXD-mod are:
 [[weak_ptr][CXXD_WEAK_PTR_USE_BOOST][CXXD_WEAK_PTR_USE_STD]]
 ]
 
-If for any given mod 'XXX' both CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD is defined a preprocessing
+If for any given mod 'XXX' both CXXD_'XXX'\_USE_BOOST and CXXD_'XXX'\_USE_STD is defined a preprocessing
 error will occur when the mod header for 'XXX' is included.
 
 As examples, using the regex mod:
@@ -132,7 +132,7 @@ regex library is available for use, else a preprocessing error is generated.
 
 [heading General overriding]
 
-Along with the specific macros of the form CXXD_'XXX'_USE_BOOST and CXXD_'XXX'_USE_STD
+Along with the specific macros of the form CXXD_'XXX'\_USE_BOOST and CXXD_'XXX'\_USE_STD
 which override default processing for the specific 'xxx' mod the programmer can specify either
 of two generalized macros which overrides default processing for any mod.
 
@@ -157,7 +157,7 @@ If for any given mod 'xxx' both CXXD_'XXX'_USE_STD and CXXD_USE_BOOST is defined
 a preprocessing error will occur when the mod header file for 'xxx' is
 included.
 
-As examples, using the regex CXXD-mod:
+As examples, using the regex mod:
 
     #define CXXD_USE_BOOST
     #include <boost/cxx_dual/regex.hpp>
@@ -309,7 +309,7 @@ dual library choice must be overridden for a reason, perhaps to prevent a faulty
 library implementation from being used.
 
 Let's imagine that for a particular compiler version 'CCC' version 'NNN' on a particular
-OS 'OOO' we know that the standard library version of CXXD-mod 'XXX' is buggy.
+OS 'OOO' we know that the standard library version of mod 'XXX' is buggy.
 Also let's imagine that we can test for the buggy combination through using the
 preprocessor defines, as we can do in Boost through either Boost.Config 
 or even more easily through Boost.Predef. Our pseudocode for overriding our 

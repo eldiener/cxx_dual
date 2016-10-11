@@ -11,7 +11,7 @@
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include <boost/cxx_dual/impl/type_traits.hpp>
+#include <boost/cxx_dual/type_traits.hpp>
 
 class A {};
 

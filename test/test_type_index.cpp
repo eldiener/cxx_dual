@@ -9,8 +9,8 @@
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
-#include <boost/cxx_dual/impl/type_index.hpp>
+#include <boost/cxx_dual/shared_ptr.hpp>
+#include <boost/cxx_dual/type_index.hpp>
  
 struct A {
     virtual ~A() {}

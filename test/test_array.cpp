@@ -15,7 +15,7 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include <boost/cxx_dual/impl/array.hpp>
+#include <boost/cxx_dual/array.hpp>
 
 int main()
     {

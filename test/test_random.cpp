@@ -16,7 +16,7 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include <boost/cxx_dual/impl/random.hpp>
+#include <boost/cxx_dual/random.hpp>
 
 #if !CXXD_HAS_STD_RANDOM
 #include <boost/random/random_device.hpp>

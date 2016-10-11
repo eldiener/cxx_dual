@@ -9,7 +9,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/tuple.hpp>
+#include <boost/cxx_dual/tuple.hpp>
 
 cxxd_tuple_ns::tuple<double, char, std::string> get_student(int id)
     {

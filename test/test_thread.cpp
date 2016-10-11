@@ -7,9 +7,9 @@
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/chrono.hpp>
-#include <boost/cxx_dual/impl/ref.hpp>
-#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/chrono.hpp>
+#include <boost/cxx_dual/ref.hpp>
+#include <boost/cxx_dual/thread.hpp>
 
 void f1(int n)
 {

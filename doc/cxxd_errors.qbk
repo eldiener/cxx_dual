@@ -9,7 +9,7 @@
 
 CXXD errors are preprocessor errors issue by the CXXD library
 using the preprocessor '#error' directive. These errors occur
-when the inclusion of a CXXD-mod produces inconsistencies
+when the inclusion of a mod produces inconsistencies
 which CXXD does not allow. These inconsistencies can be found,
 in a TU, either the first time CXXD includes a particular CXXD header
 file or subsequent times CXXD includes a particular CXXD header.
@@ -19,11 +19,11 @@ explained here again.
 
 The errors which can occur involve four different situations
 for which CXXD issues the "#error' directive. These situations
-are, for any given CXXD-mod called 'xxx':
+are, for any given mod called 'xxx':
 
 * If override macros for both Boost and the C++ standard library
-occur when a particular CXXD header is included, an '#error' directive
-is emitted of 'CXXD: Using C++ standard and using Boost are both defined for xxx'.
+of a mod occur, an '#error' directive is emitted of
+'CXXD: Using C++ standard and using Boost are both defined for xxx'.
 
 * If the C++ standard library has been previously chosen and is
 subsequently overridden by the Boost library, an '#error' directive
@@ -34,10 +34,10 @@ subsequently overridden by the C++ standard library, an '#error' directive
 is emitted of 'CXXD: Previous use of Boost xxx erroneously overridden'.
 
 * If override macros for the C++ standard library occur but the
-C++ standard library is not available for the CXXD-mod xxx, an '#error'
+C++ standard library is not available for the mod xxx, an '#error'
 directive is emitted of 'CXXD: C++ standard xxx is not available'.
 
-As previously stated in the documentation low=level mod implementation
+As previously stated in the documentation low-level mod implementation
 header files are processed each time they are included to avoid inconsistencies.
 
 The first error listed above could happen either the first time a particular
@@ -45,16 +45,16 @@ CXXD header is included or a subsequent time a particular CXXD header is include
 since override macros could occur at any time in a TU. It is not possible
 to eliminate this error message for the situation in which it would occur, since
 conflicting CXXD override macros always means that CXXD cannot choose the correct
-dual library for a particular CXXD-mod.
+dual library for a particular mod.
 
 The second and third errors listed above can only happen at a subsequent
-time a particular CXXD-mod is included, since either message occurs when
+time a particular mod is included, since either message occurs when
 an override macro changes the dual library choice from a previous inclusion
 of the CXXD header. It is not possible to eliminate this error message for the
 situation in which it would occur, since CXXD enforces consistency of the
 dual library chosen for a mod in all places in a TU.
 
-The last error message can only occur the first time a particular CXXD-mod
+The last error message can only occur the first time a particular mod
 is included, where an override macro for the C++ standard library fails
 because the library is not available. It is possible to eliminate this last
 error message for the situation in which it would occur. You can do this by
@@ -72,21 +72,21 @@ There are two reasons for allowing this object-macro to eliminate the particular
 preprocessor error message:
 
 * The end-user may still want CXXD to use the equivalent C++ standard library
-for a particular CXX-mod even when Boost.Config says it is not available. This
-could be because of some obscure configuration that Boost.Config does not know about
+for a particular CXX-mod even when Boost Config says it is not available. This
+could be because of some obscure configuration that Boost Config does not know about
 for a given OS/compiler combination. A compiler error or linker error, as opposed to a preprocessor
-error, might still show up when the end-user codes as if the C++ standard library for that 
-CXXD-mod exists when it does not do so.
+error, might well still show up when the end-user codes as if the C++ standard library for that 
+mod exists when it does not do so.
 * The object-like macro allows tests for CXXD facilities to be run
 as if the C++ standard library were available even when it is not.
 This includes tests for the functionality of the CXXD_LIBRARY_NAME
 and CXXD_VALID_VARIANTS macro. In other words if no further use of
-the particular CXXD-mod's C++ standard library equivalent subsequently
+the particular mod's C++ standard library equivalent subsequently
 exists in the TU there is no reason to disallow it when including the
 particular CXXD header.
 
 Eliminating this last of CXXD's preprocessor \#error messages, and allowing a macro override
 to choose a particular mod's C++ standard equivalent dual library even
-when Boost.Config says it does not exist, should very rarely ever be done.
+when Boost Config says it does not exist, should very rarely ever be done.
 
 [endsect]

@@ -8,7 +8,7 @@
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/regex.hpp>
+#include <boost/cxx_dual/regex.hpp>
 
 int main()
     {

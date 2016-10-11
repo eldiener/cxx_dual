@@ -7,7 +7,7 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
-#include <boost/cxx_dual/chrono.hpp>
+#include <boost/cxx_dual/impl/chrono.hpp>
 
 #if !CXXD_HAS_STD_CHRONO
 #define BOOST_CHRONO_HEADER_ONLY
@@ -15,7 +15,7 @@
 #define BOOST_SYSTEM_NO_DEPRECATED // Remove when chrono 'master' branch is updated from 'develop'
 #endif                                                                         
 
-#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/chrono.hpp>
 
 int main()
   {

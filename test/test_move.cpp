@@ -9,7 +9,7 @@
 #include <string>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/move.hpp>
+#include <boost/cxx_dual/move.hpp>
 
 int main()
     {

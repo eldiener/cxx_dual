@@ -15,7 +15,7 @@ The following table lists the mods supported by CXXD, in alphabetical order,
 and the appropriate information for each one. All header files are based off of
 the <boost/cxx_dual/> directory;
 
-[table:cxxdmods CXXD-Mods
+[table:cxxdmods Mods
 [[Mod name][Header file][Namespace alias]]
 [[array][array.hpp][cxxd_array_ns]]
 [[atomic][atomic.hpp][cxxd_atomic_ns]]
@@ -47,7 +47,7 @@ the <boost/cxx_dual/> directory;
 [[weak_ptr][weak_ptr.hpp][cxxd_weak_ptr_ns]]
 ]
 
-The naming scheme for each mod follows a simple common conventions:
+The naming scheme for each mod follows simple common conventions:
 
 * Each header file is the mod name preceded by 'boost/cxx_dual/'
 and followed by the '.hpp' extension.
@@ -80,7 +80,7 @@ mod headers for weak_ptr, make_shared, and enable_shared_from_this
 to use their respective functionality with the appropriate
 namespace alias for each one.
 
-[heading:hids CXXD-mod identifiers]
+[heading:hids Mod identifiers]
 
 Each mod also has an identifier, called a "mod-ID", by which that
 mod is identified. The mod-ID is a VMD identifier. This means that
@@ -95,7 +95,7 @@ the particular macro to identify a particular mod. Each mod-ID is simply
 the name of the mod in upper case with 'CXXD_' prepended:
 
 [table:modids Identifiers
-[[CXXD-mod][mod-ID]]
+[[Mod][Mod-ID]]
 [[array][CXXD_ARRAY]]
 [[atomic][CXXD_ATOMIC]]
 [[bind][CXXD_BIND]]

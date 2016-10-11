@@ -1,0 +1,20 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Acknowledgements ]
+
+The CXXD library would not be possible without the Boost Config
+library and the work that has been done maintaining it by
+John Maddock.
+
+I would also like to thank all those who have commented on the
+library in the Boost developers mailing list, but especially
+Vicente J. Botet Escriba and Rob Stewart, whose criticism spurred
+me to make changes in the library to make it easier for those who
+don't like C++ macros to use CXXD.
+  
+[endsect]

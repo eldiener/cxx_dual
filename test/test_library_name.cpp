@@ -23,11 +23,11 @@
 #define CXXD_CHRONO_USE_STD
 #define CXXD_CONDITION_VARIABLE_USE_STD
 
-#include <boost/cxx_dual/array.hpp>
-#include <boost/cxx_dual/atomic.hpp>
-#include <boost/cxx_dual/bind.hpp>
-#include <boost/cxx_dual/chrono.hpp>
-#include <boost/cxx_dual/condition_variable.hpp>
+#include <boost/cxx_dual/impl/array.hpp>
+#include <boost/cxx_dual/impl/atomic.hpp>
+#include <boost/cxx_dual/impl/bind.hpp>
+#include <boost/cxx_dual/impl/chrono.hpp>
+#include <boost/cxx_dual/impl/condition_variable.hpp>
 
 int main()
   {

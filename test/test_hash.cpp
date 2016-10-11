@@ -14,8 +14,8 @@
 #include <boost/foreach.hpp>
 #endif
 
-#include <boost/cxx_dual/impl/hash.hpp>
-#include <boost/cxx_dual/impl/unordered_set.hpp>
+#include <boost/cxx_dual/hash.hpp>
+#include <boost/cxx_dual/unordered_set.hpp>
  
 struct S {
     std::string first_name;

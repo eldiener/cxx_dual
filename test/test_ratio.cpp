@@ -6,7 +6,7 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/ratio.hpp>
+#include <boost/cxx_dual/ratio.hpp>
 
 int main()
   {

@@ -10,7 +10,7 @@
 The CXXD library offers support for build systems.
 
 Sometimes during a build it is necessary to know whether or
-not a particular CXXD-mod uses the Boost implementation or
+not a particular mod uses the Boost implementation or
 the C++ standard library implementation for the compiler
 being used during a build. This could be because, depending
 on the dual library implementation chosen, a library needs to
@@ -23,7 +23,7 @@ for other build systems in general. This topic explains that support.
 [section Boost Build]
 
 CXXD has build-time support for Boost Build so that depending
-on whether a particular CXXD-mod uses the Boost implementation or
+on whether a particular mod uses the Boost implementation or
 the C++ standard library implementation, a requirement or usage
 requirement can be set in a Boost Build rule. Among the useful
 built-in rules where this functionality can be used are the run,
@@ -32,7 +32,7 @@ addition of requirements or usage requirements can be used.
 
 CXXD implements this support by its own Boost Build rules, which can
 be used to conditionally set requirements depending on whether or not
-specific CXXD-mods use the Boost implementation or the C++ standard
+specific mods use the Boost implementation or the C++ standard
 implementation.
 
 The first thing an end-user of CXXD needs to do to use this functionality
@@ -50,19 +50,19 @@ all taking the same Boost Build parameters. These rules are:
 * cxxd.requires.specify
 
 Each rule takes, as a first parameter, a list of one or more names which identify
-CXXD-mods. For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std',
-these names are the the CXXD-mods identifying a particular
-CXXD-mod. As an example 'regex' identifies the regex CXXD-mod. For the third
-rule above, 'cxxd.requires.specify', these names are also the CXXD-mods
+mods. For the first two rules, 'cxxd.requires.boost' and 'cxxd.requires.std',
+these names are the the mods identifying a particular
+mod. As an example 'regex' identifies the regex mod. For the third
+rule above, 'cxxd.requires.specify', these names are also the mods
 identifying a particular CXXD_mod, but are followed by a comma ( ',' ) and then 0
 to indicate Boost or 1 to indicate the C++ standard. As examples 'regex,0'
-identifies the regex CXXD-mod with Boost chosen while 'tuple,1' identifies the
-tuple CXXD-mod with the C++ standard chosen.
+identifies the regex mod with Boost chosen while 'tuple,1' identifies the
+tuple mod with the C++ standard chosen.
 
 Essentially the first parameter of
-'cxxd.requires.boost' is a shorthand for passing each CXXD-mod followed by
+'cxxd.requires.boost' is a shorthand for passing each mod followed by
 a comma ( ',' ) and then 0 in 'cxxd.requires.specify' while the first parameter of
-'cxxd.requires.std' is a shorthand for passing each CXXD-mod followed by
+'cxxd.requires.std' is a shorthand for passing each mod followed by
 a comma ( ',' ) and then 1 in 'cxxd.requires.specify'.
 
 Each rule takes, as an optional second parameter, 0 or more Boost Build requirement or usage requirements.
@@ -71,28 +71,28 @@ Each rule takes, as an optional third parameter, 0 or more Boost Build requireme
 
 A Boost Build requirement or usage requirement is a Boost Build feature.
 
-The way that the 'cxxd.requires.boost' rule works is that if each of the CXXD-mods
+The way that the 'cxxd.requires.boost' rule works is that if each of the mods
 specified use its Boost library implementation, the Boost Build requirements or usage requirements
 specified by the optional second parameter is chosen; otherwise the Boost Build requirements
 or usage requirements specified by the optional third parameter is chosen.
 
-The way that the 'cxxd.requires.std' rule works is that if each of the CXXD-mods
+The way that the 'cxxd.requires.std' rule works is that if each of the mods
 specified use its C++ standard library implementation, the Boost Build requirements
 or usage requirements specified by the optional second parameter is chosen; otherwise the
 Boost Build requirements or usage requirements specified by the optional third parameter is chosen.
 
-The way that the 'cxxd.requires.specific' rule works is that if each of the CXXD-mods
+The way that the 'cxxd.requires.specific' rule works is that if each of the mods
 specified use whichever implementation is chosen through the 0 or 1 addition,
 the Boost Build requirements or usage requirements specified by the optional second parameter
 is chosen; otherwise the Boost Build requirements or usage requirements specified by the
 optional third parameter is chosen. The 'cxxd.requires.specific' rule gives maximum
-flexibility in matching each CXXD-mod with the dual library implementation chosen.
+flexibility in matching each mod with the dual library implementation chosen.
 
 When we use any of these rules we invoke them as:
 
-  cxxd.requires.boost CXXD-mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
-  cxxd.requires.std CXXD-mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
-  cxxd.requires.specific CXXD-mod,0-or-1...   : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
+  cxxd.requires.boost mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
+  cxxd.requires.std mod... : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
+  cxxd.requires.specific mod,0-or-1...   : optional_requirements_may_be_empty : optional_requirements_may_be_empty ;
   
 To use the results of these rules in one's own rules you surround these rule
 invocations in Boost Build with brackets and spaces ( ' [ ' and ' ] ' ).
@@ -121,7 +121,7 @@ or even as:
   run test_regex.cpp : : : 
   [ cxxd.requires.specific regex,1 : : <library>/boost/regex//boost_regex ] ;
   
-We can have more than one CXXD-mod as our first parameter to any of our three rules,
+We can have more than one mod as our first parameter to any of our three rules,
 although this is a less common scenario. Let's make up an arbitrary case just to show
 how this works. Let's say that when compiling our source file 'my_source.cpp' if CXXD
 is choosing both the Boost bind and the Boost function implementations we want to define
@@ -155,8 +155,8 @@ implementations to set our requirements, as in:
   compile my_source.cpp : 
     [ cxxd.requires.specific array,1 hash,0 : <include>some_path : <define>some_macro=some_value ] ;
   
-Here we are saying that if the array CXXD-mod uses the C++ standard implementation
-and the hash CXXD-mod uses the Boost implementation, add 'some_path' to the include
+Here we are saying that if the array mod uses the C++ standard implementation
+and the hash mod uses the Boost implementation, add 'some_path' to the include
 paths, else define a macro called 'some_macro' to 'some_value'.  
   
 [endsect]
@@ -170,30 +170,30 @@ to end-users.
 
 For general build support there is a program in the CXXD build directory,
 which the end-user can build using Boost Build with a particular compiler,
-which when run will subsequently tell him whether or not particular CXXD-mods
+which when run will subsequently tell him whether or not particular mods
 use their Boost or C++ standard implementations. The program is called
 'cxxd_choice'. The resulting program is specific to the compiler used 
 when building the program and is self-contained, not relying on any shared
 libraries.
 
-When cxxd_choice is invoked it takes as arguments one or more CXXD-mod
+When cxxd_choice is invoked it takes as arguments one or more mod
 designations followed by a comma ( ',' ) and a 0 indicating a Boost
 implementation or a 1 indicating a C++ standard implementation. Examples
 for a single argument would be 'regex,0' to designate the Boost implementation
-for the regex CXXD-mod implementation or 'tuple,1' to designate the C++ standard
-implementation for the tuple CXXD-mod implementation. If the arguments all match
+for the regex mod implementation or 'tuple,1' to designate the C++ standard
+implementation for the tuple mod implementation. If the arguments all match
 the actual dual library implementations chosen the cxxd_choice program
 returns 0, otherwise it returns the number of arguments that did not match.
 This return value could then be subsequently used in general build systems
-to add whatever general build features are needed when a particular CXXD-mod
+to add whatever general build features are needed when a particular mod
 dual library choice, or a combination of choices, is made.
 
 It needs to be emphasized that the results of the dual libraries chosen
 by default is completely reliant on the compiler invocation used when
 building the cxxd_choice program. Please recall that the default algorithm
-used by CXXD is that if the C++ standard library implementation of a CXXD-mod
+used by CXXD is that if the C++ standard library implementation of a mod
 is available during compilation that choice is made, otherwise the Boost
-library implementation for that CXXD-mod is chosen. Not only will different
+library implementation for that mod is chosen. Not only will different
 compilers offer different default dual library choices in their compiler
 implementations but different compiler flags, such as ones designating
 the level of C++ support ( c++03, c++11, c++14 ), will change the dual
@@ -214,14 +214,14 @@ each on its own line as applicable, where argument is the actual parameter
 subsequently passed as a command-line parameter to the program.
 
 The cxxd_choice program, when passed no parameters, will return 0 but will
-also write to standard output the choice for every CXXD-mod in the form of
+also write to standard output the choice for every mod in the form of
 individual lines of:
 
-  CXXD-mod name = 0-or-1
+  mod name = 0-or-1
   
-where CXXD-mod name is the lowercase name of the CXXD-mod, such as 'regex' or 'tuple',
+where mod name is the lowercase name of the mod, such as 'regex' or 'tuple',
 and 0 means the Boost library being chosen while 1 means the C++ standard library
-being chosen. The CXXD-mod names are listed in alphabetical order.
+being chosen. The mod names are listed in alphabetical order.
 
 By default when Boost Build builds the cxxd_choice program it will
 put its resulting exe in different directories depending on the
@@ -258,7 +258,7 @@ The 'test_vv.cpp' test is just a compile of a program that either succeeds
 as a compile or fails. In order to succeed compilation the invoker
 of the test must pass on the command line a macro definition for a macro
 called 'CXXD_VV' which is equal to a single
-[link cxxd.sec_lib.sec_lvvv.vvmac valid variant] macro parameter.
+[link cxxd.sadvanced.sec_lib.sec_lvvv.vvmac valid variant] macro parameter.
 A valid variant macro parameter, which has previously been explained,
 is a way of encoding what dual library possibility is wanted. It takes
 the form of a VMD sequence of two element tuples where the first element
@@ -295,7 +295,7 @@ This on-the-fly invocation of a CXXD test to match dual library
 choices could be used by build tools which can specify different
 features based on whether a program execution fails or not.
 It can also be used by an end-user to determine on-the-fly
-whether or not particular CXXD-mods match in their dual library choices
+whether or not particular mods match in their dual library choices
 some desired configuration.
 
 [endsect]

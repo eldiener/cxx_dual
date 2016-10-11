@@ -6,7 +6,7 @@
 
 
 #include <iostream>
-#include <boost/cxx_dual/shared_mutex.hpp>
+#include <boost/cxx_dual/impl/shared_mutex.hpp>
 
 #if !CXXD_HAS_STD_SHARED_MUTEX
 #include <boost/thread/locks.hpp>
@@ -16,10 +16,10 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/shared_mutex.hpp>
-#include <boost/cxx_dual/impl/mutex.hpp>
-#include <boost/cxx_dual/impl/ref.hpp>
-#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/shared_mutex.hpp>
+#include <boost/cxx_dual/mutex.hpp>
+#include <boost/cxx_dual/ref.hpp>
+#include <boost/cxx_dual/thread.hpp>
 
 class ThreadSafeCounter {
  public:

@@ -5,7 +5,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section:basic Basic Functionality]
+[section:sbasic Basic Functionality]
 
 The basic functionality of the CXXD library is to include
 a mod header and use the namespace alias to program with that mod:
@@ -45,7 +45,7 @@ namespace alias to program with that mod. This is the essence
 of the basic functionality of the CXXD library, and it is very easy
 to use.
 
-[heading Determining the library choice]
+[heading Determining the dual library chosen]
 
 Occasionally there are situations where the programmer would like
 to be able to program based on which one of the dual libraries has
@@ -94,7 +94,7 @@ library is chosen for mod 'XXX' instead:
 ]
 
 The normal use for the CXXD_HAS_STD_'XXX' macro to provide specific functionality
-depending on whether or not a particular CXXD-mod is using the C++ standard
+depending on whether or not a particular mod is using the C++ standard
 or Boost version. Of course you hope to minimize these situations but occasionally
 they happen:
   
@@ -190,7 +190,7 @@ directly in a macro expansion:
 
 Another situation where a programmer will need to use the namespace macro
 is when you need to reopen the namespace of the dual library chosen for
-template specialization. You can do this, for some XXX CXXD-mod using code like:
+template specialization. You can do this, for some XXX mod using code like:
 
  #include <boost/cxx_dual/hash.hpp>
  #include <string>
@@ -238,13 +238,13 @@ Although a namespace can isolate nearly every construct
 in a dual library, use of macros that are part of a dual library
 falls outside the functionality of any namespace since macros in C++
 are global and not bound to any namespace. The CXXD library
-therefore provides a CXXD macro with the name CXXD_'XXX'_MACRO
+therefore provides a CXXD macro with the name CXXD_'XXX'\_MACRO
 for mod 'XXX' when the mod header file for XXX is included in a TU,
 but only when that mod has common macros in both of its
 dual libraries. This CXXD macro is a function-like macro whose only
 purpose is to translate the base form of a dual library macro
 to the form which one or the other dual library actually
-uses. The form of this macro is CXXD_'XXX'_MACRO(MACRO_NAME).
+uses. The form of this macro is CXXD_'XXX'\_MACRO(MACRO_NAME).
 
 Currently among the CXXD mods the only one which uses
 this CXXD macro is the atomic mod. It's name therefore is CXXD_ATOMIC_MACRO

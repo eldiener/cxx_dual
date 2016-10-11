@@ -7,8 +7,8 @@
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/system_error.hpp>
-#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/system_error.hpp>
+#include <boost/cxx_dual/thread.hpp>
 
 int main()
   {

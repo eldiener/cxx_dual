@@ -10,7 +10,7 @@
 #include <vector>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/cxx_dual/cxx_mods.hpp>
+#include <boost/cxx_dual/impl/cxx_mods.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 

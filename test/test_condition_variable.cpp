@@ -8,9 +8,9 @@
 #include <string>
 #include <boost/config.hpp>
  
-#include <boost/cxx_dual/impl/thread.hpp>
-#include <boost/cxx_dual/impl/mutex.hpp>
-#include <boost/cxx_dual/impl/condition_variable.hpp>
+#include <boost/cxx_dual/thread.hpp>
+#include <boost/cxx_dual/mutex.hpp>
+#include <boost/cxx_dual/condition_variable.hpp>
 
 cxxd_mutex_ns::mutex m;
 cxxd_condition_variable_ns::condition_variable cv;

@@ -261,7 +261,7 @@ which uses a particular dual library chosen in a mod. It also
 emphasizes the importance of supporting the basic mode of using CXXD,
 which is to include a mod header and then use the mod's namespace alias
 to work with the dual library chosen. The compromise involves a limit
-in flexibility in that it is not possible to work with opposite
+in flexibility, in that it is not possible to work with opposite
 overrides of the same mod in a TU when using CXXD. But since this
 limitation ensures consistency, avoids, confusion, and supports the
 basic functionality the compromise between flexibility and practicality

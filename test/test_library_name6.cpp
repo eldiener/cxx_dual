@@ -24,12 +24,12 @@
 #define CXXD_TYPE_TRAITS_USE_STD
 #define CXXD_UNORDERED_MULTIMAP_USE_BOOST
 
-#include <boost/cxx_dual/system_error.hpp>
-#include <boost/cxx_dual/thread.hpp>
-#include <boost/cxx_dual/tuple.hpp>
-#include <boost/cxx_dual/type_index.hpp>
-#include <boost/cxx_dual/type_traits.hpp>
-#include <boost/cxx_dual/unordered_multimap.hpp>
+#include <boost/cxx_dual/impl/system_error.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/impl/tuple.hpp>
+#include <boost/cxx_dual/impl/type_index.hpp>
+#include <boost/cxx_dual/impl/type_traits.hpp>
+#include <boost/cxx_dual/impl/unordered_multimap.hpp>
 
 int main()
   {

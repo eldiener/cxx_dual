@@ -5,10 +5,12 @@
 
 #include <boost/cxx_dual/impl/shared_ptr.hpp>
 
-#if !defined(CXXD_SHARED_PTR_HPP) && !defined(CXXD_SHARED_PTR_ALL_HPP)
-#define CXXD_SHARED_PTR_HPP
+#if !defined(CXXD_SHARED_PTR_ALL_HPP)
+#define CXXD_SHARED_PTR_ALL_HPP
 
-#include CXXD_SHARED_PTR_HEADER
+#include CXXD_SHARED_PTR_ALL_HEADER
+#if !defined(CXXD_SHARED_PTR_HPP)
 namespace cxxd_shared_ptr_ns = CXXD_SHARED_PTR_NS ;
+#endif
 
-#endif // !defined(CXXD_SHARED_PTR_HPP)
+#endif // !defined(CXXD_SHARED_PTR_ALL_HPP)

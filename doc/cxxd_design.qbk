@@ -1,0 +1,54 @@
+[/ 
+  (C) Copyright Edward Diener 2016
+  Distributed under the Boost Software License, Version 1.0.
+  (See accompanying file LICENSE_1_0.txt or copy at
+  http://www.boost.org/LICENSE_1_0.txt).
+]
+
+[section Design Rationale]
+
+The rationale for the design of the CXXD library is to provide
+the least intrusive way of allowing a programmer, using the
+same code, to use either a Boost library or its C++ standard
+equivalent library based on whether the C++ standard library
+is available or not.
+
+Other implementations along these lines involved a great deal
+of intrusiveness and preprocessing of outside code, and I did
+not want to follow along those lines no matter how workable
+such solutions might seem to others. My goal was to make this
+ability to program either side of dual libraries with the least
+amount of effort a reality.
+
+While I realized that other programmers might be put off by the
+use of C++ macros in designing such a library my experience with
+macro programming and the use of macros told me that the weaknesses
+of a macro solution were a good compromise with the effectiveness
+of such a solution in actual usage.
+
+The original design, what was version 1 of the library, was
+completely macro-based. This version garnered much criticism
+because of its extensive use of macros in user code and the
+general dislike of macro use for many programmers.
+
+I subsequently came up with version 2 of the library, which
+offered both a macro-based way of programming using CXXD
+and a namespace alias way of programming using CXXD.
+
+Thinking about the dual nature of programming using the
+library, whether it be macro-based or alias-based, along
+with all the examples in the doc using both these modes,
+I realized that these modes are probably just confusing
+potential users of he library. Therefore, with the latest
+version 3 of the library I have rearranged the header files
+and the documentation to provide the basic mode of programming
+the library, based on a header file that automatically
+includes what is needed for a dual library and a namespace
+alias that provides access to the constructs of a dual library.
+In this mode CXXD macros rarely appear in user code, which
+should satisfy objections to the library being used by
+programmers who dislike the use of macros. A low-level
+macro-based interface still exists for programmers who might
+want to use its facilities.
+  
+[endsect]

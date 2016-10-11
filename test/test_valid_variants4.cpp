@@ -23,11 +23,11 @@
 #define CXXD_MUTEX_USE_BOOST
 #define CXXD_RANDOM_USE_STD
 
-#include <boost/cxx_dual/function.hpp>
-#include <boost/cxx_dual/hash.hpp>
-#include <boost/cxx_dual/mem_fn.hpp>
-#include <boost/cxx_dual/mutex.hpp>
-#include <boost/cxx_dual/random.hpp>
+#include <boost/cxx_dual/impl/function.hpp>
+#include <boost/cxx_dual/impl/hash.hpp>
+#include <boost/cxx_dual/impl/mem_fn.hpp>
+#include <boost/cxx_dual/impl/mutex.hpp>
+#include <boost/cxx_dual/impl/random.hpp>
 
 int main()
   {

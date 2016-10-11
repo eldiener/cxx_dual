@@ -26,7 +26,7 @@
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/shared_ptr.hpp>
+#include <boost/cxx_dual/shared_ptr_all.hpp>
 
 //  The application will produce a series of
 //  objects of type Foo which later must be

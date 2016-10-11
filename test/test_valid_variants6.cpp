@@ -27,15 +27,15 @@
 #define CXXD_TYPE_INDEX_USE_STD
 #define CXXD_TYPE_TRAITS_USE_STD
 
-#include <boost/cxx_dual/ratio.hpp>
-#include <boost/cxx_dual/ref.hpp>
-#include <boost/cxx_dual/shared_mutex.hpp>
-#include <boost/cxx_dual/shared_ptr.hpp>
-#include <boost/cxx_dual/system_error.hpp>
-#include <boost/cxx_dual/thread.hpp>
-#include <boost/cxx_dual/tuple.hpp>
-#include <boost/cxx_dual/type_index.hpp>
-#include <boost/cxx_dual/type_traits.hpp>
+#include <boost/cxx_dual/impl/ratio.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
+#include <boost/cxx_dual/impl/shared_mutex.hpp>
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
+#include <boost/cxx_dual/impl/system_error.hpp>
+#include <boost/cxx_dual/impl/thread.hpp>
+#include <boost/cxx_dual/impl/tuple.hpp>
+#include <boost/cxx_dual/impl/type_index.hpp>
+#include <boost/cxx_dual/impl/type_traits.hpp>
 
 int main()
   {

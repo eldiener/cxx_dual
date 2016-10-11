@@ -7,8 +7,8 @@
 #include <boost/config.hpp>
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/function.hpp>
-#include <boost/cxx_dual/impl/bind.hpp>
+#include <boost/cxx_dual/function.hpp>
+#include <boost/cxx_dual/bind.hpp>
 
 struct Foo {
     Foo(int num) : num_(num) {}

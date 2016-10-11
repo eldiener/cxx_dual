@@ -9,7 +9,7 @@
 
 The CXXD tests encompass tests for the individual variadic macros which
 CXXD supports to make using CXXD in a library easier, for the individual
-CXXD-mods, and for the test_vv.cpp compilation previously discussed. The tests
+mods, and for the test_vv.cpp compilation previously discussed. The tests
 are in the CXXD 'test' sub-directory so running the tests in general is a matter
 of being in that subdirectory and invoking 'b2' as appropriate:
 
@@ -38,7 +38,7 @@ or
   
   b2 vv any_other_b2_parameters...
   
-The tests for the individual CXXD-mods do depend on other Boost libraries
+The tests for the individual mods do depend on other Boost libraries
 when the Boost dual library is chosen for the individual mod. Therefore
 these tests are marked 'explicit' in terms of Boost Build, which means that
 they are not run normally when running the CXXD tests. All of these tests for the 
@@ -66,6 +66,6 @@ as in:
 
   b2 . mods any_other_b2_parameters...
   
-in order to run the default tests and the CXXD-mod explicit tests.
+in order to run the default tests and the mod explicit tests.
   
 [endsect]

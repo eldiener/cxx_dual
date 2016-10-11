@@ -153,7 +153,23 @@ namespace alias automatically created when the mod header is
 used. Alternatively the programmer may simple want to use
 the namespace macro, rather than the more C++-like namespace alias,
 and not want to litter his code with an automatically created
-namespace alias which he will not use.
+namespace alias which he will not use. Extending our code above
+we could write:
+
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ 
+ #if CXXD_HAS_STD_TYPE_TRAITS
+ #include CXXD_TYPE_TRAITS_HEADER
+ #else
+ #include <boost/type_traits/add_const.hpp>
+ #endif
+
+ namespace mylib_tt = CXXD_TYPE_TRAITS_NS ;
+ 
+ void SomeFunction()
+     {
+     // Code using mylib_tt::add_const
+     }
 
 Any time you include a mod header you can alternatively
 include the mod implementation header file as long as you have
@@ -183,7 +199,7 @@ When you include a mod's low-level implementation header you are
 not establishing an immediate dependency on the dual library chosen.
 This is because a low-level implementation header only creates
 macros for further use. Of course as soon as you use the C++
-header(s) macro to include the C++ headers for the mod you are
+header macro to include the C++ headers for the mod, you are
 establishing a dependency on the dual library chosen; or if you
 manually include some specific C++ header for the dual library
 chosen you are establishing a dependency. But merely including

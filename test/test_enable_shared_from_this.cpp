@@ -6,8 +6,8 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/enable_shared_from_this.hpp>
-#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
+#include <boost/cxx_dual/enable_shared_from_this.hpp>
+#include <boost/cxx_dual/shared_ptr.hpp>
 
 class Y: public cxxd_enable_shared_from_this_ns::enable_shared_from_this<Y>
 {

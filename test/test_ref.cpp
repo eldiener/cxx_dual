@@ -6,9 +6,9 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/bind.hpp>
-#include <boost/cxx_dual/impl/function.hpp>
-#include <boost/cxx_dual/impl/ref.hpp>
+#include <boost/cxx_dual/bind.hpp>
+#include <boost/cxx_dual/function.hpp>
+#include <boost/cxx_dual/ref.hpp>
 
 void f(int& n1, int& n2, const int& n3)
 {

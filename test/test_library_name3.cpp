@@ -17,7 +17,7 @@
 #include <boost/vmd/equal.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <libs/cxx_dual/test/test_library_name_use_std.hpp>
-#include <boost/cxx_dual/cxx_mods.hpp>
+#include <boost/cxx_dual/impl/cxx_mods.hpp>
 
 int main()
   {

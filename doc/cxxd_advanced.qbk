@@ -5,7 +5,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section:basic Advanced Functionality]
+[section:sadvanced Advanced Functionality]
 
 The basic functionality of the CXXD library has been explained
 and should serve most programmers when using the library without

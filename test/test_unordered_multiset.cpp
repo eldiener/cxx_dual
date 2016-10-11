@@ -8,7 +8,7 @@
 
 #define CXXD_TEST_NOT(expr) BOOST_TEST(!(expr))
 
-#include <boost/cxx_dual/impl/unordered_multiset.hpp>
+#include <boost/cxx_dual/unordered_multiset.hpp>
 
 int main()
     {

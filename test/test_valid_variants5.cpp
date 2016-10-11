@@ -25,13 +25,13 @@
 #define CXXD_SHARED_MUTEX_USE_STD
 #define CXXD_SHARED_PTR_USE_BOOST
 
-#include <boost/cxx_dual/hash.hpp>
-#include <boost/cxx_dual/random.hpp>
-#include <boost/cxx_dual/ratio.hpp>
-#include <boost/cxx_dual/ref.hpp>
-#include <boost/cxx_dual/regex.hpp>
-#include <boost/cxx_dual/shared_mutex.hpp>
-#include <boost/cxx_dual/shared_ptr.hpp>
+#include <boost/cxx_dual/impl/hash.hpp>
+#include <boost/cxx_dual/impl/random.hpp>
+#include <boost/cxx_dual/impl/ratio.hpp>
+#include <boost/cxx_dual/impl/ref.hpp>
+#include <boost/cxx_dual/impl/regex.hpp>
+#include <boost/cxx_dual/impl/shared_mutex.hpp>
+#include <boost/cxx_dual/impl/shared_ptr.hpp>
 
 int main()
   {

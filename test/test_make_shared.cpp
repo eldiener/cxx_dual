@@ -6,8 +6,8 @@
 
 #include <boost/detail/lightweight_test.hpp>
 
-#include <boost/cxx_dual/impl/make_shared.hpp>
-#include <boost/cxx_dual/impl/shared_ptr_only.hpp>
+#include <boost/cxx_dual/make_shared.hpp>
+#include <boost/cxx_dual/shared_ptr.hpp>
 
 void foo(const cxxd_shared_ptr_ns::shared_ptr<int>& i)
 {

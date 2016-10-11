@@ -25,13 +25,13 @@
 #define CXXD_UNORDERED_MULTISET_USE_STD
 #define CXXD_UNORDERED_SET_USE_BOOST
 
-#include <boost/cxx_dual/regex.hpp>
-#include <boost/cxx_dual/system_error.hpp>
-#include <boost/cxx_dual/tuple.hpp>
-#include <boost/cxx_dual/unordered_map.hpp>
-#include <boost/cxx_dual/unordered_multimap.hpp>
-#include <boost/cxx_dual/unordered_multiset.hpp>
-#include <boost/cxx_dual/unordered_set.hpp>
+#include <boost/cxx_dual/impl/regex.hpp>
+#include <boost/cxx_dual/impl/system_error.hpp>
+#include <boost/cxx_dual/impl/tuple.hpp>
+#include <boost/cxx_dual/impl/unordered_map.hpp>
+#include <boost/cxx_dual/impl/unordered_multimap.hpp>
+#include <boost/cxx_dual/impl/unordered_multiset.hpp>
+#include <boost/cxx_dual/impl/unordered_set.hpp>
 
 int main()
   {
