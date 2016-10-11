@@ -1,0 +1,706 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Use in a non-header only library</title>
+<link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../sec_lib.html" title="Using in a library">
+<link rel="prev" href="../sec_lib.html" title="Using in a library">
+<link rel="next" href="sec_lvvv.html" title="Support for naming library variants and testing all valid possibilities">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../sec_lib.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../sec_lib.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="sec_lvvv.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library"></a><a class="link" href="use_in_a_non_header_only_library.html" title="Use in a non-header only library">Use
+        in a non-header only library</a>
+</h4></div></div></div>
+<p>
+          A non-header only library is a library which gets built into a shared library
+          or a static library. In a traditional non-header only library all the source
+          code of the library is built into the shared library or static library.
+          A non-header only library also could contain some code which is header
+          only along with the code which consists of the built portion of the library.
+          Because the built portion of a non-header library is code whose functionality
+          is fixed a non-header only library presents a more difficult problem when
+          CXXD is used.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h0"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_problem"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_problem">The
+          problem</a>
+        </h6>
+<p>
+          The reason why a non-header only library presents a problem if CXXD is
+          used is because CXXD does its work at compile time. This means that once
+          the built portions of a non-header only library get compiled and linked
+          the choice for any of the CXXD dual libraries has already been made and
+          essentially encoded into the resulting shared or static library. This choice
+          is based on the compiler and its command line switches when the non-header
+          only library is built. The ability of CXXD to choose, for the end-user
+          of the built portion of the library, at compile time the particular dual
+          library being used is eliminated in such a case.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h1"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution">The
+          solution</a>
+        </h6>
+<p>
+          There is a solution to the fixed nature of the built portion of a non-header
+          only library using CXXD. It consists of generating more than one variant
+          for the non-header only library based on different CXXD dual possibilities.
+          Each variant would have:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              The same code, with more or less the same functionality, based on which
+              dual library(s) are chosen.
+            </li>
+<li class="listitem">
+              A slightly different base library name based on which dual library(s)
+              are chosen.
+            </li>
+</ul></div>
+<p>
+          For a particular non-header only library different variants of the library,
+          depending on the CXXD dual library possibilities, are built. Then depending
+          on the end-user's compiler settings when he uses the library the particular
+          correct variant of the library is 'linked' to his code as a shared library
+          or as a static library.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h2"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution_in_general"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution_in_general">The
+          solution in general</a>
+        </h6>
+<p>
+          As a simple generalized example without immediately going into all the
+          details, which I will do shortly, let's suppose that a shared or static
+          library, whose current base name is called MyLib, is changed to use the
+          CXXD regex interface in a built portion of the library. The process would
+          be that when MyLib is built it will consist of two variants; one variant
+          when MyLib is built when using the Boost regex library and one variant
+          when MyLib is built when using the C++ standard regex library. In order
+          for this to work I need two separate 'base' names for MyLib, depending
+          on whether Boost regex or C++ standard regex is the dual library for regex
+          when the library is built. The choice of these 'base' names will be encoded
+          into the build process for MyLib so that each variant will have a different
+          library name.
+        </p>
+<p>
+          When an end-user uses my library, by including its appropriate header file(s),
+          he links to the correct variant of MyLib depending on whether or not CXXD
+          chooses the Boost regex or C++ standard regex library as the dual library
+          when the regex mod header file gets included.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h3"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution_in_detail"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.the_solution_in_detail">The
+          solution in detail</a>
+        </h6>
+<p>
+          Now let's look in detail, using a simple example, how this would be implemented
+          in MyLib's code.
+        </p>
+<p>
+          First we have MyLib's functionality which uses the CXXD regex mod. Since
+          MyLib is a non-header only library our functionality will consist of a
+          header file, which the end-user will include, and a source file, which
+          contains the code which will be compiled and linked in order to create
+          MyLib's shared or static library.
+        </p>
+<p>
+          When we used a header-only library our regex example was:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyHeader.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">MyClass</span>
+    <span class="special">{</span>
+    <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;</span> <span class="identifier">rx</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* Some functionality */</span> <span class="special">}</span>
+    <span class="special">};</span>
+</pre>
+<p>
+          For our non-header only library as the header file for our example, we
+          specify instead:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyHeader.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">MyClass</span>
+    <span class="special">{</span>
+    <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;</span> <span class="identifier">rx</span><span class="special">);</span>
+    <span class="special">};</span>
+</pre>
+<p>
+          This is very little different from what we presented before with a header-only
+          library. Our difference is that for our non-header only library we are
+          going to compile the implementation of MyClass into a shared or static
+          library. So we now have both our header file and a separate source code
+          file MyHeader.cpp:
+        </p>
+<pre class="programlisting"><span class="comment">// Source file MyHeader.cpp</span>
+<span class="preprocessor">#include</span> <span class="string">"MyHeader.hpp"</span>
+<span class="keyword">void</span> <span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;</span> <span class="identifier">rx</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="comment">/* Some Functionality using 'rx' */</span>
+    <span class="special">}</span>
+</pre>
+<p>
+          At this point we have two problems to solve:
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+              We want to be able to build MyLib as two variants with different base
+              names, one for compiling when the regex mod uses the Boost regex library
+              and one for compiling when the regex mod uses the C++ standard regex
+              library.
+            </li>
+<li class="listitem">
+              We want the end-user of MyLib to link to the correct MyLib variant
+              depending on whether the end-user's compilation will choose the Boost
+              regex dual library or the C++ standard regex dual library.
+            </li>
+</ul></div>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h4"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.building_the_library"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.building_the_library">Building
+          the library</a>
+        </h6>
+<p>
+          The first of our two problems is the easiest to solve. As long as we have
+          a system for building our library where we can specify the name of the
+          library we want along with specifying macros we define for our build on
+          the command line, we always have a solution for our first problem.
+        </p>
+<p>
+          In specific terms we are going to specify two builds for our library under
+          two different names, and we are going to specify appropriate CXXD override
+          macros on the command line for each build. For the purposes of our example
+          I will choose the library name 'MyLib' for the build where the Boost regex
+          library will be used and the library name 'MyLib_std' for the build where
+          the C++ standard version of the regex library will be used. When we build
+          'MyLib' we will pass the regex override macro CXXD_REGEX_USE_BOOST on the
+          command line of the build process. When we build 'MyLib_std' we will pass
+          the regex override macro CXXD_REGEX_USE_STD on the command line of the
+          build process. In Boost bjam terms this would mean, at minimum:
+        </p>
+<pre class="programlisting"><span class="identifier">lib</span> <span class="identifier">MyLib</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_std</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">;</span>
+</pre>
+<p>
+          Other build systems would have their own syntax for building a library.
+        </p>
+<p>
+          This is an instance where we use CXXD override macros which we have not
+          seen before, but it is perfectly valid since we want to force a particular
+          dual library choice when we build our library. The CXXD override macros
+          for the regex mod are specified in the build and not in a header file.
+          This allows us to force a particular dual library when we build the library
+          but otherwise leave the choice of the dual library up to the CXXD mechanism
+          for choosing the library when MyLib is being used.
+        </p>
+<p>
+          When the end-user builds the MyLib library he will pass appropriate command
+          line switches which determine whether or not the C++ standard regex library
+          is supported. If the C++ standard regex library is not supported by appropriate
+          command line switches the build of 'MyLib' should still succeed but the
+          build of 'MyLib_std' will fail. This is as it should be. A build of MyLib
+          with the appropriate command line switches ( usually C++11 support ) will
+          succeed in also building 'MyLib_std'.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h5"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.linking_to_the_library"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.linking_to_the_library">Linking
+          to the library</a>
+        </h6>
+<p>
+          The end-user of our built library will include our MyHeader.hpp and whether
+          the Boost regex library is chosen or the C++ standard regex library is
+          chosen will be determined at compile time when the end-user compiles his
+          code. Our problem is that when the end-user includes MyHeader.hpp in a
+          compilation we would like to be able to specify at that time, based on
+          which dual regex library is being used, the correctly named library to
+          which to link.
+        </p>
+<p>
+          The solution to our problem lies in auto-linking for those compilers which
+          support it. Without auto-linking what we can do is provide some sort of
+          documentation specifying the name of our library depending on the dual
+          library choice which occurs when the end-user uses our library.
+        </p>
+<p>
+          In either case, whether the compiler supports auto-linking or not, what
+          we want to do in MyLib is to create a header file which will encode the
+          correct name of our library as a preprocessor macro depending on our dual
+          library choice. This can be easily done in our example because each dual
+          library has a macro which will tell us at compile time which choice has
+          been made. For our example with the regex library the macro is CXXD_HAS_STD_REGEX,
+          which is 1 if the C++ standard regex library is being used and 0 if the
+          Boost regex library is being used.
+        </p>
+<p>
+          Furthermore, for those compilers which support auto-linking, we want to
+          provide whatever compiler mechanism is available to auto-link to our correct
+          library name. For my example I will use the auto-linking mechanism that
+          is built into Boost.Config. We only want this auto-link header file's functionality
+          to be used when we are not building MyLib, ie. when MyLib is being used
+          by another library or executable.
+        </p>
+<p>
+          In our example we will add a header file to our MyLib library and call
+          it MyLibName.hpp. We only need to include the low-level implementation
+          regex header since we only need the mod's choice macro to produce our unique
+          variant library names:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyLibName.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_std</span>
+<span class="preprocessor">#else</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+          We will also add a header file to our MyLib library and call it MyLibLink.hpp:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyLibLink.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_ALL_NO_LIB</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_MY_LIBRARY_NO_LIB</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">MYLIB_BEING_BUILT</span><span class="special">)</span>
+<span class="preprocessor">#include</span> <span class="string">"MyLibName.hpp"</span>
+<span class="preprocessor">#define</span> <span class="identifier">BOOST_LIB_NAME</span> <span class="identifier">MYLIB_LIBRARY_NAME</span>
+<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">MYLIB_DYN_LINK</span>
+    <span class="preprocessor">#define</span> <span class="identifier">BOOST_DYN_LINK</span>
+<span class="preprocessor">#endif</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">/</span><span class="identifier">auto_link</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+          We alter the header file which the end-user sees, MyHeader.hpp, to include
+          our auto-linking code in MyLibLink.hpp:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyHeader.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="string">"MyLibLink.hpp"</span>
+<span class="keyword">class</span> <span class="identifier">MyClass</span>
+    <span class="special">{</span>
+    <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;);</span>
+    <span class="special">};</span>
+</pre>
+<p>
+          We want to change our code which builds the MyLib variants to define the
+          MYLIB_BEING_BUILT macro:
+        </p>
+<pre class="programlisting"><span class="identifier">lib</span> <span class="identifier">MyLib</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_std</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+</pre>
+<p>
+          As part of the auto-linking mechanism of Boost.Config the end-user of our
+          library could also define the MYLIB_DYN_LINK, before including MyHeader.hpp
+          in his code, to auto-link to the shared library version instead of the
+          static library version of the appropriate MyLib variant.
+        </p>
+<p>
+          For the end-user which is using a compiler that does not support auto-linking
+          we should make sure to document the built variant names of our library
+          depending on whether the end-user compilation chooses the Boost regex library
+          or the C++ standard regex library. That end-user will have to manually
+          link the correct library name in his own code. This is usually done by
+          adding the name of the library to the linker command line.
+        </p>
+<p>
+          As an added tool for that end-user whose compiler does not support auto-linking
+          the MyLib build could also create a program which prints to standard output
+          the name of the library to link using the library name generated in our
+          MyLibName.hpp header file. We could do that with a source file called MyLibName.cpp:
+        </p>
+<pre class="programlisting"><span class="comment">// Source file MyLibName.cpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="string">"MyLibName.hpp"</span>
+<span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME_AS_STRING</span> <span class="special">#</span><span class="identifier">MYLIB_LIBRARY_NAME</span>
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"The MyLib library name is: '"</span> <span class="special">&lt;&lt;</span> <span class="identifier">MYLIB_LIBRARY_NAME_AS_STRING</span> <span class="special">&lt;&lt;</span> <span class="string">"'."</span><span class="special">;</span>
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+    <span class="special">}</span>
+</pre>
+<p>
+          In our example this could be added to the Boost jam file that builds the
+          library variants as:
+        </p>
+<pre class="programlisting"><span class="identifier">exe</span> <span class="identifier">MyLibName</span> <span class="special">:</span> <span class="identifier">MyLibName</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">;</span>
+</pre>
+<p>
+          When the end-user invokes our build jamfile the MyLibName program is built
+          with whatever command line options the end-user uses. Depending on those
+          command line options the MyLibName executable will print the appropriate
+          name of the MyLib library for those options. For an end-user without auto-linking
+          he could then use that name to successful link MyLib to his own library
+          or executable.
+        </p>
+<p>
+          In Boost the library name as specified by the library author is often not
+          the actual final generated name of the library, since Boost can decorate
+          the library author's name for his library with other information. Using
+          Boost auto-linking facilities this discrepancy between what the library
+          author passes to the Boost.Config auto-linking mechanism and the actual
+          generated final name of the library is automatically handled. For compilers
+          that do not support auto-linking it is up to the end-user to understand
+          what the generated final name of the library will be as compared to the
+          name given by the library author. The MyLibName program will generate the
+          correct name given by the library author, so it is then up to the user
+          of the library to understand the generated final name. This is no different
+          from what happens when CXXD is not being used.
+        </p>
+<h6>
+<a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.h6"></a>
+          <span class="phrase"><a name="cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.working_with_possible_library_va"></a></span><a class="link" href="use_in_a_non_header_only_library.html#cxxd.sadvanced.sec_lib.use_in_a_non_header_only_library.working_with_possible_library_va">Working
+          with possible library variants</a>
+        </h6>
+<p>
+          I have chosen a very simple example in using CXXD in the built portion
+          of a non-header only library. This is because my example uses a single
+          mod in the built code, and the built code consists of a single source file
+          with its corresponding header file. It is quite probable, however, that
+          a non-header only library uses many more mods in the built portion of the
+          library and that the use of mods occurs in many more source files with
+          their corresponding header files. While the exact same principles apply
+          when using a number of mods as using a single one, an important issue that
+          comes up when using a number of mods is whether we have to support all
+          possible library variants and how we would limit the possible variants
+          if necessary.
+        </p>
+<p>
+          Let's consider that if the number of separate mods in the built portion
+          of a non-header only library is designated as 'n', we have 2<sup>n</sup> of different
+          CXXD combinations which the end-user of our library could use. As an example,
+          for just 4 different mods being included, we now have 16 different variants
+          of our library to support and build. Furthermore, when counting the mods
+          being included we must take into account the number of mods being used
+          in the built portion of a non-header only library as not only being those
+          mods our library is directly using but also possibly mods being used by
+          other libraries which our own non-header only library is using in its built
+          portion. Clearly the number of mods in the built portion of a non-header
+          only library may proliferate to an unmanageable amount if we have to build
+          every possible variant.
+        </p>
+<p>
+          Despite the fact that there are 2<sup>n</sup> possible variants it is quite possible
+          that the library developer will choose to support many less variants. In
+          fact very often he may choose to support only two variants. Those two variants
+          are often divided by whether or not the library is being compiled in C++11
+          mode or not. For most, if not all, of the mods in a given compiler implementation,
+          when compiling in C++11 mode the C++ standard library version of the dual
+          library is available and when not compiling in C++11 mode only the Boost
+          version will be available. So realistically, even when 'n' different mods
+          are being used by the built portion of a non-header only library, the library
+          developer may choose to support only two variants, either all Boost libraries
+          or all C++ standard library equivalents.
+        </p>
+<p>
+          Whatever the choice of the number of variants supported in a non-header
+          only library compared to the maximum number of variants possible based
+          on the mods used by that library in its built portion, we need some way
+          to name each of the variants supported and we may need some way to intelligently
+          limit the number of variants supported.
+        </p>
+<p>
+          Let's take a look at our example MyLib and let's see what we have to do
+          to support more library variants and possibly limit the number of variants.
+          Imagine that in the source of the library being built we are supporting
+          more than simply the regex mod but also other mods. For the sake of this
+          updated example let's suppose we also are using the array, function, and
+          tuple mods in the built portion of MyLib. We will do this by adding some
+          functionality to our MyHeader interface. In actuality the built portion
+          of a non-header only library will usually encompass far more than a single
+          source/header file pairing, but for the sake of our still fairly simple
+          example we will continue to imagine a single source/header pairing.
+        </p>
+<p>
+          Our updated Myheader.hpp will now look like:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyHeader.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">array</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="string">"MyLibLink.hpp"</span>
+<span class="keyword">class</span> <span class="identifier">MyClass</span>
+    <span class="special">{</span>
+    <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">void</span> <span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;);</span>
+    <span class="keyword">void</span> <span class="identifier">AFunction</span><span class="special">(</span><span class="identifier">cxxd_array_ns</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="number">5</span><span class="special">&gt;</span> <span class="special">&amp;);</span>
+    <span class="keyword">void</span> <span class="identifier">AnotherFunction</span><span class="special">(</span><span class="identifier">cxxd_function_ns</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="special">(</span><span class="keyword">double</span><span class="special">)&gt;</span> <span class="special">&amp;);</span>
+    <span class="keyword">void</span> <span class="identifier">YetAnotherFunction</span><span class="special">(</span><span class="identifier">cxxd_tuple_ns</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">,</span><span class="keyword">short</span><span class="special">&gt;</span> <span class="special">&amp;);</span>
+    <span class="special">};</span>
+</pre>
+<p>
+          Our updated MyHeader.cpp will now look like:
+        </p>
+<pre class="programlisting"><span class="comment">// Source file MyHeader.cpp</span>
+<span class="preprocessor">#include</span> <span class="string">"MyHeader.hpp"</span>
+<span class="keyword">void</span> <span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">MyFunction</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="special">&amp;</span> <span class="identifier">rx</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="comment">/* Some Functionality using 'rx' */</span>
+    <span class="special">}</span>
+<span class="keyword">void</span> <span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">AFunction</span><span class="special">(</span><span class="identifier">cxxd_array_ns</span><span class="special">::</span><span class="identifier">array</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="number">5</span><span class="special">&gt;</span> <span class="special">&amp;</span> <span class="identifier">arr</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="comment">/* Some Functionality using 'arr' */</span>
+    <span class="special">}</span>
+<span class="keyword">void</span> <span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">AnotherFunction</span><span class="special">(</span><span class="identifier">cxxd_function_ns</span><span class="special">::</span><span class="identifier">function</span><span class="special">&lt;</span><span class="keyword">long</span> <span class="special">(</span><span class="keyword">double</span><span class="special">)&gt;</span> <span class="special">&amp;</span> <span class="identifier">fun</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="comment">/* Some Functionality using 'fun' */</span>
+    <span class="special">}</span>
+<span class="keyword">void</span> <span class="identifier">MyClass</span><span class="special">::</span><span class="identifier">YetAnotherFunction</span><span class="special">(</span><span class="identifier">cxxd_tuple_ns</span><span class="special">::</span><span class="identifier">tuple</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">,</span><span class="keyword">short</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="identifier">tup</span><span class="special">)</span>
+    <span class="special">{</span>
+    <span class="comment">/* Some Functionality using 'tup' */</span>
+    <span class="special">}</span>
+</pre>
+<p>
+          If we look back at our MyLibName.hpp we can both extend the name of the
+          library to encompass more variants as well as limit the variants we wish
+          to allow. Allowing all our new variants could give us something like:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyLibName.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">array</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_ARRAY</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span>
+        <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+            <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+                <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_std</span>
+            <span class="preprocessor">#else</span>
+                <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn_rx</span>
+            <span class="preprocessor">#endif</span>
+        <span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn_tp</span>
+        <span class="preprocessor">#else</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn</span>
+        <span class="preprocessor">#endif</span>
+    <span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+        <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_rx_tp</span>
+        <span class="preprocessor">#else</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_rx</span>
+        <span class="preprocessor">#endif</span>
+    <span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_tp</span>
+    <span class="preprocessor">#else</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar</span>
+    <span class="preprocessor">#endif</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+        <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_fn_rx_tp</span>
+        <span class="preprocessor">#else</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_fn_rx</span>
+        <span class="preprocessor">#endif</span>
+    <span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_fn_tp</span>
+    <span class="preprocessor">#else</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_fn</span>
+    <span class="preprocessor">#endif</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_rx_tp</span>
+    <span class="preprocessor">#else</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_rx</span>
+    <span class="preprocessor">#endif</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_tp</span>
+<span class="preprocessor">#else</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+          That is some complicated-looking code to just give a name to each variant,
+          but it is really just a series of tests of all 16 combinations of CXXD_HAS_STD_'XXX'
+          for the possible 'XXX' mod being used. It is actually more tedious than
+          really complicated. We just have to choose a naming convention for our
+          variants so that all variant names are unique. In our case the manual naming
+          convention chosen is that each mod where the C++ standard library is being
+          chosen has a two character abbreviation preceded by an underscore appended
+          to the base 'MyLib' name, but if all the mods have the C++ standard library
+          being chosen the mnemonic '_std' is appended to the base 'MyLib' name instead.
+          Furthermore the appends are done in the alphabetical order of mods being
+          used. This manual scheme is purely arbitrary for naming variants when building
+          a non-header only library and, of course, the library developer using CXXD
+          may choose whatever manual scheme he wishes to give each variant he chooses
+          to support a unique name.
+        </p>
+<p>
+          Later in this documentation section I will discuss CXXD support in the
+          form of a CXXD macro which which the library developer can use to automate
+          the naming scheme if he wishes with a single invocation of the macro.
+        </p>
+<p>
+          Now suppose we do not want to support all variants in MyLib but just a
+          subset of the 16 possible variants in our example. As one case suppose
+          we want to support only those variants where both CXXD array and CXXD function
+          are both using either the Boost library or both are using the C++ standard
+          library. Our changed MyLibName.hpp could then be:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyLibName.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">array</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_ARRAY</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span>
+        <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+            <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+                <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_std</span>
+            <span class="preprocessor">#else</span>
+                <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn_rx</span>
+            <span class="preprocessor">#endif</span>
+        <span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn_tp</span>
+        <span class="preprocessor">#else</span>
+            <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_ar_fn</span>
+        <span class="preprocessor">#endif</span>
+    <span class="preprocessor">#else</span>
+        <span class="preprocessor">#error</span> <span class="identifier">MyLib</span> <span class="special">-</span> <span class="identifier">CXXD</span> <span class="identifier">configuration</span> <span class="keyword">not</span> <span class="identifier">supported</span> <span class="identifier">where</span> <span class="identifier">array</span> <span class="keyword">and</span> <span class="identifier">function</span> <span class="identifier">differ</span><span class="special">.</span>
+    <span class="preprocessor">#endif</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span>
+    <span class="preprocessor">#error</span> <span class="identifier">MyLib</span> <span class="special">-</span> <span class="identifier">CXXD</span> <span class="identifier">configuration</span> <span class="keyword">not</span> <span class="identifier">supported</span> <span class="identifier">where</span> <span class="identifier">array</span> <span class="keyword">and</span> <span class="identifier">function</span> <span class="identifier">differ</span><span class="special">.</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_REGEX</span>
+    <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_rx_tp</span>
+    <span class="preprocessor">#else</span>
+        <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_rx</span>
+    <span class="preprocessor">#endif</span>
+<span class="preprocessor">#elif</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_tp</span>
+<span class="preprocessor">#else</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+          We have simplified the file producing half the number of variants as before,
+          and we have produced a means by which we notify the end-user at compile
+          time of the variants we do not support. Of course we could and should also
+          notify the end-user of MyLib in its documentation about the variants we
+          do or do not support. But the nice thing is that we can produce a compile-time
+          error, in the form of a preprocessor error, while still using CXXD to limit
+          the subset of variants.
+        </p>
+<p>
+          Later in this documentation section I will discuss CXXD support in the
+          form of a CXXD macro which which the library developer can use to test
+          for all his valid variant possibilities with a single macro invocation.
+        </p>
+<p>
+          Suppose we simplify further in a manner I suggested previously where we
+          will only support the two variants which most likely corresponds to the
+          end-user compiling with C++11 on up support or not. Now our MyLibName.hpp
+          gets much simpler:
+        </p>
+<pre class="programlisting"><span class="comment">// Header file MyLibName.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">array</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">function</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">tuple</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_ARRAY</span> <span class="special">&amp;&amp;</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span> <span class="special">&amp;&amp;</span> <span class="identifier">CXXD_HAS_STD_REGEX</span> <span class="special">&amp;&amp;</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib_std</span>
+<span class="preprocessor">#elif</span> <span class="special">!(</span><span class="identifier">CXXD_HAS_STD_ARRAY</span> <span class="special">||</span> <span class="identifier">CXXD_HAS_STD_FUNCTION</span> <span class="special">||</span> <span class="identifier">CXXD_HAS_STD_REGEX</span> <span class="special">||</span> <span class="identifier">CXXD_HAS_STD_TUPLE</span><span class="special">)</span>
+    <span class="preprocessor">#define</span> <span class="identifier">MYLIB_LIBRARY_NAME</span> <span class="identifier">MyLib</span>
+<span class="preprocessor">#else</span>
+    <span class="preprocessor">#error</span> <span class="identifier">CXXD</span> <span class="identifier">configuration</span> <span class="identifier">only</span> <span class="identifier">supported</span> <span class="keyword">if</span> <span class="identifier">all</span> <span class="identifier">dual</span> <span class="identifier">libraries</span> <span class="identifier">are</span> <span class="identifier">Boost</span> <span class="keyword">or</span> <span class="identifier">all</span> <span class="identifier">dual</span> <span class="identifier">libraries</span> <span class="identifier">are</span> <span class="identifier">C</span><span class="special">++</span> <span class="identifier">standard</span><span class="special">.</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+          Here we have further simplified the number of variants, theoretically producing
+          builds which either support C++11 or do not support C++11. Of course this
+          may produce problems if the end-user wants to compile in C++11 mode but
+          the compiler the end-user uses has C++ standard support for one or more
+          of the CXXD modules we are using but not for all of those we are using.
+          In that case the end-user would encounter the preprocessor error directive
+          in the example above. However even in that case the end-user could turn
+          off C++11 mode when compiling and link to the MyLib variant which supports
+          all Boost libraries for the mods without getting an error.
+        </p>
+<p>
+          In these examples the library author needs to adjust the build of his library
+          to only build the variants which he allows. In Boost terms this means modifying
+          the jam file which builds his library.
+        </p>
+<p>
+          With our first extended example, for all 16 variants, the updated jam file
+          would be, at minimum:
+        </p>
+<pre class="programlisting"><span class="identifier">lib</span> <span class="identifier">MyLib</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_std</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_rx_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_fn_rx_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_fn_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_fn_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_fn</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_rx_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+</pre>
+<p>
+          With our second extended example, with its 8 variants, the updated jam
+          file would be, at minimum:
+        </p>
+<pre class="programlisting"><span class="identifier">lib</span> <span class="identifier">MyLib</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_std</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_ar_fn</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_rx_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_rx</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_tp</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+</pre>
+<p>
+          With our third extended example, with its 2 variants, the updated jam file
+          would be, at minimum:
+        </p>
+<pre class="programlisting"><span class="identifier">lib</span> <span class="identifier">MyLib</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_BOOST</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+<span class="identifier">lib</span> <span class="identifier">MyLib_std</span> <span class="special">:</span> <span class="identifier">MyHeader</span><span class="special">.</span><span class="identifier">cpp</span> <span class="special">:</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_ARRAY_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_FUNCTION_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_REGEX_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">CXXD_TUPLE_USE_STD</span> <span class="special">&lt;</span><span class="identifier">define</span><span class="special">&gt;</span><span class="identifier">MYLIB_BEING_BUILT</span> <span class="special">;</span>
+</pre>
+<p>
+          Aside from the functional changes in MyLib itself, to use more CXXD mods
+          in the built portion of the library, the changes to a proposed MyLibName.hpp
+          in our example and the changes to the jam file used to build the non-header
+          only library are the only ones that need to be done to support more variants,
+          and possibly limit the variants compared to the total number possible.
+          The rest of the infrastructure in our example remains in place.
+        </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../sec_lib.html"><img src="../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../sec_lib.html"><img src="../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="sec_lvvv.html"><img src="../../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

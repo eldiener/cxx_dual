@@ -1,0 +1,969 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Basic Functionality</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="prev" href="smods.html" title="Mods">
+<link rel="next" href="basic0.html" title="Advanced Functionality">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="smods.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic0.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.basic"></a><a class="link" href="basic.html" title="Basic Functionality">Basic Functionality</a>
+</h2></div></div></div>
+<p>
+      The basic functionality of the CXXD library is to include a mod header and
+      use the namespace alias to program with that mod:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+      In our example we include the regex mod header and then use the regex namespace
+      alias to program with regex functionality. Whether the C++ standard regex library
+      or the Boost regex library is chosen by CXXD the syntax is still valid.
+    </p>
+<p>
+      Because the namespace alias is a stand-in for the actual namespace of the regex
+      library we can also program the above with a 'using directive':
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">cxxd_regex_ns</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+      We can program any of the 28 different mods in the CXXD library in the same
+      way. We include the mod header and we use the mod's namespace alias to program
+      with that mod. This is the essence of the basic functionality of the CXXD library,
+      and it is very easy to use.
+    </p>
+<h4>
+<a name="cxxd.basic.h0"></a>
+      <span class="phrase"><a name="cxxd.basic.determining_the_dual_library_cho"></a></span><a class="link" href="basic.html#cxxd.basic.determining_the_dual_library_cho">Determining
+      the dual library chosen</a>
+    </h4>
+<p>
+      Occasionally there are situations where the programmer would like to be able
+      to program based on which one of the dual libraries has been chosen for a particular
+      mod. This would most often occur when there are differences in functionality
+      between the C++ standard implementation or the Boost implementation of a particular
+      mod, and one of those differences must be taken into account in the programmer's
+      code.
+    </p>
+<p>
+      For any given mod 'XXX' the CXXD library creates a macro called CXXD_HAS_STD_'XXX'
+      whenever the mod header for 'XXX' is included in a translation unit ( TU ).
+      This macro is set to 1 if the C++ standard library is chosen for mod 'XXX'
+      and is set to 0 if the Boost library is chosen for mod 'XXX' instead:
+    </p>
+<div class="table">
+<a name="cxxd.basic.cxxdchoice"></a><p class="title"><b>Table&#160;1.3.&#160;CXXD choice macros</b></p>
+<div class="table-contents"><table class="table" summary="CXXD choice macros">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Mod name
+              </p>
+            </th>
+<th>
+              <p>
+                Choice Macro
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                array
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_ARRAY
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                atomic
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_ATOMIC
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                bind
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_BIND
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                chrono
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_CHRONO
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                condition_variable
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_CONDITION_VARIABLE
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                enable_shared_from_this
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_ENABLE_SHARED_FROM_THIS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                function
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_FUNCTION
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                hash
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_HASH
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                make_shared
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_MAKE_SHARED
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mem_fn
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_MEM_FN
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                move
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_MOVE
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mutex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_MUTEX
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                random
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_RANDOM
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ratio
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_RATIO
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ref
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_REF
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                regex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_REGEX
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                shared_mutex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_SHARED_MUTEX
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                shared_ptr
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_SHARED_PTR
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                system_error
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_SYSTEM_ERROR
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                thread
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_THREAD
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                tuple
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_TUPLE
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                type_index
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_TYPE_INDEX
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                type_traits
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_TYPE_TRAITS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_map
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_UNORDERED_MAP
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_multimap
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_UNORDERED_MULTIMAP
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_multiset
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_UNORDERED_MULTISET
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_set
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_UNORDERED_SET
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                weak_ptr
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HAS_STD_WEAK_PTR
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+      The normal use for the CXXD_HAS_STD_'XXX' macro to provide specific functionality
+      depending on whether or not a particular mod is using the C++ standard or Boost
+      version. Of course you hope to minimize these situations but occasionally they
+      happen:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">thread</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+   <span class="special">{</span>
+
+   <span class="comment">// Code...</span>
+
+   <span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_THREAD</span>
+
+   <span class="comment">// Functionality available if the C++ standard version of the thread library is being used</span>
+
+   <span class="preprocessor">#else</span>
+
+   <span class="comment">// Functionality available if the Boost version of the thread library is being used</span>
+
+   <span class="preprocessor">#endif</span>
+
+   <span class="special">}</span>
+</pre>
+<h4>
+<a name="cxxd.basic.h1"></a>
+      <span class="phrase"><a name="cxxd.basic.when_a_namespace_alias_isn_t_eno"></a></span><a class="link" href="basic.html#cxxd.basic.when_a_namespace_alias_isn_t_eno">When
+      a namespace alias isn't enough</a>
+    </h4>
+<p>
+      Even though the namespace alias for any given mod is extremely useful when
+      programming using CXXD, there are a few instances where the actual namespace
+      of a dual library is needed in programming where a namespace alias won't do.
+      One of these instances is if the programmer needs the actual namespace name
+      as a string. Another of these instances is when the programmer needs to re-open
+      the actual namespace for any reason, such as adding a customization point or
+      specializing a class template for the mod in question.
+    </p>
+<p>
+      When a mod header is included in a TU the actual namespace name is available
+      as a macro, whose form is the exact same as the namespace alias but in all
+      uppercase letters:
+    </p>
+<div class="table">
+<a name="cxxd.basic.cxxdnmac"></a><p class="title"><b>Table&#160;1.4.&#160;CXXD Namespace Macros</b></p>
+<div class="table-contents"><table class="table" summary="CXXD Namespace Macros">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Mod name
+              </p>
+            </th>
+<th>
+              <p>
+                Namespace macro
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                array
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_ARRAY_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                atomic
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_ATOMIC_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                bind
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_BIND_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                chrono
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_CHRONO_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                condition_variable
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_CONDITION_VARIABLE_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                enable_shared_from_this
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_ENABLE_SHARED_FROM_THIS_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                function
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_FUNCTION_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                hash
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_HASH_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                make_shared
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_MAKE_SHARED_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mem_fn
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_MEM_FN_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                move
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_MOVE_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                mutex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_MUTEX_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                random
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_RANDOM_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ratio
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_RATIO_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ref
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_REF_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                regex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_REGEX_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                shared_mutex
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_SHARED_MUTEX_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                shared_ptr
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_SHARED_PTR_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                system_error
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_SYSTEM_ERROR_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                thread
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_THREAD_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                tuple
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_TUPLE_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                type_index
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_TYPE_INDEX_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                type_traits
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_TYPE_TRAITS_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_map
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_UNORDERED_MAP_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_multimap
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_UNORDERED_MULTIMAP_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_multiset
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_UNORDERED_MULTISET_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                unordered_set
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_UNORDERED_SET_NS
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                weak_ptr
+              </p>
+            </td>
+<td>
+              <p>
+                CXXD_WEAK_PTR_NS
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+      The namespace macro is an object-like macro that expands to the namespace name
+      for the dual library which is chosen. As an example if you include &lt;boost/cxx_dual/regex.hpp&gt;
+      the macro CXXD_REGEX_NS expands to 'boost' if the Boost regex library is chosen,
+      otherwise 'std' if the C++ standard regex library is chosen.
+    </p>
+<p>
+      Whenever the name of the dual library namespace is needed in a string the programmer
+      can use a macro such as BOOST_STRINGIZE to convert the namespace macro to string
+      representation, or can alternatively use the preprocessor stringize operator
+      ( '#' ) directly in a macro expansion:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">config</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+   <span class="special">{</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"The name of the regex library's namespace is '"</span>
+             <span class="special">&lt;&lt;</span> <span class="identifier">BOOST_STRINGIZE</span><span class="special">(</span><span class="identifier">CXXD_REGEX_NS</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">"'."</span><span class="special">;</span>
+   <span class="special">}</span>
+</pre>
+<p>
+      Another situation where a programmer will need to use the namespace macro is
+      when you need to reopen the namespace of the dual library chosen for template
+      specialization. You can do this, for some XXX mod using code like:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">hash</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span>
+
+<span class="keyword">struct</span> <span class="identifier">S</span>
+   <span class="special">{</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">first_name</span><span class="special">;</span>
+   <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="identifier">last_name</span><span class="special">;</span>
+   <span class="special">};</span>
+
+<span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">lhs</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">rhs</span><span class="special">)</span>
+   <span class="special">{</span>
+   <span class="keyword">return</span> <span class="identifier">lhs</span><span class="special">.</span><span class="identifier">first_name</span> <span class="special">==</span> <span class="identifier">rhs</span><span class="special">.</span><span class="identifier">first_name</span> <span class="special">&amp;&amp;</span> <span class="identifier">lhs</span><span class="special">.</span><span class="identifier">last_name</span> <span class="special">==</span> <span class="identifier">rhs</span><span class="special">.</span><span class="identifier">last_name</span><span class="special">;</span>
+   <span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">CXXD_HASH_NS</span>
+   <span class="special">{</span>
+   <span class="keyword">template</span><span class="special">&lt;&gt;</span> <span class="keyword">struct</span> <span class="identifier">hash</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;</span>
+       <span class="special">{</span>
+       <span class="keyword">typedef</span> <span class="identifier">S</span> <span class="identifier">argument_type</span><span class="special">;</span>
+       <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">result_type</span><span class="special">;</span>
+       <span class="identifier">result_type</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">argument_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">s</span><span class="special">)</span> <span class="keyword">const</span>
+           <span class="special">{</span>
+           <span class="identifier">result_type</span> <span class="keyword">const</span> <span class="identifier">h1</span> <span class="special">(</span> <span class="identifier">cxxd_hash_ns</span><span class="special">::</span><span class="identifier">hash</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;()(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">first_name</span><span class="special">)</span> <span class="special">);</span>
+           <span class="identifier">result_type</span> <span class="keyword">const</span> <span class="identifier">h2</span> <span class="special">(</span> <span class="identifier">cxxd_hash_ns</span><span class="special">::</span><span class="identifier">hash</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;()(</span><span class="identifier">s</span><span class="special">.</span><span class="identifier">last_name</span><span class="special">)</span> <span class="special">);</span>
+           <span class="keyword">return</span> <span class="identifier">h1</span> <span class="special">^</span> <span class="special">(</span><span class="identifier">h2</span> <span class="special">&lt;&lt;</span> <span class="number">1</span><span class="special">);</span>
+           <span class="special">}</span>
+       <span class="special">};</span>
+   <span class="special">}</span>
+</pre>
+<p>
+      where using the namespace alias to reopen the namespace is not valid C++.
+    </p>
+<p>
+      In actuality the namespace macro can be used every place the namespace alias
+      is used. But since it is understandable that using the namespace alias is more
+      C++-like than a namespace macro, and that programmers really dislike using
+      macros extensively in their code, using the namespace alias is the recommended
+      way to program with the basic functionality of CXXD in all the situations where
+      the namespace alias can be used validly.
+    </p>
+<h4>
+<a name="cxxd.basic.h2"></a>
+      <span class="phrase"><a name="cxxd.basic.handling_macros_in_a_dual_librar"></a></span><a class="link" href="basic.html#cxxd.basic.handling_macros_in_a_dual_librar">Handling
+      macros in a dual library</a>
+    </h4>
+<p>
+      Although a namespace can isolate nearly every construct in a dual library,
+      use of macros that are part of a dual library falls outside the functionality
+      of any namespace since macros in C++ are global and not bound to any namespace.
+      The CXXD library therefore provides a CXXD macro with the name CXXD_'XXX'_MACRO
+      for mod 'XXX' when the mod header file for XXX is included in a TU, but only
+      when that mod has common macros in both of its dual libraries. This CXXD macro
+      is a function-like macro whose only purpose is to translate the base form of
+      a dual library macro to the form which one or the other dual library actually
+      uses. The form of this macro is CXXD_'XXX'_MACRO(MACRO_NAME).
+    </p>
+<p>
+      Currently among the CXXD mods the only one which uses this CXXD macro is the
+      atomic mod. It's name therefore is CXXD_ATOMIC_MACRO and it can be used in
+      the form of CXXD_ATOMIC_MACRO(SOME_ATOMIC_MACRO) to produce the correct equivalent
+      macro name for the atomic mod, whether the atomic C++ standard library or the
+      atomic Boost library is chosen. In the atomic mod the base forms of an atomic
+      macro are the ones used by the C++ standard atomic library.
+    </p>
+<p>
+      As an example, to initialize an atomic_flag variable you could use:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">atomic</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+   <span class="special">{</span>
+
+   <span class="identifier">cxxd_atomic_ns</span><span class="special">::</span><span class="identifier">atomic_flag</span> <span class="identifier">automatic_flag</span> <span class="special">=</span> <span class="identifier">CXXD_ATOMIC_MACRO</span><span class="special">(</span><span class="identifier">ATOMIC_FLAG_INIT</span><span class="special">);</span>
+
+   <span class="comment">// Code</span>
+
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+   <span class="special">}</span>
+</pre>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="smods.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="basic0.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
