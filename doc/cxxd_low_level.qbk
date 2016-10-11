@@ -21,6 +21,10 @@ header file. The implementation header file for each mod
 is in the CXXD 'boost/cxx_dual/impl' subdirectory and has the same name
 as its corresponding mod header in the 'boost/cxx_dual' directory.
 
+Both the 'shared_ptr.hpp' and 'shared_ptr_all.hpp' mod headers
+for the shared_ptr mod uses the same implementation header called
+'shared_ptr.hpp'.
+
 All of the macros, except one, which could be used by the programmer
 when including a mod header have been explained as aids to using
 the basic functionality of CXXD. The one macro which was not explained,
@@ -29,8 +33,8 @@ a macro which is used to include the C++ header file(s) needed by
 the dual library which has been chosen. The form of this macro is
 CXXD_'XXX'_HEADER for any given mod XXX:
 
-[table:cxxdheader C++ header(s) macros
-[[Mod name][C++ header(s) macro]]
+[table:cxxdheader C++ header macros
+[[Mod name][C++ header macro]]
 [[array][CXXD_ARRAY_HEADER]]
 [[atomic][CXXD_ATOMIC_HEADER]]
 [[bind][CXXD_BIND_HEADER]]
@@ -69,6 +73,13 @@ includes more than one library header file. For the rest this
 C++ header macro expands to a single C++ header for either the
 Boost or C++ standard library dual library, which itself
 includes all constructs needed by the dual library chosen.
+
+The shared_ptr mod implementation header also has a separate
+C++ header macro called 'CXXD_SHARED_PTR_ALL_HEADER'. This
+C++ header macro is used by the 'shared_ptr_all.hpp' mod
+header to include the C++ header files needed by shared_ptr,
+weak_ptr, make_shared, and enable_shared_from_this for either the
+Boost dual library or the C++ standard dual library chosen.
 
 Because of the C++ header macro, and because the previously discussed
 namespace macro can be used anytime the namespace alias can be used,
@@ -112,8 +123,20 @@ or even:
      // etc.
      }
      
-Obviously using the low-level implementation header is more verbose.
-So why would we ever want to use it as opposed to the normal mod header ?
+[heading Low-level inclusion]
+
+Once you include a mod header in a TU there is no point in
+separately including the low-level mod implementation header,
+since the mod header already does so. However separately 
+including both the mod header and low-level mod implementation
+header does no harm, no matter what order they are included
+or how many times they are included.
+
+[heading Low-level usage]
+
+Obviously using the low-level implementation header is more verbose
+as can be seen in previous examples. So why would we ever want to 
+use it as opposed to the normal mod header ?
 
 One idiom that could occur, especially when for a mod the Boost library
 is chosen instead of the C++ standard library, is that the programmer wishes
@@ -170,12 +193,46 @@ we could write:
      {
      // Code using mylib_tt::add_const
      }
+     
+Another idiom, related to the above examples, for which
+you may wish to use the low-level mod implementation
+header is that you may just want to test
+whether or not the C++ standard library for a particular
+mod is supported or not, and write one-off code accordingly
+without using the CXXD dual library facility for the mod at all.
+While you could do this using a Boost Config macro the CXXD
+library provides a more regular means of identifying whether
+a mod supports the C++ standard library or not:
 
-Any time you include a mod header you can alternatively
-include the mod implementation header file as long as you have
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ 
+ #if CXXD_HAS_STD_TYPE_TRAITS
+ #include <type_traits>
+ void SomeFunctionUsingCppTypeTraits()
+     {
+     // Code using std::some_trait
+     }
+ #endif
+ 
+or:
+ 
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ 
+ #if !CXXD_HAS_STD_TYPE_TRAITS
+ #include <boost/type_traits.hpp>
+ void SomeFunctionUsingBoostTraits()
+     {
+     // Code using boost::some_trait
+     }
+ #endif
+     
+[heading General usage theory]
+
+Any time you might include a mod header you can alternatively
+include instead the mod implementation header file as long as you have
 no immediate need for include the C++ header files for the
 dual library chosen or for using the namespace alias for the
-dual library chosen. Specific uses for including the
+dual library chosen. Further specific uses for including the
 implementation mod header rather than the normal mod header
 will occur later in the documentation.
 
@@ -203,6 +260,6 @@ header macro to include the C++ headers for the mod, you are
 establishing a dependency on the dual library chosen; or if you
 manually include some specific C++ header for the dual library
 chosen you are establishing a dependency. But merely including
-the low-level header does not do so.
+the low-level header does not do so at all.
 
 [endsect]

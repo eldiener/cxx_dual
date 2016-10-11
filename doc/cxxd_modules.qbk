@@ -59,26 +59,34 @@ header in the functionality it provides for using either the Boost
 dual library or the C++ standard library for that mod in user code.
 Any number of individual mods can be used in a TU.
 
+[heading:hshp The shared_ptr mod is special]
+
 For the 'shared_ptr' mod a separate mod header called 
-<boost/cxx_dual/shared_ptr_all.hpp> also exists which
+'shared_ptr_all.hpp' also exists which
 includes the C++ header files for shared_ptr, weak_ptr, 
 make_shared, and enable_shared_from_this for either the
 Boost dual library or the C++ standard dual library chosen.
-The cxxd_shared_ptr_ns namespace can be used to program 
+The 'cxxd_shared_ptr_ns' namespace can be used to program 
 with any any of these individual C++ headers successfully.
-This mod header exists for convenience since using
-the shared_ptr functionality often involves the other libraries
+This mod header exists for convenience, since using
+shared_ptr functionality often involves the other libraries
 whose C++ header files are included by the 
-<boost/cxx_dual/shared_ptr_all.hpp> mod header, whether they
+'shared_ptr_all.hpp' mod header, whether they
 are the Boost dual libraries or the C++ standard dual libraries.
 
-If instead you use the normal <boost/cxx_dual/shared_ptr.hpp>
-mod header only the C++ header files for shared_ptr is
-included and the cxxd_shared_ptr_ns namespace alias should be
+If instead you use the normal 'shared_ptr.hpp'
+mod header only the C++ header file for shared_ptr is
+included and the 'cxxd_shared_ptr_ns' namespace alias should be
 used to program that mod. You can then separately include the
 mod headers for weak_ptr, make_shared, and enable_shared_from_this
 to use their respective functionality with the appropriate
 namespace alias for each one.
+
+Both the normal 'shared_ptr.hpp' mod header and the extended
+'shared_ptr_all.hpp' use the same 'cxxd_shared_ptr_ns' namespace
+alias, which works in either situation. There is no problem
+including both 'shared_ptr.hpp' and 'shared_ptr_all.hpp' in
+the same TU.
 
 [heading:hids Mod identifiers]
 
