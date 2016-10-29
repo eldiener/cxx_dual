@@ -233,7 +233,7 @@ designer of 'yet_another_library_with_override' may appear to be unreasonable
 in his design decision but we have all dealt with third party
 libraries which impose restrictions with which we may not agree.
 
-Mow let us suppose that within our own TU we want to use functionality
+Now let us suppose that within our own TU we want to use functionality
 from both the 'another_library_with_override' library and the
 'yet_another_library_with_override' libraries. So our TU may look like:
     

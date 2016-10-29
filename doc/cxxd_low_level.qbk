@@ -16,14 +16,16 @@ implementation header file to do two things:
 # Set the namespace alias to the namespace of the dual library which has been chosen.
 
 All of the logic of choosing the dual library and of creating
-macros reflecting that choice is done in the implementation
+macros reflecting that choice is done in the low-level implementation
 header file. The implementation header file for each mod
 is in the CXXD 'boost/cxx_dual/impl' subdirectory and has the same name
 as its corresponding mod header in the 'boost/cxx_dual' directory.
 
 Both the 'shared_ptr.hpp' and 'shared_ptr_all.hpp' mod headers
-for the shared_ptr mod uses the same implementation header called
+for the shared_ptr mod use the same implementation header called
 'shared_ptr.hpp'.
+
+[heading Header macro]
 
 All of the macros, except one, which could be used by the programmer
 when including a mod header have been explained as aids to using
@@ -81,6 +83,8 @@ header to include the C++ header files needed by shared_ptr,
 weak_ptr, make_shared, and enable_shared_from_this for either the
 Boost dual library or the C++ standard dual library chosen.
 
+[heading Low-level implementation header versus mod header]
+
 Because of the C++ header macro, and because the previously discussed
 namespace macro can be used anytime the namespace alias can be used,
 it is possible to forgo the inclusion of the mod header and use the
@@ -123,38 +127,55 @@ or even:
      // etc.
      }
      
-[heading Low-level inclusion]
+[heading Inclusion order]
 
 Once you include a mod header in a TU there is no point in
 separately including the low-level mod implementation header,
 since the mod header already does so. However separately 
 including both the mod header and low-level mod implementation
-header does no harm, no matter what order they are included
-or how many times they are included.
+for a particular mod does no harm, no matter what order they
+are included or how many times they are included.
 
-[heading Low-level usage]
+[heading Basic low-level usage]
 
 Obviously using the low-level implementation header is more verbose
 as can be seen in previous examples. So why would we ever want to 
 use it as opposed to the normal mod header ?
 
-One idiom that could occur, especially when for a mod the Boost library
-is chosen instead of the C++ standard library, is that the programmer wishes
-to include only the relevant C++ header file(s) rather than all the C++
-header files for a dual library.
+Including the low-level implementation header, rather than the mod
+header, gives the programmer specific control over which header file(s)
+get included for the dual library chosen and how the constructs in the
+dual library chosen are referred to. When including the mod header that
+choice is automatically made by including the most general header file(s)
+needed and by creating a namespace alias for referring to the top-level
+constructs of a dual library. Including the low-level implementation
+header allows the programmer to manually make such choices.
 
-A good example of this would be in the Boost type_traits library. The
+Furthermore, unlike including a mod header, including the low-level
+header for a mod does not create any immediate dependency on the dual
+library chosen. This is particularly relevant if you want to use the
+mod's choosing macro to write one-off code which does not use CXXD's
+dual library support at all.
+
+[h4 Manual header file inclusion]
+
+Many programmers like to include specific header file rather than a general
+header for a library. The reasons for this are numerous but the general
+idea is that the programmer should only include what he needs for the
+functionality that he actually uses in a particular situation.
+
+A good example of including a specific header file rather than a general 
+header file would be in the Boost type_traits library. The
 generalized Boost type_traits header is <boost/type_traits.hpp>. This header
 includes all the individual type traits headers, just as the C++ standard
 library the <type_traits> header includes all type traits. On the Boost side,
 however, it is possible to include header files for only the individual type
-traits being used in a TU instead of all type traits, therefore speeding up
-compilation. When using the type_traits mod header the general C++ type_traits
-header is always included automatically. To have finer control over individual
-type traits header inclusion a programmer could use the low-level implementation
-header for type_traits and then manually include only the individual header
-file he is actually using when Boost is chosen as the dual library. The code
-might look like this:
+traits being used in a TU instead of all type traits. When using the type_traits
+mod header the general C++ type_traits header is always included automatically.
+To have finer control over individual type traits header inclusion a programmer
+could use the low-level implementation header for type_traits and then manually
+include only the individual header file he is actually using when Boost is chosen
+as the dual library. The code might look like this:
 
  #include <boost/cxx_dual/impl/type_traits.hpp>
  
@@ -169,40 +190,85 @@ might look like this:
      // Code using CXXD_TYPE_TRAITS_NS::add_const
      }
      
-Another reason for using the low-level implementation header
-might be if the programmer wants to provide his own namespace
-alias for the dual library chosen rather than using the
-namespace alias automatically created when the mod header is
-used. Alternatively the programmer may simple want to use
-the namespace macro, rather than the more C++-like namespace alias,
-and not want to litter his code with an automatically created
-namespace alias which he will not use. Extending our code above
-we could write:
+[h4 Referring to dual library constructs]
+
+When a mod header is included a namespace alias is
+created to refer to the constructs of that mod. The
+namespace alias merely uses the namespace macro for
+the dual library chosen to refer to that mod's namespace.
+For some programmers using a namespace alias might be
+overkill. They would rather use other more specific
+means to refer to some construct of the dual library
+chosen. For other programmers using a namespace alias
+is fine but they would rather use one reflecting their
+own naming preference rather than the name automatically
+created for any given mod header. Finally some programmers might
+decide to use the namespace macro directly rather than
+use a namespace alias at all. In any of the above cases
+the existence of a namespace macro can be used to create
+alternative means to refer to a dual library constructs.
+
+[h5 Using a specific construct]
+
+Some programmers do not want to use a namespace
+in general in their code when they are using only
+specific constructs of a given library. In C++
+you can do this with a using declaration:
 
  #include <boost/cxx_dual/impl/type_traits.hpp>
- 
- #if CXXD_HAS_STD_TYPE_TRAITS
  #include CXXD_TYPE_TRAITS_HEADER
- #else
- #include <boost/type_traits/add_const.hpp>
- #endif
+ using CXXD_TYPE_TRAITS_NS::add_const;
+ 
+ void SomeFunction()
+     {
+     // Code using add_const
+     }
+     
+[h5 Creating own's one namespace alias]
 
+When using the low-level header a programmer might
+want to create his own namespace alias for referring
+in general to the constructs of the dual library chosen.
+This could obviously also be done when using the mod
+header but the automatically created namespace alias
+would be an extra namespace alias in that case which
+might never be used.
+
+An example of creating one's own namespace alias
+could be:
+
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ #include CXXD_TYPE_TRAITS_HEADER
  namespace mylib_tt = CXXD_TYPE_TRAITS_NS ;
  
  void SomeFunction()
      {
-     // Code using mylib_tt::add_const
+     // Code using mylib_tt::some_type_traits_construct
      }
      
-Another idiom, related to the above examples, for which
-you may wish to use the low-level mod implementation
-header is that you may just want to test
-whether or not the C++ standard library for a particular
-mod is supported or not, and write one-off code accordingly
-without using the CXXD dual library facility for the mod at all.
-While you could do this using a Boost Config macro the CXXD
-library provides a more regular means of identifying whether
-a mod supports the C++ standard library or not:
+[h5 Using the namespace macro directly]
+
+Of course a programmer could choose to use the
+namespace macro directly rather than use a namespace
+alias at all:
+
+ #include <boost/cxx_dual/impl/type_traits.hpp>
+ #include CXXD_TYPE_TRAITS_HEADER
+ 
+ void SomeFunction()
+     {
+     // Code using CXXD_TYPE_TRAITS_NS::some_type_traits_construct
+     }
+     
+[h4 Implementing one-off code]
+
+You may just want to test whether or not the C++ standard
+library for a particular mod is supported or not, and write
+one-off code accordingly without using the CXXD dual library
+facility for the mod at all. While you could do this using a
+Boost Config macro the CXXD library provides a more regular
+syntactical naming convention for identifying whether a mod
+supports the C++ standard library or not:
 
  #include <boost/cxx_dual/impl/type_traits.hpp>
  
@@ -225,41 +291,5 @@ or:
      // Code using boost::some_trait
      }
  #endif
-     
-[heading General usage theory]
-
-Any time you might include a mod header you can alternatively
-include instead the mod implementation header file as long as you have
-no immediate need for include the C++ header files for the
-dual library chosen or for using the namespace alias for the
-dual library chosen. Further specific uses for including the
-implementation mod header rather than the normal mod header
-will occur later in the documentation.
-
-While the use of the mod header is recommended for the basic
-functionality of programmers using CXXD, the direct inclusion
-of the low-level implementation instead of the mod header
-serves the purpose of programmers who like maximum flexibility
-at the price of greater syntactical verbosity.
-
-[heading Dependencies]
-
-When you include the mod header you are establishing a dependency
-on whichever dual library is chosen by that mod. The dependency
-is immediate since the C++ header(s) for the library chosen
-are automatically included and a namespace alias to the namespace
-of the library is created. This is as it should be, since including
-the mod header is done because you intend to program using the
-dual library chosen.
-
-When you include a mod's low-level implementation header you are
-not establishing an immediate dependency on the dual library chosen.
-This is because a low-level implementation header only creates
-macros for further use. Of course as soon as you use the C++
-header macro to include the C++ headers for the mod, you are
-establishing a dependency on the dual library chosen; or if you
-manually include some specific C++ header for the dual library
-chosen you are establishing a dependency. But merely including
-the low-level header does not do so at all.
-
+ 
 [endsect]
