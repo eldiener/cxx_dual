@@ -1,0 +1,385 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Chapter&#160;1.&#160;The Cxx Dual Library</title>
+<link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="next" href="cxxd/terminology.html" title="Terminology">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td>
+<td align="center"><a href="../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="cxxd/terminology.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="cxxd"></a>Chapter&#160;1.&#160;The Cxx Dual Library</h2></div>
+<div><div class="author"><h3 class="author">
+<span class="firstname">Edward</span> <span class="surname">Diener</span>
+</h3></div></div>
+<div><p class="copyright">Copyright &#169; 2015, 2016 Tropic Software East Inc</p></div>
+<div><div class="legalnotice">
+<a name="cxxd.legal"></a><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></div>
+</div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="section"><a href="index.html#cxxd.introduction">Introduction</a></span></dt>
+<dt><span class="section"><a href="cxxd/terminology.html">Terminology</a></span></dt>
+<dt><span class="section"><a href="cxxd/smods.html">Mods</a></span></dt>
+<dt><span class="section"><a href="cxxd/sbasic.html">Basic Functionality</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced.html">Advanced Functionality</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/sadvanced.html#cxxd.sadvanced.low_level_inclusion">Low-level inclusion</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced/overriding_the_default_choosing_.html">Overriding
+      the default choosing algorithm</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced/consistency.html">Consistency</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced/sec_lib.html">Using in a library</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/sadvanced/sec_lib.html#cxxd.sadvanced.sec_lib.sec_hlib">Use in a header only
+        library</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced/sec_lib/use_in_a_non_header_only_library.html">Use
+        in a non-header only library</a></span></dt>
+<dt><span class="section"><a href="cxxd/sadvanced/sec_lib/sec_lvvv.html">Support for naming
+        library variants and testing all valid possibilities</a></span></dt>
+</dl></dd>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/preprocessing_errors.html">Preprocessing errors</a></span></dt>
+<dt><span class="section"><a href="cxxd/build_support.html">Build support</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="cxxd/build_support.html#cxxd.build_support.boost_build">Boost Build</a></span></dt>
+<dt><span class="section"><a href="cxxd/build_support/general_build_support.html">General build
+      support</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="cxxd/header_files.html">Header files</a></span></dt>
+<dt><span class="section"><a href="cxxd/tests.html">Tests</a></span></dt>
+<dt><span class="section"><a href="cxxd/dual_library_knowledge_and_conce.html">Dual library knowledge
+    and concerns</a></span></dt>
+<dt><span class="section"><a href="cxxd/design_rationale.html">Design Rationale</a></span></dt>
+<dt><span class="section"><a href="cxxd/history.html">History </a></span></dt>
+<dt><span class="section"><a href="cxxd/acknowledgements.html">Acknowledgements </a></span></dt>
+<dt><span class="section"><a href="reference.html">Reference</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="reference.html#header.boost.cxx_dual.impl.array_hpp">Header &lt;boost/cxx_dual/impl/array.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/atomic_hpp.html">Header &lt;boost/cxx_dual/impl/atomic.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/bind_hpp.html">Header &lt;boost/cxx_dual/impl/bind.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/chrono_hpp.html">Header &lt;boost/cxx_dual/impl/chrono.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/condition_variable_hpp.html">Header &lt;boost/cxx_dual/impl/condition_variable.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/cxx_mods_hpp.html">Header &lt;boost/cxx_dual/impl/cxx_mods.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/enable_shared_from_this_hpp.html">Header &lt;boost/cxx_dual/impl/enable_shared_from_this.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/function_hpp.html">Header &lt;boost/cxx_dual/impl/function.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/hash_hpp.html">Header &lt;boost/cxx_dual/impl/hash.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/make_shared_hpp.html">Header &lt;boost/cxx_dual/impl/make_shared.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/mem_fn_hpp.html">Header &lt;boost/cxx_dual/impl/mem_fn.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/move_hpp.html">Header &lt;boost/cxx_dual/impl/move.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/mutex_hpp.html">Header &lt;boost/cxx_dual/impl/mutex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/random_hpp.html">Header &lt;boost/cxx_dual/impl/random.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/ratio_hpp.html">Header &lt;boost/cxx_dual/impl/ratio.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/ref_hpp.html">Header &lt;boost/cxx_dual/impl/ref.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/regex_hpp.html">Header &lt;boost/cxx_dual/impl/regex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/shared_mutex_hpp.html">Header &lt;boost/cxx_dual/impl/shared_mutex.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/shared_ptr_hpp.html">Header &lt;boost/cxx_dual/impl/shared_ptr.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/system_error_hpp.html">Header &lt;boost/cxx_dual/impl/system_error.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/thread_hpp.html">Header &lt;boost/cxx_dual/impl/thread.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/tuple_hpp.html">Header &lt;boost/cxx_dual/impl/tuple.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/type_index_hpp.html">Header &lt;boost/cxx_dual/impl/type_index.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/type_traits_hpp.html">Header &lt;boost/cxx_dual/impl/type_traits.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/unordered_map_hpp.html">Header &lt;boost/cxx_dual/impl/unordered_map.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/unordered_multimap_hpp.html">Header &lt;boost/cxx_dual/impl/unordered_multimap.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/unordered_multiset_hpp.html">Header &lt;boost/cxx_dual/impl/unordered_multiset.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/unordered_set_hpp.html">Header &lt;boost/cxx_dual/impl/unordered_set.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/impl/weak_ptr_hpp.html">Header &lt;boost/cxx_dual/impl/weak_ptr.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/library_name_hpp.html">Header &lt;boost/cxx_dual/library_name.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+<dt><span class="section"><a href="header/boost/cxx_dual/valid_variants_hpp.html">Header &lt;boost/cxx_dual/valid_variants.hpp&gt;</a></span></dt>
+<dd><dl></dl></dd>
+</dl></dd>
+<dt><span class="section"><a href="index/s15.html">Index</a></span></dt>
+</dl>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.introduction"></a><a class="link" href="index.html#cxxd.introduction" title="Introduction">Introduction</a>
+</h2></div></div></div>
+<p>
+      The Cxx Dual library, or CXXD for short, is a macro library which chooses between
+      using a Boost library or its C++ standard equivalent library for a number of
+      different C++ implementations, while allowing the end-user to use the same
+      code to program either choice. An implementation is a Boost library which has
+      a C++ standard library equivalent whose public interfaces are nearly the same
+      in both cases. An 'implementation' is called a 'mod' for short and each of
+      the possible Boost or C++ standard implementations for that mod are called
+      a 'dual library'.
+    </p>
+<p>
+      The library does this by:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Automatically choosing either the Boost library or the C++ standard library
+          for a particular mod based on compile-time preprocessor macros in Boost
+          Config. If the C++ standard library is available, as indicated by the relevant
+          Boost Config macro, it is chosen, else the Boost library is chosen.
+        </li>
+<li class="listitem">
+          Including the correct header file(s) needed for the dual library chosen.
+        </li>
+<li class="listitem">
+          Creating a namespace alias for the namespace of the dual library chosen.
+        </li>
+</ul></div>
+<p>
+      All of this is done on a per-mod basis when a header file representing that
+      mod is included by the end-user in his code. Any single mod is completely separated
+      from all other mods, so that the use of each mod is self-contained and does
+      not involve the use of anything else in the CXXD library.
+    </p>
+<p>
+      The CXXD library also provides:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          A macro-based solution for distinguishing between the Boost version and
+          the C++ standard version of a dual library so that specific code for a
+          particular dual library choice may be written in those cases where the
+          public interfaces diverge.
+        </li>
+<li class="listitem">
+          A macro-based solution for overriding the default algorithm by which CXXD
+          chooses between the Boost version and the C++ standard version of a dual
+          library.
+        </li>
+</ul></div>
+<h4>
+<a name="cxxd.introduction.h0"></a>
+      <span class="phrase"><a name="cxxd.introduction.basic_example_using_cxxd"></a></span><a class="link" href="index.html#cxxd.introduction.basic_example_using_cxxd">Basic
+      example using CXXD</a>
+    </h4>
+<p>
+      Let us say that the end-user wishes to use the C++ regex mod functionality
+      in his code in order to create a regular expression object and use it to find
+      data in a string based on that regular expression.
+    </p>
+<p>
+      If the end-user had chosen to use the Boost regex library his code could be:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+      If the end-user had chosen to use the C++ standard library his code could be:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">regex</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">std</span><span class="special">:</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+      However the end-user's goal is that if the C++ standard library regex implementation
+      is available he wants to use that, otherwise he wants to use the Boost regex
+      implementation. Most importantly he wants to use the exact same code to achieve
+      his goals no matter which implementation he uses. To do that he uses CXXD.
+      Using CXXD we use the regex mod and we could code:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+      The header file representing the regex mod is included. This includes whatever
+      header files are needed by the regex library chosen. Afterwards regex namespace
+      alias is used to program with whichever regex dual library is chosen.
+    </p>
+<p>
+      This is all one has to do to use the CXXD library in its most basic mode. Despite
+      the fact that CXXD is a macro library, and many programmers are distrustful
+      and afraid to use macros, the vast majority of actual user code when using
+      CXXD does not use CXXD macros at all.
+    </p>
+<h4>
+<a name="cxxd.introduction.h1"></a>
+      <span class="phrase"><a name="cxxd.introduction.cxxd_mods"></a></span><a class="link" href="index.html#cxxd.introduction.cxxd_mods">CXXD
+      mods</a>
+    </h4>
+<p>
+      There are currently 28 different mods in CXXD and each mod has its own header
+      file to be included in order to use that mod in your code, and each has its
+      own namespace alias to be used.
+    </p>
+<p>
+      This basic use of CXXD is very simple, yet it provides the ability to program
+      using any of the 28 different mods supported in a way such that the choice
+      of which dual library is actually used for a particular mod is automatically
+      made by CXXD.
+    </p>
+<h4>
+<a name="cxxd.introduction.h2"></a>
+      <span class="phrase"><a name="cxxd.introduction.who_the_library_is_for"></a></span><a class="link" href="index.html#cxxd.introduction.who_the_library_is_for">Who
+      the library is for</a>
+    </h4>
+<p>
+      The CXXD library is for any programmer who wants to let CXXD decide whether
+      to use the C++ standard library or the Boost library version of a mod at compile
+      time, and who wants to write a single set of code for either library.
+    </p>
+<p>
+      On a more practical basis the CXXD library is for:
+    </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          Programmers writing code not using C++11 syntax who still want to target
+          some C++11 libraries if the code is compiled in C++11 mode.
+        </li>
+<li class="listitem">
+          Programmers writing code using C++11 syntax who still want the option of
+          targeting some Boost libraries if the equivalent C++11 library does not
+          exist for a given implementation.
+        </li>
+</ol></div>
+<h4>
+<a name="cxxd.introduction.h3"></a>
+      <span class="phrase"><a name="cxxd.introduction.current_cxxd_alternatives"></a></span><a class="link" href="index.html#cxxd.introduction.current_cxxd_alternatives">Current
+      CXXD alternatives</a>
+    </h4>
+<p>
+      Popular alternative choices in programmers's code are:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Use the Boost library of a mod since it is always available.
+        </li>
+<li class="listitem">
+          Use the C++ standard library of a mod for code written using C++11, and
+          fail to compile if the library is not available.
+        </li>
+<li class="listitem">
+          Write separate code using the C++ standard library of a mod if it is available,
+          otherwise using the Boost of a mod.
+        </li>
+</ul></div>
+<p>
+      The first choice is easily the most popular since Boost library developers,
+      and those involved using any one of the approximately current 130+ Boost libraries,
+      assume that a Boost distribution is always available for the programmer to
+      use. What are the possible negatives in the first choice ?
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Some programmers, programming groups, businesses and large corporation
+          employing programmers, do not like the idea of having to rely on the Boost
+          distribution as a whole while feeling it is fine to rely on certain individual
+          Boost libraries. This is not a reflection on Boost libraries themselves
+          but more a reflection of the current monolithic structure of the Boost
+          distribution.
+        </li>
+<li class="listitem">
+          Many programmers would like to use the C++ standard libraries when available
+          with their compiler implementation rather than have a dependency in their
+          code on the equivalent Boost library.
+        </li>
+<li class="listitem">
+          Programmers may be already using a C++ standard library in their code and
+          do not want to have to therefore use the Boost library equivalent for a
+          particular library interface.
+        </li>
+</ul></div>
+<p>
+      The second choice, always using the C++ standard equivalent library, will occur
+      less often because of its most obvious negative; if the C++ standard library
+      is not available for a particular compiler implementation and C++ standard
+      compiler level, the code will fail to compile. If however you write a library
+      for a particular level of the C++ standard, such as C++11, and assume a strong
+      implementation of that standard is needed by certain compilers which can compile
+      your code, this is often your most viable choice.
+    </p>
+<p>
+      The third choice, supporting both the Boost version of a library and the equivalent
+      C++ standard version of that library, is obviously programmable but entails
+      a much greater amount of work. Each usage of a mod will entail writing code
+      that supports both libraries and this will require a great deal of extra code.
+      Furthermore your code will be filled with uses of preprocessor #if statements
+      to delineate which usage of a mod would be available at any given time.
+    </p>
+<p>
+      All these choices are understandable. The CXXD library offers another choice
+      and the purpose of the library is to provide that other choice to programmers
+      who see it as a viable one.
+    </p>
+<h4>
+<a name="cxxd.introduction.h4"></a>
+      <span class="phrase"><a name="cxxd.introduction.cxxd_basic_mode"></a></span><a class="link" href="index.html#cxxd.introduction.cxxd_basic_mode">CXXD
+      basic mode</a>
+    </h4>
+<p>
+      Using CXXD in its basic mode has been briefly illustrated above. There are
+      more areas of basic mode that will be explored, though those areas are more
+      rarely used. But before I go on to explore those areas, and to list the mods
+      supported by CXXD, I want to give some terminology that will be used in this
+      documentation in the next section.
+    </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: October 29, 2016 at 15:55:46 GMT</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="cxxd/terminology.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a></div>
+</body>
+</html>

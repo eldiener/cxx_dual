@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>History</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="prev" href="design_rationale.html" title="Design Rationale">
+<link rel="next" href="acknowledgements.html" title="Acknowledgements">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="design_rationale.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="acknowledgements.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.history"></a><a class="link" href="history.html" title="History">History </a>
+</h2></div></div></div>
+<p>
+      Version 3 - 10/11/16
+    </p>
+<p>
+      CXXD is updated so that what was previously called alias mode is now the basic
+      programming mode of the library. Headers for the basic mode are in the main
+      cxx_dual include directory and low-level headers for what was previously called
+      macro mode are in the impl sub-directory of the include directory. All documentation
+      of functionality is done using the basic mode making use of namespace aliases.
+    </p>
+<p>
+      The macro for turning off consistency, previously called CXXD_NO_CONSISTENCY,
+      has been removed and CXXD now enforces consistency of the dual library chosen
+      for a particular mod throughout a TU.
+    </p>
+<p>
+      The documemtation has been rewritten in many places to present a simpler explanation
+      of the basic mode of using the library, and a separation between basic mode
+      and more advanced topics. A rationale for the design of the library and the
+      changes made to support a method of programming which de-emphasizes the use
+      of macros has also been added to the documentation, as well as this history.
+    </p>
+<p>
+      The use of a shared_ptr mod, whose basic mod header included all related shared_ptr
+      C++ header files, while its shared_ptr_only mod header included only the shared_ptr
+      C++ header file(s), has changed. In the latest implementation for the shared_ptr
+      mod, the basic mod header includes only the C++ header file(s) for shared_ptr,
+      while a shared_ptr_all mod header includes all related shared_ptr C++ header
+      files. This follows the design where any mod's header file only includes the
+      C++ header(s) needed by that mod. The shared_ptr_all mod header is a 1-off
+      instance of a difference from this design in order to ease the functionality
+      of shared_ptr use, which often involves other shared_ptr related mod functionality.
+    </p>
+<p>
+      Version 2 - 07/22/16
+    </p>
+<p>
+      CXXD is updated to provide an alias mode as an alternative to the macro-based
+      mode of version 1. The macro mode is still the main programming mode used by
+      the immediate headers in the cxx_dual include directory. The alias mode uses
+      headers in the cxx_dual impl sub-directory of the include directory and automatically
+      includes its macro-mode header.
+    </p>
+<p>
+      Support for Boost Build in the library has been enhanced to make it easy to
+      add requirements to a build based on whether a library uses the Boost or C++
+      standard implementation of a mod.
+    </p>
+<p>
+      Version 1 - 06/02/16
+    </p>
+<p>
+      CXXD is created as a macro-based library where the programming mode is through
+      the use of macros, both for including the correct headers file(s) and using
+      the correct namespace.
+    </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="design_rationale.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="acknowledgements.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

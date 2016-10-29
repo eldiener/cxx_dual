@@ -1,0 +1,743 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Advanced Functionality</title>
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Cxx Dual Library">
+<link rel="prev" href="sbasic.html" title="Basic Functionality">
+<link rel="next" href="sadvanced/overriding_the_default_choosing_.html" title="Overriding the default choosing algorithm">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sbasic.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="sadvanced/overriding_the_default_choosing_.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="cxxd.sadvanced"></a><a class="link" href="sadvanced.html" title="Advanced Functionality">Advanced Functionality</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="sadvanced.html#cxxd.sadvanced.low_level_inclusion">Low-level inclusion</a></span></dt>
+<dt><span class="section"><a href="sadvanced/overriding_the_default_choosing_.html">Overriding
+      the default choosing algorithm</a></span></dt>
+<dt><span class="section"><a href="sadvanced/consistency.html">Consistency</a></span></dt>
+<dt><span class="section"><a href="sadvanced/sec_lib.html">Using in a library</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="sadvanced/sec_lib.html#cxxd.sadvanced.sec_lib.sec_hlib">Use in a header only
+        library</a></span></dt>
+<dt><span class="section"><a href="sadvanced/sec_lib/use_in_a_non_header_only_library.html">Use
+        in a non-header only library</a></span></dt>
+<dt><span class="section"><a href="sadvanced/sec_lib/sec_lvvv.html">Support for naming
+        library variants and testing all valid possibilities</a></span></dt>
+</dl></dd>
+</dl></div>
+<p>
+      The basic functionality of the CXXD library has been explained and should serve
+      most programmers when using the library without having to know anything further
+      about CXXD. The basic functionality involves including a single header file
+      for a given mod and then using the namespace alias to program the functionality
+      which the mod provides, with the same syntax being used no matter which library
+      has been chosen. This functionality, along with occasional use of macros which
+      CXXD provides for each mod, is the mainstream way of programming CXXD.
+    </p>
+<p>
+      This method of programming does not necessarily change when the programmer
+      uses the advanced functionality of CXXD, which will now be explained. Instead
+      the advanced functionality offers further methods to help the programmer when
+      using a dual library. The advanced functionality entails:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Low-level inclusion
+        </li>
+<li class="listitem">
+          Overriding the default choosing algorithm
+        </li>
+<li class="listitem">
+          Mod consistency
+        </li>
+<li class="listitem">
+          Usage in a third party library
+        </li>
+</ul></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="cxxd.sadvanced.low_level_inclusion"></a><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion" title="Low-level inclusion">Low-level inclusion</a>
+</h3></div></div></div>
+<p>
+        When you include a mod header in a TU you are actually including a separate
+        implementation header file and then using the macros in that implementation
+        header file to do two things:
+      </p>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+            Include the C++ header file(s) for the dual library which has been chosen.
+          </li>
+<li class="listitem">
+            Set the namespace alias to the namespace of the dual library which has
+            been chosen.
+          </li>
+</ol></div>
+<p>
+        All of the logic of choosing the dual library and of creating macros reflecting
+        that choice is done in the low-level implementation header file. The implementation
+        header file for each mod is in the CXXD 'boost/cxx_dual/impl' subdirectory
+        and has the same name as its corresponding mod header in the 'boost/cxx_dual'
+        directory.
+      </p>
+<p>
+        Both the 'shared_ptr.hpp' and 'shared_ptr_all.hpp' mod headers for the shared_ptr
+        mod use the same implementation header called 'shared_ptr.hpp'.
+      </p>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h0"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.header_macro"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.header_macro">Header
+        macro</a>
+      </h5>
+<p>
+        All of the macros, except one, which could be used by the programmer when
+        including a mod header have been explained as aids to using the basic functionality
+        of CXXD. The one macro which was not explained, because it does not directly
+        impact the basic functionality, is a macro which is used to include the C++
+        header file(s) needed by the dual library which has been chosen. The form
+        of this macro is CXXD_'XXX'_HEADER for any given mod XXX:
+      </p>
+<div class="table">
+<a name="cxxd.sadvanced.low_level_inclusion.cxxdheader"></a><p class="title"><b>Table&#160;1.5.&#160;C++ header macros</b></p>
+<div class="table-contents"><table class="table" summary="C++ header macros">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Mod name
+                </p>
+              </th>
+<th>
+                <p>
+                  C++ header macro
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  array
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_ARRAY_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  atomic
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_ATOMIC_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  bind
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_BIND_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  chrono
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_CHRONO_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  condition_variable
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_CONDITION_VARIABLE_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  enable_shared_from_this
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_ENABLE_SHARED_FROM_THIS_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  function
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_FUNCTION_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  hash
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_HASH_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  make_shared
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_MAKE_SHARED_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  mem_fn
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_MEM_FN_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  move
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_MOVE_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  mutex
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_MUTEX_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  random
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_RANDOM_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  ratio
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_RATIO_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  ref
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_REF_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  regex
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_REGEX_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  shared_mutex
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_SHARED_MUTEX_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  shared_ptr
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_SHARED_PTR_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  system_error
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_SYSTEM_ERROR_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  thread
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_THREAD_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  tuple
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_TUPLE_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  type_index
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_TYPE_INDEX_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  type_traits
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_TYPE_TRAITS_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  unordered_map
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_UNORDERED_MAP_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  unordered_multimap
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_UNORDERED_MULTIMAP_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  unordered_multiset
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_UNORDERED_MULTISET_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  unordered_set
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_UNORDERED_SET_HEADER
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  weak_ptr
+                </p>
+              </td>
+<td>
+                <p>
+                  CXXD_WEAK_PTR_HEADER
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+        For all mods this C++ header macro expands to the include path of a header
+        file using the angle bracket form ( '&lt;' and '&gt;' ). For a few mods this
+        C++ header macro actually expands to a header file in the CXXD implementation
+        detail directory, which itself includes more than one library header file.
+        For the rest this C++ header macro expands to a single C++ header for either
+        the Boost or C++ standard library dual library, which itself includes all
+        constructs needed by the dual library chosen.
+      </p>
+<p>
+        The shared_ptr mod implementation header also has a separate C++ header macro
+        called 'CXXD_SHARED_PTR_ALL_HEADER'. This C++ header macro is used by the
+        'shared_ptr_all.hpp' mod header to include the C++ header files needed by
+        shared_ptr, weak_ptr, make_shared, and enable_shared_from_this for either
+        the Boost dual library or the C++ standard dual library chosen.
+      </p>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h1"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.low_level_implementation_header_"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.low_level_implementation_header_">Low-level
+        implementation header versus mod header</a>
+      </h5>
+<p>
+        Because of the C++ header macro, and because the previously discussed namespace
+        macro can be used anytime the namespace alias can be used, it is possible
+        to forgo the inclusion of the mod header and use the low-level inclusion
+        of the same-named implementation header file for any given mod. As an example,
+        when using the regex mod the code showing basic functionality of CXXD was:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+        Alternatively using the low-level implementation header the code could be:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_REGEX_HEADER</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">CXXD_REGEX_NS</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">CXXD_REGEX_NS</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<p>
+        or even:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">regex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_REGEX_HEADER</span>
+<span class="keyword">namespace</span> <span class="identifier">cxxd_regex_ns</span> <span class="special">=</span> <span class="identifier">CXXD_REGEX_NS</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex</span> <span class="identifier">re</span><span class="special">(</span><span class="string">"A regular expression etc."</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">result</span><span class="special">(</span><span class="identifier">cxxd_regex_ns</span><span class="special">::</span><span class="identifier">regex_match</span><span class="special">(</span><span class="string">"Some string..."</span><span class="special">,</span><span class="identifier">re</span><span class="special">));</span>
+    <span class="comment">// etc.</span>
+    <span class="special">}</span>
+</pre>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h2"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.inclusion_order"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.inclusion_order">Inclusion
+        order</a>
+      </h5>
+<p>
+        Once you include a mod header in a TU there is no point in separately including
+        the low-level mod implementation header, since the mod header already does
+        so. However separately including both the mod header and low-level mod implementation
+        for a particular mod does no harm, no matter what order they are included
+        or how many times they are included.
+      </p>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h3"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.basic_low_level_usage"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.basic_low_level_usage">Basic
+        low-level usage</a>
+      </h5>
+<p>
+        Obviously using the low-level implementation header is more verbose as can
+        be seen in previous examples. So why would we ever want to use it as opposed
+        to the normal mod header ?
+      </p>
+<p>
+        Including the low-level implementation header, rather than the mod header,
+        gives the programmer specific control over which header file(s) get included
+        for the dual library chosen and how the constructs in the dual library chosen
+        are referred to. When including the mod header that choice is automatically
+        made by including the most general header file(s) needed and by creating
+        a namespace alias for referring to the top-level constructs of a dual library.
+        Including the low-level implementation header allows the programmer to manually
+        make such choices.
+      </p>
+<p>
+        Furthermore, unlike including a mod header, including the low-level header
+        for a mod does not create any immediate dependency on the dual library chosen.
+        This is particularly relevant if you want to use the mod's choosing macro
+        to write one-off code which does not use CXXD's dual library support at all.
+      </p>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h4"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.manual_header_file_inclusion"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.manual_header_file_inclusion">Manual
+        header file inclusion</a>
+      </h5>
+<p>
+        Many programmers like to include specific header file rather than a general
+        header for a library. The reasons for this are numerous but the general idea
+        is that the programmer should only include what he needs for the functionality
+        that he actually uses in a particular situation.
+      </p>
+<p>
+        A good example of including a specific header file rather than a general
+        header file would be in the Boost type_traits library. The generalized Boost
+        type_traits header is &lt;boost/type_traits.hpp&gt;. This header includes
+        all the individual type traits headers, just as the C++ standard library
+        the &lt;type_traits&gt; header includes all type traits. On the Boost side,
+        however, it is possible to include header files for only the individual type
+        traits being used in a TU instead of all type traits. When using the type_traits
+        mod header the general C++ type_traits header is always included automatically.
+        To have finer control over individual type traits header inclusion a programmer
+        could use the low-level implementation header for type_traits and then manually
+        include only the individual header file he is actually using when Boost is
+        chosen as the dual library. The code might look like this:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TYPE_TRAITS</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_TYPE_TRAITS_HEADER</span>
+<span class="preprocessor">#else</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">/</span><span class="identifier">add_const</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#endif</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using CXXD_TYPE_TRAITS_NS::add_const</span>
+    <span class="special">}</span>
+</pre>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h5"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.referring_to_dual_library_constr"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.referring_to_dual_library_constr">Referring
+        to dual library constructs</a>
+      </h5>
+<p>
+        When a mod header is included a namespace alias is created to refer to the
+        constructs of that mod. The namespace alias merely uses the namespace macro
+        for the dual library chosen to refer to that mod's namespace. For some programmers
+        using a namespace alias might be overkill. They would rather use other more
+        specific means to refer to some construct of the dual library chosen. For
+        other programmers using a namespace alias is fine but they would rather use
+        one reflecting their own naming preference rather than the name automatically
+        created for any given mod header. Finally some programmers might decide to
+        use the namespace macro directly rather than use a namespace alias at all.
+        In any of the above cases the existence of a namespace macro can be used
+        to create alternative means to refer to a dual library constructs.
+      </p>
+<h6>
+<a name="cxxd.sadvanced.low_level_inclusion.h6"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.using_a_specific_construct"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.using_a_specific_construct">Using
+        a specific construct</a>
+      </h6>
+<p>
+        Some programmers do not want to use a namespace in general in their code
+        when they are using only specific constructs of a given library. In C++ you
+        can do this with a using declaration:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_TYPE_TRAITS_HEADER</span>
+<span class="keyword">using</span> <span class="identifier">CXXD_TYPE_TRAITS_NS</span><span class="special">::</span><span class="identifier">add_const</span><span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using add_const</span>
+    <span class="special">}</span>
+</pre>
+<h6>
+<a name="cxxd.sadvanced.low_level_inclusion.h7"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.creating_own_s_one_namespace_ali"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.creating_own_s_one_namespace_ali">Creating
+        own's one namespace alias</a>
+      </h6>
+<p>
+        When using the low-level header a programmer might want to create his own
+        namespace alias for referring in general to the constructs of the dual library
+        chosen. This could obviously also be done when using the mod header but the
+        automatically created namespace alias would be an extra namespace alias in
+        that case which might never be used.
+      </p>
+<p>
+        An example of creating one's own namespace alias could be:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_TYPE_TRAITS_HEADER</span>
+<span class="keyword">namespace</span> <span class="identifier">mylib_tt</span> <span class="special">=</span> <span class="identifier">CXXD_TYPE_TRAITS_NS</span> <span class="special">;</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using mylib_tt::some_type_traits_construct</span>
+    <span class="special">}</span>
+</pre>
+<h6>
+<a name="cxxd.sadvanced.low_level_inclusion.h8"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.using_the_namespace_macro_direct"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.using_the_namespace_macro_direct">Using
+        the namespace macro directly</a>
+      </h6>
+<p>
+        Of course a programmer could choose to use the namespace macro directly rather
+        than use a namespace alias at all:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="identifier">CXXD_TYPE_TRAITS_HEADER</span>
+
+<span class="keyword">void</span> <span class="identifier">SomeFunction</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using CXXD_TYPE_TRAITS_NS::some_type_traits_construct</span>
+    <span class="special">}</span>
+</pre>
+<h5>
+<a name="cxxd.sadvanced.low_level_inclusion.h9"></a>
+        <span class="phrase"><a name="cxxd.sadvanced.low_level_inclusion.implementing_one_off_code"></a></span><a class="link" href="sadvanced.html#cxxd.sadvanced.low_level_inclusion.implementing_one_off_code">Implementing
+        one-off code</a>
+      </h5>
+<p>
+        You may just want to test whether or not the C++ standard library for a particular
+        mod is supported or not, and write one-off code accordingly without using
+        the CXXD dual library facility for the mod at all. While you could do this
+        using a Boost Config macro the CXXD library provides a more regular syntactical
+        naming convention for identifying whether a mod supports the C++ standard
+        library or not:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#if</span> <span class="identifier">CXXD_HAS_STD_TYPE_TRAITS</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">type_traits</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">SomeFunctionUsingCppTypeTraits</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using std::some_trait</span>
+    <span class="special">}</span>
+<span class="preprocessor">#endif</span>
+</pre>
+<p>
+        or:
+      </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">cxx_dual</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">CXXD_HAS_STD_TYPE_TRAITS</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="keyword">void</span> <span class="identifier">SomeFunctionUsingBoostTraits</span><span class="special">()</span>
+    <span class="special">{</span>
+    <span class="comment">// Code using boost::some_trait</span>
+    <span class="special">}</span>
+<span class="preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2015, 2016 Tropic Software East Inc<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="sbasic.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="sadvanced/overriding_the_default_choosing_.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
